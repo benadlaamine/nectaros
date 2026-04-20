@@ -927,6 +927,18 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
   </div>
   <div class="login-footer">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+    <!-- hidden owner unlock: tap 7x on version -->
+    <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:80px;height:18px;cursor:default;opacity:0;"></div>
+    <div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+      <div style="color:#FFC107;font-size:14px;font-weight:700;">🔑 كود المطوّر</div>
+      <input id="owner-pin-input" type="password" maxlength="12"
+        style="background:#1e1e1e;border:1px solid #FFC107;border-radius:8px;padding:10px 16px;color:#fff;font-size:18px;letter-spacing:4px;text-align:center;outline:none;width:200px;"
+        placeholder="••••••••" onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
+      <div style="display:flex;gap:8px;">
+        <button onclick="_ownerPinSubmit()" style="background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:8px;padding:8px 20px;font-weight:700;cursor:pointer;">دخول</button>
+        <button onclick="document.getElementById('owner-pin-box').style.display='none'" style="background:#2e2e2e;color:#aaa;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;">إلغاء</button>
+      </div>
+    </div>
 </div>
 
 <div id="app">
@@ -7184,9 +7196,7 @@ function _applyUpdate() {
 }
 
 // ── Device Fingerprint ────────────────────────────
-async function getDeviceFingerprint(){
-  const stored = localStorage.getItem('_nec_dfp');
-  if(stored) return stored;
+async function _computeFingerprint(){
   // Build fingerprint from stable browser properties
   let data = [
     navigator.userAgent,
@@ -7197,15 +7207,20 @@ async function getDeviceFingerprint(){
     navigator.hardwareConcurrency||0,
     navigator.platform||'',
   ].join('|');
-  // Canvas fingerprint (optional — adds uniqueness)
   try{
     const c = document.createElement('canvas');
     const ctx = c.getContext('2d');
     ctx.textBaseline='top';ctx.font='14px Arial';
     ctx.fillStyle='#FFC107';ctx.fillText('NectarOS',2,2);
-    data = data + '|' + c.toDataURL().slice(-50); // ← fix: assign back to data
+    data = data + '|' + c.toDataURL().slice(-50);
   }catch(e){}
-  const fp = await _hashString(data);
+  return await _hashString(data);
+}
+
+async function getDeviceFingerprint(){
+  const stored = localStorage.getItem('_nec_dfp');
+  if(stored) return stored;
+  const fp = await _computeFingerprint();
   localStorage.setItem('_nec_dfp', fp);
   return fp;
 }
@@ -7275,26 +7290,35 @@ function isTrialExtended(){ return getTrialInfo().extended; }
 // ── Main License Check ─────────────────────────────
 let _deviceFP = null;
 async function checkLicense(){
-  _deviceFP = await getDeviceFingerprint();
-  const lic = getLicense();
-  // Already activated?
-  // ── فحص جهاز المالك — دخول مباشر + لوحة المطوّر ──
-  const _myDisplayId = getDeviceId(_deviceFP);
+  // ── 1. فحص مخزن أولاً (أسرع) ──────────────────────
+  if (localStorage.getItem('_nec_owner_verified') === '1') {
+    _deviceFP = await getDeviceFingerprint();
+    hideLicenseScreen();
+    setTimeout(()=>{
+      const devPanel = document.getElementById('dev-panel');
+      if (devPanel) devPanel.style.display = 'block';
+    }, 100);
+    return;
+  }
+
+  // ── 2. احسب fingerprint جديد دائماً للمالك ──────────
+  const freshFP = await _computeFingerprint();
+  _deviceFP = freshFP;
+  // حدّث الكاش
+  localStorage.setItem('_nec_dfp', freshFP);
+
+  const _myDisplayId = getDeviceId(freshFP);
   if (_myDisplayId.toUpperCase() === OWNER_DEVICE_ID.toUpperCase()) {
     hideLicenseScreen();
-    const devPanel = document.getElementById('dev-panel');
-    if (devPanel) devPanel.style.display = 'block';
-    // حفظ دائم في localStorage حتى لا يُطلب مجدداً
     localStorage.setItem('_nec_owner_verified', '1');
+    setTimeout(()=>{
+      const devPanel = document.getElementById('dev-panel');
+      if (devPanel) devPanel.style.display = 'block';
+    }, 100);
     return;
   }
-  // فحص مخزن (بعد إغلاق/فتح التطبيق)
-  if (localStorage.getItem('_nec_owner_verified') === '1') {
-    hideLicenseScreen();
-    const devPanel = document.getElementById('dev-panel');
-    if (devPanel) devPanel.style.display = 'block';
-    return;
-  }
+
+  const lic = getLicense();
 
   if(lic && lic.active && lic.serial){
     const valid = await validateSerial(lic.serial, _deviceFP);
@@ -7617,6 +7641,39 @@ function _renderCertMainBarcode(serial, apiary, date, hiveCount){
   }, 150);
 }
 
+
+/* ── Owner Secret Unlock ── */
+let _ownerTapCount = 0;
+let _ownerTapTimer = null;
+function _ownerTap() {
+  _ownerTapCount++;
+  clearTimeout(_ownerTapTimer);
+  _ownerTapTimer = setTimeout(() => { _ownerTapCount = 0; }, 3000);
+  if (_ownerTapCount >= 7) {
+    _ownerTapCount = 0;
+    const box = document.getElementById('owner-pin-box');
+    if (box) { box.style.display = 'flex'; setTimeout(()=>document.getElementById('owner-pin-input')?.focus(), 100); }
+  }
+}
+function _ownerPinSubmit() {
+  const input = document.getElementById('owner-pin-input');
+  const pin = input?.value || '';
+  if (pin === 'NectarBee2025') {
+    localStorage.setItem('_nec_owner_verified', '1');
+    const box = document.getElementById('owner-pin-box');
+    if (box) box.style.display = 'none';
+    hideLicenseScreen();
+    setTimeout(()=>{
+      const devPanel = document.getElementById('dev-panel');
+      if (devPanel) devPanel.style.display = 'block';
+      toast('🐝 مرحباً بك يا مطوّر NectarOS!', 'success');
+    }, 200);
+  } else {
+    input.value = '';
+    input.style.borderColor = 'var(--red)';
+    setTimeout(()=>{ if(input) input.style.borderColor = '#FFC107'; }, 1000);
+  }
+}
 
 DB.init();
 seed();
@@ -8636,7 +8693,9 @@ function renderSecurityPage(){
 
   const el=document.getElementById('security-status-list');
   if(el){
-    const auth=DB.get('auth')||{username:'admin',password:'1234'};
+    const _bpw = localStorage.getItem('_nec_auth_pw');
+    const _dbA = DB.get('auth') || {};
+    const auth = { username: _dbA.username||'admin', password: _dbA.password||_bpw||'1234' };
     const encSettings=DB.get('enc_settings')||{};
     const checks=[
       {label:'كلمة المرور',ok:auth.password&&auth.password.length>=6,ok_msg:'قوية',warn_msg:'ضعيفة — أقل من 6 أحرف'},
