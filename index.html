@@ -820,17 +820,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 </head>
 <body>
 
-<!-- ══ GLOBAL OWNER PIN BOX (works from any screen) ══ -->
-<div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-  <div style="color:#FFC107;font-size:14px;font-weight:700;">🔑 كود المطوّر</div>
-  <input id="owner-pin-input" type="password" maxlength="12"
-    style="background:#1e1e1e;border:1px solid #FFC107;border-radius:8px;padding:10px 16px;color:#fff;font-size:18px;letter-spacing:4px;text-align:center;outline:none;width:200px;"
-    placeholder="••••••••" onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
-  <div style="display:flex;gap:8px;">
-    <button onclick="_ownerPinSubmit()" style="background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:8px;padding:8px 20px;font-weight:700;cursor:pointer;">دخول</button>
-    <button onclick="document.getElementById('owner-pin-box').style.display='none'" style="background:#2e2e2e;color:#aaa;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;">إلغاء</button>
-  </div>
-</div>
+<!-- ══ SPLASH SCREEN ══ -->
 <div id="splash">
   <div class="splash-hex">🐝</div>
   <div class="splash-title">NectarOS</div>
@@ -839,7 +829,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div id="splash-msg" style="font-size:10px;color:var(--text3);">جاري التحميل...</div>
 </div>
 
-<!-- ══ SPLASH SCREEN ══ -->
+<!-- ═══════════ LOGIN SCREEN ═══════════ -->
 
 <!-- ═══════════ UPDATE BANNER ═══════════ -->
 <div id="update-banner">
@@ -907,9 +897,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       </div>
     </div>
 
-    <div class="login-footer" style="margin-top:16px;position:relative;">NectarOS · <span onclick="_ownerTap()" style="cursor:default;user-select:none;">v5.1</span> · نظام إدارة المناحل الذكي
-      <div id="owner-tap-zone-lic" onclick="_ownerTap()" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:20px;cursor:default;opacity:0;"></div>
-    </div>
+    <div class="login-footer" style="margin-top:16px;">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
   </div>
 </div>
 
@@ -941,6 +929,16 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="login-footer">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
     <!-- hidden owner unlock: tap 7x on version -->
     <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:80px;height:18px;cursor:default;opacity:0;"></div>
+    <div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+      <div style="color:#FFC107;font-size:14px;font-weight:700;">🔑 كود المطوّر</div>
+      <input id="owner-pin-input" type="password" maxlength="12"
+        style="background:#1e1e1e;border:1px solid #FFC107;border-radius:8px;padding:10px 16px;color:#fff;font-size:18px;letter-spacing:4px;text-align:center;outline:none;width:200px;"
+        placeholder="••••••••" onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
+      <div style="display:flex;gap:8px;">
+        <button onclick="_ownerPinSubmit()" style="background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:8px;padding:8px 20px;font-weight:700;cursor:pointer;">دخول</button>
+        <button onclick="document.getElementById('owner-pin-box').style.display='none'" style="background:#2e2e2e;color:#aaa;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;">إلغاء</button>
+      </div>
+    </div>
 </div>
 
 <div id="app">
@@ -7291,10 +7289,36 @@ function isTrialExtended(){ return getTrialInfo().extended; }
 
 // ── Main License Check ─────────────────────────────
 let _deviceFP = null;
+
+// دالة مساعدة: هل هذا جهاز المالك؟
+function _isOwnerDevice(fp) {
+  if (!fp) return false;
+  return getDeviceId(fp).toUpperCase() === OWNER_DEVICE_ID.toUpperCase();
+}
+
+// تفعيل المالك مباشرة
+function _activateOwner(fp) {
+  _deviceFP = fp;
+  localStorage.setItem('_nec_owner_verified', '1');
+  localStorage.setItem('_nec_dfp', fp);
+  hideLicenseScreen();
+  setTimeout(()=>{
+    const devPanel = document.getElementById('dev-panel');
+    if (devPanel) devPanel.style.display = 'block';
+  }, 100);
+}
+
 async function checkLicense(){
-  // ── 1. فحص مخزن أولاً (أسرع) ──────────────────────
+  // ── 0. فحص مباشر بـ Device ID المخزّن (الأسرع والأضمن) ──
+  const storedFP = localStorage.getItem('_nec_dfp');
+  if (storedFP && _isOwnerDevice(storedFP)) {
+    _activateOwner(storedFP);
+    return;
+  }
+
+  // ── 1. فحص علامة المالك المحفوظة ─────────────────────
   if (localStorage.getItem('_nec_owner_verified') === '1') {
-    _deviceFP = await getDeviceFingerprint();
+    _deviceFP = storedFP || await getDeviceFingerprint();
     hideLicenseScreen();
     setTimeout(()=>{
       const devPanel = document.getElementById('dev-panel');
@@ -7303,25 +7327,18 @@ async function checkLicense(){
     return;
   }
 
-  // ── 2. احسب fingerprint جديد دائماً للمالك ──────────
+  // ── 2. احسب fingerprint جديد وتحقق من المالك ───────────
   const freshFP = await _computeFingerprint();
   _deviceFP = freshFP;
-  // حدّث الكاش
   localStorage.setItem('_nec_dfp', freshFP);
 
-  const _myDisplayId = getDeviceId(freshFP);
-  if (_myDisplayId.toUpperCase() === OWNER_DEVICE_ID.toUpperCase()) {
-    hideLicenseScreen();
-    localStorage.setItem('_nec_owner_verified', '1');
-    setTimeout(()=>{
-      const devPanel = document.getElementById('dev-panel');
-      if (devPanel) devPanel.style.display = 'block';
-    }, 100);
+  if (_isOwnerDevice(freshFP)) {
+    _activateOwner(freshFP);
     return;
   }
 
+  // ── 3. فحص السيريال المخزّن ───────────────────────────
   const lic = getLicense();
-
   if(lic && lic.active && lic.serial){
     const valid = await validateSerial(lic.serial, _deviceFP);
     if(valid){
@@ -7329,13 +7346,12 @@ async function checkLicense(){
       return;
     }
   }
-  // Trial active?
+
+  // ── 4. فحص التجربة ────────────────────────────────────
   if(isTrialActive()){
-    // Show license screen with trial info (not blocking)
     showLicenseScreen('trial');
     return;
   }
-  // Trial expired — must activate
   showLicenseScreen('expired');
 }
 
@@ -7694,6 +7710,21 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
+// ── فحص مبكر جداً للمالك قبل checkLicense ──────────
+// إذا لم يكن _nec_dfp مخزّناً بعد، نخزّن Device ID للمالك مباشرة
+// حتى يعمل الفحص الأول في checkLicense بدون انتظار
+(function _ownerEarlyCheck() {
+  try {
+    const stored = localStorage.getItem('_nec_dfp');
+    if (!stored) return; // سيُحسب لاحقاً في checkLicense
+    const id = stored.slice(0,16).toUpperCase();
+    const fmt = id.slice(0,4)+'-'+id.slice(4,8)+'-'+id.slice(8,12)+'-'+id.slice(12,16);
+    if (fmt === OWNER_DEVICE_ID) {
+      localStorage.setItem('_nec_owner_verified', '1');
+    }
+  } catch(e) {}
+})();
+
 // Check license / trial (async) — wrapped to prevent splash freeze
 checkLicense().catch(e => {
   console.warn('[LIC] checkLicense failed:', e);
