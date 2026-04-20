@@ -820,7 +820,17 @@ tr:hover td{background:rgba(255,255,255,.02);}
 </head>
 <body>
 
-<!-- ══ SPLASH SCREEN ══ -->
+<!-- ══ GLOBAL OWNER PIN BOX (works from any screen) ══ -->
+<div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:99999;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
+  <div style="color:#FFC107;font-size:14px;font-weight:700;">🔑 كود المطوّر</div>
+  <input id="owner-pin-input" type="password" maxlength="12"
+    style="background:#1e1e1e;border:1px solid #FFC107;border-radius:8px;padding:10px 16px;color:#fff;font-size:18px;letter-spacing:4px;text-align:center;outline:none;width:200px;"
+    placeholder="••••••••" onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
+  <div style="display:flex;gap:8px;">
+    <button onclick="_ownerPinSubmit()" style="background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:8px;padding:8px 20px;font-weight:700;cursor:pointer;">دخول</button>
+    <button onclick="document.getElementById('owner-pin-box').style.display='none'" style="background:#2e2e2e;color:#aaa;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;">إلغاء</button>
+  </div>
+</div>
 <div id="splash">
   <div class="splash-hex">🐝</div>
   <div class="splash-title">NectarOS</div>
@@ -829,7 +839,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div id="splash-msg" style="font-size:10px;color:var(--text3);">جاري التحميل...</div>
 </div>
 
-<!-- ═══════════ LOGIN SCREEN ═══════════ -->
+<!-- ══ SPLASH SCREEN ══ -->
 
 <!-- ═══════════ UPDATE BANNER ═══════════ -->
 <div id="update-banner">
@@ -897,7 +907,9 @@ tr:hover td{background:rgba(255,255,255,.02);}
       </div>
     </div>
 
-    <div class="login-footer" style="margin-top:16px;">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+    <div class="login-footer" style="margin-top:16px;position:relative;">NectarOS · <span onclick="_ownerTap()" style="cursor:default;user-select:none;">v5.1</span> · نظام إدارة المناحل الذكي
+      <div id="owner-tap-zone-lic" onclick="_ownerTap()" style="position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:80px;height:20px;cursor:default;opacity:0;"></div>
+    </div>
   </div>
 </div>
 
@@ -929,16 +941,6 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="login-footer">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
     <!-- hidden owner unlock: tap 7x on version -->
     <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:80px;height:18px;cursor:default;opacity:0;"></div>
-    <div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-      <div style="color:#FFC107;font-size:14px;font-weight:700;">🔑 كود المطوّر</div>
-      <input id="owner-pin-input" type="password" maxlength="12"
-        style="background:#1e1e1e;border:1px solid #FFC107;border-radius:8px;padding:10px 16px;color:#fff;font-size:18px;letter-spacing:4px;text-align:center;outline:none;width:200px;"
-        placeholder="••••••••" onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
-      <div style="display:flex;gap:8px;">
-        <button onclick="_ownerPinSubmit()" style="background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:8px;padding:8px 20px;font-weight:700;cursor:pointer;">دخول</button>
-        <button onclick="document.getElementById('owner-pin-box').style.display='none'" style="background:#2e2e2e;color:#aaa;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;">إلغاء</button>
-      </div>
-    </div>
 </div>
 
 <div id="app">
