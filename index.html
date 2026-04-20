@@ -4858,7 +4858,13 @@ function doLogin(){
   const s=T[currentLang]||T['ar'];
   const err=document.getElementById('login-err');
   if(!u||!p){err.textContent=s.login_err_empty;return;}
-  const saved=DB.get('auth')||{username:'admin',password:'1234'};
+  // فحص كلمة المرور المحفوظة (طبقتان: DB + localStorage)
+  const _backupPw = localStorage.getItem('_nec_auth_pw');
+  const _dbAuth = DB.get('auth') || {};
+  const saved = {
+    username: _dbAuth.username || 'admin',
+    password: _dbAuth.password || _backupPw || '1234'
+  };
   if(u===saved.username&&p===saved.password){
     DB.set('session',{user:u,lang:currentLang,time:Date.now()});
     document.getElementById('login-screen').classList.add('hidden');
@@ -7050,7 +7056,7 @@ const SB_URL = 'https://jirwztmtyajwptkdzqsv.supabase.co';
 const SB_KEY = 'sb_publishable_NsIIHkN8YM0npKaYhRTYaw__WgCKXtb';
 
 // ── Owner Device — لوحة المطوّر تظهر هنا فقط ──────
-const OWNER_DEVICE_ID = '6cb427c8-3c3e-6d5a-7e95-0407cdb64941';
+const OWNER_DEVICE_ID = 'D028-6040-0FC3-4586';
 
 async function sbQuery(method, path, body) {
   const controller = new AbortController();
@@ -7273,16 +7279,21 @@ async function checkLicense(){
   const lic = getLicense();
   // Already activated?
   // ── فحص جهاز المالك — دخول مباشر + لوحة المطوّر ──
-  const _ownerCheck = localStorage.getItem('_nec_dfp');
-  if (_ownerCheck) {
-    const _ownerId = getDeviceId(_ownerCheck);
-    if (_ownerId.toUpperCase() === OWNER_DEVICE_ID.toUpperCase()) {
-      hideLicenseScreen();
-      // أظهر لوحة المطوّر
-      const devPanel = document.getElementById('dev-panel');
-      if (devPanel) devPanel.style.display = 'block';
-      return;
-    }
+  const _myDisplayId = getDeviceId(_deviceFP);
+  if (_myDisplayId.toUpperCase() === OWNER_DEVICE_ID.toUpperCase()) {
+    hideLicenseScreen();
+    const devPanel = document.getElementById('dev-panel');
+    if (devPanel) devPanel.style.display = 'block';
+    // حفظ دائم في localStorage حتى لا يُطلب مجدداً
+    localStorage.setItem('_nec_owner_verified', '1');
+    return;
+  }
+  // فحص مخزن (بعد إغلاق/فتح التطبيق)
+  if (localStorage.getItem('_nec_owner_verified') === '1') {
+    hideLicenseScreen();
+    const devPanel = document.getElementById('dev-panel');
+    if (devPanel) devPanel.style.display = 'block';
+    return;
   }
 
   if(lic && lic.active && lic.serial){
@@ -8590,6 +8601,14 @@ function delLoss(id){confirm2('حذف السجل؟','',()=>{DB.set('colony_losse
    🔐 SECURITY & PRIVACY
 ══════════════════════════════════════════════════ */
 function renderSecurityPage(){
+  // ── تفعيل لوحة المطوّر إذا كان هذا جهاز المالك ──
+  if (localStorage.getItem('_nec_owner_verified') === '1' || 
+      (typeof _deviceFP !== 'undefined' && _deviceFP && 
+       getDeviceId(_deviceFP).toUpperCase() === OWNER_DEVICE_ID.toUpperCase())) {
+    const devPanel = document.getElementById('dev-panel');
+    if (devPanel) devPanel.style.display = 'block';
+    localStorage.setItem('_nec_owner_verified', '1');
+  }
   // License status
   const licEl = document.getElementById('sec-license-status');
   if(licEl){
@@ -8755,9 +8774,18 @@ function changeSecPassword(){
   if(oldP!==auth.password){toast('كلمة المرور الحالية خاطئة','error');return;}
   if(newP!==confP){toast('كلمات المرور الجديدة غير متطابقة','error');return;}
   if(newP.length<4){toast('كلمة المرور يجب أن تكون 4 أحرف على الأقل','warning');return;}
-  DB.set('auth',{...auth,password:newP});
+  const newAuth = {...auth, password: newP};
+  DB.set('auth', newAuth);
+  // تأكيد الحفظ مباشرة في localStorage كطبقة إضافية
+  try { localStorage.setItem('_nec_auth_pw', newP); } catch(e) {}
   logActivity('تغيير كلمة المرور');
-  toast('✅ تم تغيير كلمة المرور','success');
+  // تفريغ الحقول
+  ['sec5-old','sec5-new','sec5-conf'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  toast('✅ تم تغيير كلمة المرور وحفظها', 'success');
+  renderSecurityPage();
   ['sec5-old','sec5-new','sec5-conf'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
 }
 
