@@ -816,9 +816,45 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .section-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin:14px 0 8px;display:flex;align-items:center;gap:7px;}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
+/* ── Google Translate Panel ── */
+#gt-panel{
+  display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);
+  background:var(--card);border:1px solid var(--gold3);border-radius:12px;
+  padding:12px 16px;z-index:5000;box-shadow:0 8px 32px rgba(0,0,0,.5);
+  min-width:260px;text-align:center;
+}
+#gt-panel.open{display:block;}
+#gt-panel .gt-title{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:10px;}
+.gt-lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+.gt-lang-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;
+  padding:8px 10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:11px;
+  font-weight:600;cursor:pointer;transition:.18s;display:flex;align-items:center;gap:6px;}
+.gt-lang-btn:hover{border-color:var(--gold);color:var(--gold);}
+.gt-lang-btn.active{background:rgba(255,193,7,.15);border-color:var(--gold);color:var(--gold);}
+/* إخفاء شريط Google Translate الافتراضي */
+.goog-te-banner-frame{display:none!important;}
+body{top:0!important;}
+.goog-te-gadget{font-size:0!important;}
 </style>
+<!-- Google Translate API -->
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 </head>
 <body>
+
+<!-- ══ GOOGLE TRANSLATE PANEL ══ -->
+<div id="google_translate_element" style="display:none;"></div>
+<div id="gt-panel">
+  <div class="gt-title">🌐 ترجمة الصفحة</div>
+  <div class="gt-lang-grid">
+    <button class="gt-lang-btn active" onclick="gtTranslate('ar')">🇩🇿 العربية</button>
+    <button class="gt-lang-btn" onclick="gtTranslate('fr')">🇫🇷 Français</button>
+    <button class="gt-lang-btn" onclick="gtTranslate('en')">🇬🇧 English</button>
+    <button class="gt-lang-btn" onclick="gtTranslate('tr')">🇹🇷 Türkçe</button>
+    <button class="gt-lang-btn" onclick="gtTranslate('es')">🇪🇸 Español</button>
+    <button class="gt-lang-btn" onclick="gtTranslate('de')">🇩🇪 Deutsch</button>
+  </div>
+  <button onclick="document.getElementById('gt-panel').classList.remove('open')" style="margin-top:10px;background:transparent;border:none;color:var(--text3);font-size:11px;cursor:pointer;width:100%;">✕ إغلاق</button>
+</div>
 
 <!-- ══ SPLASH SCREEN ══ -->
 <div id="splash">
@@ -897,7 +933,24 @@ tr:hover td{background:rgba(255,255,255,.02);}
       </div>
     </div>
 
-    <div class="login-footer" style="margin-top:16px;">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+    <div class="login-footer" style="margin-top:16px;position:relative;cursor:default;" onclick="_ownerTap()">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+  </div>
+</div>
+
+<!-- ══ OWNER PIN BOX — خارج كل الشاشات، أعلى z-index ══ -->
+<div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999999;align-items:center;justify-content:center;flex-direction:column;gap:14px;direction:rtl;">
+  <div style="background:#1a1a1a;border:1px solid #FFC107;border-radius:16px;padding:28px 32px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 0 40px rgba(255,193,7,.3);">
+    <div style="color:#FFC107;font-size:22px;">🔑</div>
+    <div style="color:#FFC107;font-size:14px;font-weight:700;">كود المطوّر</div>
+    <input id="owner-pin-input" type="password" maxlength="20"
+      style="background:#111;border:2px solid #FFC107;border-radius:10px;padding:12px 18px;color:#fff;font-size:20px;letter-spacing:5px;text-align:center;outline:none;width:220px;font-family:monospace;"
+      placeholder="••••••••••"
+      onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
+    <div style="display:flex;gap:10px;">
+      <button onclick="_ownerPinSubmit()" style="background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:9px;padding:10px 24px;font-weight:700;cursor:pointer;font-size:13px;">دخول ✓</button>
+      <button onclick="document.getElementById('owner-pin-box').style.display='none';document.getElementById('owner-pin-input').value='';" style="background:#2e2e2e;color:#aaa;border:1px solid #444;border-radius:9px;padding:10px 24px;cursor:pointer;font-size:13px;">إلغاء</button>
+    </div>
+    <div id="owner-pin-err" style="color:#f44336;font-size:11px;min-height:14px;"></div>
   </div>
 </div>
 
@@ -908,12 +961,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="login-tagline">Smart Beekeeping Platform</div>
   </div>
   <div class="login-card">
-    <div class="login-section-title" id="lang-label">اختر اللغة · Choose Language</div>
-    <div class="login-lang-row">
-      <button class="lang-btn active" onclick="setLang('ar')" id="lb-ar">🇩🇿 عربي</button>
-      <button class="lang-btn" onclick="setLang('fr')" id="lb-fr">🇫🇷 Français</button>
-      <button class="lang-btn" onclick="setLang('en')" id="lb-en">🇬🇧 English</button>
-    </div>
+    <div class="login-section-title" id="lang-label">🐝 نظام إدارة المناحل الذكي</div>
     <div class="form-group"><label class="form-label" id="lbl-user">اسم المستخدم</label>
       <input id="login-user" class="form-control" placeholder="admin" autocomplete="username">
     </div>
@@ -927,18 +975,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
   </div>
   <div class="login-footer">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
-    <!-- hidden owner unlock: tap 7x on version -->
-    <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:80px;height:18px;cursor:default;opacity:0;"></div>
-    <div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-      <div style="color:#FFC107;font-size:14px;font-weight:700;">🔑 كود المطوّر</div>
-      <input id="owner-pin-input" type="password" maxlength="20"
-        style="background:#1e1e1e;border:1px solid #FFC107;border-radius:8px;padding:10px 16px;color:#fff;font-size:18px;letter-spacing:4px;text-align:center;outline:none;width:200px;"
-        placeholder="••••••••" onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
-      <div style="display:flex;gap:8px;">
-        <button onclick="_ownerPinSubmit()" style="background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:8px;padding:8px 20px;font-weight:700;cursor:pointer;">دخول</button>
-        <button onclick="document.getElementById('owner-pin-box').style.display='none'" style="background:#2e2e2e;color:#aaa;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;">إلغاء</button>
-      </div>
-    </div>
+    <!-- hidden owner unlock: tap 7x on version text in login screen -->
+    <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:80px;height:18px;cursor:default;opacity:0;z-index:9999;"></div>
 </div>
 
 <div id="app">
@@ -1043,6 +1081,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div id="alert-badge" class="badge br" style="display:none;">⚠️ <span id="alert-num">0</span></div>
       <button class="btn-icon" onclick="go('ai')" title="الذكاء الاصطناعي" style="color:var(--gold);">🤖</button>
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+      <button class="btn-icon" onclick="toggleGTranslate()" title="ترجمة الصفحة" style="color:var(--blue);" id="gtranslate-btn">🌐</button>
       <button class="btn-icon" onclick="exportData()" title="تصدير">📤</button>
       <button class="btn-icon" onclick="exportPDF()" title="PDF" style="color:var(--red);">📄</button>
       <button class="btn-icon" onclick="triggerImport()">📥</button>
@@ -4827,16 +4866,13 @@ const T={
 };
 let currentLang='ar';
 function applyLang(l){
-  const s=T[l]||T['ar'];
-  document.documentElement.lang=l;
-  // Apply all data-i18n elements in the full page
+  const s=T['ar'];
+  document.documentElement.lang='ar';
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key=el.getAttribute('data-i18n');
     if(s[key]!==undefined)el.textContent=s[key];
   });
-  // Direction: sidebar and main stay RTL always (Arabic content), only login flips
-  document.getElementById('login-screen').style.direction=s.dir;
-  // TITLES update
+  document.getElementById('login-screen').style.direction='rtl';
   if(typeof TITLES!=='undefined'){
     TITLES.dashboard=s.nav_dashboard;TITLES.apiaries=s.nav_apiaries;TITLES.map=s.nav_map;
     TITLES.hives=s.nav_hives;TITLES.calendar=s.nav_calendar;TITLES.inspections=s.nav_inspections;
@@ -4847,23 +4883,10 @@ function applyLang(l){
     TITLES.settings=s.nav_settings;TITLES.ai=s.nav_ai;TITLES.contact=s.contact_title;
     TITLES.advanced=s.nav_advanced;
   }
-  // Update topbar active title
   const activePg=document.querySelector('.nav-item.active')?.id?.replace('nav-','');
   if(activePg&&TITLES[activePg])document.getElementById('pg-title').textContent=TITLES[activePg];
 }
-function setLang(l){
-  currentLang=l;
-  ['lb-ar','lb-fr','lb-en'].forEach(id=>document.getElementById(id)?.classList.remove('active'));
-  document.getElementById('lb-'+l)?.classList.add('active');
-  const s=T[l];
-  document.getElementById('lbl-user').textContent=s.lbl_user;
-  document.getElementById('lbl-pass').textContent=s.lbl_pass;
-  document.getElementById('login-btn').textContent=s.login_btn;
-  document.getElementById('lang-label').textContent=s.lang_label;
-  document.getElementById('login-err').textContent='';
-  document.getElementById('login-screen').style.direction=s.dir;
-  applyLang(l);
-}
+function setLang(l){ currentLang='ar'; applyLang('ar'); }
 function doLogin(){
   const u=document.getElementById('login-user').value.trim();
   const p=document.getElementById('login-pass').value;
@@ -7657,11 +7680,13 @@ function _ownerTap() {
 }
 function _ownerPinSubmit() {
   const input = document.getElementById('owner-pin-input');
+  const errEl = document.getElementById('owner-pin-err');
   const pin = input?.value || '';
   if (pin === 'NectarBee2025') {
     localStorage.setItem('_nec_owner_verified', '1');
-    const box = document.getElementById('owner-pin-box');
-    if (box) box.style.display = 'none';
+    document.getElementById('owner-pin-box').style.display = 'none';
+    input.value = '';
+    if (errEl) errEl.textContent = '';
     hideLicenseScreen();
     setTimeout(()=>{
       const devPanel = document.getElementById('dev-panel');
@@ -7670,8 +7695,13 @@ function _ownerPinSubmit() {
     }, 200);
   } else {
     input.value = '';
-    input.style.borderColor = 'var(--red)';
-    setTimeout(()=>{ if(input) input.style.borderColor = '#FFC107'; }, 1000);
+    if (errEl) errEl.textContent = '❌ الكود غير صحيح';
+    input.style.borderColor = '#f44336';
+    setTimeout(()=>{
+      if(input) input.style.borderColor = '#FFC107';
+      if(errEl) errEl.textContent = '';
+    }, 1500);
+    input.focus();
   }
 }
 
@@ -7692,6 +7722,23 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
+// ══ فحص فوري للمالك بـ Device ID قبل أي شيء ══
+// يعمل تزامنياً — لا ينتظر async
+(function _immediateOwnerCheck(){
+  try {
+    // فحص 1: علامة المالك محفوظة مسبقاً
+    if (localStorage.getItem('_nec_owner_verified') === '1') return;
+    // فحص 2: الـ fingerprint المخزّن (نفس الذي يظهر في شاشة الترخيص)
+    const fp = localStorage.getItem('_nec_dfp');
+    if (!fp) return;
+    const rawId = fp.slice(0,16).toUpperCase();
+    const devId = rawId.slice(0,4)+'-'+rawId.slice(4,8)+'-'+rawId.slice(8,12)+'-'+rawId.slice(12,16);
+    if (devId === OWNER_DEVICE_ID) {
+      localStorage.setItem('_nec_owner_verified', '1');
+    }
+  } catch(e) {}
+})();
+
 // Check license / trial (async) — wrapped to prevent splash freeze
 checkLicense().catch(e => {
   console.warn('[LIC] checkLicense failed:', e);
@@ -8860,6 +8907,72 @@ function logActivity(action){
   log.push({action,time:new Date().toLocaleString('ar'),date:today()});
   DB.set('activity_log',log.slice(-100));
 }
+
+/* ══════════════════════════════════════════════════
+   🌐 GOOGLE TRANSLATE INTEGRATION
+══════════════════════════════════════════════════ */
+let _gtReady = false;
+let _gtCurrentLang = 'ar';
+
+function googleTranslateElementInit() {
+  new google.translate.TranslateElement({
+    pageLanguage: 'ar',
+    includedLanguages: 'ar,fr,en,tr,es,de',
+    autoDisplay: false,
+    multilanguagePage: false
+  }, 'google_translate_element');
+  _gtReady = true;
+}
+
+function toggleGTranslate() {
+  const panel = document.getElementById('gt-panel');
+  panel.classList.toggle('open');
+}
+
+function gtTranslate(lang) {
+  _gtCurrentLang = lang;
+  // تحديث الأزرار
+  document.querySelectorAll('.gt-lang-btn').forEach(b => b.classList.remove('active'));
+  event?.target?.classList.add('active');
+
+  if (lang === 'ar') {
+    // إعادة للعربية — نزيل كوكي الترجمة
+    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'googtrans=/ar/ar; path=/';
+    location.reload();
+    return;
+  }
+
+  // ضبط كوكي الترجمة
+  document.cookie = `googtrans=/ar/${lang}; path=/`;
+
+  // تفعيل الترجمة عبر select المخفي
+  const tries = [0, 300, 700, 1500];
+  const tryTranslate = (i) => {
+    if (i >= tries.length) { toast('⚠️ لم تُحمَّل الترجمة بعد، حاول مجدداً', 'warning'); return; }
+    setTimeout(() => {
+      const sel = document.querySelector('.goog-te-combo');
+      if (sel) {
+        sel.value = lang;
+        sel.dispatchEvent(new Event('change'));
+        toast(`✅ تمت الترجمة إلى: ${lang.toUpperCase()}`, 'success');
+        document.getElementById('gt-panel').classList.remove('open');
+      } else {
+        tryTranslate(i + 1);
+      }
+    }, tries[i]);
+  };
+  tryTranslate(0);
+}
+
+// إغلاق لوحة الترجمة عند الضغط خارجها
+document.addEventListener('click', e => {
+  const panel = document.getElementById('gt-panel');
+  const btn = document.getElementById('gtranslate-btn');
+  if (panel && btn && !panel.contains(e.target) && e.target !== btn) {
+    panel.classList.remove('open');
+  }
+});
 </script>
 </body>
 </html>
