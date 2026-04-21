@@ -816,44 +816,29 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .section-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin:14px 0 8px;display:flex;align-items:center;gap:7px;}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ── Google Translate Panel ── */
-#gt-panel{
-  display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);
-  background:var(--card);border:1px solid var(--gold3);border-radius:12px;
-  padding:12px 16px;z-index:5000;box-shadow:0 8px 32px rgba(0,0,0,.5);
-  min-width:260px;text-align:center;
-}
+#gt-panel{display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--gold3);border-radius:12px;padding:14px 16px;z-index:5000;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:270px;text-align:center;direction:rtl;}
 #gt-panel.open{display:block;}
-#gt-panel .gt-title{font-size:12px;font-weight:700;color:var(--gold);margin-bottom:10px;}
-.gt-lang-grid{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
-.gt-lang-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;
-  padding:8px 10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:11px;
-  font-weight:600;cursor:pointer;transition:.18s;display:flex;align-items:center;gap:6px;}
-.gt-lang-btn:hover{border-color:var(--gold);color:var(--gold);}
-.gt-lang-btn.active{background:rgba(255,193,7,.15);border-color:var(--gold);color:var(--gold);}
-/* إخفاء شريط Google Translate الافتراضي */
-.goog-te-banner-frame{display:none!important;}
+.gt-lang-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-top:10px;}
+.gt-lang-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 6px;color:var(--text);font-family:'Cairo',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:.18s;}
+.gt-lang-btn:hover,.gt-lang-btn.act{border-color:var(--gold);color:var(--gold);background:rgba(255,193,7,.08);}
+.goog-te-banner-frame,.goog-te-balloon-frame{display:none!important;}
 body{top:0!important;}
-.goog-te-gadget{font-size:0!important;}
 </style>
-<!-- Google Translate API -->
 <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 </head>
 <body>
-
-<!-- ══ GOOGLE TRANSLATE PANEL ══ -->
 <div id="google_translate_element" style="display:none;"></div>
 <div id="gt-panel">
-  <div class="gt-title">🌐 ترجمة الصفحة</div>
+  <div style="font-size:12px;font-weight:700;color:var(--gold);">🌐 ترجمة الصفحة</div>
   <div class="gt-lang-grid">
-    <button class="gt-lang-btn active" onclick="gtTranslate('ar')">🇩🇿 العربية</button>
-    <button class="gt-lang-btn" onclick="gtTranslate('fr')">🇫🇷 Français</button>
-    <button class="gt-lang-btn" onclick="gtTranslate('en')">🇬🇧 English</button>
-    <button class="gt-lang-btn" onclick="gtTranslate('tr')">🇹🇷 Türkçe</button>
-    <button class="gt-lang-btn" onclick="gtTranslate('es')">🇪🇸 Español</button>
-    <button class="gt-lang-btn" onclick="gtTranslate('de')">🇩🇪 Deutsch</button>
+    <button class="gt-lang-btn act" onclick="gtLang('ar')">🇩🇿 عربي</button>
+    <button class="gt-lang-btn" onclick="gtLang('fr')">🇫🇷 French</button>
+    <button class="gt-lang-btn" onclick="gtLang('en')">🇬🇧 English</button>
+    <button class="gt-lang-btn" onclick="gtLang('tr')">🇹🇷 Türkçe</button>
+    <button class="gt-lang-btn" onclick="gtLang('es')">🇪🇸 Español</button>
+    <button class="gt-lang-btn" onclick="gtLang('de')">🇩🇪 Deutsch</button>
   </div>
-  <button onclick="document.getElementById('gt-panel').classList.remove('open')" style="margin-top:10px;background:transparent;border:none;color:var(--text3);font-size:11px;cursor:pointer;width:100%;">✕ إغلاق</button>
+  <button onclick="document.getElementById('gt-panel').classList.remove('open')" style="margin-top:10px;background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;">✕ إغلاق</button>
 </div>
 
 <!-- ══ SPLASH SCREEN ══ -->
@@ -933,24 +918,30 @@ body{top:0!important;}
       </div>
     </div>
 
-    <div class="login-footer" style="margin-top:16px;position:relative;cursor:default;" onclick="_ownerTap()">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+    <div class="login-footer" style="margin-top:16px;">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+    <!-- زر المطوّر المرئي -->
+    <div style="margin-top:10px;text-align:center;">
+      <button id="owner-dev-btn" onclick="openOwnerPin()" style="display:none;background:transparent;border:1px solid #333;border-radius:8px;padding:5px 14px;color:#555;font-size:10px;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s;" onmouseover="this.style.borderColor='#FFC107';this.style.color='#FFC107'" onmouseout="this.style.borderColor='#333';this.style.color='#555'">🔑 مطوّر</button>
+    </div>
   </div>
 </div>
 
-<!-- ══ OWNER PIN BOX — خارج كل الشاشات، أعلى z-index ══ -->
-<div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:999999;align-items:center;justify-content:center;flex-direction:column;gap:14px;direction:rtl;">
-  <div style="background:#1a1a1a;border:1px solid #FFC107;border-radius:16px;padding:28px 32px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 0 40px rgba(255,193,7,.3);">
-    <div style="color:#FFC107;font-size:22px;">🔑</div>
-    <div style="color:#FFC107;font-size:14px;font-weight:700;">كود المطوّر</div>
+<!-- ══ OWNER PIN BOX — خارج كل الشاشات — z-index أعلى من كل شيء ══ -->
+<div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:999999;align-items:center;justify-content:center;flex-direction:column;gap:0;direction:rtl;">
+  <div style="background:#1a1a1a;border:2px solid #FFC107;border-radius:18px;padding:32px 28px;display:flex;flex-direction:column;align-items:center;gap:16px;box-shadow:0 0 60px rgba(255,193,7,.25);width:300px;">
+    <div style="font-size:32px;">🔑</div>
+    <div style="color:#FFC107;font-size:15px;font-weight:700;">كود المطوّر</div>
     <input id="owner-pin-input" type="password" maxlength="20"
-      style="background:#111;border:2px solid #FFC107;border-radius:10px;padding:12px 18px;color:#fff;font-size:20px;letter-spacing:5px;text-align:center;outline:none;width:220px;font-family:monospace;"
+      style="background:#111;border:2px solid #444;border-radius:10px;padding:12px;color:#fff;font-size:22px;letter-spacing:6px;text-align:center;outline:none;width:100%;transition:.2s;font-family:monospace;"
       placeholder="••••••••••"
+      onfocus="this.style.borderColor='#FFC107'"
+      onblur="this.style.borderColor='#444'"
       onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
-    <div style="display:flex;gap:10px;">
-      <button onclick="_ownerPinSubmit()" style="background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:9px;padding:10px 24px;font-weight:700;cursor:pointer;font-size:13px;">دخول ✓</button>
-      <button onclick="document.getElementById('owner-pin-box').style.display='none';document.getElementById('owner-pin-input').value='';" style="background:#2e2e2e;color:#aaa;border:1px solid #444;border-radius:9px;padding:10px 24px;cursor:pointer;font-size:13px;">إلغاء</button>
+    <div id="owner-pin-err" style="color:#f44336;font-size:11px;min-height:16px;font-weight:600;"></div>
+    <div style="display:flex;gap:10px;width:100%;">
+      <button onclick="_ownerPinSubmit()" style="flex:1;background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:10px;padding:12px;font-weight:700;cursor:pointer;font-size:13px;font-family:'Cairo',sans-serif;">دخول ✓</button>
+      <button onclick="closeOwnerPin()" style="flex:1;background:#2a2a2a;color:#aaa;border:1px solid #444;border-radius:10px;padding:12px;cursor:pointer;font-size:13px;font-family:'Cairo',sans-serif;">إلغاء</button>
     </div>
-    <div id="owner-pin-err" style="color:#f44336;font-size:11px;min-height:14px;"></div>
   </div>
 </div>
 
@@ -975,8 +966,7 @@ body{top:0!important;}
     </div>
   </div>
   <div class="login-footer">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
-    <!-- hidden owner unlock: tap 7x on version text in login screen -->
-    <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:80px;height:18px;cursor:default;opacity:0;z-index:9999;"></div>
+    <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:0;left:0;right:0;height:24px;cursor:default;opacity:0;"></div>
 </div>
 
 <div id="app">
@@ -1081,7 +1071,7 @@ body{top:0!important;}
       <div id="alert-badge" class="badge br" style="display:none;">⚠️ <span id="alert-num">0</span></div>
       <button class="btn-icon" onclick="go('ai')" title="الذكاء الاصطناعي" style="color:var(--gold);">🤖</button>
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
-      <button class="btn-icon" onclick="toggleGTranslate()" title="ترجمة الصفحة" style="color:var(--blue);" id="gtranslate-btn">🌐</button>
+      <button class="btn-icon" id="gt-btn" onclick="document.getElementById('gt-panel').classList.toggle('open')" title="ترجمة الصفحة" style="color:var(--blue);">🌐</button>
       <button class="btn-icon" onclick="exportData()" title="تصدير">📤</button>
       <button class="btn-icon" onclick="exportPDF()" title="PDF" style="color:var(--red);">📄</button>
       <button class="btn-icon" onclick="triggerImport()">📥</button>
@@ -7313,72 +7303,68 @@ function isTrialExtended(){ return getTrialInfo().extended; }
 // ── Main License Check ─────────────────────────────
 let _deviceFP = null;
 async function checkLicense(){
-  // ── 1. فحص مخزن أولاً (أسرع) ──────────────────────
+  // ── 1. المالك مفعّل مسبقاً ──────────────────────────
   if (localStorage.getItem('_nec_owner_verified') === '1') {
     _deviceFP = await getDeviceFingerprint();
     hideLicenseScreen();
-    setTimeout(()=>{
-      const devPanel = document.getElementById('dev-panel');
-      if (devPanel) devPanel.style.display = 'block';
-    }, 100);
+    setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);
     return;
   }
 
-  // ── 2. احسب fingerprint جديد دائماً للمالك ──────────
-  const freshFP = await _computeFingerprint();
-  _deviceFP = freshFP;
-  // حدّث الكاش
-  localStorage.setItem('_nec_dfp', freshFP);
+  // ── 2. استخدام getDeviceFingerprint (المخزّن) لا _computeFingerprint ──
+  // السبب: _computeFingerprint يُعيد الحساب من الصفر وقد يختلف بسبب Canvas
+  // بينما getDeviceFingerprint يُعيد نفس القيمة التي تظهر للمستخدم في الشاشة
+  _deviceFP = await getDeviceFingerprint();
 
-  const _myDisplayId = getDeviceId(freshFP);
-  if (_myDisplayId.toUpperCase() === OWNER_DEVICE_ID.toUpperCase()) {
-    hideLicenseScreen();
+  if (getDeviceId(_deviceFP).toUpperCase() === OWNER_DEVICE_ID.toUpperCase()) {
     localStorage.setItem('_nec_owner_verified', '1');
-    setTimeout(()=>{
-      const devPanel = document.getElementById('dev-panel');
-      if (devPanel) devPanel.style.display = 'block';
-    }, 100);
+    hideLicenseScreen();
+    setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);
     return;
   }
 
+  // ── 3. فحص السيريال ───────────────────────────────
   const lic = getLicense();
-
   if(lic && lic.active && lic.serial){
     const valid = await validateSerial(lic.serial, _deviceFP);
-    if(valid){
-      hideLicenseScreen();
-      return;
-    }
+    if(valid){ hideLicenseScreen(); return; }
   }
-  // Trial active?
-  if(isTrialActive()){
-    // Show license screen with trial info (not blocking)
-    showLicenseScreen('trial');
-    return;
-  }
-  // Trial expired — must activate
+
+  // ── 4. فحص التجربة ────────────────────────────────
+  if(isTrialActive()){ showLicenseScreen('trial'); return; }
   showLicenseScreen('expired');
 }
 
 function showLicenseScreen(mode){
   const el = document.getElementById('license-screen');
   if(el) el.classList.remove('hidden');
-  // Populate device ID
+
+  // عرض Device ID + فحص تلقائي للمالك
   getDeviceFingerprint().then(fp=>{
+    _deviceFP = fp;
     const did = getDeviceId(fp);
     const el2 = document.getElementById('lic-device-id');
     if(el2) el2.textContent = did;
+    // إظهار زر المطوّر فقط على جهاز المالك
+    const devBtn = document.getElementById('owner-dev-btn');
+    if(devBtn) devBtn.style.display = did.toUpperCase() === OWNER_DEVICE_ID.toUpperCase() ? 'inline-block' : 'none';
+    // ── فحص تلقائي: إذا كان جهاز المالك → دخول مباشر ──
+    if(did.toUpperCase() === OWNER_DEVICE_ID.toUpperCase()){
+      localStorage.setItem('_nec_owner_verified','1');
+      setTimeout(()=>{
+        hideLicenseScreen();
+        const d=document.getElementById('dev-panel');if(d)d.style.display='block';
+        toast('🐝 مرحباً بك يا مطوّر NectarOS!','success');
+      }, 600);
+    }
   });
-  // Render trial info
+
   renderTrialInfo();
-  // Render devices
   renderLicDevices();
   if(mode === 'expired'){
-    // Force to activate tab
     licTab('activate');
     const sl = document.getElementById('lic-status-line');
-    if(sl) sl.textContent = '⚠️ انتهت فترة التجربة — يرجى التفعيل';
-    sl.style.color = 'var(--red)';
+    if(sl){ sl.textContent = '⚠️ انتهت فترة التجربة — يرجى التفعيل'; sl.style.color='var(--red)'; }
     const enterBtn = document.getElementById('trial-enter-btn');
     if(enterBtn) enterBtn.disabled = true;
   }
@@ -7668,25 +7654,35 @@ function _renderCertMainBarcode(serial, apiary, date, hiveCount){
 /* ── Owner Secret Unlock ── */
 let _ownerTapCount = 0;
 let _ownerTapTimer = null;
+
+function openOwnerPin() {
+  const box = document.getElementById('owner-pin-box');
+  if (box) { box.style.display = 'flex'; setTimeout(()=>document.getElementById('owner-pin-input')?.focus(), 100); }
+}
+
+function closeOwnerPin() {
+  const box = document.getElementById('owner-pin-box');
+  if (box) box.style.display = 'none';
+  const input = document.getElementById('owner-pin-input');
+  if (input) input.value = '';
+  const err = document.getElementById('owner-pin-err');
+  if (err) err.textContent = '';
+}
+
 function _ownerTap() {
   _ownerTapCount++;
   clearTimeout(_ownerTapTimer);
   _ownerTapTimer = setTimeout(() => { _ownerTapCount = 0; }, 3000);
-  if (_ownerTapCount >= 7) {
-    _ownerTapCount = 0;
-    const box = document.getElementById('owner-pin-box');
-    if (box) { box.style.display = 'flex'; setTimeout(()=>document.getElementById('owner-pin-input')?.focus(), 100); }
-  }
+  if (_ownerTapCount >= 7) { _ownerTapCount = 0; openOwnerPin(); }
 }
+
 function _ownerPinSubmit() {
   const input = document.getElementById('owner-pin-input');
   const errEl = document.getElementById('owner-pin-err');
   const pin = input?.value || '';
   if (pin === 'NectarBee2025') {
     localStorage.setItem('_nec_owner_verified', '1');
-    document.getElementById('owner-pin-box').style.display = 'none';
-    input.value = '';
-    if (errEl) errEl.textContent = '';
+    closeOwnerPin();
     hideLicenseScreen();
     setTimeout(()=>{
       const devPanel = document.getElementById('dev-panel');
@@ -7694,14 +7690,12 @@ function _ownerPinSubmit() {
       toast('🐝 مرحباً بك يا مطوّر NectarOS!', 'success');
     }, 200);
   } else {
-    input.value = '';
-    if (errEl) errEl.textContent = '❌ الكود غير صحيح';
-    input.style.borderColor = '#f44336';
+    if (input) { input.value = ''; input.style.borderColor = '#f44336'; input.focus(); }
+    if (errEl) errEl.textContent = '❌ الكود غير صحيح، حاول مجدداً';
     setTimeout(()=>{
-      if(input) input.style.borderColor = '#FFC107';
-      if(errEl) errEl.textContent = '';
-    }, 1500);
-    input.focus();
+      if (input) input.style.borderColor = '#444';
+      if (errEl) errEl.textContent = '';
+    }, 2000);
   }
 }
 
@@ -7722,23 +7716,6 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
-// ══ فحص فوري للمالك بـ Device ID قبل أي شيء ══
-// يعمل تزامنياً — لا ينتظر async
-(function _immediateOwnerCheck(){
-  try {
-    // فحص 1: علامة المالك محفوظة مسبقاً
-    if (localStorage.getItem('_nec_owner_verified') === '1') return;
-    // فحص 2: الـ fingerprint المخزّن (نفس الذي يظهر في شاشة الترخيص)
-    const fp = localStorage.getItem('_nec_dfp');
-    if (!fp) return;
-    const rawId = fp.slice(0,16).toUpperCase();
-    const devId = rawId.slice(0,4)+'-'+rawId.slice(4,8)+'-'+rawId.slice(8,12)+'-'+rawId.slice(12,16);
-    if (devId === OWNER_DEVICE_ID) {
-      localStorage.setItem('_nec_owner_verified', '1');
-    }
-  } catch(e) {}
-})();
-
 // Check license / trial (async) — wrapped to prevent splash freeze
 checkLicense().catch(e => {
   console.warn('[LIC] checkLicense failed:', e);
@@ -8908,70 +8885,29 @@ function logActivity(action){
   DB.set('activity_log',log.slice(-100));
 }
 
-/* ══════════════════════════════════════════════════
-   🌐 GOOGLE TRANSLATE INTEGRATION
-══════════════════════════════════════════════════ */
-let _gtReady = false;
-let _gtCurrentLang = 'ar';
-
-function googleTranslateElementInit() {
-  new google.translate.TranslateElement({
-    pageLanguage: 'ar',
-    includedLanguages: 'ar,fr,en,tr,es,de',
-    autoDisplay: false,
-    multilanguagePage: false
-  }, 'google_translate_element');
-  _gtReady = true;
+/* ══ GOOGLE TRANSLATE ══ */
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'ar',includedLanguages:'ar,fr,en,tr,es,de',autoDisplay:false},'google_translate_element');
 }
-
-function toggleGTranslate() {
-  const panel = document.getElementById('gt-panel');
-  panel.classList.toggle('open');
-}
-
-function gtTranslate(lang) {
-  _gtCurrentLang = lang;
-  // تحديث الأزرار
-  document.querySelectorAll('.gt-lang-btn').forEach(b => b.classList.remove('active'));
-  event?.target?.classList.add('active');
-
-  if (lang === 'ar') {
-    // إعادة للعربية — نزيل كوكي الترجمة
-    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    document.cookie = 'googtrans=/ar/ar; path=/';
-    location.reload();
-    return;
+function gtLang(lang){
+  document.querySelectorAll('.gt-lang-btn').forEach(b=>b.classList.remove('act'));
+  event?.target?.classList.add('act');
+  if(lang==='ar'){
+    document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    location.reload(); return;
   }
-
-  // ضبط كوكي الترجمة
-  document.cookie = `googtrans=/ar/${lang}; path=/`;
-
-  // تفعيل الترجمة عبر select المخفي
-  const tries = [0, 300, 700, 1500];
-  const tryTranslate = (i) => {
-    if (i >= tries.length) { toast('⚠️ لم تُحمَّل الترجمة بعد، حاول مجدداً', 'warning'); return; }
-    setTimeout(() => {
-      const sel = document.querySelector('.goog-te-combo');
-      if (sel) {
-        sel.value = lang;
-        sel.dispatchEvent(new Event('change'));
-        toast(`✅ تمت الترجمة إلى: ${lang.toUpperCase()}`, 'success');
-        document.getElementById('gt-panel').classList.remove('open');
-      } else {
-        tryTranslate(i + 1);
-      }
-    }, tries[i]);
+  document.cookie=`googtrans=/ar/${lang}; path=/`;
+  const tryIt=(n)=>{
+    const sel=document.querySelector('.goog-te-combo');
+    if(sel){sel.value=lang;sel.dispatchEvent(new Event('change'));document.getElementById('gt-panel').classList.remove('open');toast('✅ تمت الترجمة','success');}
+    else if(n<6) setTimeout(()=>tryIt(n+1),500);
+    else toast('⚠️ فعّل الاتصال بالإنترنت للترجمة','warning');
   };
-  tryTranslate(0);
+  tryIt(0);
 }
-
-// إغلاق لوحة الترجمة عند الضغط خارجها
-document.addEventListener('click', e => {
-  const panel = document.getElementById('gt-panel');
-  const btn = document.getElementById('gtranslate-btn');
-  if (panel && btn && !panel.contains(e.target) && e.target !== btn) {
-    panel.classList.remove('open');
-  }
+document.addEventListener('click',e=>{
+  const p=document.getElementById('gt-panel'),b=document.getElementById('gt-btn');
+  if(p&&b&&!p.contains(e.target)&&e.target!==b&&!b.contains(e.target))p.classList.remove('open');
 });
 </script>
 </body>
