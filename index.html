@@ -7212,7 +7212,6 @@ function _applyUpdate() {
 
 // ── Device Fingerprint ────────────────────────────
 async function _computeFingerprint(){
-  // Build fingerprint from stable browser properties
   let data = [
     navigator.userAgent,
     navigator.language,
@@ -7223,20 +7222,26 @@ async function _computeFingerprint(){
     navigator.platform||'',
   ].join('|');
   try{
-    const c = document.createElement('canvas');
-    const ctx = c.getContext('2d');
+    const c=document.createElement('canvas');
+    const ctx=c.getContext('2d');
     ctx.textBaseline='top';ctx.font='14px Arial';
     ctx.fillStyle='#FFC107';ctx.fillText('NectarOS',2,2);
-    data = data + '|' + c.toDataURL().slice(-50);
+    data=data+'|'+c.toDataURL().slice(-50);
   }catch(e){}
   return await _hashString(data);
 }
 
 async function getDeviceFingerprint(){
-  const stored = localStorage.getItem('_nec_dfp');
+  // إذا مخزّن مسبقاً — استخدمه مباشرة (لا تُعيد الحساب)
+  const stored=localStorage.getItem('_nec_dfp');
   if(stored) return stored;
-  const fp = await _computeFingerprint();
-  localStorage.setItem('_nec_dfp', fp);
+  // حساب جديد
+  const fp=await _computeFingerprint();
+  localStorage.setItem('_nec_dfp',fp);
+  // تحقق فوري: إذا كان جهاز المالك — فعّله مباشرة
+  if(getDeviceId(fp).toUpperCase()===OWNER_DEVICE_ID.toUpperCase()){
+    localStorage.setItem('_nec_owner_verified','1');
+  }
   return fp;
 }
 
@@ -7264,13 +7269,21 @@ async function generateSerial(deviceFP){
   return s.slice(0,4)+'-'+s.slice(4,8)+'-'+s.slice(8,12)+'-'+s.slice(12,16);
 }
 
+// ── OWNER SERIAL — مُحسب من D028-6040-0FC3-4586 ─────
+const OWNER_SERIAL = 'B9DB4AFF03A0486C';
+
 async function validateSerial(serial, deviceFP){
+  const cleanInput = serial.replace(/-/g,'').toUpperCase();
+  // فحص مباشر: سيريال المالك يُقبل دائماً
+  if(cleanInput === OWNER_SERIAL){
+    localStorage.setItem('_nec_owner_verified','1');
+    return 'owner';
+  }
   // Primary: exact match for this device
   const expected = await generateSerial(deviceFP);
-  const cleanInput = serial.replace(/-/g,'').toUpperCase();
   const cleanExpected = expected.replace(/-/g,'');
   if(cleanInput === cleanExpected) return 'primary';
-  // Secondary: valid serial stored in license (multi-device sync via .nlic file)
+  // Secondary: valid serial stored in license
   const lic = getLicense();
   if(lic && lic.serial){
     if(lic.serial.replace(/-/g,'').toUpperCase() === cleanInput) return 'secondary';
@@ -7281,6 +7294,32 @@ async function validateSerial(serial, deviceFP){
 // ── License Storage ────────────────────────────────
 function getLicense(){ try{return JSON.parse(localStorage.getItem('_nec_lic')||'null');}catch{return null;} }
 function setLicense(lic){ localStorage.setItem('_nec_lic', JSON.stringify(lic)); }
+
+// ══ تفعيل جهاز المالك فوراً — طريقة مضمونة 100% ══
+// السيريال B9DB-4AFF-03A0-486C مُحسب من D028-6040-0FC3-4586
+(function _seedOwnerAccess(){
+  try{
+    // إذا مفعّل مسبقاً — لا شيء
+    if(localStorage.getItem('_nec_owner_verified')==='1') return;
+    // نضع الـ _nec_owner_verified مباشرة
+    // سيتحقق checkLicense من getDeviceFingerprint ويؤكد
+    // لكن نضيف أيضاً السيريال الصالح كـ license احتياطية
+    const existLic = getLicense();
+    if(!existLic || !existLic.active){
+      // لا نُفعّل الآن — checkLicense سيفعّل بعد حساب الـ fingerprint
+      // لكن نخزّن علامة مؤقتة لجهاز المالك إذا كان `_nec_dfp` يطابق
+      const fp = localStorage.getItem('_nec_dfp');
+      if(fp){
+        const raw=fp.slice(0,16).toUpperCase();
+        const did=raw.slice(0,4)+'-'+raw.slice(4,8)+'-'+raw.slice(8,12)+'-'+raw.slice(12,16);
+        if(did===OWNER_DEVICE_ID){
+          localStorage.setItem('_nec_owner_verified','1');
+          setLicense({active:true,serial:'B9DB-4AFF-03A0-486C',owner:true,expires:'2099-12-31'});
+        }
+      }
+    }
+  }catch(e){}
+})();
 
 // ── Trial System ───────────────────────────────────
 function getTrialInfo(){
@@ -7305,6 +7344,15 @@ function isTrialExtended(){ return getTrialInfo().extended; }
 // ── Main License Check ─────────────────────────────
 let _deviceFP = null;
 async function checkLicense(){
+  // 0. سيريال المالك مخزّن — دخول فوري
+  const existLic=getLicense();
+  if(existLic&&existLic.serial&&existLic.serial.replace(/-/g,'').toUpperCase()===OWNER_SERIAL){
+    localStorage.setItem('_nec_owner_verified','1');
+    _deviceFP=await getDeviceFingerprint();
+    hideLicenseScreen();
+    setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);
+    return;
+  }
   // 1. مفعّل مسبقاً
   if(localStorage.getItem('_nec_owner_verified')=== '1'){
     _deviceFP=await getDeviceFingerprint();
@@ -7312,21 +7360,26 @@ async function checkLicense(){
     setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);
     return;
   }
-  // 2. نستخدم getDeviceFingerprint (المخزّن) — يتطابق مع ما يظهر للمستخدم
+  // 2. احسب الـ fingerprint — يخزّن تلقائياً ويتحقق من المالك داخل getDeviceFingerprint
   _deviceFP=await getDeviceFingerprint();
+  // 3. فحص جهاز المالك بالـ Device ID
   if(getDeviceId(_deviceFP).toUpperCase()===OWNER_DEVICE_ID.toUpperCase()){
     localStorage.setItem('_nec_owner_verified','1');
+    setLicense({active:true,serial:'B9DB-4AFF-03A0-486C',owner:true,expires:'2099-12-31'});
     hideLicenseScreen();
     setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);
     return;
   }
-  // 3. فحص السيريال
+  // 4. فحص السيريال
   const lic=getLicense();
   if(lic&&lic.active&&lic.serial){
     const valid=await validateSerial(lic.serial,_deviceFP);
-    if(valid){hideLicenseScreen();return;}
+    if(valid){
+      if(valid==='owner'){setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);}
+      hideLicenseScreen();return;
+    }
   }
-  // 4. التجربة
+  // 5. التجربة
   if(isTrialActive()){showLicenseScreen('trial');return;}
   showLicenseScreen('expired');
 }
@@ -7686,6 +7739,24 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
+// ══ فحص فوري لجهاز المالك — يعمل قبل checkLicense ══
+// جهاز D028-6040-0FC3-4586 يُفعَّل مباشرة بدون أي شاشة
+(function _ownerBootCheck(){
+  try {
+    // إذا الـ fingerprint المخزّن يطابق جهاز المالك — فعّل فوراً
+    const fp = localStorage.getItem('_nec_dfp');
+    if (fp) {
+      const raw = fp.slice(0,16).toUpperCase();
+      const did = raw.slice(0,4)+'-'+raw.slice(4,8)+'-'+raw.slice(8,12)+'-'+raw.slice(12,16);
+      if (did === OWNER_DEVICE_ID) {
+        localStorage.setItem('_nec_owner_verified','1');
+      }
+    }
+    // إذا ما في fingerprint بعد (أول تشغيل) — أنشئه الآن من بيانات بسيطة ومخزّنة
+    // وسيتحقق checkLicense لاحقاً من getDeviceFingerprint
+  } catch(e) {}
+})();
+
 // Check license / trial (async) — wrapped to prevent splash freeze
 checkLicense().catch(e => {
   console.warn('[LIC] checkLicense failed:', e);
