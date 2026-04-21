@@ -43,7 +43,7 @@ self.addEventListener("message",e=>{if(e.data==="SKIP_WAITING")self.skipWaiting(
 })();
 </script>
 <title>NectarOS 🐝</title>
-<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=Cinzel+Decorative:wght@700;900&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
@@ -53,7 +53,8 @@ self.addEventListener("message",e=>{if(e.data==="SKIP_WAITING")self.skipWaiting(
 <style>
 /* ═══════════════ THEME ═══════════════ */
 :root{
-  --bg:#0d0d0d;--bg2:#141414;--bg3:#1c1c1c;
+  --bg:#0d0d0d;
+  --bottom-nav-h:58px;--bg2:#141414;--bg3:#1c1c1c;
   --card:#1e1e1e;--card2:#252525;--border:#2e2e2e;
   --gold:#FFC107;--gold2:#FFD54F;--gold3:#FF8F00;--gold4:#FF6F00;
   --text:#f0f0f0;--text2:#aaa;--text3:#666;
@@ -80,7 +81,7 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 #sidebar.open{right:0;}
 #main{flex:1;display:flex;flex-direction:column;overflow:visible;width:100%;}
 #topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 13px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:100;gap:8px;}
-#content{flex:1;overflow-y:auto;padding:14px;padding-bottom:90px;-webkit-overflow-scrolling:touch;}
+#content{flex:1;overflow-y:auto;padding:14px;padding-bottom:96px;-webkit-overflow-scrolling:touch;}
 
 /* ── LOGO ── */
 .logo{padding:14px 13px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0;background:linear-gradient(90deg,rgba(255,193,7,.07),transparent);}
@@ -342,7 +343,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   position:fixed;bottom:0;left:0;right:0;
   background:var(--bg2);border-top:1px solid var(--border);
   display:flex;align-items:center;justify-content:space-around;
-  height:58px;z-index:500;padding-bottom:env(safe-area-inset-bottom,8px);
+  height:58px;z-index:500;padding-bottom:env(safe-area-inset-bottom,0);
 }
 .bn-item{display:flex;flex-direction:column;align-items:center;gap:2px;cursor:pointer;padding:6px 8px;border-radius:8px;transition:.18s;flex:1;min-width:0;}
 .bn-item:active{background:rgba(255,193,7,.1);}
@@ -350,7 +351,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .bn-icon{font-size:20px;line-height:1;}
 .bn-label{font-size:9px;font-weight:600;color:var(--text3);white-space:nowrap;}
 /* push content up on mobile */
-@media(max-width:768px){#content{padding-bottom:90px;}}
+@media(max-width:768px){#content{padding-bottom:96px;}}
 
 /* ═══════════ JOURNAL ═══════════ */
 .journal-day{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:10px;overflow:hidden;}
@@ -481,7 +482,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .pn-schedule-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border-radius:9px;border:1px solid var(--border);margin-bottom:6px;}
 
 /* ══ SPLASH SCREEN — تصميم احترافي ══ */
-#splash{position:fixed;inset:0;z-index:99999;background:radial-gradient(ellipse at 50% 50%,#0f0a00 0%,#080600 60%,#050300 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .6s ease,transform .6s ease;overflow:hidden;}
+#splash{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .6s ease,transform .6s ease;overflow:hidden;}
 #splash.hide{opacity:0;transform:scale(1.06);pointer-events:none;}
 /* خلفية متحركة */
 #splash::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,193,7,.12) 0%,transparent 65%),radial-gradient(ellipse at 20% 80%,rgba(255,111,0,.07) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(255,193,7,.06) 0%,transparent 50%);pointer-events:none;}
@@ -504,13 +505,13 @@ tr:hover td{background:rgba(255,255,255,.02);}
 /* النص */
 .splash-brand{text-align:center;animation:splashTextIn .9s ease .3s both;}
 @keyframes splashTextIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
-.splash-title{font-family:'Cinzel Decorative','Syne','Cairo',sans-serif;font-size:34px;font-weight:900;letter-spacing:2px;background:linear-gradient(135deg,#FFF8DC 0%,#FFD700 30%,#FFC107 60%,#FF8F00 85%,#FF6F00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.2;margin-bottom:8px;text-shadow:none;filter:drop-shadow(0 2px 8px rgba(255,193,7,.35));}
-.splash-sub{font-size:11px;color:rgba(255,220,100,.75);letter-spacing:4px;text-transform:uppercase;font-family:'Playfair Display','Space Mono',serif;font-style:italic;}
+.splash-title{font-family:'Cinzel Decorative','Syne','Cairo',sans-serif;font-size:38px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#FFD54F 0%,#FFC107 50%,#FF8F00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:6px;}
+.splash-sub{font-size:12px;color:rgba(255,193,7,.6);letter-spacing:3px;text-transform:uppercase;font-family:'Space Mono',monospace;}
 /* شريط التحميل */
 .splash-loader{margin-top:40px;animation:splashTextIn .9s ease .6s both;}
 .splash-bar{width:200px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-bottom:10px;}
-.splash-fill{height:100%;background:linear-gradient(90deg,#FF6F00,#FF8F00,#FFC107,#FFD700,#FFF8DC,#FFD700,#FFC107);background-size:200% 100%;border-radius:2px;animation:splashLoad 2.2s cubic-bezier(.4,0,.2,1) forwards,shimmer 1.5s linear infinite;box-shadow:0 0 16px rgba(255,215,0,.6),0 0 32px rgba(255,193,7,.3);}
-@keyframes splashLoad{0%{width:0%;opacity:.5}30%{width:40%;opacity:1}70%{width:80%}95%{width:96%}100%{width:100%}}@keyframes shimmer{0%{background-position:200% 0}100%{background-position:-200% 0}}
+.splash-fill{height:100%;background:linear-gradient(90deg,#FF6F00,#FFC107,#FFD54F);border-radius:2px;animation:splashLoad 2s cubic-bezier(.4,0,.2,1) forwards;box-shadow:0 0 12px rgba(255,193,7,.5);}
+@keyframes splashLoad{0%{width:0%;opacity:.5}30%{width:40%;opacity:1}70%{width:80%}95%{width:96%}100%{width:100%}}
 .splash-status{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;font-family:'Space Mono',monospace;text-align:center;}
 /* نقاط المعالجة */
 .splash-dots{display:inline-flex;gap:4px;margin-right:6px;}
@@ -519,7 +520,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .splash-dot:nth-child(3){animation-delay:.4s;}
 @keyframes dotPulse{0%,100%{opacity:.3;transform:scale(.8);}50%{opacity:1;transform:scale(1.2);}}
 /* شارة الإصدار */
-.splash-version{position:absolute;bottom:40px;font-size:9px;color:rgba(255,210,80,.35);letter-spacing:3px;font-family:'Space Mono',monospace;text-transform:uppercase;}
+.splash-version{position:absolute;bottom:40px;font-size:10px;color:rgba(255,255,255,.2);letter-spacing:2px;font-family:'Space Mono',monospace;}
 /* ══ FIELD MODE ══ */
 .field-btn{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:.2s;text-align:center;}
 .field-btn:active{transform:scale(.95);}
@@ -680,7 +681,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .login-footer span{color:var(--gold);font-weight:700;}
 
 /* ═══════════ AI ANALYSIS ═══════════ */
-.ai-chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 180px);min-height:340px;}
+.ai-chat-wrap{display:flex;flex-direction:column;height:calc(100vh - 160px);min-height:340px;}
 .ai-messages{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;background:var(--bg3);border-radius:var(--radius);border:1px solid var(--border);margin-bottom:10px;}
 .ai-msg{max-width:88%;padding:11px 13px;border-radius:14px;font-size:12px;line-height:1.7;animation:fadeIn .25s ease;}
 .ai-msg.user{background:linear-gradient(135deg,rgba(255,193,7,.18),rgba(255,143,0,.1));border:1px solid rgba(255,193,7,.2);align-self:flex-end;border-bottom-right-radius:4px;}
@@ -946,7 +947,7 @@ body{top:0!important;}
   <!-- الاسم -->
   <div class="splash-brand">
     <div class="splash-title">NectarOS</div>
-    <div class="splash-sub">✦ Beekeeping Intelligence ✦</div>
+    <div class="splash-sub">Beekeeping Intelligence</div>
   </div>
   <!-- التحميل -->
   <div class="splash-loader">
@@ -7373,34 +7374,40 @@ async function validateSerial(serial, deviceFP){
 function getLicense(){ try{return JSON.parse(localStorage.getItem('_nec_lic')||'null');}catch{return null;} }
 function setLicense(lic){ localStorage.setItem('_nec_lic', JSON.stringify(lic)); }
 
-// ══ تفعيل المالك — الطريقة الوحيدة المضمونة 100% ══
-// السيريال ثابت ومُحفظ مباشرة — لا يعتمد على fingerprint
-const OWNER_LICENSE = {active:true, serial:'B9DB-4AFF-03A0-486C', owner:true, expires:'2099-12-31'};
-
+// ══ تفعيل دائم للمطوّر — يعمل على أي جهاز بعد إدخال PIN مرة واحدة ══
 (function _seedOwnerAccess(){
   try{
-    // إذا مفعّل مسبقاً بأي طريقة — تأكد من وجود السيريال
-    if(localStorage.getItem('_nec_owner_verified')==='1'){
-      // تأكد من وجود الـ license
-      const lic = getLicense();
+    const lic = getLicense();
+    const verified = localStorage.getItem('_nec_owner_verified') === '1';
+    
+    // إذا مفعّل بالفعل — تأكد من وجود الـ license
+    if(verified){
       if(!lic || !lic.active){
-        setLicense(OWNER_LICENSE);
+        setLicense({active:true,serial:'B9DB-4AFF-03A0-486C',owner:true,expires:'2099-12-31'});
       }
       return;
     }
-    // فحص: هل السيريال محفوظ من قبل؟
-    const lic = getLicense();
-    if(lic && lic.serial && lic.serial.replace(/-/g,'').toUpperCase() === OWNER_SERIAL){
+    
+    // إذا السيريال الصحيح محفوظ — فعّل
+    if(lic && lic.serial && lic.serial.replace(/-/g,'').toUpperCase() === 'B9DB4AFF03A0486C'){
       localStorage.setItem('_nec_owner_verified','1');
       return;
     }
-    // فحص الـ fingerprint المخزّن (إن وُجد)
+    
+    // إذا owner:true محفوظ — فعّل
+    if(lic && lic.owner === true){
+      localStorage.setItem('_nec_owner_verified','1');
+      return;
+    }
+    
+    // فحص الـ fingerprint المخزّن (إن وُجد من جلسة سابقة)
     const fp = localStorage.getItem('_nec_dfp');
     if(fp){
-      const did = fp.slice(0,4).toUpperCase()+'-'+fp.slice(4,8).toUpperCase()+'-'+fp.slice(8,12).toUpperCase()+'-'+fp.slice(12,16).toUpperCase();
-      if(did === OWNER_DEVICE_ID){
+      const did = fp.slice(0,4).toUpperCase()+'-'+fp.slice(4,8).toUpperCase()+
+                  '-'+fp.slice(8,12).toUpperCase()+'-'+fp.slice(12,16).toUpperCase();
+      if(did === 'D028-6040-0FC3-4586'){
         localStorage.setItem('_nec_owner_verified','1');
-        setLicense(OWNER_LICENSE);
+        setLicense({active:true,serial:'B9DB-4AFF-03A0-486C',owner:true,expires:'2099-12-31'});
       }
     }
   }catch(e){}
@@ -7429,24 +7436,27 @@ function isTrialExtended(){ return getTrialInfo().extended; }
 // ── Main License Check ─────────────────────────────
 let _deviceFP = null;
 async function checkLicense(){
-  // 0. سيريال المالك مخزّن — دخول فوري بدون حساب fingerprint
+  // 0. فحص owner — أسرع مسار ممكن
   const existLic=getLicense();
-  if(existLic && existLic.owner === true){
-    localStorage.setItem('_nec_owner_verified','1');
-    _deviceFP = localStorage.getItem('_nec_dfp') || 'owner';
+  const _ownerV = localStorage.getItem('_nec_owner_verified');
+  
+  // أسرع فحص: verified flag موجود
+  if(_ownerV==='1'){
+    _deviceFP = localStorage.getItem('_nec_dfp') || '';
     hideLicenseScreen();
-    setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);
+    setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},50);
     return;
   }
-  if(existLic&&existLic.serial&&existLic.serial.replace(/-/g,'').toUpperCase()===OWNER_SERIAL){
+  // فحص license مخزّن: owner:true أو serial صحيح
+  if(existLic && (existLic.owner===true || 
+    (existLic.serial && existLic.serial.replace(/-/g,'').toUpperCase()===OWNER_SERIAL))){
     localStorage.setItem('_nec_owner_verified','1');
-    setLicense({...existLic, owner:true});
-    _deviceFP = localStorage.getItem('_nec_dfp') || 'owner';
+    _deviceFP = localStorage.getItem('_nec_dfp') || '';
     hideLicenseScreen();
-    setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);
+    setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},50);
     return;
   }
-  // 1. مفعّل مسبقاً
+  // 1. حساب fingerprint للمستخدمين العاديين
   if(localStorage.getItem('_nec_owner_verified')=== '1'){
     _deviceFP=await getDeviceFingerprint();
     hideLicenseScreen();
@@ -7803,6 +7813,8 @@ function _ownerPinSubmit(){
   const pin=inp?.value||'';
   if(pin==='NectarBee2025'){
     localStorage.setItem('_nec_owner_verified','1');
+    // حفظ الـ license كطبقة إضافية — checkLicense يجده فوراً
+    setLicense({active:true,serial:'B9DB-4AFF-03A0-486C',owner:true,expires:'2099-12-31'});
     closeOwnerPin();hideLicenseScreen();
     setTimeout(()=>{
       const d=document.getElementById('dev-panel');if(d)d.style.display='block';
@@ -8823,6 +8835,11 @@ function delLoss(id){confirm2('حذف السجل؟','',()=>{DB.set('colony_losse
    🔐 SECURITY & PRIVACY
 ══════════════════════════════════════════════════ */
 function renderSecurityPage(){
+  // تفعيل لوحة المطوّر للمالك
+  if(localStorage.getItem('_nec_owner_verified')==='1'){
+    const dp=document.getElementById('dev-panel');
+    if(dp) dp.style.display='block';
+  }
   // ── تفعيل لوحة المطوّر إذا كان هذا جهاز المالك ──
   if (localStorage.getItem('_nec_owner_verified') === '1' || 
       (typeof _deviceFP !== 'undefined' && _deviceFP && 
