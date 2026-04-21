@@ -10,47 +10,35 @@
 <meta name="description" content="نظام إدارة المناحل الذكي">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFD54F'/%3E%3Cstop offset='100%25' stop-color='%23FF6F00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='256,10 480,138 480,374 256,502 32,374 32,138' fill='url(%23g)'/%3E%3Cellipse cx='256' cy='245' rx='92' ry='112' fill='%23222'/%3E%3Crect x='214' y='205' width='84' height='16' rx='8' fill='%23FFD54F'/%3E%3Crect x='214' y='237' width='84' height='16' rx='8' fill='%23FFD54F'/%3E%3Crect x='214' y='269' width='84' height='16' rx='8' fill='%23FFD54F'/%3E%3C/svg%3E">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFD54F'/%3E%3Cstop offset='100%25' stop-color='%23FF6F00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='50,2 93,26 93,74 50,98 7,74 7,26' fill='url(%23g)'/%3E%3Cellipse cx='50' cy='48' rx='18' ry='22' fill='%23222'/%3E%3Crect x='39' y='40' width='22' height='4' rx='2' fill='%23FFD54F'/%3E%3Crect x='39' y='47' width='22' height='4' rx='2' fill='%23FFD54F'/%3E%3Crect x='39' y='54' width='22' height='4' rx='2' fill='%23FFD54F'/%3E%3C/svg%3E">
-<link rel="manifest" href="manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="NectarOS">
 <meta name="msapplication-TileColor" content="#FFC107">
 <script>
-/* ══ INLINE MANIFEST — يعمل بدون ملف خارجي مع كل المتصفحات ══ */
+/* ══ INLINE MANIFEST ══ */
 (function(){
-  const icons=[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpolygon points='256,10 480,138 480,374 256,502 32,374 32,138' fill='%23FFC107'/%3E%3Cellipse cx='256' cy='245' rx='92' ry='112' fill='%23222'/%3E%3Crect x='214' y='205' width='84' height='16' rx='8' fill='%23FFC107'/%3E%3Crect x='214' y='237' width='84' height='16' rx='8' fill='%23FFC107'/%3E%3Crect x='214' y='269' width='84' height='16' rx='8' fill='%23FFC107'/%3E%3C/svg%3E",sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"},{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cpolygon points='96,4 180,52 180,140 96,188 12,140 12,52' fill='%23FFC107'/%3E%3Cellipse cx='96' cy='93' rx='35' ry='43' fill='%23222'/%3E%3Crect x='79' y='78' width='34' height='7' rx='3' fill='%23FFC107'/%3E%3Crect x='79' y='91' width='34' height='7' rx='3' fill='%23FFC107'/%3E%3Crect x='79' y='104' width='34' height='7' rx='3' fill='%23FFC107'/%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml",purpose:"any maskable"}];
-  const m={name:'NectarOS — نظام إدارة المناحل',short_name:'NectarOS',description:'نظام إدارة المناحل الذكي',start_url:'./index.html',scope:'.',display:'standalone',orientation:'portrait-primary',background_color:'#0d0d0d',theme_color:'#FFC107',lang:'ar',dir:'rtl',icons};
-  try{
-    const b=new Blob([JSON.stringify(m)],{type:'application/manifest+json'});
-    document.querySelector('link[rel="manifest"]').href=URL.createObjectURL(b);
-  }catch(e){}
+  const icons=[
+    {src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpolygon points='256,10 480,138 480,374 256,502 32,374 32,138' fill='%23FFC107'/%3E%3Cellipse cx='256' cy='245' rx='92' ry='112' fill='%23222'/%3E%3Crect x='214' y='205' width='84' height='16' rx='8' fill='%23FFC107'/%3E%3Crect x='214' y='237' width='84' height='16' rx='8' fill='%23FFC107'/%3E%3Crect x='214' y='269' width='84' height='16' rx='8' fill='%23FFC107'/%3E%3C/svg%3E",sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"},
+    {src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cpolygon points='96,4 180,52 180,140 96,188 12,140 12,52' fill='%23FFC107'/%3E%3Cellipse cx='96' cy='93' rx='35' ry='43' fill='%23222'/%3E%3Crect x='79' y='78' width='34' height='7' rx='3' fill='%23FFC107'/%3E%3Crect x='79' y='91' width='34' height='7' rx='3' fill='%23FFC107'/%3E%3Crect x='79' y='104' width='34' height='7' rx='3' fill='%23FFC107'/%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml",purpose:"any maskable"}
+  ];
+  const m={name:"NectarOS — نظام إدارة المناحل",short_name:"NectarOS",description:"نظام إدارة المناحل الذكي",start_url:"./index.html",scope:".",display:"standalone",orientation:"portrait-primary",background_color:"#0d0d0d",theme_color:"#FFC107",lang:"ar",dir:"rtl",icons};
+  try{const b=new Blob([JSON.stringify(m)],{type:"application/manifest+json"});const l=document.createElement("link");l.rel="manifest";l.href=URL.createObjectURL(b);document.head.appendChild(l);}catch(e){}
 })();
-
-/* ══ INLINE SERVICE WORKER — مُضمَّن كـ Blob بدون sw.js خارجي ══ */
+/* ══ INLINE SERVICE WORKER ══ */
 (function(){
-  if(!('serviceWorker' in navigator)) return;
-  const SW=`
-const CACHE='nectaros-v5';
-const CORE=['./'];
-self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
-self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
-self.addEventListener('fetch',e=>{
-  if(e.request.method!=='GET')return;
-  e.respondWith(fetch(e.request).then(r=>{if(r&&r.status===200){const c=r.clone();caches.open(CACHE).then(ca=>ca.put(e.request,c));}return r;}).catch(()=>caches.match(e.request)));
-});
-self.addEventListener('message',e=>{if(e.data==='SKIP_WAITING')self.skipWaiting();});
-`;
+  if(!("serviceWorker"in navigator))return;
+  const SW=`const CACHE="nectaros-v5";const CORE=["./"];
+self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
+self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;e.respondWith(fetch(e.request).then(r=>{if(r&&r.status===200){const c=r.clone();caches.open(CACHE).then(ca=>ca.put(e.request,c));}return r;}).catch(()=>caches.match(e.request)));});
+self.addEventListener("message",e=>{if(e.data==="SKIP_WAITING")self.skipWaiting();});`;
   try{
-    const b=new Blob([SW],{type:'text/javascript'});
+    const b=new Blob([SW],{type:"text/javascript"});
     const url=URL.createObjectURL(b);
-    navigator.serviceWorker.register(url,{scope:'./'}).then(reg=>{
-      reg.addEventListener('updatefound',()=>{
-        const nw=reg.installing;
-        if(!nw)return;
-        nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller)_showUpdateBanner(reg);});
-      });
+    navigator.serviceWorker.register(url,{scope:"./"}).then(reg=>{
+      reg.addEventListener("updatefound",()=>{const nw=reg.installing;if(!nw)return;nw.addEventListener("statechange",()=>{if(nw.state==="installed"&&navigator.serviceWorker.controller)_showUpdateBanner(reg);});});
     }).catch(()=>{});
     let _ref=false;
-    navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!_ref){_ref=true;location.reload();}});
+    navigator.serviceWorker.addEventListener("controllerchange",()=>{if(!_ref){_ref=true;location.reload();}});
   }catch(e){}
 })();
 </script>
@@ -858,9 +846,32 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .section-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin:14px 0 8px;display:flex;align-items:center;gap:7px;}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
+/* ── Google Translate Panel ── */
+#gt-panel{display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--gold3);border-radius:12px;padding:14px 16px;z-index:5000;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:260px;text-align:center;direction:rtl;}
+#gt-panel.open{display:block;}
+.gt-lang-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;}
+.gt-lang-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 5px;color:var(--text);font-family:'Cairo',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:.18s;}
+.gt-lang-btn:hover,.gt-lang-btn.gt-act{border-color:var(--gold);color:var(--gold);background:rgba(255,193,7,.08);}
+.goog-te-banner-frame,.goog-te-balloon-frame{display:none!important;}
+body{top:0!important;}
+
 </style>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 </head>
 <body>
+<div id="google_translate_element" style="display:none;"></div>
+<div id="gt-panel">
+  <div style="font-size:12px;font-weight:700;color:var(--gold);">🌐 ترجمة الصفحة</div>
+  <div class="gt-lang-grid">
+    <button class="gt-lang-btn gt-act" onclick="gtLang('ar')">🇩🇿 عربي</button>
+    <button class="gt-lang-btn" onclick="gtLang('fr')">🇫🇷 Français</button>
+    <button class="gt-lang-btn" onclick="gtLang('en')">🇬🇧 English</button>
+    <button class="gt-lang-btn" onclick="gtLang('tr')">🇹🇷 Türkçe</button>
+    <button class="gt-lang-btn" onclick="gtLang('es')">🇪🇸 Español</button>
+    <button class="gt-lang-btn" onclick="gtLang('de')">🇩🇪 Deutsch</button>
+  </div>
+  <button onclick="document.getElementById('gt-panel').classList.remove('open')" style="margin-top:10px;background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;">✕ إغلاق</button>
+</div>
 
 <!-- ══ SPLASH SCREEN ══ -->
 <div id="splash">
@@ -939,7 +950,10 @@ tr:hover td{background:rgba(255,255,255,.02);}
       </div>
     </div>
 
-    <div class="login-footer" style="margin-top:16px;">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+    <div class="login-footer" style="margin-top:16px;position:relative;cursor:default;" onclick="_ownerTap()">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+    <div id="owner-dev-btn-wrap" style="margin-top:8px;text-align:center;display:none;">
+      <button id="owner-dev-btn" onclick="openOwnerPin()" style="background:transparent;border:1px solid #333;border-radius:8px;padding:4px 14px;color:#555;font-size:10px;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s;" onmouseover="this.style.borderColor='#FFC107';this.style.color='#FFC107'" onmouseout="this.style.borderColor='#333';this.style.color='#555'">🔑 مطوّر</button>
+    </div>
   </div>
 </div>
 
@@ -950,12 +964,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="login-tagline">Smart Beekeeping Platform</div>
   </div>
   <div class="login-card">
-    <div class="login-section-title" id="lang-label">اختر اللغة · Choose Language</div>
-    <div class="login-lang-row">
-      <button class="lang-btn active" onclick="setLang('ar')" id="lb-ar">🇩🇿 عربي</button>
-      <button class="lang-btn" onclick="setLang('fr')" id="lb-fr">🇫🇷 Français</button>
-      <button class="lang-btn" onclick="setLang('en')" id="lb-en">🇬🇧 English</button>
-    </div>
+    <div class="login-section-title">🐝 نظام إدارة المناحل الذكي</div>
     <div class="form-group"><label class="form-label" id="lbl-user">اسم المستخدم</label>
       <input id="login-user" class="form-control" placeholder="admin" autocomplete="username">
     </div>
@@ -969,18 +978,24 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
   </div>
   <div class="login-footer">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
-    <!-- hidden owner unlock: tap 7x on version -->
-    <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:8px;left:50%;transform:translateX(-50%);width:80px;height:18px;cursor:default;opacity:0;"></div>
-    <div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px;">
-      <div style="color:#FFC107;font-size:14px;font-weight:700;">🔑 كود المطوّر</div>
-      <input id="owner-pin-input" type="password" maxlength="12"
-        style="background:#1e1e1e;border:1px solid #FFC107;border-radius:8px;padding:10px 16px;color:#fff;font-size:18px;letter-spacing:4px;text-align:center;outline:none;width:200px;"
-        placeholder="••••••••" onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
-      <div style="display:flex;gap:8px;">
-        <button onclick="_ownerPinSubmit()" style="background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:8px;padding:8px 20px;font-weight:700;cursor:pointer;">دخول</button>
-        <button onclick="document.getElementById('owner-pin-box').style.display='none'" style="background:#2e2e2e;color:#aaa;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;">إلغاء</button>
-      </div>
+    <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:0;left:0;right:0;height:24px;cursor:default;opacity:0;"></div>
+</div>
+
+<!-- ══ OWNER PIN BOX — فوق كل الشاشات — z-index:999999 ══ -->
+<div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:999999;align-items:center;justify-content:center;flex-direction:column;direction:rtl;">
+  <div style="background:#1a1a1a;border:2px solid #FFC107;border-radius:18px;padding:28px 24px;width:290px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 0 60px rgba(255,193,7,.25);">
+    <div style="font-size:30px;">🔑</div>
+    <div style="color:#FFC107;font-size:14px;font-weight:700;">كود المطوّر</div>
+    <input id="owner-pin-input" type="password" maxlength="20"
+      style="background:#111;border:2px solid #444;border-radius:10px;padding:12px;color:#fff;font-size:22px;letter-spacing:6px;text-align:center;outline:none;width:100%;font-family:monospace;transition:.2s;"
+      placeholder="••••••••••" onfocus="this.style.borderColor='#FFC107'" onblur="this.style.borderColor='#444'"
+      onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
+    <div id="owner-pin-err" style="color:#f44336;font-size:11px;min-height:16px;font-weight:600;"></div>
+    <div style="display:flex;gap:10px;width:100%;">
+      <button onclick="_ownerPinSubmit()" style="flex:1;background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:10px;padding:11px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Cairo',sans-serif;">دخول ✓</button>
+      <button onclick="closeOwnerPin()" style="flex:1;background:#2a2a2a;color:#aaa;border:1px solid #444;border-radius:10px;padding:11px;cursor:pointer;font-size:13px;font-family:'Cairo',sans-serif;">إلغاء</button>
     </div>
+  </div>
 </div>
 
 <div id="app">
@@ -1085,6 +1100,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div id="alert-badge" class="badge br" style="display:none;">⚠️ <span id="alert-num">0</span></div>
       <button class="btn-icon" onclick="go('ai')" title="الذكاء الاصطناعي" style="color:var(--gold);">🤖</button>
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+      <button class="btn-icon" id="gt-btn" onclick="document.getElementById('gt-panel').classList.toggle('open')" title="ترجمة الصفحة" style="color:var(--blue);">🌐</button>
       <button class="btn-icon" onclick="exportData()" title="تصدير">📤</button>
       <button class="btn-icon" onclick="exportPDF()" title="PDF" style="color:var(--red);">📄</button>
       <button class="btn-icon" onclick="triggerImport()">📥</button>
@@ -1354,18 +1370,18 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div id="smart-reminder-result" style="margin-top:8px;font-size:11px;"></div>
       </div>
 
-      <!-- روابط سريعة للأمان والنسخ الاحتياطي -->
+      <!-- روابط سريعة -->
       <div class="card mt10" style="border-color:rgba(255,193,7,.2);">
-        <div class="card-header"><span class="card-title">🔐 الأمان والنسخ الاحتياطي</span></div>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <button class="btn btn-secondary btn-sm" onclick="go('security')">🔒 تغيير كلمة المرور والتشفير</button>
-          <button class="btn btn-secondary btn-sm" onclick="autoBackup()">💾 نسخ احتياطي الآن</button>
-          <button class="btn btn-secondary btn-sm" onclick="exportData()">📤 تصدير JSON</button>
+        <div class="card-header"><span class="card-title">💾 النسخ الاحتياطي السريع</span></div>
+        <div style="display:flex;gap:7px;flex-wrap:wrap;">
+          <button class="btn btn-primary btn-sm" onclick="autoBackup()">💾 نسخ احتياطي</button>
+          <button class="btn btn-secondary btn-sm" onclick="exportData()">📤 تصدير</button>
           <button class="btn btn-secondary btn-sm" onclick="triggerImport()">📥 استيراد</button>
           <button class="btn btn-danger btn-sm" onclick="confirmClear()">🗑️ حذف الكل</button>
         </div>
         <div style="margin-top:6px;font-size:10px;color:var(--text3);" id="ds-info"></div>
         <div style="margin-top:2px;font-size:10px;color:var(--text3);" id="last-backup-info"></div>
+        <button class="btn btn-secondary btn-sm" style="margin-top:8px;" onclick="go('security')">🔐 الأمان وكلمة المرور ←</button>
       </div>
     </div>
 
@@ -1811,6 +1827,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
           </div>
         </div>
       </div>
+      <div class="card">
         <div class="card-header"><span class="card-title">🛡️ حالة الأمان</span></div>
         <div id="security-status-list"></div>
       </div>
@@ -3687,7 +3704,7 @@ function delQueen(id){confirm2('حذف','',()=>{DB.set('queens',gQ().filter(q=>q
 function openCertModal(){
   rebuildSels();
   const s=gSet();
-  const serial='NC-'+Date.now().toString(36).toUpperCase().slice(-8);
+  const serial='CERT-'+Date.now().toString(36).toUpperCase().slice(-8);
   document.getElementById('cert-fn').textContent=s.name||'---';
   document.getElementById('cert-on').textContent=s.owner||'---';
   document.getElementById('cert-farm-name').textContent=s.name||'---';
@@ -3701,13 +3718,12 @@ function openCertModal(){
   document.getElementById('cert-st').textContent='جيدة';
   document.getElementById('cert-varroa').value='';
   document.getElementById('cert-api').value='';
-  // افتح المودال أولاً — ثم ارسم الباركود بعد ظهور العناصر
+  // افتح المودال أولاً ثم ارسم — يضمن ظهور SVG
   om('mod-cert');
-  // تأخير كافٍ لضمان أن المودال ظاهر والـ SVG قابل للرسم
   setTimeout(()=>{
     _renderCertBarcode(s.name||'NECTAR-FARM');
-    _renderCertMainBarcode(serial, s.name||'NECTAR', today(), gH().length);
-  }, 350);
+    _renderCertMainBarcode(serial,s.name||'NECTAR',today(),gH().length);
+  },350);
 }
 function updateCertPreview(){
   const apiId=document.getElementById('cert-api').value;
@@ -3724,33 +3740,28 @@ function updateCertPreview(){
       document.getElementById('cert-fn').textContent=ap.name;
       if(ap.lat&&ap.lng){document.getElementById('cert-coords').textContent=Number(ap.lat).toFixed(4)+', '+Number(ap.lng).toFixed(4);}
       else{document.getElementById('cert-coords').textContent=ap.location||'—';}
-      // Secondary barcode: apiary info (ASCII فقط)
       const barcodeData=(ap.id+'-'+ap.name+'-'+(s.owner||'')+'-'+today()).replace(/[^\x00-\x7F]/g,'').slice(0,50);
-      setTimeout(()=>{ _renderCertBarcode(barcodeData); _renderCertMainBarcode(serial, ap.name, today(), hc); }, 200);
+      setTimeout(()=>{_renderCertBarcode(barcodeData);_renderCertMainBarcode(serial,ap.name,today(),hc);},200);
     }
   }
   if(varroa)document.getElementById('cert-vv').textContent=varroa+'%';
   else document.getElementById('cert-vv').textContent='أقل من 2%';
 }
 function _renderCertBarcode(data){
-  // تنظيف البيانات: CODE128 يقبل ASCII فقط — نحذف الأحرف العربية
-  const clean = data.replace(/[^\x00-\x7F]/g,'').replace(/\|/g,'-').slice(0,50) || 'NECTAR-FARM';
+  // CODE128 يقبل ASCII فقط — تنظيف الأحرف العربية
+  const clean=(data||'NECTAR').replace(/[^\x00-\x7F]/g,'').replace(/[|]/g,'-').slice(0,50)||'NECTAR-FARM';
   setTimeout(()=>{
     const el=document.getElementById('cert-barcode');
-    if(!el||typeof JsBarcode==='undefined') return;
+    if(!el||typeof JsBarcode==='undefined')return;
     try{
-      JsBarcode('#cert-barcode', clean, {
-        format:'CODE128', width:1.2, height:44, displayValue:false,
-        background:'#ffffff', lineColor:'#000000', margin:3
-      });
+      JsBarcode('#cert-barcode',clean,{format:'CODE128',width:1.2,height:44,displayValue:false,background:'#ffffff',lineColor:'#000000',margin:3});
       el.style.display='block';
     }catch(e){
-      // fallback: نص فقط
       el.style.display='none';
-      const wrap=document.getElementById('cert-bc-wrap');
-      if(wrap) wrap.innerHTML=`<div style="font-family:monospace;font-size:9px;padding:4px;color:#333;">${clean}</div>`;
+      const w=document.getElementById('cert-bc-wrap');
+      if(w)w.innerHTML=`<div style="font-family:monospace;font-size:9px;padding:4px;color:#333;">${clean}</div>`;
     }
-  }, 400);
+  },400);
 }
 function saveCert(){
   const list=gCe();
@@ -4859,16 +4870,13 @@ const T={
 };
 let currentLang='ar';
 function applyLang(l){
-  const s=T[l]||T['ar'];
-  document.documentElement.lang=l;
-  // Apply all data-i18n elements in the full page
+  const s=T['ar'];
+  document.documentElement.lang='ar';
+  document.documentElement.dir='rtl';
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key=el.getAttribute('data-i18n');
     if(s[key]!==undefined)el.textContent=s[key];
   });
-  // Direction: sidebar and main stay RTL always (Arabic content), only login flips
-  document.getElementById('login-screen').style.direction=s.dir;
-  // TITLES update
   if(typeof TITLES!=='undefined'){
     TITLES.dashboard=s.nav_dashboard;TITLES.apiaries=s.nav_apiaries;TITLES.map=s.nav_map;
     TITLES.hives=s.nav_hives;TITLES.calendar=s.nav_calendar;TITLES.inspections=s.nav_inspections;
@@ -4879,23 +4887,10 @@ function applyLang(l){
     TITLES.settings=s.nav_settings;TITLES.ai=s.nav_ai;TITLES.contact=s.contact_title;
     TITLES.advanced=s.nav_advanced;
   }
-  // Update topbar active title
   const activePg=document.querySelector('.nav-item.active')?.id?.replace('nav-','');
   if(activePg&&TITLES[activePg])document.getElementById('pg-title').textContent=TITLES[activePg];
 }
-function setLang(l){
-  currentLang=l;
-  ['lb-ar','lb-fr','lb-en'].forEach(id=>document.getElementById(id)?.classList.remove('active'));
-  document.getElementById('lb-'+l)?.classList.add('active');
-  const s=T[l];
-  document.getElementById('lbl-user').textContent=s.lbl_user;
-  document.getElementById('lbl-pass').textContent=s.lbl_pass;
-  document.getElementById('login-btn').textContent=s.login_btn;
-  document.getElementById('lang-label').textContent=s.lang_label;
-  document.getElementById('login-err').textContent='';
-  document.getElementById('login-screen').style.direction=s.dir;
-  applyLang(l);
-}
+function setLang(l){ currentLang='ar'; applyLang('ar'); }
 function doLogin(){
   const u=document.getElementById('login-user').value.trim();
   const p=document.getElementById('login-pass').value;
@@ -7125,130 +7120,72 @@ async function sbQuery(method, path, body) {
   } catch(e) { clearTimeout(timer); throw e; }
 }
 
-// ── PWA Install — دعم شامل لكل المتصفحات ─────────────
-let _deferredPrompt = null;
+// ── PWA Install — دعم شامل لكل المتصفحات ──────────
+let _deferredPrompt=null;
+const _ua=navigator.userAgent;
+const _isIOS=/iPad|iPhone|iPod/.test(_ua)&&!window.MSStream;
+const _isAndroid=/Android/.test(_ua);
+const _isSamsung=/SamsungBrowser/.test(_ua);
+const _isFirefox=/Firefox/.test(_ua)&&!/Seamonkey/.test(_ua);
+const _isEdge=/Edg\//.test(_ua);
+const _isOpera=/OPR\/|Opera/.test(_ua);
+const _isSafari=/^((?!chrome|android).)*safari/i.test(_ua);
+const _isStandalone=window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
 
-/* كشف المتصفح والمنصة */
-const _ua = navigator.userAgent;
-const _isIOS        = /iPad|iPhone|iPod/.test(_ua) && !window.MSStream;
-const _isAndroid    = /Android/.test(_ua);
-const _isSamsung    = /SamsungBrowser/.test(_ua);
-const _isFirefox    = /Firefox/.test(_ua) && !/Seamonkey/.test(_ua);
-const _isEdge       = /Edg\//.test(_ua);
-const _isOpera      = /OPR\/|Opera/.test(_ua);
-const _isMiui       = /MiuiBrowser/.test(_ua);
-const _isHuawei     = /HuaweiBrowser/.test(_ua);
-const _isSafari     = /^((?!chrome|android).)*safari/i.test(_ua);
-const _isChrome     = /Chrome/.test(_ua) && !/Chromium/.test(_ua) && !_isEdge && !_isOpera && !_isSamsung;
-const _isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();_deferredPrompt=e;_showPWABtn();});
+setTimeout(_showPWABtn,1500);
 
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault();
-  _deferredPrompt = e;
-  _showPWABtn();
-});
-
-/* إظهار زر التثبيت في كل الحالات */
-setTimeout(_showPWABtn, 1500);
-
-function _showPWABtn() {
-  if (_isStandalone) return;
-  const btn = document.getElementById('pwa-topbar-btn');
-  if (btn) btn.classList.add('visible');
+function _showPWABtn(){
+  if(_isStandalone)return;
+  const btn=document.getElementById('pwa-topbar-btn');
+  if(btn)btn.classList.add('visible');
 }
 
-async function installPWA() {
-  if (_isStandalone) { toast('✅ التطبيق مثبّت مسبقاً', 'success'); return; }
-
-  /* Chrome / Edge / Samsung / Opera / Huawei — يدعمون beforeinstallprompt */
-  if (_deferredPrompt) {
-    const btn = document.getElementById('pwa-topbar-btn');
-    if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
-    try {
+async function installPWA(){
+  if(_isStandalone){toast('✅ التطبيق مثبّت مسبقاً','success');return;}
+  if(_deferredPrompt){
+    const btn=document.getElementById('pwa-topbar-btn');
+    if(btn){btn.textContent='⏳';btn.disabled=true;}
+    try{
       await _deferredPrompt.prompt();
-      const { outcome } = await _deferredPrompt.userChoice;
-      if (outcome === 'accepted') {
-        toast('🎉 تم تثبيت NectarOS!', 'success');
-      }
-    } catch(e) {}
-    if (btn) { btn.textContent = '📲'; btn.disabled = false; }
-    _deferredPrompt = null;
-    return;
+      const{outcome}=await _deferredPrompt.userChoice;
+      if(outcome==='accepted')toast('🎉 تم تثبيت NectarOS!','success');
+    }catch(e){}
+    if(btn){btn.textContent='📲';btn.disabled=false;}
+    _deferredPrompt=null;return;
   }
-
-  /* افتح مودال تعليمات التثبيت حسب المتصفح */
   _showInstallGuide();
 }
 
-function _showInstallGuide() {
-  let steps = [], browser = '';
-
-  if (_isIOS && _isSafari) {
-    browser = '🍎 Safari — iPhone / iPad';
-    steps = ['1️⃣ اضغط زر المشاركة <b>□↑</b> في أسفل الشاشة','2️⃣ اختر <b>"إضافة إلى الشاشة الرئيسية"</b>','3️⃣ اضغط <b>"إضافة"</b> في الأعلى'];
-  } else if (_isIOS) {
-    browser = '🍎 iOS — Safari مطلوب';
-    steps = ['⚠️ افتح الصفحة في <b>Safari</b> (ليس Chrome أو Firefox)','ثم اضغط □↑ ← "إضافة إلى الشاشة الرئيسية"'];
-  } else if (_isSamsung) {
-    browser = '📱 Samsung Internet';
-    steps = ['1️⃣ اضغط القائمة <b>⋮</b> في أسفل الشاشة','2️⃣ اختر <b>"إضافة صفحة إلى"</b>','3️⃣ اختر <b>"الشاشة الرئيسية"</b>'];
-  } else if (_isFirefox && _isAndroid) {
-    browser = '🦊 Firefox Android';
-    steps = ['1️⃣ اضغط القائمة <b>⋮</b> في الزاوية','2️⃣ اختر <b>"تثبيت"</b> أو <b>"إضافة إلى الشاشة الرئيسية"</b>'];
-  } else if (_isFirefox) {
-    browser = '🦊 Firefox Desktop';
-    steps = ['1️⃣ انظر لأيقونة <b>🏠+</b> في شريط العنوان','2️⃣ اضغطها واختر <b>"ثبّت"</b>','ملاحظة: يجب تفعيل PWA في about:config'];
-  } else if (_isEdge) {
-    browser = '🌐 Microsoft Edge';
-    steps = ['1️⃣ اضغط القائمة <b>⋯</b> في الأعلى','2️⃣ اختر <b>"التطبيقات"</b>','3️⃣ اختر <b>"تثبيت هذا الموقع كتطبيق"</b>'];
-  } else if (_isOpera) {
-    browser = '🎭 Opera';
-    steps = ['1️⃣ اضغط أيقونة Opera في الأسفل','2️⃣ اختر <b>"الشاشة الرئيسية"</b>','3️⃣ اضغط <b>"إضافة"</b>'];
-  } else if (_isMiui) {
-    browser = '📱 Xiaomi Browser';
-    steps = ['1️⃣ اضغط القائمة <b>⋮</b>','2️⃣ اختر <b>"إضافة إلى الشاشة الرئيسية"</b>'];
-  } else if (_isHuawei) {
-    browser = '📱 Huawei Browser';
-    steps = ['1️⃣ اضغط القائمة <b>⋮</b>','2️⃣ اختر <b>"إضافة إلى الشاشة الرئيسية"</b>'];
-  } else if (_isChrome && _isAndroid) {
-    browser = '🟡 Chrome Android';
-    steps = ['1️⃣ اضغط القائمة <b>⋮</b> في الأعلى','2️⃣ اختر <b>"إضافة إلى الشاشة الرئيسية"</b>','3️⃣ اضغط <b>"إضافة"</b>'];
-  } else {
-    browser = '🌐 متصفحك';
-    steps = ['1️⃣ افتح قائمة المتصفح <b>⋮</b> أو <b>⋯</b>','2️⃣ ابحث عن <b>"إضافة إلى الشاشة الرئيسية"</b> أو <b>"تثبيت التطبيق"</b>'];
-  }
-
-  /* أنشئ مودال التعليمات */
-  const old = document.getElementById('_pwa_guide');
-  if (old) old.remove();
-  const d = document.createElement('div');
-  d.id = '_pwa_guide';
-  d.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999998;display:flex;align-items:center;justify-content:center;direction:rtl;padding:20px;';
-  d.innerHTML = `
-    <div style="background:#1a1a1a;border:2px solid #FFC107;border-radius:18px;padding:28px 24px;max-width:360px;width:100%;box-shadow:0 0 50px rgba(255,193,7,.2);">
-      <div style="text-align:center;margin-bottom:18px;">
-        <div style="font-size:36px;">📲</div>
-        <div style="color:#FFC107;font-weight:800;font-size:15px;margin-top:6px;">تثبيت NectarOS</div>
-        <div style="color:#888;font-size:11px;margin-top:4px;">${browser}</div>
-      </div>
-      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
-        ${steps.map(s=>`<div style="background:#252525;border-radius:10px;padding:11px 14px;font-size:12px;color:#e0e0e0;line-height:1.6;">${s}</div>`).join('')}
-      </div>
-      <button onclick="document.getElementById('_pwa_guide').remove()" style="width:100%;background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:10px;padding:12px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Cairo',sans-serif;">✓ فهمت</button>
-    </div>`;
+function _showInstallGuide(){
+  let steps=[],browser='';
+  if(_isIOS&&_isSafari){browser='🍎 Safari — iPhone/iPad';steps=['1️⃣ اضغط زر المشاركة <b>□↑</b> في أسفل الشاشة','2️⃣ اختر <b>"إضافة إلى الشاشة الرئيسية"</b>','3️⃣ اضغط <b>"إضافة"</b>'];}
+  else if(_isIOS){browser='🍎 iOS';steps=['⚠️ افتح الصفحة في <b>Safari</b> (ليس Chrome)','ثم: □↑ ← إضافة إلى الشاشة الرئيسية'];}
+  else if(_isSamsung){browser='📱 Samsung Internet';steps=['1️⃣ اضغط القائمة <b>⋮</b>','2️⃣ اختر <b>"إضافة صفحة إلى"</b>','3️⃣ اختر <b>"الشاشة الرئيسية"</b>'];}
+  else if(_isFirefox&&_isAndroid){browser='🦊 Firefox Android';steps=['1️⃣ اضغط القائمة <b>⋮</b>','2️⃣ اختر <b>"تثبيت"</b> أو <b>"إضافة إلى الشاشة الرئيسية"</b>'];}
+  else if(_isEdge){browser='🌐 Microsoft Edge';steps=['1️⃣ اضغط القائمة <b>⋯</b>','2️⃣ اختر <b>"التطبيقات"</b>','3️⃣ اختر <b>"تثبيت هذا الموقع كتطبيق"</b>'];}
+  else if(_isOpera){browser='🎭 Opera';steps=['1️⃣ اضغط أيقونة Opera','2️⃣ اختر <b>"الشاشة الرئيسية"</b>'];}
+  else{browser='🌐 متصفحك';steps=['1️⃣ افتح قائمة المتصفح <b>⋮</b>','2️⃣ ابحث عن <b>"إضافة إلى الشاشة الرئيسية"</b>'];}
+  const old=document.getElementById('_pwa_guide');if(old)old.remove();
+  const d=document.createElement('div');
+  d.id='_pwa_guide';
+  d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:999998;display:flex;align-items:center;justify-content:center;direction:rtl;padding:20px;';
+  d.innerHTML=`<div style="background:#1a1a1a;border:2px solid #FFC107;border-radius:18px;padding:26px 22px;max-width:340px;width:100%;box-shadow:0 0 50px rgba(255,193,7,.2);">
+    <div style="text-align:center;margin-bottom:16px;"><div style="font-size:34px;">📲</div><div style="color:#FFC107;font-weight:800;font-size:15px;margin-top:5px;">تثبيت NectarOS</div><div style="color:#888;font-size:11px;margin-top:3px;">${browser}</div></div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">${steps.map(s=>`<div style="background:#252525;border-radius:9px;padding:10px 13px;font-size:12px;color:#e0e0e0;line-height:1.6;">${s}</div>`).join('')}</div>
+    <button onclick="document.getElementById('_pwa_guide').remove()" style="width:100%;background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:10px;padding:11px;font-weight:700;font-size:13px;cursor:pointer;font-family:Cairo,sans-serif;">✓ فهمت</button>
+  </div>`;
   document.body.appendChild(d);
-  d.addEventListener('click', e => { if(e.target===d) d.remove(); });
+  d.addEventListener('click',e=>{if(e.target===d)d.remove();});
 }
 
-window.addEventListener('appinstalled', () => {
-  toast('🎉 تم تثبيت NectarOS بنجاح!', 'success');
-  const btn = document.getElementById('pwa-topbar-btn');
-  if (btn) btn.classList.remove('visible');
-  _deferredPrompt = null;
+window.addEventListener('appinstalled',()=>{
+  toast('🎉 تم تثبيت NectarOS بنجاح!','success');
+  const btn=document.getElementById('pwa-topbar-btn');
+  if(btn)btn.classList.remove('visible');
+  _deferredPrompt=null;
 });
-
-// ── Service Worker Registration ─────────────────────
-// السيرفس ووركر مُضمَّن الآن كـ Blob في الـ head — لا يحتاج sw.js خارجي
+// Service Worker مُضمَّن كـ Blob في الـ head
 
 function _showUpdateBanner(reg) {
   const old = document.getElementById('_update_banner');
@@ -7368,74 +7305,56 @@ function isTrialExtended(){ return getTrialInfo().extended; }
 // ── Main License Check ─────────────────────────────
 let _deviceFP = null;
 async function checkLicense(){
-  // ── 1. فحص مخزن أولاً (أسرع) ──────────────────────
-  if (localStorage.getItem('_nec_owner_verified') === '1') {
-    _deviceFP = await getDeviceFingerprint();
+  // 1. مفعّل مسبقاً
+  if(localStorage.getItem('_nec_owner_verified')=== '1'){
+    _deviceFP=await getDeviceFingerprint();
     hideLicenseScreen();
-    setTimeout(()=>{
-      const devPanel = document.getElementById('dev-panel');
-      if (devPanel) devPanel.style.display = 'block';
-    }, 100);
+    setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);
     return;
   }
-
-  // ── 2. احسب fingerprint جديد دائماً للمالك ──────────
-  const freshFP = await _computeFingerprint();
-  _deviceFP = freshFP;
-  // حدّث الكاش
-  localStorage.setItem('_nec_dfp', freshFP);
-
-  const _myDisplayId = getDeviceId(freshFP);
-  if (_myDisplayId.toUpperCase() === OWNER_DEVICE_ID.toUpperCase()) {
+  // 2. نستخدم getDeviceFingerprint (المخزّن) — يتطابق مع ما يظهر للمستخدم
+  _deviceFP=await getDeviceFingerprint();
+  if(getDeviceId(_deviceFP).toUpperCase()===OWNER_DEVICE_ID.toUpperCase()){
+    localStorage.setItem('_nec_owner_verified','1');
     hideLicenseScreen();
-    localStorage.setItem('_nec_owner_verified', '1');
-    setTimeout(()=>{
-      const devPanel = document.getElementById('dev-panel');
-      if (devPanel) devPanel.style.display = 'block';
-    }, 100);
+    setTimeout(()=>{const d=document.getElementById('dev-panel');if(d)d.style.display='block';},100);
     return;
   }
-
-  const lic = getLicense();
-
-  if(lic && lic.active && lic.serial){
-    const valid = await validateSerial(lic.serial, _deviceFP);
-    if(valid){
-      hideLicenseScreen();
-      return;
-    }
+  // 3. فحص السيريال
+  const lic=getLicense();
+  if(lic&&lic.active&&lic.serial){
+    const valid=await validateSerial(lic.serial,_deviceFP);
+    if(valid){hideLicenseScreen();return;}
   }
-  // Trial active?
-  if(isTrialActive()){
-    // Show license screen with trial info (not blocking)
-    showLicenseScreen('trial');
-    return;
-  }
-  // Trial expired — must activate
+  // 4. التجربة
+  if(isTrialActive()){showLicenseScreen('trial');return;}
   showLicenseScreen('expired');
 }
 
 function showLicenseScreen(mode){
-  const el = document.getElementById('license-screen');
-  if(el) el.classList.remove('hidden');
-  // Populate device ID
+  const el=document.getElementById('license-screen');
+  if(el)el.classList.remove('hidden');
   getDeviceFingerprint().then(fp=>{
-    const did = getDeviceId(fp);
-    const el2 = document.getElementById('lic-device-id');
-    if(el2) el2.textContent = did;
+    _deviceFP=fp;
+    const did=getDeviceId(fp);
+    const el2=document.getElementById('lic-device-id');
+    if(el2)el2.textContent=did;
+    // إظهار زر المطوّر فقط على جهازه
+    const wrap=document.getElementById('owner-dev-btn-wrap');
+    if(wrap)wrap.style.display=did.toUpperCase()===OWNER_DEVICE_ID.toUpperCase()?'block':'none';
+    // دخول تلقائي إذا كان جهاز المالك
+    if(did.toUpperCase()===OWNER_DEVICE_ID.toUpperCase()){
+      localStorage.setItem('_nec_owner_verified','1');
+      setTimeout(()=>{hideLicenseScreen();const d=document.getElementById('dev-panel');if(d)d.style.display='block';toast('🐝 مرحباً يا مطوّر NectarOS!','success');},700);
+    }
   });
-  // Render trial info
-  renderTrialInfo();
-  // Render devices
-  renderLicDevices();
-  if(mode === 'expired'){
-    // Force to activate tab
+  renderTrialInfo();renderLicDevices();
+  if(mode==='expired'){
     licTab('activate');
-    const sl = document.getElementById('lic-status-line');
-    if(sl) sl.textContent = '⚠️ انتهت فترة التجربة — يرجى التفعيل';
-    sl.style.color = 'var(--red)';
-    const enterBtn = document.getElementById('trial-enter-btn');
-    if(enterBtn) enterBtn.disabled = true;
+    const sl=document.getElementById('lic-status-line');
+    if(sl){sl.textContent='⚠️ انتهت فترة التجربة — يرجى التفعيل';sl.style.color='var(--red)';}
+    const enterBtn=document.getElementById('trial-enter-btn');
+    if(enterBtn)enterBtn.disabled=true;
   }
 }
 
@@ -7697,61 +7616,56 @@ function dismissUpdate(){
 /* ══════════════════════════════════════════════════
    📜 CERT BARCODE — ENHANCED (main barcode)
 ══════════════════════════════════════════════════ */
-function _renderCertMainBarcode(serial, apiary, date, hiveCount){
-  // تنظيف: CODE128 لا يدعم العربية
-  const cleanApiary = (apiary||'FARM').replace(/[^\x00-\x7F]/g,'').slice(0,10) || 'FARM';
-  const cleanSerial = (serial||'NC000').replace(/[^\x00-\x7F]/g,'').slice(0,12);
-  const data = (cleanSerial+'-'+cleanApiary+'-'+date+'-H'+hiveCount).slice(0,40);
+function _renderCertMainBarcode(serial,apiary,date,hiveCount){
+  const cleanAp=(apiary||'').replace(/[^\x00-\x7F]/g,'').slice(0,10)||'FARM';
+  const cleanSn=(serial||'').replace(/[^\x00-\x7F]/g,'').slice(0,10)||'NC';
+  const data=(cleanSn+'-'+cleanAp+'-'+date+'-H'+hiveCount).slice(0,40);
   setTimeout(()=>{
-    const el = document.getElementById('cert-barcode-main');
-    const textEl = document.getElementById('cert-barcode-text');
-    if(!el||typeof JsBarcode==='undefined') return;
+    const el=document.getElementById('cert-barcode-main');
+    const tEl=document.getElementById('cert-barcode-text');
+    if(!el||typeof JsBarcode==='undefined')return;
     try{
-      JsBarcode('#cert-barcode-main', data, {
-        format:'CODE128', width:1.5, height:56,
-        displayValue:false, background:'#ffffff',
-        lineColor:'#000000', margin:4
-      });
-      el.style.display='block';
-      if(textEl) textEl.textContent = data;
-    }catch(e){
-      if(el) el.style.display='none';
-      if(textEl) textEl.textContent = data;
-    }
-  }, 500);
+      JsBarcode('#cert-barcode-main',data,{format:'CODE128',width:1.5,height:56,displayValue:false,background:'#ffffff',lineColor:'#000000',margin:4});
+      el.style.display='block';if(tEl)tEl.textContent=data;
+    }catch(e){if(el)el.style.display='none';if(tEl)tEl.textContent=data;}
+  },500);
 }
 
 
 /* ── Owner Secret Unlock ── */
-let _ownerTapCount = 0;
-let _ownerTapTimer = null;
-function _ownerTap() {
+let _ownerTapCount=0,_ownerTapTimer=null;
+
+function openOwnerPin(){
+  const box=document.getElementById('owner-pin-box');
+  if(box){box.style.display='flex';setTimeout(()=>document.getElementById('owner-pin-input')?.focus(),100);}
+}
+function closeOwnerPin(){
+  const box=document.getElementById('owner-pin-box');
+  if(box)box.style.display='none';
+  const inp=document.getElementById('owner-pin-input');if(inp)inp.value='';
+  const err=document.getElementById('owner-pin-err');if(err)err.textContent='';
+}
+function _ownerTap(){
   _ownerTapCount++;
   clearTimeout(_ownerTapTimer);
-  _ownerTapTimer = setTimeout(() => { _ownerTapCount = 0; }, 3000);
-  if (_ownerTapCount >= 7) {
-    _ownerTapCount = 0;
-    const box = document.getElementById('owner-pin-box');
-    if (box) { box.style.display = 'flex'; setTimeout(()=>document.getElementById('owner-pin-input')?.focus(), 100); }
-  }
+  _ownerTapTimer=setTimeout(()=>{_ownerTapCount=0;},3000);
+  if(_ownerTapCount>=7){_ownerTapCount=0;openOwnerPin();}
 }
-function _ownerPinSubmit() {
-  const input = document.getElementById('owner-pin-input');
-  const pin = input?.value || '';
-  if (pin === 'NectarBee2025') {
-    localStorage.setItem('_nec_owner_verified', '1');
-    const box = document.getElementById('owner-pin-box');
-    if (box) box.style.display = 'none';
-    hideLicenseScreen();
+function _ownerPinSubmit(){
+  const inp=document.getElementById('owner-pin-input');
+  const errEl=document.getElementById('owner-pin-err');
+  const pin=inp?.value||'';
+  if(pin==='NectarBee2025'){
+    localStorage.setItem('_nec_owner_verified','1');
+    closeOwnerPin();hideLicenseScreen();
     setTimeout(()=>{
-      const devPanel = document.getElementById('dev-panel');
-      if (devPanel) devPanel.style.display = 'block';
-      toast('🐝 مرحباً بك يا مطوّر NectarOS!', 'success');
-    }, 200);
+      const d=document.getElementById('dev-panel');if(d)d.style.display='block';
+      toast('🐝 مرحباً بك يا مطوّر NectarOS!','success');
+    },200);
   } else {
-    input.value = '';
-    input.style.borderColor = 'var(--red)';
-    setTimeout(()=>{ if(input) input.style.borderColor = '#FFC107'; }, 1000);
+    if(inp){inp.value='';inp.style.borderColor='#f44336';inp.focus();}
+    if(errEl)errEl.textContent='❌ الكود غير صحيح';
+    setTimeout(()=>{if(inp)inp.style.borderColor='#444';if(errEl)errEl.textContent='';},2000);
   }
 }
 
@@ -8940,6 +8854,28 @@ function logActivity(action){
   log.push({action,time:new Date().toLocaleString('ar'),date:today()});
   DB.set('activity_log',log.slice(-100));
 }
+/* ══ GOOGLE TRANSLATE ══ */
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'ar',includedLanguages:'ar,fr,en,tr,es,de',autoDisplay:false},'google_translate_element');
+}
+function gtLang(lang){
+  document.querySelectorAll('.gt-lang-btn').forEach(b=>b.classList.remove('gt-act'));
+  event?.target?.classList.add('gt-act');
+  if(lang==='ar'){document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';location.reload();return;}
+  document.cookie=`googtrans=/ar/${lang}; path=/`;
+  const tryIt=(n)=>{
+    const sel=document.querySelector('.goog-te-combo');
+    if(sel){sel.value=lang;sel.dispatchEvent(new Event('change'));document.getElementById('gt-panel').classList.remove('open');toast('✅ تمت الترجمة','success');}
+    else if(n<8)setTimeout(()=>tryIt(n+1),500);
+    else toast('⚠️ تحتاج اتصالاً بالإنترنت للترجمة','warning');
+  };
+  tryIt(0);
+}
+document.addEventListener('click',e=>{
+  const p=document.getElementById('gt-panel'),b=document.getElementById('gt-btn');
+  if(p&&b&&!p.contains(e.target)&&!b.contains(e.target))p.classList.remove('open');
+});
+
 </script>
 </body>
 </html>
