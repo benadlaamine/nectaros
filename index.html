@@ -78,9 +78,9 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 #overlay.open{display:block;}
 #sidebar{width:252px;background:var(--bg2);border-left:1px solid var(--border);display:flex;flex-direction:column;transition:.3s cubic-bezier(.4,0,.2,1);z-index:1000;overflow-y:auto;position:fixed;height:100%;right:-252px;}
 #sidebar.open{right:0;}
-#main{flex:1;display:flex;flex-direction:column;overflow:hidden;width:100%;}
+#main{flex:1;display:flex;flex-direction:column;overflow:visible;width:100%;}
 #topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 13px;height:56px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:100;gap:8px;}
-#content{flex:1;overflow-y:auto;padding:14px;padding-bottom:24px;}
+#content{flex:1;overflow-y:auto;padding:14px;padding-bottom:80px;-webkit-overflow-scrolling:touch;}
 
 /* ── LOGO ── */
 .logo{padding:14px 13px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);flex-shrink:0;background:linear-gradient(90deg,rgba(255,193,7,.07),transparent);}
@@ -480,14 +480,46 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .toggle-switch input:checked+.toggle-slider::before{transform:translateX(20px);}
 .pn-schedule-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border-radius:9px;border:1px solid var(--border);margin-bottom:6px;}
 
-/* ══ SPLASH SCREEN ══ */
-#splash{position:fixed;inset:0;z-index:99999;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;transition:opacity .5s,transform .5s;}
-#splash.hide{opacity:0;transform:scale(1.04);pointer-events:none;}
-.splash-hex{width:88px;height:88px;background:linear-gradient(135deg,var(--gold),var(--gold4));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:42px;animation:hpulse 1.5s infinite;}
-.splash-title{font-family:'Syne','Cairo',sans-serif;font-size:36px;font-weight:800;background:linear-gradient(135deg,var(--gold),var(--gold3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.splash-bar{width:200px;height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
-.splash-fill{height:100%;background:linear-gradient(90deg,var(--gold),var(--gold4));border-radius:2px;animation:splashLoad 1.8s ease forwards;}
-@keyframes splashLoad{0%{width:0%}60%{width:75%}100%{width:100%}}
+/* ══ SPLASH SCREEN — تصميم احترافي ══ */
+#splash{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .6s ease,transform .6s ease;overflow:hidden;}
+#splash.hide{opacity:0;transform:scale(1.06);pointer-events:none;}
+/* خلفية متحركة */
+#splash::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,193,7,.12) 0%,transparent 65%),radial-gradient(ellipse at 20% 80%,rgba(255,111,0,.07) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(255,193,7,.06) 0%,transparent 50%);pointer-events:none;}
+/* جسيمات عائمة */
+#splash::after{content:'🐝';position:absolute;font-size:14px;top:15%;right:20%;animation:floatBee1 6s ease-in-out infinite;opacity:.2;}
+@keyframes floatBee1{0%,100%{transform:translate(0,0) rotate(-10deg);}50%{transform:translate(-15px,20px) rotate(10deg);}}
+.splash-logo-wrap{position:relative;margin-bottom:32px;animation:splashLogoIn .8s cubic-bezier(.34,1.56,.64,1) forwards;}
+@keyframes splashLogoIn{from{opacity:0;transform:scale(.4) translateY(30px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.splash-hex-outer{width:120px;height:120px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:linear-gradient(145deg,#FFD54F,#FF6F00);display:flex;align-items:center;justify-content:center;position:relative;animation:splashHexPulse 2s ease-in-out infinite;}
+@keyframes splashHexPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,193,7,.4),0 0 40px rgba(255,193,7,.2);}50%{box-shadow:0 0 0 20px rgba(255,193,7,0),0 0 60px rgba(255,193,7,.35);}}
+.splash-hex-inner{width:80px;height:80px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:#111;display:flex;align-items:center;justify-content:center;}
+.splash-bee-icon{font-size:36px;animation:splashBeeBounce 1.5s ease-in-out infinite;}
+@keyframes splashBeeBounce{0%,100%{transform:scale(1) rotate(-5deg);}50%{transform:scale(1.15) rotate(5deg);}}
+/* حلقات تموّج */
+.splash-rings{position:absolute;width:120px;height:120px;}
+.splash-ring{position:absolute;inset:0;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);border:2px solid rgba(255,193,7,.3);animation:splashRing 2s ease-out infinite;}
+.splash-ring:nth-child(2){animation-delay:.5s;}
+.splash-ring:nth-child(3){animation-delay:1s;}
+@keyframes splashRing{0%{transform:scale(1);opacity:.6;}100%{transform:scale(1.8);opacity:0;}}
+/* النص */
+.splash-brand{text-align:center;animation:splashTextIn .9s ease .3s both;}
+@keyframes splashTextIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.splash-title{font-family:'Syne','Cairo',sans-serif;font-size:38px;font-weight:800;letter-spacing:-1px;background:linear-gradient(135deg,#FFD54F 0%,#FFC107 50%,#FF8F00 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:6px;}
+.splash-sub{font-size:12px;color:rgba(255,193,7,.6);letter-spacing:3px;text-transform:uppercase;font-family:'Space Mono',monospace;}
+/* شريط التحميل */
+.splash-loader{margin-top:40px;animation:splashTextIn .9s ease .6s both;}
+.splash-bar{width:200px;height:3px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;margin-bottom:10px;}
+.splash-fill{height:100%;background:linear-gradient(90deg,#FF6F00,#FFC107,#FFD54F);border-radius:2px;animation:splashLoad 2s cubic-bezier(.4,0,.2,1) forwards;box-shadow:0 0 12px rgba(255,193,7,.5);}
+@keyframes splashLoad{0%{width:0%;opacity:.5}30%{width:40%;opacity:1}70%{width:80%}95%{width:96%}100%{width:100%}}
+.splash-status{font-size:10px;color:rgba(255,255,255,.35);letter-spacing:1.5px;text-transform:uppercase;font-family:'Space Mono',monospace;text-align:center;}
+/* نقاط المعالجة */
+.splash-dots{display:inline-flex;gap:4px;margin-right:6px;}
+.splash-dot{width:4px;height:4px;border-radius:50%;background:rgba(255,193,7,.6);animation:dotPulse 1.2s ease-in-out infinite;}
+.splash-dot:nth-child(2){animation-delay:.2s;}
+.splash-dot:nth-child(3){animation-delay:.4s;}
+@keyframes dotPulse{0%,100%{opacity:.3;transform:scale(.8);}50%{opacity:1;transform:scale(1.2);}}
+/* شارة الإصدار */
+.splash-version{position:absolute;bottom:40px;font-size:10px;color:rgba(255,255,255,.2);letter-spacing:2px;font-family:'Space Mono',monospace;}
 /* ══ FIELD MODE ══ */
 .field-btn{background:var(--card);border:2px solid var(--border);border-radius:16px;padding:20px;display:flex;flex-direction:column;align-items:center;gap:10px;cursor:pointer;transition:.2s;text-align:center;}
 .field-btn:active{transform:scale(.95);}
@@ -873,13 +905,37 @@ body{top:0!important;}
   <button onclick="document.getElementById('gt-panel').classList.remove('open')" style="margin-top:10px;background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;">✕ إغلاق</button>
 </div>
 
-<!-- ══ SPLASH SCREEN ══ -->
+<!-- ══ SPLASH SCREEN — احترافي ══ -->
 <div id="splash">
-  <div class="splash-hex">🐝</div>
-  <div class="splash-title">NectarOS</div>
-  <div style="font-size:11px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;">نظام إدارة المناحل الذكي · v5.1</div>
-  <div class="splash-bar"><div class="splash-fill"></div></div>
-  <div id="splash-msg" style="font-size:10px;color:var(--text3);">جاري التحميل...</div>
+  <!-- حلقات التموج -->
+  <div class="splash-rings">
+    <div class="splash-ring"></div>
+    <div class="splash-ring"></div>
+    <div class="splash-ring"></div>
+  </div>
+  <!-- اللوقو الرئيسي -->
+  <div class="splash-logo-wrap">
+    <div class="splash-hex-outer">
+      <div class="splash-hex-inner">
+        <div class="splash-bee-icon">🐝</div>
+      </div>
+    </div>
+  </div>
+  <!-- الاسم -->
+  <div class="splash-brand">
+    <div class="splash-title">NectarOS</div>
+    <div class="splash-sub">Beekeeping Intelligence</div>
+  </div>
+  <!-- التحميل -->
+  <div class="splash-loader">
+    <div class="splash-bar"><div class="splash-fill"></div></div>
+    <div class="splash-status">
+      <span class="splash-dots"><span class="splash-dot"></span><span class="splash-dot"></span><span class="splash-dot"></span></span>
+      <span id="splash-msg">جاري التحميل</span>
+    </div>
+  </div>
+  <!-- الإصدار -->
+  <div class="splash-version">v5.1 · نظام إدارة المناحل</div>
 </div>
 
 <!-- ═══════════ LOGIN SCREEN ═══════════ -->
@@ -7765,9 +7821,16 @@ checkLicense().catch(e => {
   // ضمان إخفاء splash في كل الأحوال
   setTimeout(hideSplash, 100);
 });
-// Check session (valid for 24h)
+// Check session (valid for 24h) + دخول تلقائي للمالك
 const sess=DB.get('session');
-if(sess&&sess.time&&(Date.now()-sess.time)<86400000){
+const _isOwnerNow = localStorage.getItem('_nec_owner_verified')==='1';
+if(_isOwnerNow){
+  // المالك لا يحتاج login — دخول مباشر
+  document.getElementById('login-screen').classList.add('hidden');
+  if(!DB.get('session')){
+    DB.set('session',{user:'admin',lang:'ar',time:Date.now()});
+  }
+} else if(sess&&sess.time&&(Date.now()-sess.time)<86400000){
   document.getElementById('login-screen').classList.add('hidden');
   currentLang=sess.lang||'ar';
   setLang(currentLang);
@@ -8734,14 +8797,19 @@ function renderSecurityPage(){
   // License status
   const licEl = document.getElementById('sec-license-status');
   if(licEl){
+    const isOwner = localStorage.getItem('_nec_owner_verified')==='1';
     const lic = getLicense();
     const t = getTrialInfo();
     const left = getTrialDaysLeft(t);
-    if(lic&&lic.active){
+    if(isOwner || (lic&&lic.active)){
+      const serial = lic?.serial || 'B9DB-4AFF-03A0-486C';
       licEl.innerHTML=`<div style="display:flex;align-items:center;gap:10px;padding:6px 0;">
         <span style="font-size:22px;">✅</span>
-        <div><div style="font-weight:700;color:var(--green);">مُفعَّل — ترخيص دائم</div>
-        <div style="font-size:10px;color:var(--text3);">السيريال: <b>${lic.serial}</b> · ${(lic.devices||[]).length}/${MAX_DEVICES} أجهزة</div></div>
+        <div>
+          <div style="font-weight:700;color:var(--green);">مُفعَّل — ${isOwner?'ترخيص مطوّر':'ترخيص دائم'}</div>
+          <div style="font-size:10px;color:var(--text3);">السيريال: <b>${serial}</b></div>
+          ${isOwner?'<div style="font-size:10px;color:var(--gold);">👑 حساب المطوّر — صلاحيات كاملة</div>':''}
+        </div>
       </div>`;
     } else {
       const barColor=left>5?'var(--green)':left>2?'var(--orange)':'var(--red)';
