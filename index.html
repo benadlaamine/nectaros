@@ -12,6 +12,48 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23FFD54F'/%3E%3Cstop offset='100%25' stop-color='%23FF6F00'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cpolygon points='50,2 93,26 93,74 50,98 7,74 7,26' fill='url(%23g)'/%3E%3Cellipse cx='50' cy='48' rx='18' ry='22' fill='%23222'/%3E%3Crect x='39' y='40' width='22' height='4' rx='2' fill='%23FFD54F'/%3E%3Crect x='39' y='47' width='22' height='4' rx='2' fill='%23FFD54F'/%3E%3Crect x='39' y='54' width='22' height='4' rx='2' fill='%23FFD54F'/%3E%3C/svg%3E">
 <link rel="manifest" href="manifest.json">
 <meta name="mobile-web-app-capable" content="yes">
+<meta name="application-name" content="NectarOS">
+<meta name="msapplication-TileColor" content="#FFC107">
+<script>
+/* ══ INLINE MANIFEST — يعمل بدون ملف خارجي مع كل المتصفحات ══ */
+(function(){
+  const icons=[{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpolygon points='256,10 480,138 480,374 256,502 32,374 32,138' fill='%23FFC107'/%3E%3Cellipse cx='256' cy='245' rx='92' ry='112' fill='%23222'/%3E%3Crect x='214' y='205' width='84' height='16' rx='8' fill='%23FFC107'/%3E%3Crect x='214' y='237' width='84' height='16' rx='8' fill='%23FFC107'/%3E%3Crect x='214' y='269' width='84' height='16' rx='8' fill='%23FFC107'/%3E%3C/svg%3E",sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"},{src:"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Cpolygon points='96,4 180,52 180,140 96,188 12,140 12,52' fill='%23FFC107'/%3E%3Cellipse cx='96' cy='93' rx='35' ry='43' fill='%23222'/%3E%3Crect x='79' y='78' width='34' height='7' rx='3' fill='%23FFC107'/%3E%3Crect x='79' y='91' width='34' height='7' rx='3' fill='%23FFC107'/%3E%3Crect x='79' y='104' width='34' height='7' rx='3' fill='%23FFC107'/%3E%3C/svg%3E",sizes:"192x192",type:"image/svg+xml",purpose:"any maskable"}];
+  const m={name:'NectarOS — نظام إدارة المناحل',short_name:'NectarOS',description:'نظام إدارة المناحل الذكي',start_url:'./index.html',scope:'.',display:'standalone',orientation:'portrait-primary',background_color:'#0d0d0d',theme_color:'#FFC107',lang:'ar',dir:'rtl',icons};
+  try{
+    const b=new Blob([JSON.stringify(m)],{type:'application/manifest+json'});
+    document.querySelector('link[rel="manifest"]').href=URL.createObjectURL(b);
+  }catch(e){}
+})();
+
+/* ══ INLINE SERVICE WORKER — مُضمَّن كـ Blob بدون sw.js خارجي ══ */
+(function(){
+  if(!('serviceWorker' in navigator)) return;
+  const SW=`
+const CACHE='nectaros-v5';
+const CORE=['./'];
+self.addEventListener('install',e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
+self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener('fetch',e=>{
+  if(e.request.method!=='GET')return;
+  e.respondWith(fetch(e.request).then(r=>{if(r&&r.status===200){const c=r.clone();caches.open(CACHE).then(ca=>ca.put(e.request,c));}return r;}).catch(()=>caches.match(e.request)));
+});
+self.addEventListener('message',e=>{if(e.data==='SKIP_WAITING')self.skipWaiting();});
+`;
+  try{
+    const b=new Blob([SW],{type:'text/javascript'});
+    const url=URL.createObjectURL(b);
+    navigator.serviceWorker.register(url,{scope:'./'}).then(reg=>{
+      reg.addEventListener('updatefound',()=>{
+        const nw=reg.installing;
+        if(!nw)return;
+        nw.addEventListener('statechange',()=>{if(nw.state==='installed'&&navigator.serviceWorker.controller)_showUpdateBanner(reg);});
+      });
+    }).catch(()=>{});
+    let _ref=false;
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{if(!_ref){_ref=true;location.reload();}});
+  }catch(e){}
+})();
+</script>
 <title>NectarOS 🐝</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -7083,9 +7125,21 @@ async function sbQuery(method, path, body) {
   } catch(e) { clearTimeout(timer); throw e; }
 }
 
-// ── PWA Install ────────────────────────────────────
+// ── PWA Install — دعم شامل لكل المتصفحات ─────────────
 let _deferredPrompt = null;
-const _isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+
+/* كشف المتصفح والمنصة */
+const _ua = navigator.userAgent;
+const _isIOS        = /iPad|iPhone|iPod/.test(_ua) && !window.MSStream;
+const _isAndroid    = /Android/.test(_ua);
+const _isSamsung    = /SamsungBrowser/.test(_ua);
+const _isFirefox    = /Firefox/.test(_ua) && !/Seamonkey/.test(_ua);
+const _isEdge       = /Edg\//.test(_ua);
+const _isOpera      = /OPR\/|Opera/.test(_ua);
+const _isMiui       = /MiuiBrowser/.test(_ua);
+const _isHuawei     = /HuaweiBrowser/.test(_ua);
+const _isSafari     = /^((?!chrome|android).)*safari/i.test(_ua);
+const _isChrome     = /Chrome/.test(_ua) && !/Chromium/.test(_ua) && !_isEdge && !_isOpera && !_isSamsung;
 const _isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
 
 window.addEventListener('beforeinstallprompt', e => {
@@ -7093,21 +7147,20 @@ window.addEventListener('beforeinstallprompt', e => {
   _deferredPrompt = e;
   _showPWABtn();
 });
-setTimeout(_showPWABtn, 2500);
+
+/* إظهار زر التثبيت في كل الحالات */
+setTimeout(_showPWABtn, 1500);
 
 function _showPWABtn() {
   if (_isStandalone) return;
   const btn = document.getElementById('pwa-topbar-btn');
   if (btn) btn.classList.add('visible');
-  const card = document.getElementById('pwa-card');
-  if (card) card.style.display = 'block';
 }
 
 async function installPWA() {
-  if (_isIOS) {
-    toast('📲 Safari: اضغط □↑ ثم "إضافة إلى الشاشة الرئيسية"', 'info');
-    return;
-  }
+  if (_isStandalone) { toast('✅ التطبيق مثبّت مسبقاً', 'success'); return; }
+
+  /* Chrome / Edge / Samsung / Opera / Huawei — يدعمون beforeinstallprompt */
   if (_deferredPrompt) {
     const btn = document.getElementById('pwa-topbar-btn');
     if (btn) { btn.textContent = '⏳'; btn.disabled = true; }
@@ -7115,52 +7168,87 @@ async function installPWA() {
       await _deferredPrompt.prompt();
       const { outcome } = await _deferredPrompt.userChoice;
       if (outcome === 'accepted') {
-        toast('🎉 تم تثبيت NectarOS على شاشتك!', 'success');
-        const card = document.getElementById('pwa-card');
-        if (card) card.style.display = 'none';
-        if (btn) btn.classList.remove('visible');
-      } else {
-        if (btn) { btn.textContent = '📲'; btn.disabled = false; }
+        toast('🎉 تم تثبيت NectarOS!', 'success');
       }
-    } catch(e) {
-      if (btn) { btn.textContent = '📲'; btn.disabled = false; }
-    }
+    } catch(e) {}
+    if (btn) { btn.textContent = '📲'; btn.disabled = false; }
     _deferredPrompt = null;
     return;
   }
-  toast('📲 افتح قائمة المتصفح ← "إضافة إلى الشاشة الرئيسية"', 'info');
+
+  /* افتح مودال تعليمات التثبيت حسب المتصفح */
+  _showInstallGuide();
+}
+
+function _showInstallGuide() {
+  let steps = [], browser = '';
+
+  if (_isIOS && _isSafari) {
+    browser = '🍎 Safari — iPhone / iPad';
+    steps = ['1️⃣ اضغط زر المشاركة <b>□↑</b> في أسفل الشاشة','2️⃣ اختر <b>"إضافة إلى الشاشة الرئيسية"</b>','3️⃣ اضغط <b>"إضافة"</b> في الأعلى'];
+  } else if (_isIOS) {
+    browser = '🍎 iOS — Safari مطلوب';
+    steps = ['⚠️ افتح الصفحة في <b>Safari</b> (ليس Chrome أو Firefox)','ثم اضغط □↑ ← "إضافة إلى الشاشة الرئيسية"'];
+  } else if (_isSamsung) {
+    browser = '📱 Samsung Internet';
+    steps = ['1️⃣ اضغط القائمة <b>⋮</b> في أسفل الشاشة','2️⃣ اختر <b>"إضافة صفحة إلى"</b>','3️⃣ اختر <b>"الشاشة الرئيسية"</b>'];
+  } else if (_isFirefox && _isAndroid) {
+    browser = '🦊 Firefox Android';
+    steps = ['1️⃣ اضغط القائمة <b>⋮</b> في الزاوية','2️⃣ اختر <b>"تثبيت"</b> أو <b>"إضافة إلى الشاشة الرئيسية"</b>'];
+  } else if (_isFirefox) {
+    browser = '🦊 Firefox Desktop';
+    steps = ['1️⃣ انظر لأيقونة <b>🏠+</b> في شريط العنوان','2️⃣ اضغطها واختر <b>"ثبّت"</b>','ملاحظة: يجب تفعيل PWA في about:config'];
+  } else if (_isEdge) {
+    browser = '🌐 Microsoft Edge';
+    steps = ['1️⃣ اضغط القائمة <b>⋯</b> في الأعلى','2️⃣ اختر <b>"التطبيقات"</b>','3️⃣ اختر <b>"تثبيت هذا الموقع كتطبيق"</b>'];
+  } else if (_isOpera) {
+    browser = '🎭 Opera';
+    steps = ['1️⃣ اضغط أيقونة Opera في الأسفل','2️⃣ اختر <b>"الشاشة الرئيسية"</b>','3️⃣ اضغط <b>"إضافة"</b>'];
+  } else if (_isMiui) {
+    browser = '📱 Xiaomi Browser';
+    steps = ['1️⃣ اضغط القائمة <b>⋮</b>','2️⃣ اختر <b>"إضافة إلى الشاشة الرئيسية"</b>'];
+  } else if (_isHuawei) {
+    browser = '📱 Huawei Browser';
+    steps = ['1️⃣ اضغط القائمة <b>⋮</b>','2️⃣ اختر <b>"إضافة إلى الشاشة الرئيسية"</b>'];
+  } else if (_isChrome && _isAndroid) {
+    browser = '🟡 Chrome Android';
+    steps = ['1️⃣ اضغط القائمة <b>⋮</b> في الأعلى','2️⃣ اختر <b>"إضافة إلى الشاشة الرئيسية"</b>','3️⃣ اضغط <b>"إضافة"</b>'];
+  } else {
+    browser = '🌐 متصفحك';
+    steps = ['1️⃣ افتح قائمة المتصفح <b>⋮</b> أو <b>⋯</b>','2️⃣ ابحث عن <b>"إضافة إلى الشاشة الرئيسية"</b> أو <b>"تثبيت التطبيق"</b>'];
+  }
+
+  /* أنشئ مودال التعليمات */
+  const old = document.getElementById('_pwa_guide');
+  if (old) old.remove();
+  const d = document.createElement('div');
+  d.id = '_pwa_guide';
+  d.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:999998;display:flex;align-items:center;justify-content:center;direction:rtl;padding:20px;';
+  d.innerHTML = `
+    <div style="background:#1a1a1a;border:2px solid #FFC107;border-radius:18px;padding:28px 24px;max-width:360px;width:100%;box-shadow:0 0 50px rgba(255,193,7,.2);">
+      <div style="text-align:center;margin-bottom:18px;">
+        <div style="font-size:36px;">📲</div>
+        <div style="color:#FFC107;font-weight:800;font-size:15px;margin-top:6px;">تثبيت NectarOS</div>
+        <div style="color:#888;font-size:11px;margin-top:4px;">${browser}</div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+        ${steps.map(s=>`<div style="background:#252525;border-radius:10px;padding:11px 14px;font-size:12px;color:#e0e0e0;line-height:1.6;">${s}</div>`).join('')}
+      </div>
+      <button onclick="document.getElementById('_pwa_guide').remove()" style="width:100%;background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:10px;padding:12px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Cairo',sans-serif;">✓ فهمت</button>
+    </div>`;
+  document.body.appendChild(d);
+  d.addEventListener('click', e => { if(e.target===d) d.remove(); });
 }
 
 window.addEventListener('appinstalled', () => {
-  toast('🎉 تم تثبيت NectarOS!', 'success');
+  toast('🎉 تم تثبيت NectarOS بنجاح!', 'success');
   const btn = document.getElementById('pwa-topbar-btn');
   if (btn) btn.classList.remove('visible');
   _deferredPrompt = null;
 });
 
-// ── Service Worker Registration ────────────────────
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js', { scope: './' })
-      .then(reg => {
-        reg.addEventListener('updatefound', () => {
-          const nw = reg.installing;
-          if (!nw) return;
-          nw.addEventListener('statechange', () => {
-            if (nw.state === 'installed' && navigator.serviceWorker.controller) {
-              _showUpdateBanner(reg);
-            }
-          });
-        });
-        setInterval(() => reg.update(), 60000);
-      })
-      .catch(e => console.warn('[SW]', e));
-    let _refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (!_refreshing) { _refreshing = true; window.location.reload(); }
-    });
-  });
-}
+// ── Service Worker Registration ─────────────────────
+// السيرفس ووركر مُضمَّن الآن كـ Blob في الـ head — لا يحتاج sw.js خارجي
 
 function _showUpdateBanner(reg) {
   const old = document.getElementById('_update_banner');
