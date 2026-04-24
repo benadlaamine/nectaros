@@ -7,34 +7,50 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NectarOS">
-<meta name="description" content="نظام إدارة المناحل الذكي v5.3">
+<meta name="description" content="نظام إدارة المناحل الذكي">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22body%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3C%21--%20%D8%AE%D9%84%D9%81%D9%8A%D8%A9%20%D8%B3%D8%AF%D8%A7%D8%B3%D9%8A%D8%A9%20--%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C8%20484%2C136%20484%2C376%20256%2C504%2028%2C376%2028%2C136%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C20%20472%2C144%20472%2C368%20256%2C492%2040%2C368%2040%2C144%22%20fill%3D%22%231a1a00%22%20opacity%3D%220.3%22%2F%3E%0A%20%20%3C%21--%20%D8%AC%D8%B3%D9%85%20%D8%A7%D9%84%D9%86%D8%AD%D9%84%D8%A9%20--%3E%0A%20%20%3Cellipse%20cx%3D%22256%22%20cy%3D%22230%22%20rx%3D%2258%22%20ry%3D%2278%22%20fill%3D%22url%28%23body%29%22%2F%3E%0A%20%20%3C%21--%20%D8%AE%D8%B7%D9%88%D8%B7%20%D8%A7%D9%84%D8%AC%D8%B3%D9%85%20--%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22195%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22227%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22259%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%B1%D8%A3%D8%B3%20--%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22154%22%20r%3D%2236%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22242%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22270%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%A3%D8%AC%D9%86%D8%AD%D8%A9%20--%3E%0A%20%20%3Cellipse%20cx%3D%22186%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C186%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22326%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C326%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22192%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%28-20%2C192%2C215%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22320%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%2820%2C320%2C215%29%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%A5%D8%A8%D8%B1%D8%A9%20--%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C295%20248%2C340%20264%2C340%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D9%87%D9%88%D8%A7%D8%A6%D9%8A%D8%A7%D8%AA%20--%3E%0A%20%20%3Cline%20x1%3D%22242%22%20y1%3D%22120%22%20x2%3D%22222%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Cline%20x1%3D%22270%22%20y1%3D%22120%22%20x2%3D%22290%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22220%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22292%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%3C%2Fsvg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bd%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C3%20181%2C51%20181%2C141%2096%2C189%2011%2C141%2011%2C51%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2296%22%20cy%3D%2287%22%20rx%3D%2222%22%20ry%3D%2229%22%20fill%3D%22url%28%23bd%29%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2274%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2286%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2298%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2296%22%20cy%3D%2258%22%20r%3D%2214%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2291%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22101%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2269%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C69%2C70%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22123%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C123%2C70%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C111%2092%2C128%20100%2C128%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%3C%2Fsvg%3E">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="NectarOS">
 <meta name="msapplication-TileColor" content="#FFC107">
-<link rel="manifest" href="./manifest.json">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22body%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C8%20484%2C136%20484%2C376%20256%2C504%2028%2C376%2028%2C136%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C20%20472%2C144%20472%2C368%20256%2C492%2040%2C368%2040%2C144%22%20fill%3D%22%231a1a00%22%20opacity%3D%220.3%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22256%22%20cy%3D%22230%22%20rx%3D%2258%22%20ry%3D%2278%22%20fill%3D%22url%28%23body%29%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22195%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22227%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22259%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22154%22%20r%3D%2236%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22242%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22270%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22186%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C186%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22326%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C326%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22192%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%28-20%2C192%2C215%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22320%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%2820%2C320%2C215%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C295%20248%2C340%20264%2C340%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%20%20%3Cline%20x1%3D%22242%22%20y1%3D%22120%22%20x2%3D%22222%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Cline%20x1%3D%22270%22%20y1%3D%22120%22%20x2%3D%22290%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22220%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22292%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%3C%2Fsvg%3E">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bd%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C3%20181%2C51%20181%2C141%2096%2C189%2011%2C141%2011%2C51%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2296%22%20cy%3D%2287%22%20rx%3D%2222%22%20ry%3D%2229%22%20fill%3D%22url%28%23bd%29%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2274%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2286%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2298%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2296%22%20cy%3D%2258%22%20r%3D%2214%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2291%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22101%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2269%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C69%2C70%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22123%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C123%2C70%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C111%2092%2C128%20100%2C128%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%3C%2Fsvg%3E">
 <script>
-/* ══ SERVICE WORKER — خارجي حقيقي ══ */
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.register('./sw.js', {scope:'./'}).then(reg=>{
-    // SW جديد ينتظر → أظهر البانر فوراً
-    if(reg.waiting){ _showUpdateBanner(reg); }
-    reg.addEventListener('updatefound', ()=>{
-      const nw = reg.installing;
-      if(!nw) return;
-      nw.addEventListener('statechange', ()=>{
-        if(nw.state==='installed' && navigator.serviceWorker.controller){
-          _showUpdateBanner(reg);
-        }
+/* ══ INLINE MANIFEST ══ */
+(function(){
+  const icons=[
+    {src:"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22body%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3C%21--%20%D8%AE%D9%84%D9%81%D9%8A%D8%A9%20%D8%B3%D8%AF%D8%A7%D8%B3%D9%8A%D8%A9%20--%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C8%20484%2C136%20484%2C376%20256%2C504%2028%2C376%2028%2C136%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C20%20472%2C144%20472%2C368%20256%2C492%2040%2C368%2040%2C144%22%20fill%3D%22%231a1a00%22%20opacity%3D%220.3%22%2F%3E%0A%20%20%3C%21--%20%D8%AC%D8%B3%D9%85%20%D8%A7%D9%84%D9%86%D8%AD%D9%84%D8%A9%20--%3E%0A%20%20%3Cellipse%20cx%3D%22256%22%20cy%3D%22230%22%20rx%3D%2258%22%20ry%3D%2278%22%20fill%3D%22url%28%23body%29%22%2F%3E%0A%20%20%3C%21--%20%D8%AE%D8%B7%D9%88%D8%B7%20%D8%A7%D9%84%D8%AC%D8%B3%D9%85%20--%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22195%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22227%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22259%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%B1%D8%A3%D8%B3%20--%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22154%22%20r%3D%2236%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22242%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22270%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%A3%D8%AC%D9%86%D8%AD%D8%A9%20--%3E%0A%20%20%3Cellipse%20cx%3D%22186%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C186%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22326%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C326%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22192%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%28-20%2C192%2C215%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22320%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%2820%2C320%2C215%29%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%A5%D8%A8%D8%B1%D8%A9%20--%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C295%20248%2C340%20264%2C340%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D9%87%D9%88%D8%A7%D8%A6%D9%8A%D8%A7%D8%AA%20--%3E%0A%20%20%3Cline%20x1%3D%22242%22%20y1%3D%22120%22%20x2%3D%22222%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Cline%20x1%3D%22270%22%20y1%3D%22120%22%20x2%3D%22290%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22220%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22292%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%3C%2Fsvg%3E",sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"},
+    {src:"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bd%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C3%20181%2C51%20181%2C141%2096%2C189%2011%2C141%2011%2C51%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2296%22%20cy%3D%2287%22%20rx%3D%2222%22%20ry%3D%2229%22%20fill%3D%22url%28%23bd%29%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2274%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2286%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2298%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2296%22%20cy%3D%2258%22%20r%3D%2214%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2291%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22101%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2269%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C69%2C70%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22123%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C123%2C70%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C111%2092%2C128%20100%2C128%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%3C%2Fsvg%3E",sizes:"192x192",type:"image/svg+xml",purpose:"any maskable"}
+  ];
+  const m={name:"NectarOS — نظام إدارة المناحل",short_name:"NectarOS",description:"نظام إدارة المناحل الذكي",start_url:"./index.html",scope:".",display:"standalone",orientation:"portrait-primary",background_color:"#0d0d0d",theme_color:"#FFC107",lang:"ar",dir:"rtl",icons};
+  try{const b=new Blob([JSON.stringify(m)],{type:"application/manifest+json"});const l=document.createElement("link");l.rel="manifest";l.href=URL.createObjectURL(b);document.head.appendChild(l);}catch(e){}
+})();
+/* ══ INLINE SERVICE WORKER ══ */
+(function(){
+  if(!("serviceWorker"in navigator))return;
+  const SW=`const CACHE="nectaros-v6";const CORE=["./"];
+self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
+self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
+self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;e.respondWith(fetch(e.request).then(r=>{if(r&&r.status===200){const c=r.clone();caches.open(CACHE).then(ca=>ca.put(e.request,c));}return r;}).catch(()=>caches.match(e.request)));});
+self.addEventListener("message",e=>{if(e.data==="SKIP_WAITING")self.skipWaiting();});`;
+  try{
+    const b=new Blob([SW],{type:"text/javascript"});
+    const url=URL.createObjectURL(b);
+    navigator.serviceWorker.register(url,{scope:"./"}).then(reg=>{
+      // SW جديد ينتظر — أظهر البانر فوراً
+      if(reg.waiting){ _showUpdateBanner(reg); }
+      reg.addEventListener("updatefound",()=>{
+        const nw=reg.installing;
+        if(!nw)return;
+        nw.addEventListener("statechange",()=>{
+          if(nw.state==="installed"&&navigator.serviceWorker.controller){
+            _showUpdateBanner(reg);
+          }
+        });
       });
-    });
-  }).catch(()=>{});
-  let _reloading = false;
-  navigator.serviceWorker.addEventListener('controllerchange', ()=>{
-    if(!_reloading){ _reloading=true; location.reload(); }
-  });
-}
+    }).catch(()=>{});
+    let _ref=false;
+    navigator.serviceWorker.addEventListener("controllerchange",()=>{if(!_ref){_ref=true;location.reload();}});
+  }catch(e){}
+})();
 </script>
 <title>NectarOS 🐝</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
@@ -875,13 +891,388 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
 /* ── Google Translate Panel ── */
+#gt-panel{display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--gold3);border-radius:12px;padding:14px 16px;z-index:5000;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:260px;text-align:center;direction:rtl;}
+#gt-panel.open{display:block;}
+.gt-lang-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;}
+.gt-lang-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 5px;color:var(--text);font-family:'Cairo',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:.18s;}
+.gt-lang-btn:hover,.gt-lang-btn.gt-act{border-color:var(--gold);color:var(--gold);background:rgba(255,193,7,.08);}
+.goog-te-banner-frame,.goog-te-balloon-frame{display:none!important;}
 body{top:0!important;}
 
 </style>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 </head>
 <body>
+<div id="google_translate_element" style="display:none;"></div>
+<div id="gt-panel">
+  <div style="font-size:12px;font-weight:700;color:var(--gold);">🌐 ترجمة الصفحة</div>
+  <div class="gt-lang-grid">
+    <button class="gt-lang-btn gt-act" onclick="gtLang('ar')">🇩🇿 عربي</button>
+    <button class="gt-lang-btn" onclick="gtLang('fr')">🇫🇷 Français</button>
+    <button class="gt-lang-btn" onclick="gtLang('en')">🇬🇧 English</button>
+    <button class="gt-lang-btn" onclick="gtLang('tr')">🇹🇷 Türkçe</button>
+    <button class="gt-lang-btn" onclick="gtLang('es')">🇪🇸 Español</button>
+    <button class="gt-lang-btn" onclick="gtLang('de')">🇩🇪 Deutsch</button>
+  </div>
+  <button onclick="document.getElementById('gt-panel').classList.remove('open')" style="margin-top:10px;background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;">✕ إغلاق</button>
+</div>
 
-<!-- ═══════════ MAIN ═══════════ --><!-- ═══════════ MAIN ═══════════ -->
+<!-- ══ SPLASH SCREEN — احترافي ══ -->
+<div id="splash">
+  <!-- حلقات التموج -->
+  <div class="splash-rings">
+    <div class="splash-ring"></div>
+    <div class="splash-ring"></div>
+    <div class="splash-ring"></div>
+  </div>
+  <!-- اللوقو الرئيسي -->
+  <div class="splash-logo-wrap">
+    <div class="splash-hex-outer">
+      <div class="splash-hex-inner" style="overflow:visible;">
+        <div class="splash-bee-icon"><svg viewBox="0 0 100 120" width="64" height="76" xmlns="http://www.w3.org/2000/svg">
+  <!-- جسم النحلة -->
+  <ellipse cx="50" cy="72" rx="22" ry="30" fill="#FFD54F"/>
+  <rect x="30" y="60" width="40" height="7" rx="3.5" fill="#1a1a00" opacity="0.75"/>
+  <rect x="30" y="72" width="40" height="7" rx="3.5" fill="#1a1a00" opacity="0.75"/>
+  <rect x="30" y="84" width="40" height="7" rx="3.5" fill="#1a1a00" opacity="0.75"/>
+  <!-- الرأس -->
+  <circle cx="50" cy="42" r="18" fill="#FFD54F"/>
+  <circle cx="44" cy="38" r="4" fill="#333"/>
+  <circle cx="56" cy="38" r="4" fill="#333"/>
+  <!-- الأجنحة -->
+  <ellipse cx="26" cy="55" rx="20" ry="10" fill="rgba(255,255,255,0.5)" transform="rotate(-20,26,55)"/>
+  <ellipse cx="74" cy="55" rx="20" ry="10" fill="rgba(255,255,255,0.5)" transform="rotate(20,74,55)"/>
+  <ellipse cx="29" cy="68" rx="13" ry="7" fill="rgba(255,255,255,0.3)" transform="rotate(-15,29,68)"/>
+  <ellipse cx="71" cy="68" rx="13" ry="7" fill="rgba(255,255,255,0.3)" transform="rotate(15,71,68)"/>
+  <!-- الإبرة -->
+  <polygon points="50,98 44,112 56,112" fill="#FF8F00"/>
+  <!-- الهوائيات -->
+  <line x1="44" y1="26" x2="34" y2="10" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="56" y1="26" x2="66" y2="10" stroke="#555" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="33" cy="9" r="3.5" fill="#FF8F00"/>
+  <circle cx="67" cy="9" r="3.5" fill="#FF8F00"/>
+</svg></div>
+      </div>
+    </div>
+  </div>
+  <!-- الاسم -->
+  <div class="splash-brand">
+    <div class="splash-title">NectarOS</div>
+    <div class="splash-sub">Beekeeping Intelligence</div>
+  </div>
+  <!-- التحميل -->
+  <div class="splash-loader">
+    <div class="splash-bar"><div class="splash-fill"></div></div>
+    <div class="splash-status">
+      <span class="splash-dots"><span class="splash-dot"></span><span class="splash-dot"></span><span class="splash-dot"></span></span>
+      <span id="splash-msg">جاري التحميل</span>
+    </div>
+  </div>
+  <!-- الإصدار -->
+  <div class="splash-version">v5.1 · نظام إدارة المناحل</div>
+</div>
+
+<!-- ═══════════ LOGIN SCREEN ═══════════ -->
+
+<!-- ═══════════ UPDATE BANNER ═══════════ -->
+<div id="update-banner">
+  <span class="update-banner-icon">🚀</span>
+  <div class="update-banner-text">
+    <b id="update-banner-text-main">🎉 إصدار جديد متاح — اضغط لتحديث التطبيق</b>
+    <div style="font-size:10px;opacity:.75;margin-top:2px;">NectarOS <span id="update-banner-ver"></span> — بياناتك محفوظة بأمان</div>
+  </div>
+  <button class="update-banner-btn" onclick="applyUpdate()">⬆️ تحديث</button>
+  <button class="update-banner-close" onclick="dismissUpdate()">✕</button>
+</div>
+
+<!-- ═══════════ LICENSE SCREEN ═══════════ -->
+<div id="license-screen" class="hidden">
+  <div class="lic-wrap">
+    <div class="lic-hex">🐝</div>
+    <div style="text-align:center;margin-bottom:18px;">
+      <div style="font-family:'Syne','Cairo',sans-serif;font-size:22px;font-weight:800;color:var(--gold);">NectarOS</div>
+      <div id="lic-status-line" style="font-size:11px;color:var(--text3);margin-top:3px;">نظام الترخيص</div>
+    </div>
+
+    <!-- Tabs -->
+    <div class="lic-tabs">
+      <button class="lic-tab active" onclick="licTab('trial')">⏱️ التجربة</button>
+      <button class="lic-tab" onclick="licTab('activate')">🔑 تفعيل</button>
+      <button class="lic-tab" onclick="licTab('devices')">📱 الأجهزة</button>
+    </div>
+
+    <!-- Trial tab -->
+    <div id="lic-panel-trial" class="lic-tab-panel active">
+      <div id="trial-info"></div>
+      <button id="trial-extend-btn" class="btn btn-secondary" style="width:100%;margin-top:10px;display:none;" onclick="extendTrial()">
+        ⏳ تمديد التجربة 15 يوم إضافياً
+      </button>
+      <button id="trial-enter-btn" class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="enterTrialApp()">
+        🐝 دخول التطبيق
+      </button>
+    </div>
+
+    <!-- Activate tab -->
+    <div id="lic-panel-activate" class="lic-tab-panel">
+      <div style="font-size:10px;color:var(--text3);margin-bottom:8px;">🔑 معرّف جهازك (أرسله للمطوّر للحصول على السيريال)</div>
+      <div class="device-id-box" id="lic-device-id">جاري التحميل...</div>
+      <button onclick="copyDeviceId()" class="btn btn-xs btn-secondary" style="width:100%;margin-bottom:12px;">📋 نسخ معرّف الجهاز</button>
+      <div class="form-group">
+        <label class="form-label">أدخل رمز التفعيل (Serial)</label>
+        <input id="lic-serial-input" class="form-control serial-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" oninput="formatSerial(this)" dir="ltr">
+      </div>
+      <button class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="activateLicense()">✅ تفعيل الترخيص</button>
+      <div id="lic-activate-msg" style="font-size:10px;text-align:center;margin-top:8px;min-height:14px;"></div>
+
+      <!-- ── قسم شراء الترخيص ── -->
+      <div style="margin-top:16px;background:rgba(255,193,7,.06);border:1px solid rgba(255,193,7,.18);border-radius:12px;padding:14px;">
+        <div style="font-size:12px;font-weight:700;color:var(--gold);margin-bottom:10px;text-align:center;">🛒 كيف تشتري الترخيص؟</div>
+
+        <!-- خطوات -->
+        <div style="font-size:10px;color:var(--text2);margin-bottom:12px;line-height:1.8;">
+          1️⃣ انسخ <b style="color:var(--gold);">معرّف جهازك</b> من الأعلى<br>
+          2️⃣ أرسله مع الدفع عبر إحدى الطرق أدناه<br>
+          3️⃣ ستصلك رمز التفعيل خلال 24 ساعة
+        </div>
+
+        <!-- PayPal -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px;margin-bottom:8px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span style="font-size:18px;">💳</span>
+            <span style="font-size:11px;font-weight:700;color:#009cde;">PayPal</span>
+          </div>
+          <div style="font-size:11px;color:var(--text);font-family:monospace;letter-spacing:.3px;word-break:break-all;background:rgba(0,156,222,.07);border-radius:6px;padding:6px 8px;display:flex;justify-content:space-between;align-items:center;">
+            <span id="pp-email-lic">benadla_amine@outlook.com</span>
+            <button onclick="navigator.clipboard.writeText('benadla_amine@outlook.com');toast('✅ تم النسخ','success')" style="background:rgba(0,156,222,.15);border:none;color:#009cde;border-radius:5px;padding:2px 7px;cursor:pointer;font-size:10px;font-family:'Cairo',sans-serif;">نسخ</button>
+          </div>
+        </div>
+
+        <!-- CCP -->
+        <div style="background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px;margin-bottom:12px;">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+            <span style="font-size:18px;">🏦</span>
+            <span style="font-size:11px;font-weight:700;color:var(--green);">حساب CCP (بريد الجزائر)</span>
+          </div>
+          <div id="ccp-info-lic" style="font-size:11px;color:var(--text2);background:rgba(76,175,80,.07);border-radius:6px;padding:8px 10px;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="color:var(--text3);">رقم الحساب</span>
+                <div style="display:flex;align-items:center;gap:6px;">
+                  <span style="font-family:monospace;font-weight:700;color:var(--green);letter-spacing:1px;">56348 93</span>
+                  <button onclick="navigator.clipboard.writeText('5634893');toast('✅ تم النسخ','success')" style="background:rgba(76,175,80,.2);border:none;color:var(--green);border-radius:5px;padding:2px 7px;cursor:pointer;font-size:10px;font-family:'Cairo',sans-serif;">نسخ</button>
+                </div>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="color:var(--text3);">المفتاح (Clé)</span>
+                <span style="font-family:monospace;font-weight:700;color:var(--green);">61</span>
+              </div>
+              <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span style="color:var(--text3);">الاسم</span>
+                <span style="font-weight:600;color:var(--text);">BENADLA MOHAMMED AMINE</span>
+              </div>
+            </div>
+        </div>
+
+        <!-- زر واتساب للتواصل -->
+        <button onclick="licContactWhatsApp()" class="btn btn-success" style="width:100%;justify-content:center;font-size:12px;">
+          💬 تواصل معنا عبر واتساب
+        </button>
+        <div style="font-size:9px;color:var(--text3);text-align:center;margin-top:6px;">أرسل معرّف جهازك + إيصال الدفع للحصول على رمز التفعيل</div>
+
+        <!-- ── وثائق التطبيق ── -->
+        <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:14px;">
+          <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:10px;text-align:center;">📄 وثائق التطبيق</div>
+          <a href="https://drive.google.com/file/d/1FtP9FVcxwsM16nSXmuDQMv2OmzJGm9fO/view?usp=drivesdk" target="_blank"
+             style="display:flex;align-items:center;gap:10px;background:rgba(33,150,243,.07);border:1px solid rgba(33,150,243,.2);border-radius:9px;padding:10px;margin-bottom:8px;text-decoration:none;">
+            <span style="font-size:20px;">📋</span>
+            <div style="flex:1;">
+              <div style="font-size:11px;font-weight:700;color:var(--blue);">البطاقة التقنية</div>
+              <div style="font-size:9px;color:var(--text3);">مواصفات التطبيق</div>
+            </div>
+            <span style="font-size:16px;">⬇️</span>
+          </a>
+          <a href="https://drive.google.com/file/d/1C5TzeOKKH1m21ElDb_7vk8_9hoeLkkrx/view?usp=drivesdk" target="_blank"
+             style="display:flex;align-items:center;gap:10px;background:rgba(255,193,7,.07);border:1px solid rgba(255,193,7,.2);border-radius:9px;padding:10px;text-decoration:none;">
+            <span style="font-size:20px;">📖</span>
+            <div style="flex:1;">
+              <div style="font-size:11px;font-weight:700;color:var(--gold);">دليل المستخدم</div>
+              <div style="font-size:9px;color:var(--text3);">شرح كامل للميزات</div>
+            </div>
+            <span style="font-size:16px;">⬇️</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Devices tab -->
+    <div id="lic-panel-devices" class="lic-tab-panel">
+      <div style="font-size:10px;color:var(--text3);margin-bottom:10px;">📱 الأجهزة المرتبطة بترخيصك (حد أقصى 4 أجهزة)</div>
+      <div id="lic-devices-list"></div>
+      <div style="margin-top:12px;">
+        <div style="font-size:10px;font-weight:700;color:var(--text3);margin-bottom:6px;">📤 مزامنة الترخيص</div>
+        <div style="display:flex;gap:6px;">
+          <button class="btn btn-sm btn-secondary" style="flex:1;" onclick="exportLicense()">📥 تصدير</button>
+          <button class="btn btn-sm btn-teal" style="flex:1;" onclick="importLicense()">📤 استيراد</button>
+        </div>
+        <input type="file" id="lic-import-file" accept=".nlic" style="display:none;" onchange="doImportLicense(this)">
+      </div>
+    </div>
+
+    <div class="login-footer" style="margin-top:16px;position:relative;cursor:default;" onclick="_ownerTap()">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+    <div id="owner-dev-btn-wrap" style="margin-top:8px;text-align:center;display:none;">
+      <button id="owner-dev-btn" onclick="openOwnerPin()" style="background:transparent;border:1px solid #333;border-radius:8px;padding:4px 14px;color:#555;font-size:10px;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s;" onmouseover="this.style.borderColor='#FFC107';this.style.color='#FFC107'" onmouseout="this.style.borderColor='#333';this.style.color='#555'">🔑 مطوّر</button>
+    </div>
+  </div>
+</div>
+
+<div id="login-screen">
+  <div class="login-logo-wrap">
+    <div class="login-hex">🐝</div>
+    <div class="login-appname">NectarOS</div>
+    <div class="login-tagline">Smart Beekeeping Platform</div>
+  </div>
+  <div class="login-card">
+    <div class="login-section-title">🐝 نظام إدارة المناحل الذكي</div>
+    <div class="form-group"><label class="form-label" id="lbl-user">اسم المستخدم</label>
+      <input id="login-user" class="form-control" placeholder="admin" autocomplete="username">
+    </div>
+    <div class="form-group"><label class="form-label" id="lbl-pass">كلمة المرور</label>
+      <input id="login-pass" class="form-control" type="password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:4px;padding:11px;" onclick="doLogin()" id="login-btn">🐝 دخول</button>
+    <div class="login-err" id="login-err"></div>
+    <div style="margin-top:12px;padding:9px 11px;background:rgba(255,193,7,.06);border:1px solid rgba(255,193,7,.14);border-radius:8px;font-size:10px;color:var(--text3);text-align:center;">
+      🔑 الدخول الافتراضي: <span style="color:var(--gold);font-weight:700;">admin</span> / <span style="color:var(--gold);font-weight:700;">1234</span>
+    </div>
+  </div>
+  <div class="login-footer">NectarOS · <span>v5.1</span> · نظام إدارة المناحل الذكي</div>
+    <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:0;left:0;right:0;height:24px;cursor:default;opacity:0;"></div>
+</div>
+
+<!-- ══ OWNER PIN BOX — فوق كل الشاشات — z-index:999999 ══ -->
+<div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:999999;align-items:center;justify-content:center;flex-direction:column;direction:rtl;">
+  <div style="background:#1a1a1a;border:2px solid #FFC107;border-radius:18px;padding:28px 24px;width:290px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 0 60px rgba(255,193,7,.25);">
+    <div style="font-size:30px;">🔑</div>
+    <div style="color:#FFC107;font-size:14px;font-weight:700;">كود المطوّر</div>
+    <input id="owner-pin-input" type="password" maxlength="20"
+      style="background:#111;border:2px solid #444;border-radius:10px;padding:12px;color:#fff;font-size:22px;letter-spacing:6px;text-align:center;outline:none;width:100%;font-family:monospace;transition:.2s;"
+      placeholder="••••••••••" onfocus="this.style.borderColor='#FFC107'" onblur="this.style.borderColor='#444'"
+      onkeydown="if(event.key==='Enter')_ownerPinSubmit()">
+    <div id="owner-pin-err" style="color:#f44336;font-size:11px;min-height:16px;font-weight:600;"></div>
+    <div style="display:flex;gap:10px;width:100%;">
+      <button onclick="_ownerPinSubmit()" style="flex:1;background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:10px;padding:11px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Cairo',sans-serif;">دخول ✓</button>
+      <button onclick="closeOwnerPin()" style="flex:1;background:#2a2a2a;color:#aaa;border:1px solid #444;border-radius:10px;padding:11px;cursor:pointer;font-size:13px;font-family:'Cairo',sans-serif;">إلغاء</button>
+    </div>
+  </div>
+</div>
+
+<div id="app">
+
+<!-- ═══════════ SIDEBAR ═══════════ -->
+<nav id="sidebar">
+  <div class="logo">
+    <div class="logo-hex">🐝</div>
+    <div><div class="logo-text" style="font-family:'Syne','Cairo',sans-serif;font-size:15px;letter-spacing:-.5px;">NectarOS</div><div class="logo-sub">Smart Beekeeping · v5.1</div></div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label" data-i18n="nav_main">الرئيسية</div>
+    <div class="nav-item active" id="nav-dashboard" onclick="go('dashboard')"><span class="nav-icon">📊</span><span class="nav-text" data-i18n="nav_dashboard">لوحة التحكم</span></div>
+    <div class="nav-item" id="nav-apiaries" onclick="go('apiaries')"><span class="nav-icon">🗺️</span><span class="nav-text" data-i18n="nav_apiaries">المناحل والمواقع</span></div>
+    <div class="nav-item" id="nav-map" onclick="go('map')"><span class="nav-icon">📍</span><span class="nav-text" data-i18n="nav_map">الخريطة التفاعلية</span></div>
+    <div class="nav-item" id="nav-advanced" onclick="go('advanced')"><span class="nav-icon">📈</span><span class="nav-text" data-i18n="nav_advanced">مقاييس متقدمة</span></div>
+    <div class="nav-item" id="nav-hives" onclick="go('hives')"><span class="nav-icon">⬡</span><span class="nav-text" data-i18n="nav_hives">الخلايا</span></div>
+    <div class="nav-item" id="nav-calendar" onclick="go('calendar')"><span class="nav-icon">📅</span><span class="nav-text" data-i18n="nav_calendar">التقويم</span></div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label" data-i18n="nav_bee_health">صحة النحل</div>
+    <div class="nav-item" id="nav-inspections" onclick="go('inspections')"><span class="nav-icon">🔍</span><span class="nav-text" data-i18n="nav_inspections">سجل الفحوصات</span></div>
+    <div class="nav-item" id="nav-treatments" onclick="go('treatments')"><span class="nav-icon">💊</span><span class="nav-text">سجل العلاجات</span></div>
+    <div class="nav-item" id="nav-weights" onclick="go('weights')"><span class="nav-icon">⚖️</span><span class="nav-text" data-i18n="nav_weights">سجل الأوزان</span></div>
+    <div class="nav-item" id="nav-harvest" onclick="go('harvest')"><span class="nav-icon">🍯</span><span class="nav-text" data-i18n="nav_harvest">سجل الحصاد</span></div>
+    <div class="nav-item" id="nav-batches" onclick="go('batches')"><span class="nav-icon">🏷️</span><span class="nav-text">دفعات العسل</span></div>
+    <div class="nav-item" id="nav-queens" onclick="go('queens')"><span class="nav-icon">🧬</span><span class="nav-text" data-i18n="nav_queens">جينات الملكات</span></div>
+    <div class="nav-item" id="nav-health" onclick="go('health')"><span class="nav-icon">📜</span><span class="nav-text" data-i18n="nav_health">الشهادات الصحية</span></div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label" data-i18n="nav_equipment">المعدات والمخزن</div>
+    <div class="nav-item" id="nav-assets" onclick="go('assets')"><span class="nav-icon">🏷️</span><span class="nav-text" data-i18n="nav_assets">باركود المعدات</span></div>
+    <div class="nav-item" id="nav-inventory" onclick="go('inventory')"><span class="nav-icon">📦</span><span class="nav-text" data-i18n="nav_inventory">المخزن</span></div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label" data-i18n="nav_commerce">التجارة</div>
+    <div class="nav-item" id="nav-store" onclick="go('store')"><span class="nav-icon">🛒</span><span class="nav-text" data-i18n="nav_store">المتجر المباشر</span></div>
+    <div class="nav-item" id="nav-crm" onclick="go('crm')"><span class="nav-icon">👥</span><span class="nav-text" data-i18n="nav_crm">العملاء</span></div>
+    <div class="nav-item" id="nav-sales" onclick="go('sales')"><span class="nav-icon">💰</span><span class="nav-text" data-i18n="nav_sales">المبيعات</span></div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label" data-i18n="nav_finance">المالية</div>
+    <div class="nav-item" id="nav-expenses" onclick="go('expenses')"><span class="nav-icon">💸</span><span class="nav-text" data-i18n="nav_expenses">المصاريف</span></div>
+    <div class="nav-item" id="nav-profit" onclick="go('profit')"><span class="nav-icon">💹</span><span class="nav-text" data-i18n="nav_profit">الربح والخسارة</span></div>
+    <div class="nav-item" id="nav-finance" onclick="go('finance')"><span class="nav-icon">📈</span><span class="nav-text" data-i18n="nav_finance_rep">التقارير المالية</span></div>
+  </div>
+  <!-- ══ الذكاء الاصطناعي ══ -->
+  <div class="nav-section">
+    <div class="nav-label">الذكاء الاصطناعي</div>
+    <div class="nav-item" id="nav-ai" onclick="go('ai')"><span class="nav-icon">🤖</span><span class="nav-text">الذكاء الاصطناعي</span></div>
+    <div class="nav-item" id="nav-aiplus" onclick="go('aiplus')"><span class="nav-icon">🧠</span><span class="nav-text">AI+ متقدم</span></div>
+  </div>
+  <!-- ══ التحليل والتخطيط ══ -->
+  <div class="nav-section">
+    <div class="nav-label">التحليل والتخطيط</div>
+    <div class="nav-item" id="nav-goals" onclick="go('goals')"><span class="nav-icon">🎯</span><span class="nav-text">أهداف الإنتاج</span></div>
+    <div class="nav-item" id="nav-seasonal" onclick="go('seasonal')"><span class="nav-icon">📅</span><span class="nav-text">الجدول الموسمي</span></div>
+    <div class="nav-item" id="nav-radar" onclick="go('radar')"><span class="nav-icon">📊</span><span class="nav-text">مقارنة الخلايا</span></div>
+    <div class="nav-item" id="nav-compare" onclick="go('compare')"><span class="nav-icon">🔄</span><span class="nav-text">مقارنة السنوات</span></div>
+    <div class="nav-item" id="nav-advstats" onclick="go('advstats')"><span class="nav-icon">📈</span><span class="nav-text">إحصائيات متقدمة</span></div>
+    <div class="nav-item" id="nav-losses" onclick="go('losses')"><span class="nav-icon">📉</span><span class="nav-text">تحليل الخسائر</span></div>
+    <div class="nav-item" id="nav-annual" onclick="go('annual')"><span class="nav-icon">📋</span><span class="nav-text">التقرير السنوي</span></div>
+  </div>
+  <!-- ══ المراقبة والميدان ══ -->
+  <div class="nav-section">
+    <div class="nav-label">المراقبة والميدان</div>
+    <div class="nav-item" id="nav-weather" onclick="go('weather')"><span class="nav-icon">🌡️</span><span class="nav-text">طقس المناحل</span></div>
+    <div class="nav-item" id="nav-tempmon" onclick="go('tempmon')"><span class="nav-icon">🌡️</span><span class="nav-text">مراقبة الحرارة</span></div>
+    <div class="nav-item" id="nav-fieldmode" onclick="go('fieldmode')"><span class="nav-icon">🌾</span><span class="nav-text">وضع الحقل</span></div>
+    <div class="nav-item" id="nav-scanner" onclick="go('scanner')"><span class="nav-icon">📷</span><span class="nav-text">ماسح الباركود</span></div>
+    <div class="nav-item" id="nav-foragemap" onclick="go('foragemap')"><span class="nav-icon">🗺️</span><span class="nav-text">خريطة الرعي</span></div>
+  </div>
+  <!-- ══ الموارد والمعرفة ══ -->
+  <div class="nav-section">
+    <div class="nav-label">الموارد والمعرفة</div>
+    <div class="nav-item" id="nav-plants" onclick="go('plants')"><span class="nav-icon">🌿</span><span class="nav-text">نباتات المناحل</span></div>
+    <div class="nav-item" id="nav-disease" onclick="go('disease')"><span class="nav-icon">🐛</span><span class="nav-text">دليل الأمراض</span></div>
+    <div class="nav-item" id="nav-calcs" onclick="go('calcs')"><span class="nav-icon">🧮</span><span class="nav-text">الحاسبات</span></div>
+    <div class="nav-item" id="nav-honeylabs" onclick="go('honeylabs')"><span class="nav-icon">🧪</span><span class="nav-text">مختبر العسل</span></div>
+  </div>
+  <!-- ══ التنظيم الشخصي ══ -->
+  <div class="nav-section">
+    <div class="nav-label">التنظيم الشخصي</div>
+    <div class="nav-item" id="nav-notifs" onclick="go('notifs')"><span class="nav-icon">🔔</span><span class="nav-text">التذكيرات</span></div>
+    <div class="nav-item" id="nav-pushnotifs" onclick="go('pushnotifs')"><span class="nav-icon">📲</span><span class="nav-text">إشعارات الهاتف</span></div>
+    <div class="nav-item" id="nav-tasks" onclick="go('tasks')"><span class="nav-icon">🗓️</span><span class="nav-text">مهام الأسبوع</span></div>
+    <div class="nav-item" id="nav-journal" onclick="go('journal')"><span class="nav-icon">📝</span><span class="nav-text">المذكرة اليومية</span></div>
+    <div class="nav-item" id="nav-achievements" onclick="go('achievements')"><span class="nav-icon">🏆</span><span class="nav-text">الإنجازات</span></div>
+  </div>
+  <!-- ══ العمليات المتقدمة ══ -->
+  <div class="nav-section">
+    <div class="nav-label">العمليات المتقدمة</div>
+    <div class="nav-item" id="nav-orders" onclick="go('orders')"><span class="nav-icon">📦</span><span class="nav-text">الطلبات والشحن</span></div>
+    <div class="nav-item" id="nav-invoice" onclick="go('invoice')"><span class="nav-icon">🔢</span><span class="nav-text">الفواتير</span></div>
+    <div class="nav-item" id="nav-wareport" onclick="go('wareport')"><span class="nav-icon">📱</span><span class="nav-text">تقرير واتساب</span></div>
+    <div class="nav-item" id="nav-team" onclick="go('team')"><span class="nav-icon">👥</span><span class="nav-text">فريق العمل</span></div>
+    <div class="nav-item" id="nav-integrations" onclick="go('integrations')"><span class="nav-icon">🔗</span><span class="nav-text">التكاملات</span></div>
+  </div>
+  <!-- ══ النظام ══ -->
+  <div class="sidebar-bottom">
+    <div class="nav-item" id="nav-themes" onclick="go('themes')"><span class="nav-icon">🎨</span><span class="nav-text">الثيمات والمظهر</span></div>
+    <div class="nav-item" id="nav-security" onclick="go('security')"><span class="nav-icon">🔐</span><span class="nav-text">الأمان والخصوصية</span></div>
+    <div class="nav-item" id="nav-contact" onclick="go('contact')"><span class="nav-icon">📬</span><span class="nav-text">اتصل بنا</span></div>
+    <div class="nav-item" id="nav-settings" onclick="go('settings')"><span class="nav-icon">⚙️</span><span class="nav-text">الإعدادات</span></div>
+    <div class="nav-item" onclick="doLogout()" style="color:var(--red);"><span class="nav-icon">🚪</span><span class="nav-text">تسجيل الخروج</span></div>
+  </div>
+</nav>
+<div id="overlay" onclick="closeSB()"></div>
+
+<!-- ═══════════ MAIN ═══════════ -->
 <div id="main">
   <div id="topbar">
     <div style="display:flex;align-items:center;gap:7px;min-width:0;">
@@ -892,6 +1283,7 @@ body{top:0!important;}
       <div id="alert-badge" class="badge br" style="display:none;">⚠️ <span id="alert-num">0</span></div>
       <button class="btn-icon" onclick="go('ai')" title="الذكاء الاصطناعي" style="color:var(--gold);">🤖</button>
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+      <button class="btn-icon" id="gt-btn" onclick="document.getElementById('gt-panel').classList.toggle('open')" title="ترجمة الصفحة" style="color:var(--blue);">🌐</button>
       <button class="btn-icon" onclick="exportData()" title="تصدير">📤</button>
       <button class="btn-icon" onclick="exportPDF()" title="PDF" style="color:var(--red);">📄</button>
       <button class="btn-icon" onclick="triggerImport()">📥</button>
@@ -1584,13 +1976,10 @@ body{top:0!important;}
         <!-- Admin panel — مخفية، تظهر فقط لجهاز المالك -->
         <div id="dev-panel" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
           <div style="background:rgba(255,193,7,.06);border:1px solid rgba(255,193,7,.2);border-radius:10px;padding:12px;">
-            <div style="font-size:11px;font-weight:800;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:6px;">
+            <div style="font-size:11px;font-weight:800;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;">
               🛠️ لوحة المطوّر
               <span style="font-size:9px;background:var(--gold);color:#000;padding:2px 6px;border-radius:10px;">للمطوّر فقط</span>
             </div>
-
-            <!-- ─ توليد سيريال ─ -->
-            <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:8px;text-transform:uppercase;letter-spacing:.8px;">⚡ توليد ترخيص جديد</div>
             <div class="form-group">
               <label class="form-label">Device ID للعميل</label>
               <input id="admin-device-id" class="form-control" style="font-family:monospace;font-size:11px;" placeholder="XXXX-XXXX-XXXX-XXXX" dir="ltr">
@@ -1606,57 +1995,17 @@ body{top:0!important;}
               </select>
             </div>
             <div class="form-group">
-              <label class="form-label">ملاحظة (اسم العميل)</label>
+              <label class="form-label">ملاحظة (اختياري)</label>
               <input id="admin-note" class="form-control" placeholder="اسم العميل...">
             </div>
             <button class="btn btn-primary" style="width:100%;" onclick="adminGenerateSerial()">⚡ توليد السيريال وحفظه</button>
             <div id="admin-serial-result" style="font-family:monospace;font-size:14px;font-weight:700;color:var(--gold);min-height:20px;text-align:center;letter-spacing:3px;margin-top:8px;padding:8px;background:var(--bg3);border-radius:8px;"></div>
             <div id="admin-serial-info" style="font-size:10px;color:var(--text2);text-align:center;margin-top:4px;"></div>
-            <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:6px;" onclick="adminCopySerial()">📋 نسخ السيريال</button>
-
-            <!-- ─ إدارة التراخيص ─ -->
-            <div style="margin-top:14px;border-top:1px solid var(--border);padding-top:12px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <div style="font-size:10px;font-weight:700;color:var(--text2);text-transform:uppercase;letter-spacing:.8px;">📋 إدارة التراخيص</div>
-                <button class="btn btn-secondary btn-sm" onclick="adminLoadUsers()">🔄 تحديث</button>
-              </div>
-              <!-- فلتر البحث -->
-              <input id="admin-search" class="form-control" style="font-size:11px;margin-bottom:8px;" placeholder="🔍 بحث بالاسم أو Device ID..." oninput="adminFilterUsers()">
-              <!-- قائمة التراخيص -->
-              <div id="admin-users-list" style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;"></div>
-            </div>
-
-            <!-- ─ مودال تعديل الترخيص ─ -->
-            <div id="admin-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:9999;align-items:center;justify-content:center;padding:20px;">
-              <div style="background:var(--card);border:1px solid var(--gold3);border-radius:16px;padding:18px;width:100%;max-width:360px;direction:rtl;">
-                <div style="font-size:13px;font-weight:800;color:var(--gold);margin-bottom:14px;">✏️ تعديل الترخيص</div>
-                <input type="hidden" id="edit-lic-id">
-                <div class="form-group">
-                  <label class="form-label">Device ID</label>
-                  <input id="edit-lic-device" class="form-control" style="font-family:monospace;font-size:11px;" readonly dir="ltr">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">الحالة</label>
-                  <select id="edit-lic-status" class="form-control">
-                    <option value="active">✅ نشط</option>
-                    <option value="trial">🕐 تجريبي</option>
-                    <option value="expired">🔒 منتهي</option>
-                    <option value="blocked">🚫 محظور</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">تاريخ الانتهاء</label>
-                  <input id="edit-lic-expires" class="form-control" type="date">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">ملاحظات</label>
-                  <input id="edit-lic-notes" class="form-control" placeholder="اسم العميل أو ملاحظة...">
-                </div>
-                <div style="display:flex;gap:8px;margin-top:4px;">
-                  <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="document.getElementById('admin-edit-modal').style.display='none'">إلغاء</button>
-                  <button class="btn btn-primary btn-sm" style="flex:1;" onclick="adminSaveEditLicense()">💾 حفظ</button>
-                </div>
-              </div>
+            <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px;" onclick="adminCopySerial()">📋 نسخ السيريال</button>
+            <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;">
+              <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:6px;">قائمة المستخدمين</div>
+              <button class="btn btn-secondary btn-sm" onclick="adminLoadUsers()">🔄 تحميل</button>
+              <div id="admin-users-list" style="margin-top:8px;max-height:200px;overflow-y:auto;"></div>
             </div>
           </div>
         </div>
@@ -6970,8 +7319,8 @@ function checkAndPush(){
    🔐 LICENSE / SERIAL NUMBER SYSTEM
    NectarOS v5.2 — كامل مع مزامنة 4 أجهزة
 ══════════════════════════════════════════════════ */
-const APP_VERSION = '5.3';
-const APP_VERSION_CODE = 530;
+const APP_VERSION = '5.2';
+const APP_VERSION_CODE = 520;
 const TRIAL_DAYS = 15;
 const MAX_DEVICES = 4;
 const _SALT = 'NectarOS2025Bee';
@@ -7002,7 +7351,6 @@ async function sbQuery(method, path, body) {
     if (method === 'GET' || (method === 'POST' && res.ok)) {
       try { return await res.json(); } catch { return null; }
     }
-    if (method === 'DELETE') return res.ok;
     return res.ok;
   } catch(e) { clearTimeout(timer); throw e; }
 }
@@ -7538,112 +7886,10 @@ function doImportLicense(input){
 }
 
 /* ══════════════════════════════════════════════════
-   📢 NECTAROS ADS SYSTEM — يتحكم فيه المطوّر عن بُعد
+   🔄 UPDATE NOTIFICATION SYSTEM
 ══════════════════════════════════════════════════ */
-
-// ─── رابط ملف الإعلانات على GitHub Gist ───
-// عدّل هذا الملف متى شئت وستظهر التغييرات فوراً عند العملاء
-const ADS_URL = 'https://gist.githubusercontent.com/benadla-amine/4a80726ac2cceecf8c03797aaa912849/raw/ads.json';
-const ADS_CACHE_KEY  = '_nec_ads_cache';
-const ADS_CACHE_TIME = '_nec_ads_time';
-const ADS_CACHE_TTL  = 3 * 60 * 60 * 1000; // 3 ساعات
-
-// ─── هل يجب إظهار الإعلانات؟ ───
-function shouldShowAds(){
-  // فقط للنسخة غير المفعّلة (تجريبية أو منتهية)
-  const owner = localStorage.getItem('_nec_owner_verified') === '1';
-  const lic   = getLicense();
-  const licensed = owner || (lic && lic.active && lic.serial);
-  return !licensed;
-}
-
-// ─── جلب الإعلانات (مع كاش محلي) ───
-async function fetchAds(){
-  // هل عندنا كاش حديث؟
-  const cached = localStorage.getItem(ADS_CACHE_KEY);
-  const cachedAt = parseInt(localStorage.getItem(ADS_CACHE_TIME)||'0');
-  if(cached && Date.now() - cachedAt < ADS_CACHE_TTL){
-    try{ return JSON.parse(cached); }catch(e){}
-  }
-  // جلب من الإنترنت
-  try{
-    const r = await fetch(ADS_URL + '?t=' + Date.now(), {cache:'no-store'});
-    if(!r.ok) throw new Error('HTTP '+r.status);
-    const data = await r.json();
-    localStorage.setItem(ADS_CACHE_KEY,  JSON.stringify(data));
-    localStorage.setItem(ADS_CACHE_TIME, Date.now().toString());
-    return data;
-  }catch(e){
-    // إذا فشل الجلب أرجع الكاش القديم أو null
-    if(cached){ try{ return JSON.parse(cached); }catch(e2){} }
-    return null;
-  }
-}
-
-// ─── رسم بطاقة إعلان واحدة ───
-function renderAdCard(ad){
-  const badge = ad.badge ? `<div style="position:absolute;top:10px;left:10px;background:${ad.badgeColor||'var(--gold)'};color:#000;font-size:10px;font-weight:800;padding:3px 9px;border-radius:20px;">${ad.badge}</div>` : '';
-  const img   = ad.image ? `<img src="${ad.image}" loading="lazy" style="width:100%;height:180px;object-fit:cover;border-radius:10px 10px 0 0;display:block;" onerror="this.style.display='none'">` : '';
-  const link  = ad.link  ? `<a href="${ad.link}" target="_blank" style="display:block;background:linear-gradient(135deg,var(--gold),#FF8F00);color:#000;text-align:center;padding:10px;border-radius:8px;font-weight:800;font-size:13px;text-decoration:none;margin-top:10px;">${ad.cta||'اعرف أكثر ←'}</a>` : '';
-  return `
-    <div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;">
-      ${img}
-      <div style="padding:12px;position:relative;">
-        ${badge}
-        <div style="font-size:13px;font-weight:700;color:var(--text);margin-bottom:5px;">${ad.title||''}</div>
-        <div style="font-size:11px;color:var(--text2);line-height:1.7;">${ad.body||''}</div>
-        ${link}
-      </div>
-    </div>`;
-}
-
-// ─── فتح لوحة الإعلانات ───
-async function openAdsPanel(){
-  const panel = document.getElementById('ads-panel');
-  if(!panel) return;
-  panel.style.display = 'flex';
-  // جلب وعرض
-  const data = await fetchAds();
-  const list = document.getElementById('ads-list');
-  if(!list) return;
-  if(!data || !data.ads || !data.ads.length){
-    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3);"><div style="font-size:40px;">📭</div><div style="font-size:13px;margin-top:10px;">لا توجد إعلانات حالياً</div></div>';
-    return;
-  }
-  // فلتر الإعلانات النشطة
-  const now = Date.now();
-  const active = data.ads.filter(a => {
-    if(a.active === false) return false;
-    if(a.startDate && new Date(a.startDate).getTime() > now) return false;
-    if(a.endDate   && new Date(a.endDate).getTime()   < now) return false;
-    return true;
-  });
-  if(!active.length){
-    list.innerHTML = '<div style="text-align:center;padding:40px;color:var(--text3);"><div style="font-size:40px;">📭</div><div style="font-size:13px;margin-top:10px;">لا توجد إعلانات نشطة</div></div>';
-    return;
-  }
-  list.innerHTML = active.map(renderAdCard).join('');
-}
-
-// ─── إغلاق لوحة الإعلانات ───
-function closeAdsPanel(){
-  const panel = document.getElementById('ads-panel');
-  if(panel) panel.style.display = 'none';
-  // سجّل أن المستخدم رأى الإعلانات هذه الجلسة
-  sessionStorage.setItem('_nec_ads_seen','1');
-}
-
-// ─── تشغيل تلقائي عند بدء التطبيق ───
-function initAdsSystem(){
-  if(!shouldShowAds()) return;                       // مرخّص — لا إعلانات
-  if(sessionStorage.getItem('_nec_ads_seen')) return; // رأى الإعلانات مسبقاً في هذه الجلسة
-  // انتظر ثانية بعد تحميل التطبيق ثم أظهر
-  setTimeout(()=>{ if(shouldShowAds()) openAdsPanel(); }, 1200);
-}
-
-
 function checkForUpdates(){
-  const CACHE_KEY = 'nectaros-v7'; // يجب أن يطابق اسم الكاش في السيرفس ووركر
+  const CACHE_KEY = 'nectaros-v6'; // يجب أن يطابق اسم الكاش في السيرفس ووركر
   const storedCache = localStorage.getItem('_nec_cache_ver');
   const storedCode  = parseInt(localStorage.getItem('_nec_installed_ver')||'0');
 
@@ -7674,7 +7920,7 @@ function checkForUpdates(){
 
 function applyUpdate(){
   localStorage.setItem('_nec_installed_ver', APP_VERSION_CODE.toString());
-  localStorage.setItem('_nec_cache_ver', 'nectaros-v7');
+  localStorage.setItem('_nec_cache_ver', 'nectaros-v6');
   dismissUpdate();
   toast('⏳ جارٍ تطبيق التحديث...','success');
   // طبّق السيرفس ووركر الجديد إن وُجد، وإلا أعد التحميل
@@ -7768,8 +8014,6 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
-// تشغيل نظام الإعلانات (للنسخة المجانية فقط)
-initAdsSystem();
 // ══ فحص فوري لجهاز المالك — يعمل قبل checkLicense ══
 // جهاز D028-6040-0FC3-4586 يُفعَّل مباشرة بدون أي شاشة
 (function _ownerBootCheck(){
@@ -8911,103 +9155,29 @@ function adminCopySerial() {
   }
 }
 
-// ─── كاش التراخيص للفلترة المحلية ───
-let _adminLicCache = [];
-
 async function adminLoadUsers() {
   const el = document.getElementById('admin-users-list');
   if (!el) return;
-  el.innerHTML = '<div style="color:var(--text3);font-size:11px;text-align:center;padding:12px;">⏳ جارٍ التحميل...</div>';
+  el.innerHTML = '<div style="color:var(--text3);font-size:11px;">⏳ جارٍ التحميل...</div>';
   try {
-    const data = await sbQuery('GET', 'licenses?select=*&order=install_date.desc&limit=100');
-    if (!data || !data.length) {
-      el.innerHTML = '<div style="color:var(--text3);font-size:11px;text-align:center;padding:12px;">📭 لا توجد تراخيص بعد</div>';
-      return;
-    }
-    _adminLicCache = data;
-    _renderLicenseList(data);
+    const data = await sbQuery('GET', 'licenses?select=*&order=install_date.desc&limit=50');
+    if (!data || !data.length) { el.innerHTML = '<div style="color:var(--text3);font-size:11px;">لا مستخدمون بعد</div>'; return; }
+    el.innerHTML = data.map(r => {
+      const sc = {active:'✅',trial:'🕐',expired:'🔒',blocked:'🚫'}[r.status]||'?';
+      const scol = {active:'var(--green)',trial:'var(--gold)',expired:'var(--red)',blocked:'var(--red)'}[r.status]||'var(--text3)';
+      const exp = r.serial_expires ? new Date(r.serial_expires).toLocaleDateString('ar-DZ') : '—';
+      return `<div style="padding:6px;border-bottom:1px solid var(--border);font-size:9px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+          <span style="color:${scol};font-weight:700;">${sc} ${r.status}</span>
+          <span style="color:var(--text3);">${exp}</span>
+        </div>
+        <div style="color:var(--gold);font-family:monospace;word-break:break-all;">${r.device_id}</div>
+        ${r.serial?`<div style="color:var(--text2);">SN: ${r.serial}</div>`:''}
+        ${r.notes?`<div style="color:var(--text3);">${r.notes}</div>`:''}
+      </div>`;
+    }).join('');
   } catch(e) {
-    el.innerHTML = '<div style="color:var(--red);font-size:11px;text-align:center;padding:12px;">❌ فشل الاتصال بـ Supabase</div>';
-  }
-}
-
-function adminFilterUsers() {
-  const q = (document.getElementById('admin-search')?.value || '').toLowerCase().trim();
-  if (!q) { _renderLicenseList(_adminLicCache); return; }
-  const filtered = _adminLicCache.filter(r =>
-    (r.device_id||'').toLowerCase().includes(q) ||
-    (r.notes||'').toLowerCase().includes(q) ||
-    (r.serial||'').toLowerCase().includes(q)
-  );
-  _renderLicenseList(filtered);
-}
-
-function _renderLicenseList(data) {
-  const el = document.getElementById('admin-users-list');
-  if (!el) return;
-  if (!data.length) {
-    el.innerHTML = '<div style="color:var(--text3);font-size:11px;text-align:center;padding:12px;">🔍 لا نتائج</div>';
-    return;
-  }
-  const statusMap = {active:{icon:'✅',col:'var(--green)',label:'نشط'},trial:{icon:'🕐',col:'var(--gold)',label:'تجريبي'},expired:{icon:'🔒',col:'var(--red)',label:'منتهي'},blocked:{icon:'🚫',col:'var(--red)',label:'محظور'}};
-  el.innerHTML = data.map(r => {
-    const st = statusMap[r.status] || {icon:'?',col:'var(--text3)',label:r.status||'—'};
-    const exp = r.serial_expires ? new Date(r.serial_expires).toLocaleDateString('ar-DZ') : '—';
-    const expDate = r.serial_expires ? r.serial_expires.slice(0,10) : '';
-    const isExpired = r.serial_expires && new Date(r.serial_expires) < new Date();
-    return `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:9px;font-size:10px;">
-      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;">
-        <span style="color:${st.col};font-weight:800;">${st.icon} ${st.label}</span>
-        <span style="color:${isExpired?'var(--red)':'var(--text3)'};">${isExpired?'⚠️ ':''} ${exp}</span>
-      </div>
-      ${r.notes?`<div style="color:var(--text);font-weight:700;margin-bottom:3px;">👤 ${r.notes}</div>`:''}
-      <div style="color:var(--gold);font-family:monospace;font-size:9px;word-break:break-all;margin-bottom:3px;">${r.device_id||'—'}</div>
-      ${r.serial?`<div style="color:var(--text2);font-family:monospace;font-size:9px;">SN: ${r.serial}</div>`:''}
-      <div style="display:flex;gap:5px;margin-top:7px;">
-        <button class="btn btn-secondary btn-xs" style="flex:1;" onclick="adminOpenEdit('${r.id}','${(r.device_id||'').replace(/'/g,"\'")}','${r.status||''}','${expDate}','${(r.notes||'').replace(/'/g,"\'")}')">✏️ تعديل</button>
-        <button class="btn btn-xs" style="flex:1;background:rgba(244,67,54,.1);color:var(--red);border:1px solid rgba(244,67,54,.2);" onclick="adminDeleteLicense('${r.id}','${(r.device_id||'').replace(/'/g,"\'")}')">🗑️ حذف</button>
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function adminOpenEdit(id, deviceId, status, expires, notes) {
-  document.getElementById('edit-lic-id').value = id;
-  document.getElementById('edit-lic-device').value = deviceId;
-  document.getElementById('edit-lic-status').value = status || 'active';
-  document.getElementById('edit-lic-expires').value = expires || '';
-  document.getElementById('edit-lic-notes').value = notes || '';
-  document.getElementById('admin-edit-modal').style.display = 'flex';
-}
-
-async function adminSaveEditLicense() {
-  const id      = document.getElementById('edit-lic-id').value;
-  const status  = document.getElementById('edit-lic-status').value;
-  const expires = document.getElementById('edit-lic-expires').value;
-  const notes   = document.getElementById('edit-lic-notes').value.trim();
-  if (!id) return;
-  try {
-    const payload = { status };
-    if (expires) payload.serial_expires = new Date(expires).toISOString();
-    if (notes)   payload.notes = notes;
-    await sbQuery('PATCH', 'licenses?id=eq.' + encodeURIComponent(id), payload);
-    document.getElementById('admin-edit-modal').style.display = 'none';
-    toast('✅ تم تحديث الترخيص', 'success');
-    adminLoadUsers();
-  } catch(e) {
-    toast('❌ فشل التحديث: ' + e.message, 'error');
-  }
-}
-
-async function adminDeleteLicense(id, deviceId) {
-  if (!confirm(`هل تريد حذف ترخيص الجهاز:\n${deviceId}\n\nهذا الإجراء لا يمكن التراجع عنه.`)) return;
-  try {
-    await sbQuery('DELETE', 'licenses?id=eq.' + encodeURIComponent(id));
-    _adminLicCache = _adminLicCache.filter(r => r.id !== id);
-    _renderLicenseList(_adminLicCache);
-    toast('🗑️ تم حذف الترخيص', 'success');
-  } catch(e) {
-    toast('❌ فشل الحذف: ' + e.message, 'error');
+    el.innerHTML = '<div style="color:var(--red);font-size:11px;">❌ فشل الاتصال بـ Supabase</div>';
   }
 }
 
@@ -9047,7 +9217,27 @@ function logActivity(action){
   log.push({action,time:new Date().toLocaleString('ar'),date:today()});
   DB.set('activity_log',log.slice(-100));
 }
-/* ══ GOOGLE TRANSLATE REMOVED ══ */
+/* ══ GOOGLE TRANSLATE ══ */
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'ar',includedLanguages:'ar,fr,en,tr,es,de',autoDisplay:false},'google_translate_element');
+}
+function gtLang(lang){
+  document.querySelectorAll('.gt-lang-btn').forEach(b=>b.classList.remove('gt-act'));
+  event?.target?.classList.add('gt-act');
+  if(lang==='ar'){document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';location.reload();return;}
+  document.cookie=`googtrans=/ar/${lang}; path=/`;
+  const tryIt=(n)=>{
+    const sel=document.querySelector('.goog-te-combo');
+    if(sel){sel.value=lang;sel.dispatchEvent(new Event('change'));document.getElementById('gt-panel').classList.remove('open');toast('✅ تمت الترجمة','success');}
+    else if(n<8)setTimeout(()=>tryIt(n+1),500);
+    else toast('⚠️ تحتاج اتصالاً بالإنترنت للترجمة','warning');
+  };
+  tryIt(0);
+}
+document.addEventListener('click',e=>{
+  const p=document.getElementById('gt-panel'),b=document.getElementById('gt-btn');
+  if(p&&b&&!p.contains(e.target)&&!b.contains(e.target))p.classList.remove('open');
+});
 
 </script>
 </body>
