@@ -893,9 +893,43 @@ tr:hover td{background:rgba(255,255,255,.02);}
 /* ── Google Translate Panel ── */
 body{top:0!important;}
 
+
+/* ══ ADS SYSTEM ══ */
+#ads-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:8500;align-items:flex-end;justify-content:center;padding:0 0 16px;}
+#ads-overlay.show{display:flex;animation:fadein .3s ease;}
+@keyframes fadein{from{opacity:0;}to{opacity:1;}}
+#ads-card{background:var(--card);border:1px solid var(--gold3);border-radius:18px 18px 14px 14px;width:100%;max-width:440px;overflow:hidden;box-shadow:0 -8px 40px rgba(0,0,0,.6);}
+#ads-card img.ads-img{width:100%;height:180px;object-fit:cover;display:block;}
+.ads-body{padding:14px;}
+.ads-badge{display:inline-block;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;color:#000;margin-bottom:8px;}
+.ads-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:6px;}
+.ads-desc{font-size:12px;color:var(--text2);line-height:1.7;margin-bottom:12px;}
+.ads-cta{display:block;background:linear-gradient(135deg,var(--gold),#FF8F00);color:#000;text-align:center;padding:11px;border-radius:10px;font-weight:800;font-size:13px;text-decoration:none;border:none;width:100%;cursor:pointer;font-family:'Cairo',sans-serif;}
+.ads-footer{display:flex;align-items:center;justify-content:space-between;padding:8px 14px 12px;border-top:1px solid var(--border);}
+.ads-skip{background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;font-family:'Cairo',sans-serif;padding:4px 8px;}
+.ads-skip:hover{color:var(--text);}
+.ads-powered{font-size:9px;color:var(--text3);}
 </style>
 </head>
 <body>
+
+<!-- ══ ADS OVERLAY ══ -->
+<div id="ads-overlay">
+  <div id="ads-card">
+    <img id="ads-img" class="ads-img" src="" alt="" style="display:none;">
+    <div class="ads-body">
+      <span id="ads-badge" class="ads-badge" style="display:none;"></span>
+      <div id="ads-title" class="ads-title"></div>
+      <div id="ads-desc" class="ads-desc"></div>
+      <button id="ads-cta-btn" class="ads-cta" style="display:none;" onclick="adsCtaClick()"></button>
+    </div>
+    <div class="ads-footer">
+      <button class="ads-skip" onclick="closeAds()">تخطي ✕</button>
+      <span class="ads-powered">إعلان · NectarOS</span>
+    </div>
+  </div>
+</div>
+
 
 <!-- ══ SPLASH SCREEN — احترافي ══ -->
 <div id="splash">
@@ -7884,8 +7918,87 @@ function doImportLicense(input){
 /* ══════════════════════════════════════════════════
    🔄 UPDATE NOTIFICATION SYSTEM
 ══════════════════════════════════════════════════ */
+/* ══ ADS SYSTEM ══ */
+const ADS_URL = 'https://gist.githubusercontent.com/benadla-amine/4a80726ac2cceecf8c03797aaa912849/raw/ads.json';
+const ADS_CACHE_KEY = '_nec_ads_data';
+const ADS_TIME_KEY  = '_nec_ads_time';
+const ADS_CACHE_TTL = 3 * 60 * 60 * 1000; // 3 ساعات
+
+function shouldShowAds(){
+  const isOwner = localStorage.getItem('_nec_owner_verified') === '1';
+  if(isOwner) return false;
+  const lic = getLicense();
+  const isLicensed = lic && lic.active && lic.serial;
+  if(isLicensed) return false;
+  const seen = sessionStorage.getItem('_nec_ads_seen');
+  if(seen) return false;
+  return true;
+}
+
+async function fetchAds(){
+  try{
+    const cached = localStorage.getItem(ADS_CACHE_KEY);
+    const cachedTime = parseInt(localStorage.getItem(ADS_TIME_KEY)||'0');
+    if(cached && Date.now() - cachedTime < ADS_CACHE_TTL){
+      return JSON.parse(cached);
+    }
+    const r = await fetch(ADS_URL + '?t=' + Date.now(), {cache:'no-store'});
+    if(!r.ok) return null;
+    const data = await r.json();
+    localStorage.setItem(ADS_CACHE_KEY, JSON.stringify(data));
+    localStorage.setItem(ADS_TIME_KEY, Date.now().toString());
+    return data;
+  }catch(e){ return null; }
+}
+
+function pickAd(ads){
+  const today = new Date().toISOString().slice(0,10);
+  const active = ads.filter(ad => {
+    if(ad.active === false) return false;
+    if(ad.startDate && today < ad.startDate) return false;
+    if(ad.endDate   && today > ad.endDate)   return false;
+    return true;
+  });
+  if(!active.length) return null;
+  return active[Math.floor(Math.random() * active.length)];
+}
+
+let _currentAdLink = '';
+function adsCtaClick(){
+  if(_currentAdLink) window.open(_currentAdLink, '_blank');
+  closeAds();
+}
+function closeAds(){
+  const ov = document.getElementById('ads-overlay');
+  if(ov){ ov.style.opacity='0'; setTimeout(()=>{ov.classList.remove('show'); ov.style.opacity='';}, 300); }
+  sessionStorage.setItem('_nec_ads_seen','1');
+}
+
+async function initAdsSystem(){
+  if(!shouldShowAds()) return;
+  const data = await fetchAds();
+  if(!data || !data.ads) return;
+  const ad = pickAd(data.ads);
+  if(!ad) return;
+  // ملء البيانات
+  document.getElementById('ads-title').textContent = ad.title || '';
+  document.getElementById('ads-desc').textContent  = ad.body  || '';
+  const badge = document.getElementById('ads-badge');
+  if(ad.badge){ badge.textContent = ad.badge; badge.style.background = ad.badgeColor || '#FF8F00'; badge.style.display = 'inline-block'; }
+  const img = document.getElementById('ads-img');
+  if(ad.image){ img.src = ad.image; img.style.display = 'block'; img.onerror = ()=>{ img.style.display='none'; }; }
+  const ctaBtn = document.getElementById('ads-cta-btn');
+  if(ad.cta || ad.link){ ctaBtn.textContent = ad.cta || 'اعرف أكثر ←'; ctaBtn.style.display = 'block'; _currentAdLink = ad.link || ''; }
+  // إظهار الإعلان بعد 1.5 ثانية من دخول التطبيق
+  setTimeout(()=>{
+    const ov = document.getElementById('ads-overlay');
+    if(ov) ov.classList.add('show');
+  }, 1500);
+}
+
+
 function checkForUpdates(){
-  const CACHE_KEY = 'nectaros-v6'; // يجب أن يطابق اسم الكاش في السيرفس ووركر
+  const CACHE_KEY = 'nectaros-v7'; // يجب أن يطابق اسم الكاش في السيرفس ووركر
   const storedCache = localStorage.getItem('_nec_cache_ver');
   const storedCode  = parseInt(localStorage.getItem('_nec_installed_ver')||'0');
 
@@ -7916,7 +8029,7 @@ function checkForUpdates(){
 
 function applyUpdate(){
   localStorage.setItem('_nec_installed_ver', APP_VERSION_CODE.toString());
-  localStorage.setItem('_nec_cache_ver', 'nectaros-v6');
+  localStorage.setItem('_nec_cache_ver', 'nectaros-v7');
   dismissUpdate();
   toast('⏳ جارٍ تطبيق التحديث...','success');
   // طبّق السيرفس ووركر الجديد إن وُجد، وإلا أعد التحميل
@@ -8010,6 +8123,7 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
+initAdsSystem();
 // ══ فحص فوري لجهاز المالك — يعمل قبل checkLicense ══
 // جهاز D028-6040-0FC3-4586 يُفعَّل مباشرة بدون أي شاشة
 (function _ownerBootCheck(){
