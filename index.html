@@ -893,122 +893,9 @@ tr:hover td{background:rgba(255,255,255,.02);}
 /* ── Google Translate Panel ── */
 body{top:0!important;}
 
-
-/* ══ ADS SYSTEM ══ */
-#ads-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:8500;align-items:center;justify-content:center;padding:16px;}
-#ads-overlay.show{display:flex!important;animation:ads-fadein .35s ease;}
-@keyframes ads-fadein{from{opacity:0;transform:scale(.95);}to{opacity:1;transform:scale(1);}}
-#ads-card-wrap{position:relative;width:100%;max-width:360px;max-height:90vh;overflow:hidden;border-radius:20px;box-shadow:0 24px 80px rgba(0,0,0,.9);}
-#ads-close-btn{position:absolute;top:10px;left:10px;z-index:100;background:rgba(0,0,0,.6);border:1px solid rgba(255,255,255,.15);border-radius:50%;width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:rgba(255,255,255,.8);backdrop-filter:blur(4px);}
-/* Ad inner styles */
-.nads-root{background:#0a0a0a;font-family:'Cairo',sans-serif;direction:rtl;overflow:hidden;border-radius:20px;}
-.nads-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 10%,rgba(255,193,7,.18) 0%,transparent 55%),radial-gradient(ellipse at 10% 60%,rgba(255,111,0,.08) 0%,transparent 45%);}
-.nads-hex-pat{position:absolute;inset:0;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52'%3E%3Cpolygon points='30,2 58,16 58,44 30,58 2,44 2,16' fill='none' stroke='%23FFC107' stroke-width='1'/%3E%3C/svg%3E");background-size:60px 52px;}
-.nads-topbar{position:relative;z-index:10;display:flex;justify-content:space-between;align-items:center;padding:14px 16px 0;}
-.nads-logo{font-size:10px;color:#FFC107;letter-spacing:1.5px;display:flex;align-items:center;gap:5px;font-weight:700;}
-.nads-badge{background:rgba(255,193,7,.15);border:1px solid rgba(255,193,7,.3);border-radius:20px;padding:2px 8px;font-size:8px;color:#FF8F00;letter-spacing:1px;}
-.nads-hero{position:relative;z-index:10;display:flex;flex-direction:column;align-items:center;padding:14px 16px 0;text-align:center;}
-.nads-hexlogo{width:72px;height:72px;clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);background:linear-gradient(145deg,#FFD54F,#FF6F00);display:flex;align-items:center;justify-content:center;box-shadow:0 0 36px rgba(255,193,7,.5);margin-bottom:10px;}
-.nads-title{font-size:26px;font-weight:900;background:linear-gradient(135deg,#FFF8DC,#FFD700,#FFC107,#FF8F00);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.1;margin-bottom:3px;}
-.nads-tagline{font-size:12px;color:rgba(255,193,7,.85);margin-bottom:2px;}
-.nads-sub{font-size:7px;color:rgba(255,193,7,.45);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px;}
-.nads-line{width:80%;height:1px;background:linear-gradient(90deg,transparent,#FF8F00,#FFC107,#FF8F00,transparent);margin:0 auto 10px;}
-.nads-feats{position:relative;z-index:10;padding:0 10px;display:grid;grid-template-columns:1fr 1fr;gap:5px;margin-bottom:8px;}
-.nads-feat{background:rgba(255,193,7,.05);border:1px solid rgba(255,193,7,.12);border-radius:8px;padding:7px 9px;display:flex;align-items:flex-start;gap:6px;border-right:2px solid #FF8F00;}
-.nads-fi{font-size:14px;flex-shrink:0;}
-.nads-fn{font-size:9px;font-weight:700;color:#FFC107;line-height:1.2;}
-.nads-fd{font-size:7.5px;color:rgba(255,255,255,.45);line-height:1.3;margin-top:1px;}
-.nads-stats{position:relative;z-index:10;padding:0 10px;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:8px;}
-.nads-stat{background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);border-radius:7px;padding:6px 4px;text-align:center;}
-.nads-sv{font-size:14px;font-weight:900;line-height:1.1;}
-.nads-sl{font-size:6.5px;color:rgba(255,255,255,.4);margin-top:1px;}
-.nads-pills{position:relative;z-index:10;padding:0 10px;display:flex;justify-content:center;gap:5px;flex-wrap:wrap;margin-bottom:8px;}
-.nads-pill{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:3px 8px;font-size:7.5px;color:rgba(255,255,255,.6);}
-.nads-cta-wrap{position:relative;z-index:10;padding:0 14px 10px;}
-.nads-cta-btn{width:100%;background:linear-gradient(135deg,#FFC107,#FF6F00);border:none;border-radius:10px;padding:11px;text-align:center;color:#000;font-family:'Cairo',sans-serif;font-size:13px;font-weight:900;box-shadow:0 6px 24px rgba(255,193,7,.35);cursor:pointer;}
-.nads-cta-sub{font-size:7.5px;color:rgba(0,0,0,.6);margin-top:2px;}
-.nads-bottom{position:relative;z-index:10;border-top:1px solid rgba(255,193,7,.1);padding:7px 14px;display:flex;justify-content:space-between;align-items:center;}
-.nads-bl{font-size:6.5px;color:rgba(255,255,255,.2);}
-.nads-br{font-size:7px;color:rgba(255,193,7,.5);font-weight:700;}
 </style>
 </head>
 <body>
-
-<!-- ══ ADS OVERLAY ══ -->
-<div id="ads-overlay">
-  <div id="ads-card-wrap">
-    <div id="ads-close-btn" onclick="closeAds()">✕</div>
-    <div class="nads-root" style="position:relative;">
-      <div class="nads-bg"></div>
-      <div class="nads-hex-pat"></div>
-      <div style="position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FF6F00,#FFC107,#FFD54F,#FFC107,#FF6F00);z-index:20;"></div>
-
-      <div class="nads-topbar">
-        <div class="nads-logo">
-          <svg viewBox="0 0 32 32" width="16" height="16"><polygon points="16,2 29,9 29,23 16,30 3,23 3,9" fill="#FFC107"/><polygon points="16,6 25,11 25,21 16,26 7,21 7,11" fill="#111"/><ellipse cx="16" cy="16" rx="5" ry="6" fill="#FFC107"/></svg>
-          NectarOS
-        </div>
-        <div class="nads-badge">v5.2 STABLE</div>
-      </div>
-
-      <div class="nads-hero">
-        <div class="nads-hexlogo">
-          <svg viewBox="0 0 100 120" width="40" height="48" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="50" cy="72" rx="22" ry="30" fill="#FFD54F"/>
-            <rect x="30" y="60" width="40" height="7" rx="3.5" fill="#1a1a00" opacity="0.75"/>
-            <rect x="30" y="72" width="40" height="7" rx="3.5" fill="#1a1a00" opacity="0.75"/>
-            <rect x="30" y="84" width="40" height="7" rx="3.5" fill="#1a1a00" opacity="0.75"/>
-            <circle cx="50" cy="42" r="18" fill="#FFD54F"/>
-            <circle cx="44" cy="38" r="4" fill="#333"/><circle cx="56" cy="38" r="4" fill="#333"/>
-            <ellipse cx="26" cy="55" rx="20" ry="10" fill="rgba(255,255,255,0.5)" transform="rotate(-20,26,55)"/>
-            <ellipse cx="74" cy="55" rx="20" ry="10" fill="rgba(255,255,255,0.5)" transform="rotate(20,74,55)"/>
-            <polygon points="50,98 44,112 56,112" fill="#FF8F00"/>
-            <line x1="44" y1="26" x2="34" y2="10" stroke="#666" stroke-width="2.5" stroke-linecap="round"/>
-            <line x1="56" y1="26" x2="66" y2="10" stroke="#666" stroke-width="2.5" stroke-linecap="round"/>
-            <circle cx="33" cy="9" r="3.5" fill="#FF8F00"/><circle cx="67" cy="9" r="3.5" fill="#FF8F00"/>
-          </svg>
-        </div>
-        <div class="nads-title">NectarOS</div>
-        <div class="nads-tagline">نظام إدارة المناحل الذكي</div>
-        <div class="nads-sub">✦ Smart Beekeeping Intelligence ✦</div>
-        <div class="nads-line"></div>
-      </div>
-
-      <div class="nads-feats">
-        <div class="nads-feat"><div class="nads-fi">📴</div><div><div class="nads-fn">100% Offline</div><div class="nads-fd">يعمل بدون إنترنت</div></div></div>
-        <div class="nads-feat" style="border-right-color:#4CAF50"><div class="nads-fi">🤖</div><div><div class="nads-fn">ذكاء اصطناعي</div><div class="nads-fd">تشخيص وتحليل</div></div></div>
-        <div class="nads-feat" style="border-right-color:#2196F3"><div class="nads-fi">📊</div><div><div class="nads-fn">52+ وحدة</div><div class="nads-fd">تغطية شاملة</div></div></div>
-        <div class="nads-feat" style="border-right-color:#9C27B0"><div class="nads-fi">💰</div><div><div class="nads-fn">تقارير مالية</div><div class="nads-fd">أرباح وفواتير</div></div></div>
-      </div>
-
-      <div class="nads-stats">
-        <div class="nads-stat"><div class="nads-sv" style="color:#FFC107">52+</div><div class="nads-sl">شاشة</div></div>
-        <div class="nads-stat"><div class="nads-sv" style="color:#4CAF50">100%</div><div class="nads-sl">Offline</div></div>
-        <div class="nads-stat"><div class="nads-sv" style="color:#2196F3">AI</div><div class="nads-sl">مدمج</div></div>
-        <div class="nads-stat"><div class="nads-sv" style="color:#009688">PWA</div><div class="nads-sl">مجاني</div></div>
-      </div>
-
-      <div class="nads-pills">
-        <span class="nads-pill">🤖 Android</span>
-        <span class="nads-pill">🍎 iOS</span>
-        <span class="nads-pill">🪟 Windows</span>
-        <span class="nads-pill">بدون تثبيت</span>
-      </div>
-
-      <div class="nads-cta-wrap">
-        <button class="nads-cta-btn" onclick="adsCtaClick()">
-          🐝 جرّب NectarOS مجاناً — 15 يوم
-          <div class="nads-cta-sub">بدون بطاقة ائتمانية • بدون تثبيت</div>
-        </button>
-      </div>
-
-      <div class="nads-bottom">
-        <span class="nads-bl">NectarOS © 2025–2026</span>
-        <span class="nads-br">🐝 Smart Beekeeping</span>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <!-- ══ SPLASH SCREEN — احترافي ══ -->
@@ -2103,16 +1990,6 @@ body{top:0!important;}
               <input id="admin-search" class="form-control" style="font-size:11px;margin-bottom:8px;" placeholder="🔍 بحث بالاسم أو Device ID..." oninput="adminFilterUsers()">
               <div id="admin-users-list" style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;"></div>
             </div>
-            <!-- ── تحكم الإعلانات للمطوّر ── -->
-            <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;">
-              <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:8px;">📢 تحكم الإعلانات</div>
-              <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px 12px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                  <span id="ads-toggle-dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>
-                  <span id="ads-toggle-btn" style="font-size:11px;color:var(--text);">📢 الإعلانات مفعّلة</span>
-                </div>
-                <button class="btn btn-ghost btn-sm" onclick="toggleAdsVisibility()" style="font-size:11px;">تبديل</button>
-              </div>
             </div>
           </div>
         </div>
@@ -2128,20 +2005,6 @@ body{top:0!important;}
           <div style="display:flex;gap:8px;margin-top:4px;">
             <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="document.getElementById('admin-edit-modal').style.display='none'">إلغاء</button>
             <button class="btn btn-primary btn-sm" style="flex:1;" onclick="adminSaveEditLicense()">💾 حفظ</button>
-          </div>
-        </div>
-      </div>
-      <!-- كارد تحكم الإعلانات — يظهر للمرخّصين والمطوّر فقط -->
-      <div id="ads-ctrl-wrap" class="card" style="display:none;">
-        <div class="card-header"><span class="card-title">📢 الإعلانات</span></div>
-        <div style="padding:12px;">
-          <div style="font-size:11px;color:var(--text2);margin-bottom:10px;">تحكم في ظهور الإعلانات داخل التطبيق.</div>
-          <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px 12px;">
-            <div style="display:flex;align-items:center;gap:8px;">
-              <span id="ads-toggle-dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>
-              <span id="ads-toggle-btn" style="font-size:12px;color:var(--text);font-weight:700;">📢 الإعلانات مفعّلة</span>
-            </div>
-            <button class="btn btn-ghost btn-sm" onclick="toggleAdsVisibility()" style="font-size:11px;">تغيير</button>
           </div>
         </div>
       </div>
@@ -7802,14 +7665,9 @@ function showLicenseScreen(mode){
   }
 }
 
-let _hideCalledOnce=false;
 function hideLicenseScreen(){
   const el = document.getElementById('license-screen');
   if(el) el.classList.add('hidden');
-  if(!_hideCalledOnce){
-    _hideCalledOnce=true;
-    setTimeout(initAdsSystem, 1500);
-  }
 }
 
 function renderTrialInfo(){
@@ -8028,55 +7886,6 @@ function doImportLicense(input){
 /* ══════════════════════════════════════════════════
    🔄 UPDATE NOTIFICATION SYSTEM
 ══════════════════════════════════════════════════ */
-/* ══ ADS SYSTEM ══ */
-const ADS_URL = 'https://gist.githubusercontent.com/benadla-amine/4a80726ac2cceecf8c03797aaa912849/raw/ads.json';
-const ADS_CACHE_KEY = '_nec_ads_data';
-const ADS_TIME_KEY  = '_nec_ads_time';
-const ADS_CACHE_TTL = 3 * 60 * 60 * 1000; // 3 ساعات
-
-function shouldShowAds(){
-  // إذا المستخدم أخفى الإعلانات يدوياً (مالك أو مرخّص فقط)
-  if(localStorage.getItem('_nec_ads_hidden')==='1') return false;
-  // لا تظهر مرتين في نفس الجلسة
-  if(sessionStorage.getItem('_nec_ads_seen')) return false;
-  return true;
-}
-
-function isAdsControlAllowed(){
-  // فقط المالك أو المرخّص يملك صلاحية إخفاء الإعلانات
-  const isOwner = localStorage.getItem('_nec_owner_verified')==='1';
-  const lic = getLicense();
-  return isOwner || (lic && lic.active && lic.serial);
-}
-
-function toggleAdsVisibility(){
-  const current = localStorage.getItem('_nec_ads_hidden')==='1';
-  const newVal   = !current;
-  localStorage.setItem('_nec_ads_hidden', newVal ? '1' : '0');
-  // تحديث واجهة الزر
-  const btn = document.getElementById('ads-toggle-btn');
-  const dot = document.getElementById('ads-toggle-dot');
-  if(btn) btn.textContent = newVal ? '🔕 الإعلانات مخفية' : '📢 الإعلانات مفعّلة';
-  if(dot){ dot.style.background = newVal ? 'var(--red)' : 'var(--green)'; }
-  toast(newVal ? '🔕 تم إخفاء الإعلانات' : '📢 تم تفعيل الإعلانات', 'success');
-}
-
-function adsCtaClick(){
-  closeAds();
-}
-function closeAds(){
-  const ov = document.getElementById('ads-overlay');
-  if(ov){ ov.style.opacity='0'; setTimeout(()=>{ov.classList.remove('show'); ov.style.opacity='';}, 300); }
-  sessionStorage.setItem('_nec_ads_seen','1');
-}
-
-function initAdsSystem(){
-  if(!shouldShowAds()) return;
-  const ov = document.getElementById('ads-overlay');
-  if(ov) ov.classList.add('show');
-}
-
-
 function checkForUpdates(){
   const CACHE_KEY = 'nectaros-v7'; // يجب أن يطابق اسم الكاش في السيرفس ووركر
   const storedCache = localStorage.getItem('_nec_cache_ver');
@@ -9206,20 +9015,6 @@ function renderSecurityPage(){
     const devPanel = document.getElementById('dev-panel');
     if (devPanel) devPanel.style.display = 'block';
     localStorage.setItem('_nec_owner_verified', '1');
-  }
-  // ── تحكم الإعلانات للمرخّصين فقط ──
-  const adsCtrlWrap = document.getElementById('ads-ctrl-wrap');
-  if(adsCtrlWrap){
-    if(isAdsControlAllowed()){
-      const hidden = localStorage.getItem('_nec_ads_hidden')==='1';
-      const btn = document.getElementById('ads-toggle-btn');
-      const dot = document.getElementById('ads-toggle-dot');
-      adsCtrlWrap.style.display = 'block';
-      if(btn) btn.textContent = hidden ? '🔕 الإعلانات مخفية' : '📢 الإعلانات مفعّلة';
-      if(dot) dot.style.background = hidden ? 'var(--red)' : 'var(--green)';
-    } else {
-      adsCtrlWrap.style.display = 'none';
-    }
   }
   // License status
   const licEl = document.getElementById('sec-license-status');
