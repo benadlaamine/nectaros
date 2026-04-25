@@ -891,31 +891,11 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
 /* ── Google Translate Panel ── */
-#gt-panel{display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--gold3);border-radius:12px;padding:14px 16px;z-index:5000;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:260px;text-align:center;direction:rtl;}
-#gt-panel.open{display:block;}
-.gt-lang-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;}
-.gt-lang-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 5px;color:var(--text);font-family:'Cairo',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:.18s;}
-.gt-lang-btn:hover,.gt-lang-btn.gt-act{border-color:var(--gold);color:var(--gold);background:rgba(255,193,7,.08);}
-.goog-te-banner-frame,.goog-te-balloon-frame{display:none!important;}
 body{top:0!important;}
 
 </style>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 </head>
 <body>
-<div id="google_translate_element" style="display:none;"></div>
-<div id="gt-panel">
-  <div style="font-size:12px;font-weight:700;color:var(--gold);">🌐 ترجمة الصفحة</div>
-  <div class="gt-lang-grid">
-    <button class="gt-lang-btn gt-act" onclick="gtLang('ar')">🇩🇿 عربي</button>
-    <button class="gt-lang-btn" onclick="gtLang('fr')">🇫🇷 Français</button>
-    <button class="gt-lang-btn" onclick="gtLang('en')">🇬🇧 English</button>
-    <button class="gt-lang-btn" onclick="gtLang('tr')">🇹🇷 Türkçe</button>
-    <button class="gt-lang-btn" onclick="gtLang('es')">🇪🇸 Español</button>
-    <button class="gt-lang-btn" onclick="gtLang('de')">🇩🇪 Deutsch</button>
-  </div>
-  <button onclick="document.getElementById('gt-panel').classList.remove('open')" style="margin-top:10px;background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;">✕ إغلاق</button>
-</div>
 
 <!-- ══ SPLASH SCREEN — احترافي ══ -->
 <div id="splash">
@@ -1283,7 +1263,6 @@ body{top:0!important;}
       <div id="alert-badge" class="badge br" style="display:none;">⚠️ <span id="alert-num">0</span></div>
       <button class="btn-icon" onclick="go('ai')" title="الذكاء الاصطناعي" style="color:var(--gold);">🤖</button>
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
-      <button class="btn-icon" id="gt-btn" onclick="document.getElementById('gt-panel').classList.toggle('open')" title="ترجمة الصفحة" style="color:var(--blue);">🌐</button>
       <button class="btn-icon" onclick="exportData()" title="تصدير">📤</button>
       <button class="btn-icon" onclick="exportPDF()" title="PDF" style="color:var(--red);">📄</button>
       <button class="btn-icon" onclick="triggerImport()">📥</button>
@@ -2003,10 +1982,27 @@ body{top:0!important;}
             <div id="admin-serial-info" style="font-size:10px;color:var(--text2);text-align:center;margin-top:4px;"></div>
             <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px;" onclick="adminCopySerial()">📋 نسخ السيريال</button>
             <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;">
-              <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:6px;">قائمة المستخدمين</div>
-              <button class="btn btn-secondary btn-sm" onclick="adminLoadUsers()">🔄 تحميل</button>
-              <div id="admin-users-list" style="margin-top:8px;max-height:200px;overflow-y:auto;"></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+                <div style="font-size:10px;font-weight:700;color:var(--text2);">📋 إدارة التراخيص</div>
+                <button class="btn btn-secondary btn-sm" onclick="adminLoadUsers()">🔄 تحديث</button>
+              </div>
+              <input id="admin-search" class="form-control" style="font-size:11px;margin-bottom:8px;" placeholder="🔍 بحث بالاسم أو Device ID..." oninput="adminFilterUsers()">
+              <div id="admin-users-list" style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;"></div>
             </div>
+          </div>
+        </div>
+      </div>
+      <div id="admin-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+        <div style="background:var(--card);border:1px solid var(--gold3);border-radius:16px;padding:18px;width:100%;max-width:360px;direction:rtl;">
+          <div style="font-size:13px;font-weight:800;color:var(--gold);margin-bottom:14px;">✏️ تعديل الترخيص</div>
+          <input type="hidden" id="edit-lic-id">
+          <div class="form-group"><label class="form-label">Device ID</label><input id="edit-lic-device" class="form-control" style="font-family:monospace;font-size:11px;" readonly dir="ltr"></div>
+          <div class="form-group"><label class="form-label">الحالة</label><select id="edit-lic-status" class="form-control"><option value="active">✅ نشط</option><option value="trial">🕐 تجريبي</option><option value="expired">🔒 منتهي</option><option value="blocked">🚫 محظور</option></select></div>
+          <div class="form-group"><label class="form-label">تاريخ الانتهاء</label><input id="edit-lic-expires" class="form-control" type="date"></div>
+          <div class="form-group"><label class="form-label">ملاحظات</label><input id="edit-lic-notes" class="form-control" placeholder="اسم العميل..."></div>
+          <div style="display:flex;gap:8px;margin-top:4px;">
+            <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="document.getElementById('admin-edit-modal').style.display='none'">إلغاء</button>
+            <button class="btn btn-primary btn-sm" style="flex:1;" onclick="adminSaveEditLicense()">💾 حفظ</button>
           </div>
         </div>
       </div>
@@ -9155,30 +9151,67 @@ function adminCopySerial() {
   }
 }
 
-async function adminLoadUsers() {
-  const el = document.getElementById('admin-users-list');
-  if (!el) return;
-  el.innerHTML = '<div style="color:var(--text3);font-size:11px;">⏳ جارٍ التحميل...</div>';
-  try {
-    const data = await sbQuery('GET', 'licenses?select=*&order=install_date.desc&limit=50');
-    if (!data || !data.length) { el.innerHTML = '<div style="color:var(--text3);font-size:11px;">لا مستخدمون بعد</div>'; return; }
-    el.innerHTML = data.map(r => {
-      const sc = {active:'✅',trial:'🕐',expired:'🔒',blocked:'🚫'}[r.status]||'?';
-      const scol = {active:'var(--green)',trial:'var(--gold)',expired:'var(--red)',blocked:'var(--red)'}[r.status]||'var(--text3)';
-      const exp = r.serial_expires ? new Date(r.serial_expires).toLocaleDateString('ar-DZ') : '—';
-      return `<div style="padding:6px;border-bottom:1px solid var(--border);font-size:9px;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
-          <span style="color:${scol};font-weight:700;">${sc} ${r.status}</span>
-          <span style="color:var(--text3);">${exp}</span>
-        </div>
-        <div style="color:var(--gold);font-family:monospace;word-break:break-all;">${r.device_id}</div>
-        ${r.serial?`<div style="color:var(--text2);">SN: ${r.serial}</div>`:''}
-        ${r.notes?`<div style="color:var(--text3);">${r.notes}</div>`:''}
-      </div>`;
-    }).join('');
-  } catch(e) {
-    el.innerHTML = '<div style="color:var(--red);font-size:11px;">❌ فشل الاتصال بـ Supabase</div>';
-  }
+let _adminLicCache=[];
+async function adminLoadUsers(){
+  const el=document.getElementById('admin-users-list');
+  if(!el)return;
+  el.innerHTML='<div style="color:var(--text3);font-size:11px;text-align:center;padding:12px;">⏳ جارٍ التحميل...</div>';
+  try{
+    const data=await sbQuery('GET','licenses?select=*&order=install_date.desc&limit=100');
+    if(!data||!data.length){el.innerHTML='<div style="color:var(--text3);font-size:11px;text-align:center;padding:12px;">📭 لا توجد تراخيص</div>';return;}
+    _adminLicCache=data;_renderLicenseList(data);
+  }catch(e){el.innerHTML='<div style="color:var(--red);font-size:11px;text-align:center;padding:12px;">❌ فشل الاتصال بـ Supabase</div>';}
+}
+function adminFilterUsers(){
+  const q=(document.getElementById('admin-search')?.value||'').toLowerCase().trim();
+  _renderLicenseList(q?_adminLicCache.filter(r=>(r.device_id||'').toLowerCase().includes(q)||(r.notes||'').toLowerCase().includes(q)||(r.serial||'').toLowerCase().includes(q)):_adminLicCache);
+}
+function _renderLicenseList(data){
+  const el=document.getElementById('admin-users-list');if(!el)return;
+  if(!data.length){el.innerHTML='<div style="color:var(--text3);font-size:11px;text-align:center;padding:12px;">🔍 لا نتائج</div>';return;}
+  const sm={active:{i:'✅',c:'var(--green)',l:'نشط'},trial:{i:'🕐',c:'var(--gold)',l:'تجريبي'},expired:{i:'🔒',c:'var(--red)',l:'منتهي'},blocked:{i:'🚫',c:'var(--red)',l:'محظور'}};
+  el.innerHTML=data.map(r=>{
+    const st=sm[r.status]||{i:'?',c:'var(--text3)',l:r.status||'—'};
+    const exp=r.serial_expires?new Date(r.serial_expires).toLocaleDateString('ar-DZ'):'—';
+    const expD=r.serial_expires?r.serial_expires.slice(0,10):'';
+    const isExp=r.serial_expires&&new Date(r.serial_expires)<new Date();
+    const did=(r.device_id||'').replace(/'/g,"\'");const nt=(r.notes||'').replace(/'/g,"\'");
+    return `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:9px;font-size:10px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;"><span style="color:${st.c};font-weight:800;">${st.i} ${st.l}</span><span style="color:${isExp?'var(--red)':'var(--text3)'};">${isExp?'⚠️ ':''}${exp}</span></div>${r.notes?'<div style="color:var(--text);font-weight:700;margin-bottom:3px;">👤 '+r.notes+'</div>':''}<div style="color:var(--gold);font-family:monospace;font-size:9px;word-break:break-all;margin-bottom:3px;">${r.device_id||'—'}</div>${r.serial?'<div style="color:var(--text2);font-family:monospace;font-size:9px;">SN: '+r.serial+'</div>':''}<div style="display:flex;gap:5px;margin-top:7px;"><button class="btn btn-secondary btn-xs" style="flex:1;" onclick="adminOpenEdit('${r.id}','${did}','${r.status||''}','${expD}','${nt}')">✏️ تعديل</button><button class="btn btn-xs" style="flex:1;background:rgba(244,67,54,.1);color:var(--red);border:1px solid rgba(244,67,54,.2);" onclick="adminDeleteLicense('${r.id}','${did}')">🗑️ حذف</button></div></div>`;
+  }).join('');
+}
+function adminOpenEdit(id,deviceId,status,expires,notes){
+  document.getElementById('edit-lic-id').value=id;
+  document.getElementById('edit-lic-device').value=deviceId;
+  document.getElementById('edit-lic-status').value=status||'active';
+  document.getElementById('edit-lic-expires').value=expires||'';
+  document.getElementById('edit-lic-notes').value=notes||'';
+  document.getElementById('admin-edit-modal').style.display='flex';
+}
+async function adminSaveEditLicense(){
+  const id=document.getElementById('edit-lic-id').value;
+  const status=document.getElementById('edit-lic-status').value;
+  const expires=document.getElementById('edit-lic-expires').value;
+  const notes=document.getElementById('edit-lic-notes').value.trim();
+  if(!id)return;
+  try{
+    const p={status};
+    if(expires)p.serial_expires=new Date(expires).toISOString();
+    if(notes)p.notes=notes;
+    await sbQuery('PATCH','licenses?id=eq.'+encodeURIComponent(id),p);
+    _adminLicCache=_adminLicCache.map(r=>r.id===id?{...r,...p}:r);
+    _renderLicenseList(_adminLicCache);
+    document.getElementById('admin-edit-modal').style.display='none';
+    toast('✅ تم تحديث الترخيص','success');
+  }catch(e){toast('❌ فشل التحديث','error');}
+}
+async function adminDeleteLicense(id,deviceId){
+  if(!confirm('هل تريد حذف ترخيص الجهاز:\n'+deviceId+'\n\nلا يمكن التراجع.'))return;
+  try{
+    await fetch('https://jirwztmtyajwptkdzqsv.supabase.co/rest/v1/licenses?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:{apikey:SB_KEY,'Authorization':'Bearer '+SB_KEY}});
+    _adminLicCache=_adminLicCache.filter(r=>r.id!==id);
+    _renderLicenseList(_adminLicCache);
+    toast('🗑️ تم حذف الترخيص','success');
+  }catch(e){toast('❌ فشل الحذف','error');}
 }
 
 function changeSecPassword(){
@@ -9217,27 +9250,7 @@ function logActivity(action){
   log.push({action,time:new Date().toLocaleString('ar'),date:today()});
   DB.set('activity_log',log.slice(-100));
 }
-/* ══ GOOGLE TRANSLATE ══ */
-function googleTranslateElementInit(){
-  new google.translate.TranslateElement({pageLanguage:'ar',includedLanguages:'ar,fr,en,tr,es,de',autoDisplay:false},'google_translate_element');
-}
-function gtLang(lang){
-  document.querySelectorAll('.gt-lang-btn').forEach(b=>b.classList.remove('gt-act'));
-  event?.target?.classList.add('gt-act');
-  if(lang==='ar'){document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';location.reload();return;}
-  document.cookie=`googtrans=/ar/${lang}; path=/`;
-  const tryIt=(n)=>{
-    const sel=document.querySelector('.goog-te-combo');
-    if(sel){sel.value=lang;sel.dispatchEvent(new Event('change'));document.getElementById('gt-panel').classList.remove('open');toast('✅ تمت الترجمة','success');}
-    else if(n<8)setTimeout(()=>tryIt(n+1),500);
-    else toast('⚠️ تحتاج اتصالاً بالإنترنت للترجمة','warning');
-  };
-  tryIt(0);
-}
-document.addEventListener('click',e=>{
-  const p=document.getElementById('gt-panel'),b=document.getElementById('gt-btn');
-  if(p&&b&&!p.contains(e.target)&&!b.contains(e.target))p.classList.remove('open');
-});
+
 
 </script>
 </body>
