@@ -2023,6 +2023,17 @@ body{top:0!important;}
               <input id="admin-search" class="form-control" style="font-size:11px;margin-bottom:8px;" placeholder="🔍 بحث بالاسم أو Device ID..." oninput="adminFilterUsers()">
               <div id="admin-users-list" style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;"></div>
             </div>
+            <!-- ── تحكم الإعلانات للمطوّر ── -->
+            <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;">
+              <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:8px;">📢 تحكم الإعلانات</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px 12px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                  <span id="ads-toggle-dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>
+                  <span id="ads-toggle-btn" style="font-size:11px;color:var(--text);">📢 الإعلانات مفعّلة</span>
+                </div>
+                <button class="btn btn-ghost btn-sm" onclick="toggleAdsVisibility()" style="font-size:11px;">تبديل</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2037,6 +2048,20 @@ body{top:0!important;}
           <div style="display:flex;gap:8px;margin-top:4px;">
             <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="document.getElementById('admin-edit-modal').style.display='none'">إلغاء</button>
             <button class="btn btn-primary btn-sm" style="flex:1;" onclick="adminSaveEditLicense()">💾 حفظ</button>
+          </div>
+        </div>
+      </div>
+      <!-- كارد تحكم الإعلانات — يظهر للمرخّصين والمطوّر فقط -->
+      <div id="ads-ctrl-wrap" class="card" style="display:none;">
+        <div class="card-header"><span class="card-title">📢 الإعلانات</span></div>
+        <div style="padding:12px;">
+          <div style="font-size:11px;color:var(--text2);margin-bottom:10px;">تحكم في ظهور الإعلانات داخل التطبيق.</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px 12px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span id="ads-toggle-dot" style="width:8px;height:8px;border-radius:50%;background:var(--green);display:inline-block;"></span>
+              <span id="ads-toggle-btn" style="font-size:12px;color:var(--text);font-weight:700;">📢 الإعلانات مفعّلة</span>
+            </div>
+            <button class="btn btn-ghost btn-sm" onclick="toggleAdsVisibility()" style="font-size:11px;">تغيير</button>
           </div>
         </div>
       </div>
@@ -7700,6 +7725,8 @@ function showLicenseScreen(mode){
 function hideLicenseScreen(){
   const el = document.getElementById('license-screen');
   if(el) el.classList.add('hidden');
+  // تشغيل الإعلانات فقط بعد الدخول الفعلي للتطبيق
+  setTimeout(initAdsSystem, 1500);
 }
 
 function renderTrialInfo(){
@@ -7925,14 +7952,30 @@ const ADS_TIME_KEY  = '_nec_ads_time';
 const ADS_CACHE_TTL = 3 * 60 * 60 * 1000; // 3 ساعات
 
 function shouldShowAds(){
-  const isOwner = localStorage.getItem('_nec_owner_verified') === '1';
-  if(isOwner) return false;
-  const lic = getLicense();
-  const isLicensed = lic && lic.active && lic.serial;
-  if(isLicensed) return false;
-  const seen = sessionStorage.getItem('_nec_ads_seen');
-  if(seen) return false;
+  // إذا المستخدم أخفى الإعلانات يدوياً (مالك أو مرخّص فقط)
+  if(localStorage.getItem('_nec_ads_hidden')==='1') return false;
+  // لا تظهر مرتين في نفس الجلسة
+  if(sessionStorage.getItem('_nec_ads_seen')) return false;
   return true;
+}
+
+function isAdsControlAllowed(){
+  // فقط المالك أو المرخّص يملك صلاحية إخفاء الإعلانات
+  const isOwner = localStorage.getItem('_nec_owner_verified')==='1';
+  const lic = getLicense();
+  return isOwner || (lic && lic.active && lic.serial);
+}
+
+function toggleAdsVisibility(){
+  const current = localStorage.getItem('_nec_ads_hidden')==='1';
+  const newVal   = !current;
+  localStorage.setItem('_nec_ads_hidden', newVal ? '1' : '0');
+  // تحديث واجهة الزر
+  const btn = document.getElementById('ads-toggle-btn');
+  const dot = document.getElementById('ads-toggle-dot');
+  if(btn) btn.textContent = newVal ? '🔕 الإعلانات مخفية' : '📢 الإعلانات مفعّلة';
+  if(dot){ dot.style.background = newVal ? 'var(--red)' : 'var(--green)'; }
+  toast(newVal ? '🔕 تم إخفاء الإعلانات' : '📢 تم تفعيل الإعلانات', 'success');
 }
 
 async function fetchAds(){
@@ -7974,8 +8017,10 @@ function closeAds(){
   sessionStorage.setItem('_nec_ads_seen','1');
 }
 
+let _adsShown=false;
 async function initAdsSystem(){
-  if(!shouldShowAds()) return;
+  if(_adsShown||!shouldShowAds()) return;
+  _adsShown=true;
   const data = await fetchAds();
   if(!data || !data.ads) return;
   const ad = pickAd(data.ads);
@@ -8123,7 +8168,6 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
-initAdsSystem();
 // ══ فحص فوري لجهاز المالك — يعمل قبل checkLicense ══
 // جهاز D028-6040-0FC3-4586 يُفعَّل مباشرة بدون أي شاشة
 (function _ownerBootCheck(){
@@ -9127,6 +9171,20 @@ function renderSecurityPage(){
     const devPanel = document.getElementById('dev-panel');
     if (devPanel) devPanel.style.display = 'block';
     localStorage.setItem('_nec_owner_verified', '1');
+  }
+  // ── تحكم الإعلانات للمرخّصين فقط ──
+  const adsCtrlWrap = document.getElementById('ads-ctrl-wrap');
+  if(adsCtrlWrap){
+    if(isAdsControlAllowed()){
+      const hidden = localStorage.getItem('_nec_ads_hidden')==='1';
+      const btn = document.getElementById('ads-toggle-btn');
+      const dot = document.getElementById('ads-toggle-dot');
+      adsCtrlWrap.style.display = 'block';
+      if(btn) btn.textContent = hidden ? '🔕 الإعلانات مخفية' : '📢 الإعلانات مفعّلة';
+      if(dot) dot.style.background = hidden ? 'var(--red)' : 'var(--green)';
+    } else {
+      adsCtrlWrap.style.display = 'none';
+    }
   }
   // License status
   const licEl = document.getElementById('sec-license-status');
