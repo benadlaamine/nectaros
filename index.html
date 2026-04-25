@@ -5578,12 +5578,29 @@ function renderContact(){
   const purchaseWrap=document.getElementById('contact-purchase-wrap');
   if(purchaseWrap) purchaseWrap.innerHTML=renderPurchaseSection();
 }
-function licContactWhatsApp(){
-  const devId=document.getElementById('lic-device-id')?.textContent||'غير معروف';
-  const DEV_WA='213659510812';
-  const text=encodeURIComponent(`🐝 *NectarOS — طلب ترخيص*\n\n📱 معرّف الجهاز:\n${devId}\n\n💳 أريد شراء ترخيص، أرجو التواصل.`);
-  window.open(`https://wa.me/${DEV_WA}?text=${text}`,'_blank');
-  toast('✅ تم فتح واتساب','success');
+async function licContactWhatsApp(){
+  const DEV_WA = '213659510812';
+
+  // جلب الـ Device ID من المصدر الحقيقي
+  let devId = document.getElementById('lic-device-id')?.textContent?.trim() || '';
+
+  // إذا لم يكن جاهزاً — نجلبه مباشرة
+  if(!devId || devId === 'جاري التحميل...' || devId.length < 5){
+    try{
+      const fp = _deviceFP || await getDeviceFingerprint();
+      devId = getDeviceId(fp);
+    }catch(e){
+      devId = 'غير متاح';
+    }
+  }
+
+  const text = encodeURIComponent(
+    `🐝 *NectarOS — طلب ترخيص*\n\n` +
+    `📱 *معرّف الجهاز:*\n${devId}\n\n` +
+    `💳 أريد شراء ترخيص، أرجو التواصل.`
+  );
+  window.open(`https://wa.me/${DEV_WA}?text=${text}`, '_blank');
+  toast('✅ تم فتح واتساب', 'success');
 }
 
 function renderPurchaseSection(){
