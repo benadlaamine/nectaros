@@ -7,50 +7,34 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="NectarOS">
-<meta name="description" content="نظام إدارة المناحل الذكي">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22body%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3C%21--%20%D8%AE%D9%84%D9%81%D9%8A%D8%A9%20%D8%B3%D8%AF%D8%A7%D8%B3%D9%8A%D8%A9%20--%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C8%20484%2C136%20484%2C376%20256%2C504%2028%2C376%2028%2C136%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C20%20472%2C144%20472%2C368%20256%2C492%2040%2C368%2040%2C144%22%20fill%3D%22%231a1a00%22%20opacity%3D%220.3%22%2F%3E%0A%20%20%3C%21--%20%D8%AC%D8%B3%D9%85%20%D8%A7%D9%84%D9%86%D8%AD%D9%84%D8%A9%20--%3E%0A%20%20%3Cellipse%20cx%3D%22256%22%20cy%3D%22230%22%20rx%3D%2258%22%20ry%3D%2278%22%20fill%3D%22url%28%23body%29%22%2F%3E%0A%20%20%3C%21--%20%D8%AE%D8%B7%D9%88%D8%B7%20%D8%A7%D9%84%D8%AC%D8%B3%D9%85%20--%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22195%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22227%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22259%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%B1%D8%A3%D8%B3%20--%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22154%22%20r%3D%2236%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22242%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22270%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%A3%D8%AC%D9%86%D8%AD%D8%A9%20--%3E%0A%20%20%3Cellipse%20cx%3D%22186%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C186%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22326%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C326%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22192%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%28-20%2C192%2C215%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22320%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%2820%2C320%2C215%29%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%A5%D8%A8%D8%B1%D8%A9%20--%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C295%20248%2C340%20264%2C340%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D9%87%D9%88%D8%A7%D8%A6%D9%8A%D8%A7%D8%AA%20--%3E%0A%20%20%3Cline%20x1%3D%22242%22%20y1%3D%22120%22%20x2%3D%22222%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Cline%20x1%3D%22270%22%20y1%3D%22120%22%20x2%3D%22290%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22220%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22292%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%3C%2Fsvg%3E">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bd%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C3%20181%2C51%20181%2C141%2096%2C189%2011%2C141%2011%2C51%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2296%22%20cy%3D%2287%22%20rx%3D%2222%22%20ry%3D%2229%22%20fill%3D%22url%28%23bd%29%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2274%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2286%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2298%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2296%22%20cy%3D%2258%22%20r%3D%2214%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2291%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22101%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2269%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C69%2C70%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22123%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C123%2C70%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C111%2092%2C128%20100%2C128%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%3C%2Fsvg%3E">
+<meta name="description" content="نظام إدارة المناحل الذكي v5.3">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="NectarOS">
 <meta name="msapplication-TileColor" content="#FFC107">
+<link rel="manifest" href="./manifest.json">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22body%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C8%20484%2C136%20484%2C376%20256%2C504%2028%2C376%2028%2C136%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C20%20472%2C144%20472%2C368%20256%2C492%2040%2C368%2040%2C144%22%20fill%3D%22%231a1a00%22%20opacity%3D%220.3%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22256%22%20cy%3D%22230%22%20rx%3D%2258%22%20ry%3D%2278%22%20fill%3D%22url%28%23body%29%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22195%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22227%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22259%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22154%22%20r%3D%2236%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22242%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22270%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22186%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C186%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22326%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C326%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22192%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%28-20%2C192%2C215%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22320%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%2820%2C320%2C215%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C295%20248%2C340%20264%2C340%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%20%20%3Cline%20x1%3D%22242%22%20y1%3D%22120%22%20x2%3D%22222%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Cline%20x1%3D%22270%22%20y1%3D%22120%22%20x2%3D%22290%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22220%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22292%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%3C%2Fsvg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bd%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C3%20181%2C51%20181%2C141%2096%2C189%2011%2C141%2011%2C51%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2296%22%20cy%3D%2287%22%20rx%3D%2222%22%20ry%3D%2229%22%20fill%3D%22url%28%23bd%29%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2274%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2286%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2298%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2296%22%20cy%3D%2258%22%20r%3D%2214%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2291%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22101%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2269%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C69%2C70%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22123%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C123%2C70%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C111%2092%2C128%20100%2C128%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%3C%2Fsvg%3E">
 <script>
-/* ══ INLINE MANIFEST ══ */
-(function(){
-  const icons=[
-    {src:"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22body%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3C%21--%20%D8%AE%D9%84%D9%81%D9%8A%D8%A9%20%D8%B3%D8%AF%D8%A7%D8%B3%D9%8A%D8%A9%20--%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C8%20484%2C136%20484%2C376%20256%2C504%2028%2C376%2028%2C136%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C20%20472%2C144%20472%2C368%20256%2C492%2040%2C368%2040%2C144%22%20fill%3D%22%231a1a00%22%20opacity%3D%220.3%22%2F%3E%0A%20%20%3C%21--%20%D8%AC%D8%B3%D9%85%20%D8%A7%D9%84%D9%86%D8%AD%D9%84%D8%A9%20--%3E%0A%20%20%3Cellipse%20cx%3D%22256%22%20cy%3D%22230%22%20rx%3D%2258%22%20ry%3D%2278%22%20fill%3D%22url%28%23body%29%22%2F%3E%0A%20%20%3C%21--%20%D8%AE%D8%B7%D9%88%D8%B7%20%D8%A7%D9%84%D8%AC%D8%B3%D9%85%20--%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22195%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22227%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22259%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%B1%D8%A3%D8%B3%20--%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22154%22%20r%3D%2236%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22242%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22270%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%A3%D8%AC%D9%86%D8%AD%D8%A9%20--%3E%0A%20%20%3Cellipse%20cx%3D%22186%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C186%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22326%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C326%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22192%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%28-20%2C192%2C215%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22320%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%2820%2C320%2C215%29%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D8%A5%D8%A8%D8%B1%D8%A9%20--%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C295%20248%2C340%20264%2C340%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%20%20%3C%21--%20%D8%A7%D9%84%D9%87%D9%88%D8%A7%D8%A6%D9%8A%D8%A7%D8%AA%20--%3E%0A%20%20%3Cline%20x1%3D%22242%22%20y1%3D%22120%22%20x2%3D%22222%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Cline%20x1%3D%22270%22%20y1%3D%22120%22%20x2%3D%22290%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22220%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22292%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%3C%2Fsvg%3E",sizes:"512x512",type:"image/svg+xml",purpose:"any maskable"},
-    {src:"data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bd%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C3%20181%2C51%20181%2C141%2096%2C189%2011%2C141%2011%2C51%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2296%22%20cy%3D%2287%22%20rx%3D%2222%22%20ry%3D%2229%22%20fill%3D%22url%28%23bd%29%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2274%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2286%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2298%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2296%22%20cy%3D%2258%22%20r%3D%2214%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2291%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22101%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2269%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C69%2C70%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22123%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C123%2C70%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C111%2092%2C128%20100%2C128%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%3C%2Fsvg%3E",sizes:"192x192",type:"image/svg+xml",purpose:"any maskable"}
-  ];
-  const m={name:"NectarOS — نظام إدارة المناحل",short_name:"NectarOS",description:"نظام إدارة المناحل الذكي",start_url:"./index.html",scope:".",display:"standalone",orientation:"portrait-primary",background_color:"#0d0d0d",theme_color:"#FFC107",lang:"ar",dir:"rtl",icons};
-  try{const b=new Blob([JSON.stringify(m)],{type:"application/manifest+json"});const l=document.createElement("link");l.rel="manifest";l.href=URL.createObjectURL(b);document.head.appendChild(l);}catch(e){}
-})();
-/* ══ INLINE SERVICE WORKER ══ */
-(function(){
-  if(!("serviceWorker"in navigator))return;
-  const SW=`const CACHE="nectaros-v6";const CORE=["./"];
-self.addEventListener("install",e=>{e.waitUntil(caches.open(CACHE).then(c=>c.addAll(CORE)).then(()=>self.skipWaiting()));});
-self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(ks=>Promise.all(ks.filter(k=>k!==CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim()));});
-self.addEventListener("fetch",e=>{if(e.request.method!=="GET")return;e.respondWith(fetch(e.request).then(r=>{if(r&&r.status===200){const c=r.clone();caches.open(CACHE).then(ca=>ca.put(e.request,c));}return r;}).catch(()=>caches.match(e.request)));});
-self.addEventListener("message",e=>{if(e.data==="SKIP_WAITING")self.skipWaiting();});`;
-  try{
-    const b=new Blob([SW],{type:"text/javascript"});
-    const url=URL.createObjectURL(b);
-    navigator.serviceWorker.register(url,{scope:"./"}).then(reg=>{
-      // SW جديد ينتظر — أظهر البانر فوراً
-      if(reg.waiting){ _showUpdateBanner(reg); }
-      reg.addEventListener("updatefound",()=>{
-        const nw=reg.installing;
-        if(!nw)return;
-        nw.addEventListener("statechange",()=>{
-          if(nw.state==="installed"&&navigator.serviceWorker.controller){
-            _showUpdateBanner(reg);
-          }
-        });
+/* ══ SERVICE WORKER — خارجي حقيقي ══ */
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.register('./sw.js', {scope:'./'}).then(reg=>{
+    // SW جديد ينتظر → أظهر البانر فوراً
+    if(reg.waiting){ _showUpdateBanner(reg); }
+    reg.addEventListener('updatefound', ()=>{
+      const nw = reg.installing;
+      if(!nw) return;
+      nw.addEventListener('statechange', ()=>{
+        if(nw.state==='installed' && navigator.serviceWorker.controller){
+          _showUpdateBanner(reg);
+        }
       });
-    }).catch(()=>{});
-    let _ref=false;
-    navigator.serviceWorker.addEventListener("controllerchange",()=>{if(!_ref){_ref=true;location.reload();}});
-  }catch(e){}
-})();
+    });
+  }).catch(()=>{});
+  let _reloading = false;
+  navigator.serviceWorker.addEventListener('controllerchange', ()=>{
+    if(!_reloading){ _reloading=true; location.reload(); }
+  });
+}
 </script>
 <title>NectarOS 🐝</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
@@ -891,12 +875,31 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
 /* ── Google Translate Panel ── */
+#gt-panel{display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--gold3);border-radius:12px;padding:14px 16px;z-index:5000;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:260px;text-align:center;direction:rtl;}
+#gt-panel.open{display:block;}
+.gt-lang-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;}
+.gt-lang-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 5px;color:var(--text);font-family:'Cairo',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:.18s;}
+.gt-lang-btn:hover,.gt-lang-btn.gt-act{border-color:var(--gold);color:var(--gold);background:rgba(255,193,7,.08);}
+.goog-te-banner-frame,.goog-te-balloon-frame{display:none!important;}
 body{top:0!important;}
 
 </style>
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 </head>
 <body>
-
+<div id="google_translate_element" style="display:none;"></div>
+<div id="gt-panel">
+  <div style="font-size:12px;font-weight:700;color:var(--gold);">🌐 ترجمة الصفحة</div>
+  <div class="gt-lang-grid">
+    <button class="gt-lang-btn gt-act" onclick="gtLang('ar')">🇩🇿 عربي</button>
+    <button class="gt-lang-btn" onclick="gtLang('fr')">🇫🇷 Français</button>
+    <button class="gt-lang-btn" onclick="gtLang('en')">🇬🇧 English</button>
+    <button class="gt-lang-btn" onclick="gtLang('tr')">🇹🇷 Türkçe</button>
+    <button class="gt-lang-btn" onclick="gtLang('es')">🇪🇸 Español</button>
+    <button class="gt-lang-btn" onclick="gtLang('de')">🇩🇪 Deutsch</button>
+  </div>
+  <button onclick="document.getElementById('gt-panel').classList.remove('open')" style="margin-top:10px;background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;">✕ إغلاق</button>
+</div>
 
 <!-- ══ SPLASH SCREEN — احترافي ══ -->
 <div id="splash">
@@ -964,6 +967,46 @@ body{top:0!important;}
   </div>
   <button class="update-banner-btn" onclick="applyUpdate()">⬆️ تحديث</button>
   <button class="update-banner-close" onclick="dismissUpdate()">✕</button>
+</div>
+
+<!-- ═══════════ ADS PANEL — يظهر لجميع المستخدمين ═══════════ -->
+<div id="ads-panel" style="display:none;position:fixed;inset:0;z-index:9050;background:var(--bg);direction:rtl;flex-direction:column;">
+
+  <!-- Header -->
+  <div style="background:linear-gradient(135deg,#FF8F00,#E65100);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 2px 12px rgba(0,0,0,.4);">
+    <div style="display:flex;align-items:center;gap:10px;">
+      <span style="font-size:26px;">🐝</span>
+      <div>
+        <div style="font-family:'Syne','Cairo',sans-serif;font-size:16px;font-weight:800;color:#fff;">NectarOS</div>
+        <div style="font-size:10px;color:rgba(255,255,255,.75);">عروض ومستجدات النحّالين</div>
+      </div>
+    </div>
+    <button onclick="closeAdsPanel()" style="background:rgba(0,0,0,.2);border:none;color:#fff;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
+  </div>
+
+  <!-- Ads list -->
+  <div id="ads-list" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;">
+    <div id="ads-loading" style="text-align:center;padding:50px 20px;color:var(--text3);">
+      <div style="font-size:44px;margin-bottom:12px;">🔄</div>
+      <div style="font-size:13px;">جارٍ تحميل الإعلانات...</div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div style="padding:12px 16px;border-top:1px solid var(--border);background:var(--bg2);display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
+    <div style="display:flex;gap:10px;">
+      <button onclick="closeAdsPanel()" style="flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:11px;font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;cursor:pointer;">
+        تخطّي ← الدخول للتطبيق
+      </button>
+      <button onclick="closeAdsPanel();document.getElementById('license-screen').classList.remove('hidden')" style="flex:1;background:linear-gradient(135deg,var(--gold),#FF8F00);border:none;color:#000;border-radius:10px;padding:11px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13px;cursor:pointer;">
+        🔑 تفعيل الترخيص
+      </button>
+    </div>
+    <!-- زر الإخفاء الدائم — يظهر فقط للمرخّص -->
+    <button id="ads-hide-btn" onclick="hideAdsPermanently()" style="display:none;width:100%;background:transparent;border:1px solid var(--border);color:var(--text3);border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;">
+      🚫 لا تعرض الإعلانات مجدداً (متاح للمرخّصين)
+    </button>
+  </div>
 </div>
 
 <!-- ═══════════ LICENSE SCREEN ═══════════ -->
@@ -1247,6 +1290,7 @@ body{top:0!important;}
     <div class="nav-item" id="nav-themes" onclick="go('themes')"><span class="nav-icon">🎨</span><span class="nav-text">الثيمات والمظهر</span></div>
     <div class="nav-item" id="nav-security" onclick="go('security')"><span class="nav-icon">🔐</span><span class="nav-text">الأمان والخصوصية</span></div>
     <div class="nav-item" id="nav-contact" onclick="go('contact')"><span class="nav-icon">📬</span><span class="nav-text">اتصل بنا</span></div>
+    <div class="nav-item" onclick="openAdsPanel();closeSB()"><span class="nav-icon">📢</span><span class="nav-text">معاينة الإعلانات</span></div>
     <div class="nav-item" id="nav-settings" onclick="go('settings')"><span class="nav-icon">⚙️</span><span class="nav-text">الإعدادات</span></div>
     <div class="nav-item" onclick="doLogout()" style="color:var(--red);"><span class="nav-icon">🚪</span><span class="nav-text">تسجيل الخروج</span></div>
   </div>
@@ -1264,6 +1308,7 @@ body{top:0!important;}
       <div id="alert-badge" class="badge br" style="display:none;">⚠️ <span id="alert-num">0</span></div>
       <button class="btn-icon" onclick="go('ai')" title="الذكاء الاصطناعي" style="color:var(--gold);">🤖</button>
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+      <button class="btn-icon" id="gt-btn" onclick="document.getElementById('gt-panel').classList.toggle('open')" title="ترجمة الصفحة" style="color:var(--blue);">🌐</button>
       <button class="btn-icon" onclick="exportData()" title="تصدير">📤</button>
       <button class="btn-icon" onclick="exportPDF()" title="PDF" style="color:var(--red);">📄</button>
       <button class="btn-icon" onclick="triggerImport()">📥</button>
@@ -1545,6 +1590,11 @@ body{top:0!important;}
         <div style="margin-top:6px;font-size:10px;color:var(--text3);" id="ds-info"></div>
         <div style="margin-top:2px;font-size:10px;color:var(--text3);" id="last-backup-info"></div>
         <button class="btn btn-secondary btn-sm" style="margin-top:8px;" onclick="go('security')">🔐 الأمان وكلمة المرور ←</button>
+        <!-- إعادة تفعيل الإعلانات — للمستخدمين الذين أخفوها -->
+        <div id="ads-settings-row" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:none;">
+          <div style="font-size:11px;color:var(--text3);margin-bottom:6px;">📢 الإعلانات مخفية حالياً</div>
+          <button class="btn btn-secondary btn-sm" onclick="resetAdsVisibility();document.getElementById('ads-settings-row').style.display='none';">🔄 إعادة تفعيل الإعلانات</button>
+        </div>
       </div>
     </div>
 
@@ -1983,28 +2033,10 @@ body{top:0!important;}
             <div id="admin-serial-info" style="font-size:10px;color:var(--text2);text-align:center;margin-top:4px;"></div>
             <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px;" onclick="adminCopySerial()">📋 نسخ السيريال</button>
             <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;">
-              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
-                <div style="font-size:10px;font-weight:700;color:var(--text2);">📋 إدارة التراخيص</div>
-                <button class="btn btn-secondary btn-sm" onclick="adminLoadUsers()">🔄 تحديث</button>
-              </div>
-              <input id="admin-search" class="form-control" style="font-size:11px;margin-bottom:8px;" placeholder="🔍 بحث بالاسم أو Device ID..." oninput="adminFilterUsers()">
-              <div id="admin-users-list" style="max-height:320px;overflow-y:auto;display:flex;flex-direction:column;gap:6px;"></div>
+              <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:6px;">قائمة المستخدمين</div>
+              <button class="btn btn-secondary btn-sm" onclick="adminLoadUsers()">🔄 تحميل</button>
+              <div id="admin-users-list" style="margin-top:8px;max-height:200px;overflow-y:auto;"></div>
             </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div id="admin-edit-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.82);z-index:9999;align-items:center;justify-content:center;padding:20px;">
-        <div style="background:var(--card);border:1px solid var(--gold3);border-radius:16px;padding:18px;width:100%;max-width:360px;direction:rtl;">
-          <div style="font-size:13px;font-weight:800;color:var(--gold);margin-bottom:14px;">✏️ تعديل الترخيص</div>
-          <input type="hidden" id="edit-lic-id">
-          <div class="form-group"><label class="form-label">Device ID</label><input id="edit-lic-device" class="form-control" style="font-family:monospace;font-size:11px;" readonly dir="ltr"></div>
-          <div class="form-group"><label class="form-label">الحالة</label><select id="edit-lic-status" class="form-control"><option value="active">✅ نشط</option><option value="trial">🕐 تجريبي</option><option value="expired">🔒 منتهي</option><option value="blocked">🚫 محظور</option></select></div>
-          <div class="form-group"><label class="form-label">تاريخ الانتهاء</label><input id="edit-lic-expires" class="form-control" type="date"></div>
-          <div class="form-group"><label class="form-label">ملاحظات</label><input id="edit-lic-notes" class="form-control" placeholder="اسم العميل..."></div>
-          <div style="display:flex;gap:8px;margin-top:4px;">
-            <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="document.getElementById('admin-edit-modal').style.display='none'">إلغاء</button>
-            <button class="btn btn-primary btn-sm" style="flex:1;" onclick="adminSaveEditLicense()">💾 حفظ</button>
           </div>
         </div>
       </div>
@@ -4481,6 +4513,9 @@ function loadSett(){
   const gsUrl=DB.get('gsheets_url');
   const gsFld=document.getElementById('gsheets-url');
   if(gsFld&&gsUrl)gsFld.value=gsUrl;
+  // إظهار زر إعادة تفعيل الإعلانات إذا كانت مخفية
+  const adsRow = document.getElementById('ads-settings-row');
+  if(adsRow) adsRow.style.display = localStorage.getItem('_nec_ads_hidden')==='1' ? 'block' : 'none';
 }
 function saveSett(){
   const s=gSet();
@@ -7317,8 +7352,8 @@ function checkAndPush(){
    🔐 LICENSE / SERIAL NUMBER SYSTEM
    NectarOS v5.2 — كامل مع مزامنة 4 أجهزة
 ══════════════════════════════════════════════════ */
-const APP_VERSION = '5.2';
-const APP_VERSION_CODE = 520;
+const APP_VERSION = '5.3';
+const APP_VERSION_CODE = 530;
 const TRIAL_DAYS = 15;
 const MAX_DEVICES = 4;
 const _SALT = 'NectarOS2025Bee';
@@ -7883,9 +7918,183 @@ function doImportLicense(input){
   input.value='';
 }
 
-/* ══════════════════════════════════════════════════
-   🔄 UPDATE NOTIFICATION SYSTEM
-══════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   📢  NECTAROS ADS SYSTEM  v2.0
+   - يُظهر الإعلانات لجميع المستخدمين (مرخّص + مجاني)
+   - المطوّر يتحكم بالإظهار/الإخفاء من ملف ads.json
+   - المستخدم المرخّص يستطيع إخفاء الإعلانات نهائياً
+   - الكاش 3 ساعات، التحديث تلقائي من الإنترنت
+══════════════════════════════════════════════════════════════ */
+
+// ── إعدادات النظام (عدّل هنا فقط) ──────────────────────────
+const ADS_URL       = 'https://gist.githubusercontent.com/benadla-amine/nectaros-ads/raw/ads.json';
+const ADS_CACHE_KEY = '_nec_ads_cache';
+const ADS_CACHE_TS  = '_nec_ads_time';
+const ADS_HIDE_KEY  = '_nec_ads_hidden';   // المستخدم أخفى الإعلانات
+const ADS_CACHE_TTL = 3 * 60 * 60 * 1000; // 3 ساعات
+
+// ── هل المستخدم مرخّص؟ ──────────────────────────────────────
+function _isLicensedUser(){
+  const ownerV = localStorage.getItem('_nec_owner_verified') === '1';
+  const lic    = getLicense();
+  const licOk  = lic && lic.active && lic.serial;
+  return ownerV || licOk;
+}
+
+// ── جلب الإعلانات مع كاش محلي ───────────────────────────────
+async function fetchAds(){
+  const cached   = localStorage.getItem(ADS_CACHE_KEY);
+  const cachedAt = parseInt(localStorage.getItem(ADS_CACHE_TS) || '0');
+
+  // إرجاع الكاش إذا كان حديثاً
+  if(cached && Date.now() - cachedAt < ADS_CACHE_TTL){
+    try{ return JSON.parse(cached); }catch(e){}
+  }
+
+  // جلب من الإنترنت
+  try{
+    const r = await fetch(ADS_URL + '?t=' + Date.now(), { cache: 'no-store' });
+    if(!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    localStorage.setItem(ADS_CACHE_KEY, JSON.stringify(data));
+    localStorage.setItem(ADS_CACHE_TS,  Date.now().toString());
+    return data;
+  }catch(e){
+    // إذا فشل الاتصال: استخدم الكاش القديم مهما كان قديماً
+    if(cached){ try{ return JSON.parse(cached); }catch(e2){} }
+    return null;
+  }
+}
+
+// ── رسم بطاقة إعلان واحدة ────────────────────────────────────
+function renderAdCard(ad){
+  const badge = ad.badge
+    ? `<div style="position:absolute;top:10px;left:10px;background:${ad.badgeColor||'var(--gold)'};color:#000;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;z-index:1;">${ad.badge}</div>`
+    : '';
+  const img = ad.image
+    ? `<div style="position:relative;"><img src="${ad.image}" loading="lazy" style="width:100%;height:190px;object-fit:cover;border-radius:12px 12px 0 0;display:block;" onerror="this.parentElement.style.display='none'">${badge}</div>`
+    : (ad.badge ? `<div style="padding:6px 12px 0;">${badge.replace('position:absolute;','position:relative;')}</div>` : '');
+  const cta = ad.link
+    ? `<a href="${ad.link}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,var(--gold),#FF8F00);color:#000;text-align:center;padding:10px;border-radius:8px;font-weight:800;font-size:13px;text-decoration:none;margin-top:10px;">${ad.cta||'اعرف أكثر ←'}</a>`
+    : '';
+  const phone = ad.phone
+    ? `<a href="tel:${ad.phone}" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(76,175,80,.12);border:1px solid rgba(76,175,80,.3);color:var(--green);padding:8px;border-radius:8px;font-weight:700;font-size:12px;text-decoration:none;margin-top:8px;">📞 ${ad.phone}</a>`
+    : '';
+  return `
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;margin-bottom:2px;">
+      ${img}
+      <div style="padding:12px;">
+        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px;">${ad.title||''}</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.75;">${(ad.body||'').replace(/\n/g,'<br>')}</div>
+        ${cta}${phone}
+        ${ad.category ? `<div style="margin-top:8px;font-size:10px;color:var(--text3);">🏷️ ${ad.category}</div>` : ''}
+      </div>
+    </div>`;
+}
+
+// ── فتح لوحة الإعلانات ───────────────────────────────────────
+async function openAdsPanel(){
+  const panel = document.getElementById('ads-panel');
+  if(!panel) return;
+
+  // إعادة ضبط حالة loading
+  const list = document.getElementById('ads-list');
+  if(list) list.innerHTML = `
+    <div id="ads-loading" style="text-align:center;padding:50px 20px;color:var(--text3);">
+      <div style="font-size:44px;margin-bottom:12px;animation:spin 1s linear infinite;">🔄</div>
+      <div style="font-size:13px;">جارٍ تحميل الإعلانات...</div>
+    </div>`;
+
+  panel.style.display = 'flex';
+
+  // إظهار زر الإخفاء الدائم للمستخدم المرخّص فقط
+  const hideBtn = document.getElementById('ads-hide-btn');
+  if(hideBtn) hideBtn.style.display = _isLicensedUser() ? 'flex' : 'none';
+
+  // جلب البيانات
+  const data = await fetchAds();
+  if(!list) return;
+
+  if(!data){
+    list.innerHTML = `<div style="text-align:center;padding:50px 20px;color:var(--text3);"><div style="font-size:44px;">📡</div><div style="font-size:13px;margin-top:10px;">تعذّر الاتصال — تحقق من الإنترنت</div></div>`;
+    return;
+  }
+
+  // فحص إذا كان المطوّر أخفى الإعلانات كلها
+  if(data.enabled === false){
+    panel.style.display = 'none';
+    return;
+  }
+
+  // فلتر الإعلانات النشطة وضمن تاريخ الصلاحية
+  const now = Date.now();
+  const active = (data.ads || []).filter(a => {
+    if(a.active === false) return false;
+    if(a.startDate && new Date(a.startDate).getTime() > now) return false;
+    if(a.endDate   && new Date(a.endDate).getTime()   < now) return false;
+    return true;
+  });
+
+  if(!active.length){
+    list.innerHTML = `<div style="text-align:center;padding:50px 20px;color:var(--text3);"><div style="font-size:44px;">📭</div><div style="font-size:13px;margin-top:10px;">لا توجد إعلانات نشطة حالياً</div></div>`;
+    return;
+  }
+
+  list.innerHTML = active.map(renderAdCard).join('');
+}
+
+// ── إغلاق لوحة الإعلانات ─────────────────────────────────────
+function closeAdsPanel(){
+  const panel = document.getElementById('ads-panel');
+  if(panel) panel.style.display = 'none';
+  sessionStorage.setItem('_nec_ads_seen', '1');
+}
+
+// ── إخفاء الإعلانات نهائياً (للمستخدم المرخّص فقط) ──────────
+function hideAdsPermanently(){
+  if(!_isLicensedUser()){
+    toast('هذه الميزة للمستخدمين المرخّصين فقط','error');
+    return;
+  }
+  localStorage.setItem(ADS_HIDE_KEY, '1');
+  closeAdsPanel();
+  toast('✅ تم إخفاء الإعلانات نهائياً — يمكنك إعادة تفعيلها من الإعدادات','success');
+}
+
+// ── إعادة تفعيل الإعلانات (من الإعدادات) ────────────────────
+function resetAdsVisibility(){
+  localStorage.removeItem(ADS_HIDE_KEY);
+  sessionStorage.removeItem('_nec_ads_seen');
+  localStorage.removeItem(ADS_CACHE_KEY);
+  localStorage.removeItem(ADS_CACHE_TS);
+  toast('✅ تم إعادة تفعيل الإعلانات','success');
+}
+
+// ── تشغيل تلقائي عند بدء التطبيق ───────────────────────────
+async function initAdsSystem(){
+  // المستخدم أخفى الإعلانات نهائياً → لا شيء
+  if(localStorage.getItem(ADS_HIDE_KEY) === '1') return;
+  // رأى الإعلانات مسبقاً في هذه الجلسة → لا شيء
+  if(sessionStorage.getItem('_nec_ads_seen') === '1') return;
+
+  // جلب مسبق للتحقق من enabled قبل الإظهار
+  try{
+    const data = await fetchAds();
+    if(!data || data.enabled === false) return; // المطوّر أخفى الكل
+    const now = Date.now();
+    const active = (data.ads||[]).filter(a =>
+      a.active !== false &&
+      !(a.startDate && new Date(a.startDate).getTime() > now) &&
+      !(a.endDate   && new Date(a.endDate).getTime()   < now)
+    );
+    if(!active.length) return; // لا إعلانات نشطة
+  }catch(e){ return; }
+
+  // انتظر ثانية بعد تحميل التطبيق ثم أظهر
+  setTimeout(() => openAdsPanel(), 1200);
+}
+
+
 function checkForUpdates(){
   const CACHE_KEY = 'nectaros-v7'; // يجب أن يطابق اسم الكاش في السيرفس ووركر
   const storedCache = localStorage.getItem('_nec_cache_ver');
@@ -8012,6 +8221,8 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
+// تشغيل نظام الإعلانات (للنسخة المجانية فقط)
+initAdsSystem();
 // ══ فحص فوري لجهاز المالك — يعمل قبل checkLicense ══
 // جهاز D028-6040-0FC3-4586 يُفعَّل مباشرة بدون أي شاشة
 (function _ownerBootCheck(){
@@ -9153,67 +9364,30 @@ function adminCopySerial() {
   }
 }
 
-let _adminLicCache=[];
-async function adminLoadUsers(){
-  const el=document.getElementById('admin-users-list');
-  if(!el)return;
-  el.innerHTML='<div style="color:var(--text3);font-size:11px;text-align:center;padding:12px;">⏳ جارٍ التحميل...</div>';
-  try{
-    const data=await sbQuery('GET','licenses?select=*&order=install_date.desc&limit=100');
-    if(!data||!data.length){el.innerHTML='<div style="color:var(--text3);font-size:11px;text-align:center;padding:12px;">📭 لا توجد تراخيص</div>';return;}
-    _adminLicCache=data;_renderLicenseList(data);
-  }catch(e){el.innerHTML='<div style="color:var(--red);font-size:11px;text-align:center;padding:12px;">❌ فشل الاتصال بـ Supabase</div>';}
-}
-function adminFilterUsers(){
-  const q=(document.getElementById('admin-search')?.value||'').toLowerCase().trim();
-  _renderLicenseList(q?_adminLicCache.filter(r=>(r.device_id||'').toLowerCase().includes(q)||(r.notes||'').toLowerCase().includes(q)||(r.serial||'').toLowerCase().includes(q)):_adminLicCache);
-}
-function _renderLicenseList(data){
-  const el=document.getElementById('admin-users-list');if(!el)return;
-  if(!data.length){el.innerHTML='<div style="color:var(--text3);font-size:11px;text-align:center;padding:12px;">🔍 لا نتائج</div>';return;}
-  const sm={active:{i:'✅',c:'var(--green)',l:'نشط'},trial:{i:'🕐',c:'var(--gold)',l:'تجريبي'},expired:{i:'🔒',c:'var(--red)',l:'منتهي'},blocked:{i:'🚫',c:'var(--red)',l:'محظور'}};
-  el.innerHTML=data.map(r=>{
-    const st=sm[r.status]||{i:'?',c:'var(--text3)',l:r.status||'—'};
-    const exp=r.serial_expires?new Date(r.serial_expires).toLocaleDateString('ar-DZ'):'—';
-    const expD=r.serial_expires?r.serial_expires.slice(0,10):'';
-    const isExp=r.serial_expires&&new Date(r.serial_expires)<new Date();
-    const did=(r.device_id||'').replace(/'/g,"\'");const nt=(r.notes||'').replace(/'/g,"\'");
-    return `<div style="background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:9px;font-size:10px;"><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;"><span style="color:${st.c};font-weight:800;">${st.i} ${st.l}</span><span style="color:${isExp?'var(--red)':'var(--text3)'};">${isExp?'⚠️ ':''}${exp}</span></div>${r.notes?'<div style="color:var(--text);font-weight:700;margin-bottom:3px;">👤 '+r.notes+'</div>':''}<div style="color:var(--gold);font-family:monospace;font-size:9px;word-break:break-all;margin-bottom:3px;">${r.device_id||'—'}</div>${r.serial?'<div style="color:var(--text2);font-family:monospace;font-size:9px;">SN: '+r.serial+'</div>':''}<div style="display:flex;gap:5px;margin-top:7px;"><button class="btn btn-secondary btn-xs" style="flex:1;" onclick="adminOpenEdit('${r.id}','${did}','${r.status||''}','${expD}','${nt}')">✏️ تعديل</button><button class="btn btn-xs" style="flex:1;background:rgba(244,67,54,.1);color:var(--red);border:1px solid rgba(244,67,54,.2);" onclick="adminDeleteLicense('${r.id}','${did}')">🗑️ حذف</button></div></div>`;
-  }).join('');
-}
-function adminOpenEdit(id,deviceId,status,expires,notes){
-  document.getElementById('edit-lic-id').value=id;
-  document.getElementById('edit-lic-device').value=deviceId;
-  document.getElementById('edit-lic-status').value=status||'active';
-  document.getElementById('edit-lic-expires').value=expires||'';
-  document.getElementById('edit-lic-notes').value=notes||'';
-  document.getElementById('admin-edit-modal').style.display='flex';
-}
-async function adminSaveEditLicense(){
-  const id=document.getElementById('edit-lic-id').value;
-  const status=document.getElementById('edit-lic-status').value;
-  const expires=document.getElementById('edit-lic-expires').value;
-  const notes=document.getElementById('edit-lic-notes').value.trim();
-  if(!id)return;
-  try{
-    const p={status};
-    if(expires)p.serial_expires=new Date(expires).toISOString();
-    if(notes)p.notes=notes;
-    await sbQuery('PATCH','licenses?id=eq.'+encodeURIComponent(id),p);
-    _adminLicCache=_adminLicCache.map(r=>r.id===id?{...r,...p}:r);
-    _renderLicenseList(_adminLicCache);
-    document.getElementById('admin-edit-modal').style.display='none';
-    toast('✅ تم تحديث الترخيص','success');
-  }catch(e){toast('❌ فشل التحديث','error');}
-}
-async function adminDeleteLicense(id,deviceId){
-  if(!confirm('هل تريد حذف ترخيص الجهاز:\n'+deviceId+'\n\nلا يمكن التراجع.'))return;
-  try{
-    await fetch('https://jirwztmtyajwptkdzqsv.supabase.co/rest/v1/licenses?id=eq.'+encodeURIComponent(id),{method:'DELETE',headers:{apikey:SB_KEY,'Authorization':'Bearer '+SB_KEY}});
-    _adminLicCache=_adminLicCache.filter(r=>r.id!==id);
-    _renderLicenseList(_adminLicCache);
-    toast('🗑️ تم حذف الترخيص','success');
-  }catch(e){toast('❌ فشل الحذف','error');}
+async function adminLoadUsers() {
+  const el = document.getElementById('admin-users-list');
+  if (!el) return;
+  el.innerHTML = '<div style="color:var(--text3);font-size:11px;">⏳ جارٍ التحميل...</div>';
+  try {
+    const data = await sbQuery('GET', 'licenses?select=*&order=install_date.desc&limit=50');
+    if (!data || !data.length) { el.innerHTML = '<div style="color:var(--text3);font-size:11px;">لا مستخدمون بعد</div>'; return; }
+    el.innerHTML = data.map(r => {
+      const sc = {active:'✅',trial:'🕐',expired:'🔒',blocked:'🚫'}[r.status]||'?';
+      const scol = {active:'var(--green)',trial:'var(--gold)',expired:'var(--red)',blocked:'var(--red)'}[r.status]||'var(--text3)';
+      const exp = r.serial_expires ? new Date(r.serial_expires).toLocaleDateString('ar-DZ') : '—';
+      return `<div style="padding:6px;border-bottom:1px solid var(--border);font-size:9px;">
+        <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
+          <span style="color:${scol};font-weight:700;">${sc} ${r.status}</span>
+          <span style="color:var(--text3);">${exp}</span>
+        </div>
+        <div style="color:var(--gold);font-family:monospace;word-break:break-all;">${r.device_id}</div>
+        ${r.serial?`<div style="color:var(--text2);">SN: ${r.serial}</div>`:''}
+        ${r.notes?`<div style="color:var(--text3);">${r.notes}</div>`:''}
+      </div>`;
+    }).join('');
+  } catch(e) {
+    el.innerHTML = '<div style="color:var(--red);font-size:11px;">❌ فشل الاتصال بـ Supabase</div>';
+  }
 }
 
 function changeSecPassword(){
@@ -9252,7 +9426,27 @@ function logActivity(action){
   log.push({action,time:new Date().toLocaleString('ar'),date:today()});
   DB.set('activity_log',log.slice(-100));
 }
-
+/* ══ GOOGLE TRANSLATE ══ */
+function googleTranslateElementInit(){
+  new google.translate.TranslateElement({pageLanguage:'ar',includedLanguages:'ar,fr,en,tr,es,de',autoDisplay:false},'google_translate_element');
+}
+function gtLang(lang){
+  document.querySelectorAll('.gt-lang-btn').forEach(b=>b.classList.remove('gt-act'));
+  event?.target?.classList.add('gt-act');
+  if(lang==='ar'){document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';location.reload();return;}
+  document.cookie=`googtrans=/ar/${lang}; path=/`;
+  const tryIt=(n)=>{
+    const sel=document.querySelector('.goog-te-combo');
+    if(sel){sel.value=lang;sel.dispatchEvent(new Event('change'));document.getElementById('gt-panel').classList.remove('open');toast('✅ تمت الترجمة','success');}
+    else if(n<8)setTimeout(()=>tryIt(n+1),500);
+    else toast('⚠️ تحتاج اتصالاً بالإنترنت للترجمة','warning');
+  };
+  tryIt(0);
+}
+document.addEventListener('click',e=>{
+  const p=document.getElementById('gt-panel'),b=document.getElementById('gt-btn');
+  if(p&&b&&!p.contains(e.target)&&!b.contains(e.target))p.classList.remove('open');
+});
 
 </script>
 </body>
