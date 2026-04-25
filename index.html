@@ -874,32 +874,9 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .section-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin:14px 0 8px;display:flex;align-items:center;gap:7px;}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* ── Google Translate Panel ── */
-#gt-panel{display:none;position:fixed;top:60px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--gold3);border-radius:12px;padding:14px 16px;z-index:5000;box-shadow:0 8px 32px rgba(0,0,0,.5);min-width:260px;text-align:center;direction:rtl;}
-#gt-panel.open{display:block;}
-.gt-lang-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin-top:10px;}
-.gt-lang-btn{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:8px 5px;color:var(--text);font-family:'Cairo',sans-serif;font-size:11px;font-weight:600;cursor:pointer;transition:.18s;}
-.gt-lang-btn:hover,.gt-lang-btn.gt-act{border-color:var(--gold);color:var(--gold);background:rgba(255,193,7,.08);}
-.goog-te-banner-frame,.goog-te-balloon-frame{display:none!important;}
-body{top:0!important;}
-
 </style>
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" async></script>
 </head>
 <body>
-<div id="google_translate_element" style="display:none;"></div>
-<div id="gt-panel">
-  <div style="font-size:12px;font-weight:700;color:var(--gold);">🌐 ترجمة الصفحة</div>
-  <div class="gt-lang-grid">
-    <button class="gt-lang-btn gt-act" onclick="gtLang('ar')">🇩🇿 عربي</button>
-    <button class="gt-lang-btn" onclick="gtLang('fr')">🇫🇷 Français</button>
-    <button class="gt-lang-btn" onclick="gtLang('en')">🇬🇧 English</button>
-    <button class="gt-lang-btn" onclick="gtLang('tr')">🇹🇷 Türkçe</button>
-    <button class="gt-lang-btn" onclick="gtLang('es')">🇪🇸 Español</button>
-    <button class="gt-lang-btn" onclick="gtLang('de')">🇩🇪 Deutsch</button>
-  </div>
-  <button onclick="document.getElementById('gt-panel').classList.remove('open')" style="margin-top:10px;background:none;border:none;color:var(--text3);font-size:11px;cursor:pointer;">✕ إغلاق</button>
-</div>
 
 <!-- ══ SPLASH SCREEN — احترافي ══ -->
 <div id="splash">
@@ -969,45 +946,6 @@ body{top:0!important;}
   <button class="update-banner-close" onclick="dismissUpdate()">✕</button>
 </div>
 
-<!-- ═══════════ ADS PANEL — يظهر لجميع المستخدمين ═══════════ -->
-<div id="ads-panel" style="display:none;position:fixed;inset:0;z-index:9050;background:var(--bg);direction:rtl;flex-direction:column;">
-
-  <!-- Header -->
-  <div style="background:linear-gradient(135deg,#FF8F00,#E65100);padding:14px 16px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0;box-shadow:0 2px 12px rgba(0,0,0,.4);">
-    <div style="display:flex;align-items:center;gap:10px;">
-      <span style="font-size:26px;">🐝</span>
-      <div>
-        <div style="font-family:'Syne','Cairo',sans-serif;font-size:16px;font-weight:800;color:#fff;">NectarOS</div>
-        <div style="font-size:10px;color:rgba(255,255,255,.75);">عروض ومستجدات النحّالين</div>
-      </div>
-    </div>
-    <button onclick="closeAdsPanel()" style="background:rgba(0,0,0,.2);border:none;color:#fff;border-radius:50%;width:34px;height:34px;font-size:18px;cursor:pointer;display:flex;align-items:center;justify-content:center;">✕</button>
-  </div>
-
-  <!-- Ads list -->
-  <div id="ads-list" style="flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:12px;">
-    <div id="ads-loading" style="text-align:center;padding:50px 20px;color:var(--text3);">
-      <div style="font-size:44px;margin-bottom:12px;">🔄</div>
-      <div style="font-size:13px;">جارٍ تحميل الإعلانات...</div>
-    </div>
-  </div>
-
-  <!-- Footer -->
-  <div style="padding:12px 16px;border-top:1px solid var(--border);background:var(--bg2);display:flex;flex-direction:column;gap:8px;flex-shrink:0;">
-    <div style="display:flex;gap:10px;">
-      <button onclick="closeAdsPanel()" style="flex:1;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:11px;font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;cursor:pointer;">
-        تخطّي ← الدخول للتطبيق
-      </button>
-      <button onclick="closeAdsPanel();document.getElementById('license-screen').classList.remove('hidden')" style="flex:1;background:linear-gradient(135deg,var(--gold),#FF8F00);border:none;color:#000;border-radius:10px;padding:11px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13px;cursor:pointer;">
-        🔑 تفعيل الترخيص
-      </button>
-    </div>
-    <!-- زر الإخفاء الدائم — يظهر فقط للمرخّص -->
-    <button id="ads-hide-btn" onclick="hideAdsPermanently()" style="display:none;width:100%;background:transparent;border:1px solid var(--border);color:var(--text3);border-radius:8px;padding:8px;font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;">
-      🚫 لا تعرض الإعلانات مجدداً (متاح للمرخّصين)
-    </button>
-  </div>
-</div>
 
 <!-- ═══════════ LICENSE SCREEN ═══════════ -->
 <div id="license-screen" class="hidden">
@@ -1290,7 +1228,6 @@ body{top:0!important;}
     <div class="nav-item" id="nav-themes" onclick="go('themes')"><span class="nav-icon">🎨</span><span class="nav-text">الثيمات والمظهر</span></div>
     <div class="nav-item" id="nav-security" onclick="go('security')"><span class="nav-icon">🔐</span><span class="nav-text">الأمان والخصوصية</span></div>
     <div class="nav-item" id="nav-contact" onclick="go('contact')"><span class="nav-icon">📬</span><span class="nav-text">اتصل بنا</span></div>
-    <div class="nav-item" onclick="openAdsPanel();closeSB()"><span class="nav-icon">📢</span><span class="nav-text">معاينة الإعلانات</span></div>
     <div class="nav-item" id="nav-settings" onclick="go('settings')"><span class="nav-icon">⚙️</span><span class="nav-text">الإعدادات</span></div>
     <div class="nav-item" onclick="doLogout()" style="color:var(--red);"><span class="nav-icon">🚪</span><span class="nav-text">تسجيل الخروج</span></div>
   </div>
@@ -1308,7 +1245,6 @@ body{top:0!important;}
       <div id="alert-badge" class="badge br" style="display:none;">⚠️ <span id="alert-num">0</span></div>
       <button class="btn-icon" onclick="go('ai')" title="الذكاء الاصطناعي" style="color:var(--gold);">🤖</button>
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
-      <button class="btn-icon" id="gt-btn" onclick="document.getElementById('gt-panel').classList.toggle('open')" title="ترجمة الصفحة" style="color:var(--blue);">🌐</button>
       <button class="btn-icon" onclick="exportData()" title="تصدير">📤</button>
       <button class="btn-icon" onclick="exportPDF()" title="PDF" style="color:var(--red);">📄</button>
       <button class="btn-icon" onclick="triggerImport()">📥</button>
@@ -1590,11 +1526,6 @@ body{top:0!important;}
         <div style="margin-top:6px;font-size:10px;color:var(--text3);" id="ds-info"></div>
         <div style="margin-top:2px;font-size:10px;color:var(--text3);" id="last-backup-info"></div>
         <button class="btn btn-secondary btn-sm" style="margin-top:8px;" onclick="go('security')">🔐 الأمان وكلمة المرور ←</button>
-        <!-- إعادة تفعيل الإعلانات — للمستخدمين الذين أخفوها -->
-        <div id="ads-settings-row" style="margin-top:10px;padding-top:10px;border-top:1px solid var(--border);display:none;">
-          <div style="font-size:11px;color:var(--text3);margin-bottom:6px;">📢 الإعلانات مخفية حالياً</div>
-          <button class="btn btn-secondary btn-sm" onclick="resetAdsVisibility();document.getElementById('ads-settings-row').style.display='none';">🔄 إعادة تفعيل الإعلانات</button>
-        </div>
       </div>
     </div>
 
@@ -2003,39 +1934,89 @@ body{top:0!important;}
           <button class="btn btn-xs btn-secondary" onclick="document.getElementById('license-screen').classList.remove('hidden')">⚙️ إدارة</button>
         </div>
         <div id="sec-license-status" style="padding:4px 0;"></div>
-        <!-- Admin panel — مخفية، تظهر فقط لجهاز المالك -->
+        <!-- لوحة إدارة التراخيص — مخفية، تظهر فقط لجهاز المالك -->
         <div id="dev-panel" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
-          <div style="background:rgba(255,193,7,.06);border:1px solid rgba(255,193,7,.2);border-radius:10px;padding:12px;">
-            <div style="font-size:11px;font-weight:800;color:var(--gold);margin-bottom:10px;display:flex;align-items:center;gap:6px;">
-              🛠️ لوحة المطوّر
-              <span style="font-size:9px;background:var(--gold);color:#000;padding:2px 6px;border-radius:10px;">للمطوّر فقط</span>
+          <div style="background:rgba(255,193,7,.05);border:1.5px solid rgba(255,193,7,.25);border-radius:14px;overflow:hidden;">
+
+            <!-- Header -->
+            <div style="background:linear-gradient(135deg,rgba(255,193,7,.15),rgba(255,111,0,.1));padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,193,7,.2);">
+              <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:20px;">🛠️</span>
+                <div>
+                  <div style="font-size:13px;font-weight:800;color:var(--gold);">إدارة التراخيص</div>
+                  <div style="font-size:9px;color:var(--text3);">للمطوّر فقط — NectarOS</div>
+                </div>
+              </div>
+              <button class="btn btn-secondary btn-sm" onclick="adminLoadUsers()">🔄 تحديث</button>
             </div>
-            <div class="form-group">
-              <label class="form-label">Device ID للعميل</label>
-              <input id="admin-device-id" class="form-control" style="font-family:monospace;font-size:11px;" placeholder="XXXX-XXXX-XXXX-XXXX" dir="ltr">
+
+            <!-- تبويبات -->
+            <div style="display:flex;border-bottom:1px solid var(--border);">
+              <button id="adm-tab-gen" onclick="adminTab('gen')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--gold);color:#000;cursor:pointer;">⚡ توليد</button>
+              <button id="adm-tab-list" onclick="adminTab('list')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--bg3);color:var(--text2);cursor:pointer;">📋 القائمة</button>
+              <button id="adm-tab-search" onclick="adminTab('search')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--bg3);color:var(--text2);cursor:pointer;">🔍 بحث</button>
             </div>
-            <div class="form-group">
-              <label class="form-label">مدة الترخيص</label>
-              <select id="admin-duration" class="form-control">
-                <option value="30">30 يوم</option>
-                <option value="90">3 أشهر</option>
-                <option value="180">6 أشهر</option>
-                <option value="365" selected>سنة كاملة</option>
-                <option value="3650">مدى الحياة</option>
-              </select>
+
+            <!-- تبويب: توليد سيريال -->
+            <div id="adm-pane-gen" style="padding:14px;">
+              <div class="form-group">
+                <label class="form-label" style="font-size:11px;">📱 Device ID للعميل</label>
+                <div style="display:flex;gap:6px;">
+                  <input id="admin-device-id" class="form-control" style="font-family:monospace;font-size:11px;flex:1;" placeholder="XXXX-XXXX-XXXX-XXXX" dir="ltr" oninput="this.value=this.value.toUpperCase()">
+                  <button onclick="adminPasteDeviceId()" class="btn btn-secondary btn-sm" style="flex-shrink:0;">📋 لصق</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:11px;">👤 اسم العميل</label>
+                <input id="admin-note" class="form-control" placeholder="مثال: أحمد — الجزائر العاصمة">
+              </div>
+              <div class="form-group">
+                <label class="form-label" style="font-size:11px;">⏳ مدة الترخيص</label>
+                <select id="admin-duration" class="form-control">
+                  <option value="30">30 يوم (تجريبي ممتد)</option>
+                  <option value="90">3 أشهر</option>
+                  <option value="180">6 أشهر</option>
+                  <option value="365" selected>سنة كاملة</option>
+                  <option value="3650">مدى الحياة</option>
+                </select>
+              </div>
+              <button class="btn btn-primary" style="width:100%;" onclick="adminGenerateSerial()">⚡ توليد السيريال</button>
+
+              <!-- نتيجة السيريال -->
+              <div id="admin-result-box" style="display:none;margin-top:12px;background:var(--bg3);border:1px solid rgba(255,193,7,.3);border-radius:10px;padding:12px;">
+                <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-align:center;">السيريال الجاهز للإرسال</div>
+                <div id="admin-serial-result" style="font-family:monospace;font-size:16px;font-weight:800;color:var(--gold);text-align:center;letter-spacing:3px;word-break:break-all;margin-bottom:8px;"></div>
+                <div id="admin-serial-info" style="font-size:10px;color:var(--text2);text-align:center;margin-bottom:10px;"></div>
+                <div style="display:flex;gap:8px;">
+                  <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="adminCopySerial()">📋 نسخ</button>
+                  <button class="btn btn-success btn-sm" style="flex:1;" onclick="adminShareSerial()">📤 مشاركة واتساب</button>
+                </div>
+              </div>
             </div>
-            <div class="form-group">
-              <label class="form-label">ملاحظة (اختياري)</label>
-              <input id="admin-note" class="form-control" placeholder="اسم العميل...">
+
+            <!-- تبويب: قائمة التراخيص -->
+            <div id="adm-pane-list" style="display:none;padding:14px;">
+              <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
+                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('')">الكل</button>
+                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('active')">✅ نشط</button>
+                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('trial')">🕐 تجريبي</button>
+                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('expired')">🔒 منتهي</button>
+                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('blocked')">🚫 محظور</button>
+              </div>
+              <div id="admin-users-list" style="max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;">
+                <div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">اضغط 🔄 تحديث لتحميل القائمة</div>
+              </div>
+              <div id="admin-list-stats" style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;"></div>
             </div>
-            <button class="btn btn-primary" style="width:100%;" onclick="adminGenerateSerial()">⚡ توليد السيريال وحفظه</button>
-            <div id="admin-serial-result" style="font-family:monospace;font-size:14px;font-weight:700;color:var(--gold);min-height:20px;text-align:center;letter-spacing:3px;margin-top:8px;padding:8px;background:var(--bg3);border-radius:8px;"></div>
-            <div id="admin-serial-info" style="font-size:10px;color:var(--text2);text-align:center;margin-top:4px;"></div>
-            <button class="btn btn-secondary btn-sm" style="width:100%;margin-top:8px;" onclick="adminCopySerial()">📋 نسخ السيريال</button>
-            <div style="margin-top:12px;border-top:1px solid var(--border);padding-top:10px;">
-              <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:6px;">قائمة المستخدمين</div>
-              <button class="btn btn-secondary btn-sm" onclick="adminLoadUsers()">🔄 تحميل</button>
-              <div id="admin-users-list" style="margin-top:8px;max-height:200px;overflow-y:auto;"></div>
+
+            <!-- تبويب: بحث -->
+            <div id="adm-pane-search" style="display:none;padding:14px;">
+              <div style="display:flex;gap:6px;margin-bottom:12px;">
+                <input id="admin-search-input" class="form-control" placeholder="Device ID أو اسم العميل..." oninput="adminSearch(this.value)">
+              </div>
+              <div id="admin-search-results" style="max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;">
+                <div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">ابدأ الكتابة للبحث</div>
+              </div>
             </div>
           </div>
         </div>
@@ -4513,9 +4494,6 @@ function loadSett(){
   const gsUrl=DB.get('gsheets_url');
   const gsFld=document.getElementById('gsheets-url');
   if(gsFld&&gsUrl)gsFld.value=gsUrl;
-  // إظهار زر إعادة تفعيل الإعلانات إذا كانت مخفية
-  const adsRow = document.getElementById('ads-settings-row');
-  if(adsRow) adsRow.style.display = localStorage.getItem('_nec_ads_hidden')==='1' ? 'block' : 'none';
 }
 function saveSett(){
   const s=gSet();
@@ -7918,181 +7896,6 @@ function doImportLicense(input){
   input.value='';
 }
 
-/* ══════════════════════════════════════════════════════════════
-   📢  NECTAROS ADS SYSTEM  v2.0
-   - يُظهر الإعلانات لجميع المستخدمين (مرخّص + مجاني)
-   - المطوّر يتحكم بالإظهار/الإخفاء من ملف ads.json
-   - المستخدم المرخّص يستطيع إخفاء الإعلانات نهائياً
-   - الكاش 3 ساعات، التحديث تلقائي من الإنترنت
-══════════════════════════════════════════════════════════════ */
-
-// ── إعدادات النظام (عدّل هنا فقط) ──────────────────────────
-const ADS_URL       = 'https://gist.githubusercontent.com/benadla-amine/nectaros-ads/raw/ads.json';
-const ADS_CACHE_KEY = '_nec_ads_cache';
-const ADS_CACHE_TS  = '_nec_ads_time';
-const ADS_HIDE_KEY  = '_nec_ads_hidden';   // المستخدم أخفى الإعلانات
-const ADS_CACHE_TTL = 3 * 60 * 60 * 1000; // 3 ساعات
-
-// ── هل المستخدم مرخّص؟ ──────────────────────────────────────
-function _isLicensedUser(){
-  const ownerV = localStorage.getItem('_nec_owner_verified') === '1';
-  const lic    = getLicense();
-  const licOk  = lic && lic.active && lic.serial;
-  return ownerV || licOk;
-}
-
-// ── جلب الإعلانات مع كاش محلي ───────────────────────────────
-async function fetchAds(){
-  const cached   = localStorage.getItem(ADS_CACHE_KEY);
-  const cachedAt = parseInt(localStorage.getItem(ADS_CACHE_TS) || '0');
-
-  // إرجاع الكاش إذا كان حديثاً
-  if(cached && Date.now() - cachedAt < ADS_CACHE_TTL){
-    try{ return JSON.parse(cached); }catch(e){}
-  }
-
-  // جلب من الإنترنت
-  try{
-    const r = await fetch(ADS_URL + '?t=' + Date.now(), { cache: 'no-store' });
-    if(!r.ok) throw new Error('HTTP ' + r.status);
-    const data = await r.json();
-    localStorage.setItem(ADS_CACHE_KEY, JSON.stringify(data));
-    localStorage.setItem(ADS_CACHE_TS,  Date.now().toString());
-    return data;
-  }catch(e){
-    // إذا فشل الاتصال: استخدم الكاش القديم مهما كان قديماً
-    if(cached){ try{ return JSON.parse(cached); }catch(e2){} }
-    return null;
-  }
-}
-
-// ── رسم بطاقة إعلان واحدة ────────────────────────────────────
-function renderAdCard(ad){
-  const badge = ad.badge
-    ? `<div style="position:absolute;top:10px;left:10px;background:${ad.badgeColor||'var(--gold)'};color:#000;font-size:10px;font-weight:800;padding:3px 10px;border-radius:20px;z-index:1;">${ad.badge}</div>`
-    : '';
-  const img = ad.image
-    ? `<div style="position:relative;"><img src="${ad.image}" loading="lazy" style="width:100%;height:190px;object-fit:cover;border-radius:12px 12px 0 0;display:block;" onerror="this.parentElement.style.display='none'">${badge}</div>`
-    : (ad.badge ? `<div style="padding:6px 12px 0;">${badge.replace('position:absolute;','position:relative;')}</div>` : '');
-  const cta = ad.link
-    ? `<a href="${ad.link}" target="_blank" rel="noopener" style="display:flex;align-items:center;justify-content:center;gap:6px;background:linear-gradient(135deg,var(--gold),#FF8F00);color:#000;text-align:center;padding:10px;border-radius:8px;font-weight:800;font-size:13px;text-decoration:none;margin-top:10px;">${ad.cta||'اعرف أكثر ←'}</a>`
-    : '';
-  const phone = ad.phone
-    ? `<a href="tel:${ad.phone}" style="display:flex;align-items:center;justify-content:center;gap:6px;background:rgba(76,175,80,.12);border:1px solid rgba(76,175,80,.3);color:var(--green);padding:8px;border-radius:8px;font-weight:700;font-size:12px;text-decoration:none;margin-top:8px;">📞 ${ad.phone}</a>`
-    : '';
-  return `
-    <div style="background:var(--card2);border:1px solid var(--border);border-radius:12px;overflow:hidden;position:relative;margin-bottom:2px;">
-      ${img}
-      <div style="padding:12px;">
-        <div style="font-size:14px;font-weight:700;color:var(--text);margin-bottom:5px;">${ad.title||''}</div>
-        <div style="font-size:12px;color:var(--text2);line-height:1.75;">${(ad.body||'').replace(/\n/g,'<br>')}</div>
-        ${cta}${phone}
-        ${ad.category ? `<div style="margin-top:8px;font-size:10px;color:var(--text3);">🏷️ ${ad.category}</div>` : ''}
-      </div>
-    </div>`;
-}
-
-// ── فتح لوحة الإعلانات ───────────────────────────────────────
-async function openAdsPanel(){
-  const panel = document.getElementById('ads-panel');
-  if(!panel) return;
-
-  // إعادة ضبط حالة loading
-  const list = document.getElementById('ads-list');
-  if(list) list.innerHTML = `
-    <div id="ads-loading" style="text-align:center;padding:50px 20px;color:var(--text3);">
-      <div style="font-size:44px;margin-bottom:12px;animation:spin 1s linear infinite;">🔄</div>
-      <div style="font-size:13px;">جارٍ تحميل الإعلانات...</div>
-    </div>`;
-
-  panel.style.display = 'flex';
-
-  // إظهار زر الإخفاء الدائم للمستخدم المرخّص فقط
-  const hideBtn = document.getElementById('ads-hide-btn');
-  if(hideBtn) hideBtn.style.display = _isLicensedUser() ? 'flex' : 'none';
-
-  // جلب البيانات
-  const data = await fetchAds();
-  if(!list) return;
-
-  if(!data){
-    list.innerHTML = `<div style="text-align:center;padding:50px 20px;color:var(--text3);"><div style="font-size:44px;">📡</div><div style="font-size:13px;margin-top:10px;">تعذّر الاتصال — تحقق من الإنترنت</div></div>`;
-    return;
-  }
-
-  // فحص إذا كان المطوّر أخفى الإعلانات كلها
-  if(data.enabled === false){
-    panel.style.display = 'none';
-    return;
-  }
-
-  // فلتر الإعلانات النشطة وضمن تاريخ الصلاحية
-  const now = Date.now();
-  const active = (data.ads || []).filter(a => {
-    if(a.active === false) return false;
-    if(a.startDate && new Date(a.startDate).getTime() > now) return false;
-    if(a.endDate   && new Date(a.endDate).getTime()   < now) return false;
-    return true;
-  });
-
-  if(!active.length){
-    list.innerHTML = `<div style="text-align:center;padding:50px 20px;color:var(--text3);"><div style="font-size:44px;">📭</div><div style="font-size:13px;margin-top:10px;">لا توجد إعلانات نشطة حالياً</div></div>`;
-    return;
-  }
-
-  list.innerHTML = active.map(renderAdCard).join('');
-}
-
-// ── إغلاق لوحة الإعلانات ─────────────────────────────────────
-function closeAdsPanel(){
-  const panel = document.getElementById('ads-panel');
-  if(panel) panel.style.display = 'none';
-  sessionStorage.setItem('_nec_ads_seen', '1');
-}
-
-// ── إخفاء الإعلانات نهائياً (للمستخدم المرخّص فقط) ──────────
-function hideAdsPermanently(){
-  if(!_isLicensedUser()){
-    toast('هذه الميزة للمستخدمين المرخّصين فقط','error');
-    return;
-  }
-  localStorage.setItem(ADS_HIDE_KEY, '1');
-  closeAdsPanel();
-  toast('✅ تم إخفاء الإعلانات نهائياً — يمكنك إعادة تفعيلها من الإعدادات','success');
-}
-
-// ── إعادة تفعيل الإعلانات (من الإعدادات) ────────────────────
-function resetAdsVisibility(){
-  localStorage.removeItem(ADS_HIDE_KEY);
-  sessionStorage.removeItem('_nec_ads_seen');
-  localStorage.removeItem(ADS_CACHE_KEY);
-  localStorage.removeItem(ADS_CACHE_TS);
-  toast('✅ تم إعادة تفعيل الإعلانات','success');
-}
-
-// ── تشغيل تلقائي عند بدء التطبيق ───────────────────────────
-async function initAdsSystem(){
-  // المستخدم أخفى الإعلانات نهائياً → لا شيء
-  if(localStorage.getItem(ADS_HIDE_KEY) === '1') return;
-  // رأى الإعلانات مسبقاً في هذه الجلسة → لا شيء
-  if(sessionStorage.getItem('_nec_ads_seen') === '1') return;
-
-  // جلب مسبق للتحقق من enabled قبل الإظهار
-  try{
-    const data = await fetchAds();
-    if(!data || data.enabled === false) return; // المطوّر أخفى الكل
-    const now = Date.now();
-    const active = (data.ads||[]).filter(a =>
-      a.active !== false &&
-      !(a.startDate && new Date(a.startDate).getTime() > now) &&
-      !(a.endDate   && new Date(a.endDate).getTime()   < now)
-    );
-    if(!active.length) return; // لا إعلانات نشطة
-  }catch(e){ return; }
-
-  // انتظر ثانية بعد تحميل التطبيق ثم أظهر
-  setTimeout(() => openAdsPanel(), 1200);
-}
 
 
 function checkForUpdates(){
@@ -8221,8 +8024,6 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
-// تشغيل نظام الإعلانات (للنسخة المجانية فقط)
-initAdsSystem();
 // ══ فحص فوري لجهاز المالك — يعمل قبل checkLicense ══
 // جهاز D028-6040-0FC3-4586 يُفعَّل مباشرة بدون أي شاشة
 (function _ownerBootCheck(){
@@ -9312,82 +9113,315 @@ function renderSecurityPage(){
 
 
 /* ═══ ADMIN: Generate serial for a customer device ═══ */
+/* ══════════════════════════════════════════════════
+   🛠️  ADMIN LICENSE MANAGEMENT — للمطوّر فقط
+══════════════════════════════════════════════════ */
+
+// ── حالة داخلية ──────────────────────────────────
+let _adminAllUsers = [];
+let _adminCurrentSerial = '';
+let _adminCurrentDeviceId = '';
+
+// ── تبويبات اللوحة ────────────────────────────────
+function adminTab(tab){
+  ['gen','list','search'].forEach(t => {
+    const btn  = document.getElementById('adm-tab-' + t);
+    const pane = document.getElementById('adm-pane-' + t);
+    if(!btn || !pane) return;
+    const active = t === tab;
+    btn.style.background  = active ? 'var(--gold)' : 'var(--bg3)';
+    btn.style.color       = active ? '#000' : 'var(--text2)';
+    pane.style.display    = active ? 'block' : 'none';
+  });
+  if(tab === 'list' && !_adminAllUsers.length) adminLoadUsers();
+}
+
+// ── لصق Device ID من الحافظة ──────────────────────
+async function adminPasteDeviceId(){
+  try{
+    const text = await navigator.clipboard.readText();
+    const el = document.getElementById('admin-device-id');
+    if(el){ el.value = text.trim().toUpperCase(); }
+  }catch(e){ toast('لا يمكن الوصول للحافظة','warning'); }
+}
+
+// ── توليد سيريال لعميل ────────────────────────────
 async function adminGenerateSerial(){
-  const rawId = document.getElementById('admin-device-id')?.value.trim();
-  const resultEl = document.getElementById('admin-serial-result');
-  const infoEl = document.getElementById('admin-serial-info');
+  const rawId   = document.getElementById('admin-device-id')?.value.trim();
+  const note    = document.getElementById('admin-note')?.value.trim() || '';
+  const duration= parseInt(document.getElementById('admin-duration')?.value || '365');
 
   if(!rawId || rawId.replace(/-/g,'').length < 16){
-    if(resultEl){ resultEl.textContent = '⚠️ أدخل Device ID صحيح (16 حرف)'; resultEl.style.color = 'var(--orange)'; }
+    toast('⚠️ أدخل Device ID صحيح (16 حرف على الأقل)', 'error');
     return;
   }
 
   const cleanId = rawId.replace(/-/g,'').toLowerCase();
-  const raw = await _hashString(cleanId + _SALT);
-  const s = raw.slice(0,16).toUpperCase();
-  const serial = s.slice(0,4)+'-'+s.slice(4,8)+'-'+s.slice(8,12)+'-'+s.slice(12,16);
+  const raw     = await _hashString(cleanId + _SALT);
+  const s       = raw.slice(0,16).toUpperCase();
+  const serial  = s.slice(0,4)+'-'+s.slice(4,8)+'-'+s.slice(8,12)+'-'+s.slice(12,16);
+  const expires = new Date(Date.now() + duration * 86400000);
+  const expStr  = expires.toLocaleDateString('ar-DZ');
 
-  if(resultEl){ resultEl.textContent = serial; resultEl.style.color = 'var(--gold)'; }
+  _adminCurrentSerial   = serial;
+  _adminCurrentDeviceId = rawId.toUpperCase();
+
+  // إظهار النتيجة
+  const box = document.getElementById('admin-result-box');
+  const res = document.getElementById('admin-serial-result');
+  const inf = document.getElementById('admin-serial-info');
+  if(box) box.style.display = 'block';
+  if(res){ res.textContent = serial; res.style.color = 'var(--gold)'; }
+  if(inf) inf.innerHTML = `👤 ${note||'—'} &nbsp;|&nbsp; ⏳ ${duration} يوم &nbsp;|&nbsp; 📅 حتى: <b>${expStr}</b>`;
 
   // حفظ في Supabase
-  const duration = parseInt(document.getElementById('admin-duration')?.value || '365');
-  const notes = document.getElementById('admin-note')?.value.trim() || '';
-  const serial_expires = new Date(Date.now() + duration * 86400000).toISOString();
   const did = rawId.toUpperCase();
-
-  try {
-    // ابحث هل الجهاز موجود
+  try{
     const existing = await sbQuery('GET', 'licenses?device_id=eq.' + encodeURIComponent(did) + '&select=id');
-    if (existing && existing.length > 0) {
+    if(existing && existing.length > 0){
       await sbQuery('PATCH', 'licenses?device_id=eq.' + encodeURIComponent(did), {
-        serial, status: 'active', serial_expires, notes: notes || undefined
+        serial, status:'active', serial_expires: expires.toISOString(), notes: note || undefined
       });
+      toast('✅ تم تحديث الترخيص في Supabase', 'success');
     } else {
       await sbQuery('POST', 'licenses', {
-        device_id: did, serial, status: 'active',
+        device_id: did, serial, status:'active',
         trial_ends: new Date(Date.now() + TRIAL_DAYS * 86400000).toISOString(),
-        serial_expires, notes
+        serial_expires: expires.toISOString(), notes: note
       });
+      toast('✅ تم حفظ الترخيص الجديد في Supabase', 'success');
     }
-    const exp = new Date(serial_expires).toLocaleDateString('ar-DZ');
-    if(infoEl) infoEl.innerHTML = `صالح حتى: <b style="color:var(--gold)">${exp}</b> &nbsp;|&nbsp; ${notes||'—'}`;
-    toast('✅ تم حفظ السيريال في Supabase', 'success');
-  } catch(e) {
-    toast('⚠️ السيريال جاهز لكن لم يُحفظ على Supabase (لا اتصال)', 'warning');
+    // تحديث الكاش المحلي
+    _adminAllUsers = [];
+  }catch(e){
+    toast('⚠️ السيريال جاهز لكن لم يُحفظ في Supabase', 'warning');
+  }
+}
+
+// ── نسخ السيريال ──────────────────────────────────
+function adminCopySerial(){
+  if(!_adminCurrentSerial){ toast('ولّد سيريالاً أولاً','warning'); return; }
+  navigator.clipboard?.writeText(_adminCurrentSerial)
+    .then(() => toast('✅ تم نسخ السيريال: ' + _adminCurrentSerial, 'success'))
+    .catch(() => toast('تعذّر النسخ','error'));
+}
+
+// ── مشاركة السيريال عبر واتساب ────────────────────
+function adminShareSerial(){
+  if(!_adminCurrentSerial){ toast('ولّد سيريالاً أولاً','warning'); return; }
+  const note = document.getElementById('admin-note')?.value.trim() || '';
+  const dur  = document.getElementById('admin-duration')?.value || '365';
+  const inf  = document.getElementById('admin-serial-info')?.textContent || '';
+  const msg  = `🐝 *NectarOS — رمز التفعيل*\n\n` +
+               `👤 ${note || 'عميل NectarOS'}\n` +
+               `🔑 السيريال:\n*${_adminCurrentSerial}*\n\n` +
+               `📅 الصلاحية: ${dur} يوم\n\n` +
+               `📲 طريقة التفعيل:\n` +
+               `1. افتح التطبيق\n2. اذهب لشاشة الترخيص\n3. أدخل السيريال\n4. اضغط "تفعيل"\n\n` +
+               `🛠️ دعم فني: wa.me/213659510812`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+}
+
+// ── تحميل قائمة المستخدمين ────────────────────────
+async function adminLoadUsers(filterStatus = ''){
+  const el = document.getElementById('admin-users-list');
+  const statsEl = document.getElementById('admin-list-stats');
+  if(!el) return;
+
+  el.innerHTML = '<div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">⏳ جارٍ التحميل...</div>';
+
+  try{
+    const data = await sbQuery('GET', 'licenses?select=*&order=install_date.desc&limit=100');
+    if(!data){ throw new Error('no data'); }
+
+    _adminAllUsers = data;
+
+    // إحصائيات
+    const counts = {active:0, trial:0, expired:0, blocked:0};
+    data.forEach(r => { if(counts[r.status] !== undefined) counts[r.status]++; });
+    if(statsEl) statsEl.innerHTML =
+      `الكل: ${data.length} &nbsp;|&nbsp; ✅ ${counts.active} &nbsp;|&nbsp; 🕐 ${counts.trial} &nbsp;|&nbsp; 🔒 ${counts.expired} &nbsp;|&nbsp; 🚫 ${counts.blocked}`;
+
+    adminRenderUsers(filterStatus ? data.filter(r => r.status === filterStatus) : data);
+
+  }catch(e){
+    el.innerHTML = '<div style="color:var(--red);font-size:11px;text-align:center;padding:20px;">❌ فشل الاتصال بـ Supabase</div>';
+  }
+}
+
+// ── رسم قائمة المستخدمين ──────────────────────────
+function adminRenderUsers(list){
+  const el = document.getElementById('admin-users-list');
+  if(!el) return;
+
+  if(!list.length){
+    el.innerHTML = '<div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">لا نتائج</div>';
+    return;
+  }
+
+  const icons = {active:'✅', trial:'🕐', expired:'🔒', blocked:'🚫'};
+  const colors= {active:'var(--green)', trial:'var(--gold)', expired:'var(--red)', blocked:'var(--red)'};
+
+  el.innerHTML = list.map(r => {
+    const icon  = icons[r.status]  || '?';
+    const color = colors[r.status] || 'var(--text3)';
+    const exp   = r.serial_expires ? new Date(r.serial_expires).toLocaleDateString('ar-DZ') : '—';
+    const inst  = r.install_date   ? new Date(r.install_date).toLocaleDateString('ar-DZ')   : '—';
+    return `
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
+          <span style="color:${color};font-size:11px;font-weight:700;">${icon} ${r.status}</span>
+          <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
+            ${r.status !== 'active'  ? `<button onclick="adminSetStatus('${r.device_id}','active')"  class="btn btn-xs btn-success" style="font-size:9px;">✅ تفعيل</button>` : ''}
+            <button onclick="adminExtendLicense('${r.device_id}')" class="btn btn-xs" style="font-size:9px;background:rgba(33,150,243,.15);color:var(--blue);border:1px solid rgba(33,150,243,.3);">📅 تمديد</button>
+            <button onclick="adminEditNote('${r.device_id}','${(r.notes||'').replace(/'/g,'')}')" class="btn btn-xs btn-secondary" style="font-size:9px;">✏️ تعديل</button>
+            ${r.status !== 'blocked' ? `<button onclick="adminSetStatus('${r.device_id}','blocked')" class="btn btn-xs btn-danger"  style="font-size:9px;">🚫 حظر</button>`  : `<button onclick="adminSetStatus('${r.device_id}','active')" class="btn btn-xs btn-success" style="font-size:9px;">🔓 رفع الحظر</button>`}
+            <button onclick="adminDeleteLicense('${r.device_id}')" class="btn btn-xs btn-danger" style="font-size:9px;background:rgba(244,67,54,.15);">🗑️</button>
+          </div>
+        </div>
+        <div style="font-family:monospace;font-size:10px;color:var(--gold);margin-bottom:3px;word-break:break-all;">${r.device_id}</div>
+        ${r.serial ? `<div style="font-family:monospace;font-size:9px;color:var(--text2);margin-bottom:3px;">🔑 ${r.serial}</div>` : ''}
+        ${r.notes  ? `<div style="font-size:9px;color:var(--text3);">👤 ${r.notes}</div>` : ''}
+        <div style="font-size:9px;color:var(--text3);margin-top:4px;display:flex;gap:10px;">
+          <span>📅 انتهاء: ${exp}</span>
+          <span>📲 تثبيت: ${inst}</span>
+        </div>
+      </div>`;
+  }).join('');
+}
+
+// ── فلتر حسب الحالة ──────────────────────────────
+function adminFilterStatus(status){
+  if(!_adminAllUsers.length){ adminLoadUsers(status); return; }
+  adminRenderUsers(status ? _adminAllUsers.filter(r => r.status === status) : _adminAllUsers);
+}
+
+// ── البحث ────────────────────────────────────────
+function adminSearch(query){
+  const el = document.getElementById('admin-search-results');
+  if(!el) return;
+  if(!query.trim()){
+    el.innerHTML = '<div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">ابدأ الكتابة للبحث</div>';
+    return;
+  }
+  if(!_adminAllUsers.length){
+    el.innerHTML = '<div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">⏳ جارٍ التحميل...</div>';
+    adminLoadUsers().then(() => adminSearch(query));
+    return;
+  }
+  const q = query.toLowerCase();
+  const results = _adminAllUsers.filter(r =>
+    (r.device_id||'').toLowerCase().includes(q) ||
+    (r.notes||'').toLowerCase().includes(q) ||
+    (r.serial||'').toLowerCase().includes(q)
+  );
+  // رسم النتائج في عنصر البحث
+  const saved = document.getElementById('admin-users-list');
+  const savedOld = saved?.innerHTML;
+  if(saved) saved.id = '__tmp__';
+  const fakeEl = document.createElement('div');
+  fakeEl.id = 'admin-users-list';
+  document.body.appendChild(fakeEl);
+  adminRenderUsers(results);
+  el.innerHTML = fakeEl.innerHTML;
+  fakeEl.remove();
+  if(saved){ saved.id = 'admin-users-list'; saved.innerHTML = savedOld; }
+}
+
+// ── تمديد ترخيص ───────────────────────────────────
+async function adminExtendLicense(deviceId){
+  const options = ['30 يوم','90 يوم (3 أشهر)','180 يوم (6 أشهر)','365 يوم (سنة)','3650 يوم (مدى الحياة)'];
+  const days    = [30, 90, 180, 365, 3650];
+
+  // نافذة اختيار المدة
+  const choice = await new Promise(resolve => {
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
+    overlay.innerHTML = `
+      <div style="background:var(--card);border-radius:14px;padding:20px;width:280px;direction:rtl;">
+        <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">📅 تمديد الترخيص</div>
+        <div style="font-size:10px;color:var(--text3);margin-bottom:10px;font-family:monospace;">${deviceId}</div>
+        ${options.map((o,i)=>`<button onclick="this.closest('div[style]').dataset.choice='${days[i]}'" style="display:block;width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px;margin-bottom:6px;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;text-align:right;">${o}</button>`).join('')}
+        <button onclick="this.closest('div[style]').dataset.choice='cancel'" style="width:100%;background:none;border:none;color:var(--text3);font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;margin-top:4px;">إلغاء</button>
+      </div>`;
+    document.body.appendChild(overlay);
+    const check = setInterval(()=>{
+      const inner = overlay.querySelector('[style*="background:var(--card)"]');
+      if(inner?.dataset.choice){ clearInterval(check); const c=inner.dataset.choice; overlay.remove(); resolve(c==='cancel'?null:parseInt(c)); }
+    },100);
+  });
+
+  if(!choice) return;
+
+  // البحث عن الترخيص الحالي لمعرفة تاريخ الانتهاء الحالي
+  const existing = _adminAllUsers.find(r => r.device_id === deviceId);
+  const baseDate = existing?.serial_expires && new Date(existing.serial_expires) > new Date()
+    ? new Date(existing.serial_expires)   // تمديد من تاريخ الانتهاء الحالي
+    : new Date();                          // تمديد من اليوم
+  const newExpiry = new Date(baseDate.getTime() + choice * 86400000);
+
+  try{
+    await sbQuery('PATCH', 'licenses?device_id=eq.' + encodeURIComponent(deviceId), {
+      serial_expires: newExpiry.toISOString(), status: 'active'
+    });
+    toast(`✅ تم التمديد حتى ${newExpiry.toLocaleDateString('ar-DZ')}`, 'success');
+    _adminAllUsers = _adminAllUsers.map(r =>
+      r.device_id === deviceId ? {...r, serial_expires: newExpiry.toISOString(), status:'active'} : r
+    );
+    adminRenderUsers(_adminAllUsers);
+  }catch(e){
+    toast('❌ فشل التمديد في Supabase','error');
+  }
+}
+
+// ── تعديل اسم/ملاحظة العميل ──────────────────────
+async function adminEditNote(deviceId, currentNote){
+  const newNote = prompt('✏️ اسم / ملاحظة العميل:', currentNote);
+  if(newNote === null) return; // ألغى
+  try{
+    await sbQuery('PATCH', 'licenses?device_id=eq.' + encodeURIComponent(deviceId), { notes: newNote });
+    toast('✅ تم تحديث الملاحظة','success');
+    _adminAllUsers = _adminAllUsers.map(r =>
+      r.device_id === deviceId ? {...r, notes: newNote} : r
+    );
+    adminRenderUsers(_adminAllUsers);
+  }catch(e){
+    toast('❌ فشل التحديث','error');
+  }
+}
+
+// ── تغيير حالة ترخيص ──────────────────────────────
+async function adminSetStatus(deviceId, newStatus){
+  try{
+    await sbQuery('PATCH', 'licenses?device_id=eq.' + encodeURIComponent(deviceId), { status: newStatus });
+    toast('✅ تم تغيير الحالة إلى: ' + newStatus, 'success');
+    _adminAllUsers = _adminAllUsers.map(r =>
+      r.device_id === deviceId ? {...r, status: newStatus} : r
+    );
+    adminRenderUsers(_adminAllUsers);
+  }catch(e){
+    toast('❌ فشل التحديث في Supabase', 'error');
+  }
+}
+
+// ── حذف ترخيص نهائياً ─────────────────────────────
+async function adminDeleteLicense(deviceId){
+  if(!confirm('⚠️ حذف ترخيص هذا الجهاز نهائياً؟\n' + deviceId)) return;
+  try{
+    await sbQuery('DELETE', 'licenses?device_id=eq.' + encodeURIComponent(deviceId));
+    toast('✅ تم حذف الترخيص', 'success');
+    _adminAllUsers = _adminAllUsers.filter(r => r.device_id !== deviceId);
+    adminRenderUsers(_adminAllUsers);
+  }catch(e){
+    toast('❌ فشل الحذف في Supabase', 'error');
   }
 }
 
 function adminCopySerial() {
-  const serial = document.getElementById('admin-serial-result')?.textContent;
-  if (serial && serial.length > 5) {
-    navigator.clipboard?.writeText(serial).then(() => toast('✅ تم نسخ السيريال: ' + serial, 'success')).catch(()=>{});
-  }
-}
-
-async function adminLoadUsers() {
-  const el = document.getElementById('admin-users-list');
-  if (!el) return;
-  el.innerHTML = '<div style="color:var(--text3);font-size:11px;">⏳ جارٍ التحميل...</div>';
-  try {
-    const data = await sbQuery('GET', 'licenses?select=*&order=install_date.desc&limit=50');
-    if (!data || !data.length) { el.innerHTML = '<div style="color:var(--text3);font-size:11px;">لا مستخدمون بعد</div>'; return; }
-    el.innerHTML = data.map(r => {
-      const sc = {active:'✅',trial:'🕐',expired:'🔒',blocked:'🚫'}[r.status]||'?';
-      const scol = {active:'var(--green)',trial:'var(--gold)',expired:'var(--red)',blocked:'var(--red)'}[r.status]||'var(--text3)';
-      const exp = r.serial_expires ? new Date(r.serial_expires).toLocaleDateString('ar-DZ') : '—';
-      return `<div style="padding:6px;border-bottom:1px solid var(--border);font-size:9px;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:2px;">
-          <span style="color:${scol};font-weight:700;">${sc} ${r.status}</span>
-          <span style="color:var(--text3);">${exp}</span>
-        </div>
-        <div style="color:var(--gold);font-family:monospace;word-break:break-all;">${r.device_id}</div>
-        ${r.serial?`<div style="color:var(--text2);">SN: ${r.serial}</div>`:''}
-        ${r.notes?`<div style="color:var(--text3);">${r.notes}</div>`:''}
-      </div>`;
-    }).join('');
-  } catch(e) {
-    el.innerHTML = '<div style="color:var(--red);font-size:11px;">❌ فشل الاتصال بـ Supabase</div>';
-  }
+  if(!_adminCurrentSerial){ toast('ولّد سيريالاً أولاً','warning'); return; }
+  navigator.clipboard?.writeText(_adminCurrentSerial)
+    .then(() => toast('✅ تم نسخ السيريال: ' + _adminCurrentSerial, 'success'))
+    .catch(() => toast('تعذّر النسخ','error'));
 }
 
 function changeSecPassword(){
@@ -9426,27 +9460,6 @@ function logActivity(action){
   log.push({action,time:new Date().toLocaleString('ar'),date:today()});
   DB.set('activity_log',log.slice(-100));
 }
-/* ══ GOOGLE TRANSLATE ══ */
-function googleTranslateElementInit(){
-  new google.translate.TranslateElement({pageLanguage:'ar',includedLanguages:'ar,fr,en,tr,es,de',autoDisplay:false},'google_translate_element');
-}
-function gtLang(lang){
-  document.querySelectorAll('.gt-lang-btn').forEach(b=>b.classList.remove('gt-act'));
-  event?.target?.classList.add('gt-act');
-  if(lang==='ar'){document.cookie='googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';location.reload();return;}
-  document.cookie=`googtrans=/ar/${lang}; path=/`;
-  const tryIt=(n)=>{
-    const sel=document.querySelector('.goog-te-combo');
-    if(sel){sel.value=lang;sel.dispatchEvent(new Event('change'));document.getElementById('gt-panel').classList.remove('open');toast('✅ تمت الترجمة','success');}
-    else if(n<8)setTimeout(()=>tryIt(n+1),500);
-    else toast('⚠️ تحتاج اتصالاً بالإنترنت للترجمة','warning');
-  };
-  tryIt(0);
-}
-document.addEventListener('click',e=>{
-  const p=document.getElementById('gt-panel'),b=document.getElementById('gt-btn');
-  if(p&&b&&!p.contains(e.target)&&!b.contains(e.target))p.classList.remove('open');
-});
 
 </script>
 </body>
