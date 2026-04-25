@@ -895,8 +895,8 @@ body{top:0!important;}
 
 
 /* ══ ADS SYSTEM ══ */
-#ads-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:8500;align-items:flex-end;justify-content:center;padding:0 0 16px;}
-#ads-overlay.show{display:flex;animation:fadein .3s ease;}
+#ads-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:8500;padding:0 0 16px;}
+#ads-overlay.show{display:flex!important;align-items:flex-end;justify-content:center;animation:fadein .3s ease;}
 @keyframes fadein{from{opacity:0;}to{opacity:1;}}
 #ads-card{background:var(--card);border:1px solid var(--gold3);border-radius:18px 18px 14px 14px;width:100%;max-width:440px;overflow:hidden;box-shadow:0 -8px 40px rgba(0,0,0,.6);}
 #ads-card img.ads-img{width:100%;height:180px;object-fit:cover;display:block;}
@@ -7722,11 +7722,14 @@ function showLicenseScreen(mode){
   }
 }
 
+let _hideCalledOnce=false;
 function hideLicenseScreen(){
   const el = document.getElementById('license-screen');
   if(el) el.classList.add('hidden');
-  // تشغيل الإعلانات فقط بعد الدخول الفعلي للتطبيق
-  setTimeout(initAdsSystem, 1500);
+  if(!_hideCalledOnce){
+    _hideCalledOnce=true;
+    setTimeout(initAdsSystem, 1500);
+  }
 }
 
 function renderTrialInfo(){
@@ -7978,20 +7981,32 @@ function toggleAdsVisibility(){
   toast(newVal ? '🔕 تم إخفاء الإعلانات' : '📢 تم تفعيل الإعلانات', 'success');
 }
 
+// إعلانات افتراضية تظهر حتى بدون إنترنت
+const DEFAULT_ADS = {ads:[
+  {id:'d1',title:'🐝 NectarOS Pro — مدى الحياة',body:'فعّل نسختك الكاملة واستمتع بجميع الميزات بدون قيود. سجّل مناحلك وتابع إنتاجك بدقة احترافية.',badge:'⭐ ترقية',badgeColor:'#FF8F00',cta:'تواصل للتفعيل ←',link:'',active:true}
+]};
+
 async function fetchAds(){
+  // أولاً: جرّب الكاش المحلي
   try{
     const cached = localStorage.getItem(ADS_CACHE_KEY);
     const cachedTime = parseInt(localStorage.getItem(ADS_TIME_KEY)||'0');
     if(cached && Date.now() - cachedTime < ADS_CACHE_TTL){
       return JSON.parse(cached);
     }
+  }catch(e){}
+  // ثانياً: جرّب الجلب من Gist
+  try{
     const r = await fetch(ADS_URL + '?t=' + Date.now(), {cache:'no-store'});
-    if(!r.ok) return null;
-    const data = await r.json();
-    localStorage.setItem(ADS_CACHE_KEY, JSON.stringify(data));
-    localStorage.setItem(ADS_TIME_KEY, Date.now().toString());
-    return data;
-  }catch(e){ return null; }
+    if(r.ok){
+      const data = await r.json();
+      localStorage.setItem(ADS_CACHE_KEY, JSON.stringify(data));
+      localStorage.setItem(ADS_TIME_KEY, Date.now().toString());
+      return data;
+    }
+  }catch(e){ console.warn('[ADS] fetch failed, using default'); }
+  // ثالثاً: fallback — إعلان افتراضي
+  return DEFAULT_ADS;
 }
 
 function pickAd(ads){
@@ -8017,10 +8032,8 @@ function closeAds(){
   sessionStorage.setItem('_nec_ads_seen','1');
 }
 
-let _adsShown=false;
 async function initAdsSystem(){
-  if(_adsShown||!shouldShowAds()) return;
-  _adsShown=true;
+  if(!shouldShowAds()) return;
   const data = await fetchAds();
   if(!data || !data.ads) return;
   const ad = pickAd(data.ads);
