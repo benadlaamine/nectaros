@@ -316,7 +316,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 /* ── DESKTOP ── */
 @media(min-width:769px){
   #app{flex-direction:row;}
-  #sidebar{position:relative;right:0;height:100%;}
+  #sidebar{position:relative;right:0;left:0;height:100%;}
   #overlay{display:none!important;}
   .modal{border-radius:16px;width:min(660px,92vw);margin:auto;}
   .modal-overlay{align-items:center;}
@@ -328,6 +328,15 @@ tr:hover td{background:rgba(255,255,255,.02);}
   #bottom-nav{display:none!important;}
   #content{padding-bottom:14px;}
 }
+/* ── LTR layout fix (non-Arabic languages) ── */
+[dir="ltr"] #app{flex-direction:row-reverse;}
+[dir="ltr"] #sidebar{right:unset!important;left:0!important;border-left:none;border-right:1px solid var(--border);}
+[dir="ltr"] #main{margin-right:0!important;margin-left:0!important;}
+[dir="ltr"] .nav-item.active{border-right:none!important;border-left:3px solid var(--gold)!important;}
+[dir="ltr"] .logo,[dir="ltr"] .nav-label{text-align:left;}
+[dir="ltr"] .ph,[dir="ltr"] .card-header{flex-direction:row;}
+[dir="ltr"] .topbar-actions{flex-direction:row!important;}
+[dir="ltr"] #update-banner,[dir="ltr"] #trial-warn-banner{direction:ltr;}
 @media(min-width:1100px){
   .grid-3{grid-template-columns:repeat(3,1fr);}
   .grid-auto{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));}
@@ -2618,7 +2627,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="modal-body">
     <input type="hidden" id="api-eid">
     <div class="form-group"><label class="form-label">الاسم *</label><input id="api-name" class="form-control"></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">الموقع</label><input id="api-loc" class="form-control" placeholder="المدينة / المنطقة"></div>
+    <div class="form-row"><div class="form-group"><label class="form-label" data-i18n="lbl_location">الموقع</label><input id="api-loc" class="form-control" placeholder="المدينة / المنطقة"></div>
     <div class="form-group"><label class="form-label">التضاريس</label><select id="api-terrain" class="form-control"><option value="mountain">🏔️ جبلي</option><option value="plain">🌾 سهلي</option><option value="forest">🌲 غابة</option><option value="garden">🌸 بستان</option></select></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">الارتفاع (م)</label><input id="api-alt" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">الطاقة (خلايا)</label><input id="api-cap" type="number" class="form-control"></div></div>
@@ -2656,7 +2665,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <input type="hidden" id="hive-eid">
     <div class="form-row"><div class="form-group"><label class="form-label">رقم الخلية *</label><input id="h-hid" class="form-control" placeholder="H001"></div>
     <div class="form-group"><label class="form-label">المنحل *</label><select id="h-api" class="form-control"><option value="">-- اختر --</option></select></div></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">النوع</label><select id="h-type" class="form-control"><option value="langstroth">لانجستروث</option><option value="top-bar">قمة القضبان</option><option value="warre">وار</option><option value="traditional">تقليدية</option></select></div>
+    <div class="form-row"><div class="form-group"><label class="form-label" data-i18n="lbl_type">النوع</label><select id="h-type" class="form-control"><option value="langstroth">لانجستروث</option><option value="top-bar">قمة القضبان</option><option value="warre">وار</option><option value="traditional">تقليدية</option></select></div>
     <div class="form-group"><label class="form-label">السلالة</label><select id="h-breed" class="form-control"><option value="carniolan">كارنيولية</option><option value="italian">إيطالية</option><option value="caucasian">قوقازية</option><option value="buckfast">باكفاست</option><option value="local">محلية</option><option value="saharan">صحراوية</option><option value="unknown">غير معروف</option></select></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">الملكة</label><select id="h-queen" class="form-control"><option value="yes">✅ موجودة</option><option value="no">❌ غائبة</option><option value="unknown">❓</option></select></div>
     <div class="form-group"><label class="form-label">البيض</label><select id="h-eggs" class="form-control"><option value="yes">✅</option><option value="no">❌</option></select></div></div>
@@ -2808,7 +2817,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-row"><div class="form-group"><label class="form-label">الرقم التسلسلي *</label><input id="a-sn" class="form-control" placeholder="SN-001"></div>
     <div class="form-group"><label class="form-label">تاريخ الشراء</label><input type="date" id="a-date" class="form-control"></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">السعر (دج)</label><input type="number" id="a-price" class="form-control"></div>
-    <div class="form-group"><label class="form-label">الحالة</label><select id="a-cond" class="form-control"><option value="new">✨ جديد</option><option value="good">✅ جيد</option><option value="fair">⚠️ مقبول</option><option value="repair">🔧 إصلاح</option></select></div></div>
+    <div class="form-group"><label class="form-label" data-i18n="lbl_status">الحالة</label><select id="a-cond" class="form-control"><option value="new">✨ جديد</option><option value="good">✅ جيد</option><option value="fair">⚠️ مقبول</option><option value="repair">🔧 إصلاح</option></select></div></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><input id="a-notes" class="form-control"></div>
   </div>
   <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-asset')">إلغاء</button><button class="btn btn-primary" onclick="saveAsset()">💾 حفظ + باركود</button></div></div>
@@ -2835,7 +2844,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="modal" style="max-width:440px;"><div class="modal-header"><span class="modal-title">🛒 منتج المتجر</span><button class="modal-close" onclick="cm('mod-store')">✕</button></div>
   <div class="modal-body">
     <div class="form-group"><label class="form-label">اسم المنتج *</label><input id="si-name" class="form-control"></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">السعر</label><input id="si-price" type="number" class="form-control"></div>
+    <div class="form-row"><div class="form-group"><label class="form-label" data-i18n="lbl_price">السعر</label><input id="si-price" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">الوحدة</label><select id="si-unit" class="form-control"><option value="kg">كغ</option><option value="piece">قطعة</option><option value="liter">لتر</option></select></div></div>
     <div class="form-group"><label class="form-label">الكمية المتاحة</label><input id="si-qty" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">وصف</label><textarea id="si-desc" class="form-control"></textarea></div>
@@ -2862,7 +2871,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="modal" style="max-width:580px;"><div class="modal-header"><span class="modal-title">🧾 فاتورة جديدة</span><button class="modal-close" onclick="cm('mod-sale')">✕</button></div>
   <div class="modal-body">
     <div class="form-row"><div class="form-group"><label class="form-label">العميل</label><select id="s-cust" class="form-control"><option value="">-- اختر --</option></select></div>
-    <div class="form-group"><label class="form-label">التاريخ</label><input id="s-date" type="date" class="form-control"></div></div>
+    <div class="form-group"><label class="form-label" data-i18n="lbl_date">التاريخ</label><input id="s-date" type="date" class="form-control"></div></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
       <span class="form-label" style="margin:0;">المنتجات</span><button class="btn btn-xs btn-secondary" onclick="addSaleRow()">➕</button>
     </div>
@@ -2892,7 +2901,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">الوصف *</label><input id="e-desc" class="form-control"></div>
     <div class="form-row"><div class="form-group"><label class="form-label">الفئة</label><select id="e-cat" class="form-control"><option value="medicine">💊 أدوية</option><option value="equipment">🔧 معدات</option><option value="feed">🍽️ تغذية</option><option value="transport">🚗 نقل</option><option value="labor">👷 عمالة</option><option value="rent">🏠 إيجار</option><option value="other">📋 أخرى</option></select></div>
     <div class="form-group"><label class="form-label">المبلغ (دج) *</label><input id="e-amount" type="number" class="form-control"></div></div>
-    <div class="form-group"><label class="form-label">التاريخ</label><input id="e-date" type="date" class="form-control"></div>
+    <div class="form-group"><label class="form-label" data-i18n="lbl_date">التاريخ</label><input id="e-date" type="date" class="form-control"></div>
   </div>
   <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-expense')">إلغاء</button><button class="btn btn-primary" onclick="saveExpense()">💾 حفظ</button></div></div>
 </div>
@@ -2903,7 +2912,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="modal-body">
     <div class="form-group"><label class="form-label">العنوان *</label><input id="ev-title" class="form-control"></div>
     <div class="form-row"><div class="form-group"><label class="form-label">التاريخ *</label><input id="ev-date" type="date" class="form-control"></div>
-    <div class="form-group"><label class="form-label">النوع</label><select id="ev-type" class="form-control"><option value="inspection">🔍 فحص</option><option value="treatment">💊 علاج</option><option value="harvest">🍯 حصاد</option><option value="feeding">🍽️ تغذية</option><option value="weight">⚖️ وزن</option><option value="other">📌 أخرى</option></select></div></div>
+    <div class="form-group"><label class="form-label" data-i18n="lbl_type">النوع</label><select id="ev-type" class="form-control"><option value="inspection">🔍 فحص</option><option value="treatment">💊 علاج</option><option value="harvest">🍯 حصاد</option><option value="feeding">🍽️ تغذية</option><option value="weight">⚖️ وزن</option><option value="other">📌 أخرى</option></select></div></div>
     <div class="form-group"><label class="form-label">الخلية المرتبطة</label><select id="ev-hive" class="form-control"><option value="">-- لا يوجد --</option></select></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="ev-notes" class="form-control"></textarea></div>
   </div>
@@ -2972,7 +2981,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">درجة الرطوبة (%)</label><input id="batch-humidity" type="number" step="0.1" max="21" class="form-control" placeholder="17.5"></div>
-      <div class="form-group"><label class="form-label">الحالة</label>
+      <div class="form-group"><label class="form-label" data-i18n="lbl_status">الحالة</label>
         <select id="batch-status" class="form-control">
           <option value="production">🔵 في الإنتاج</option>
           <option value="storage">🟠 تخزين</option>
@@ -2995,7 +3004,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">العنوان *</label><input id="notif-title" class="form-control" placeholder="فحص خلية H001..."></div>
     <div class="form-row">
       <div class="form-group"><label class="form-label">التاريخ *</label><input id="notif-date" type="date" class="form-control"></div>
-      <div class="form-group"><label class="form-label">النوع</label>
+      <div class="form-group"><label class="form-label" data-i18n="lbl_type">النوع</label>
         <select id="notif-type" class="form-control">
           <option value="inspection">🔍 فحص</option>
           <option value="treatment">💊 علاج</option>
@@ -3051,7 +3060,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div class="form-group"><label class="form-label">رقم التتبع</label><input id="ord-tracking" class="form-control" placeholder="اختياري"></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">الحالة</label>
+        <div class="form-group"><label class="form-label" data-i18n="lbl_status">الحالة</label>
           <select id="ord-status" class="form-control">
             <option value="new">🆕 جديد</option><option value="prep">🔧 تحضير</option>
             <option value="shipped">🚚 شحن</option><option value="done">✅ مكتمل</option><option value="cancel">❌ ملغى</option>
@@ -3088,7 +3097,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">النوع</label>
+        <div class="form-group"><label class="form-label" data-i18n="lbl_type">النوع</label>
           <select id="task-type" class="form-control">
             <option value="inspection">🔍 فحص</option><option value="treatment">💊 علاج</option><option value="harvest">🍯 حصاد</option>
             <option value="feeding">🍽️ تغذية</option><option value="other">📌 أخرى</option>
@@ -3112,7 +3121,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="modal-body">
       <div class="form-row">
         <div class="form-group"><label class="form-label">الخلية</label><select id="temp-hive" class="form-control"></select></div>
-        <div class="form-group"><label class="form-label">التاريخ</label><input id="temp-date" type="date" class="form-control"></div>
+        <div class="form-group"><label class="form-label" data-i18n="lbl_date">التاريخ</label><input id="temp-date" type="date" class="form-control"></div>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">الحرارة (°C)</label><input id="temp-val" type="number" class="form-control" placeholder="34.5" step="0.1"></div>
@@ -3163,7 +3172,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="modal-body">
       <input type="hidden" id="tm-id">
       <div class="form-row">
-        <div class="form-group"><label class="form-label">الاسم</label><input id="tm-name" class="form-control" placeholder="اسم العضو"></div>
+        <div class="form-group"><label class="form-label" data-i18n="lbl_name">الاسم</label><input id="tm-name" class="form-control" placeholder="اسم العضو"></div>
         <div class="form-group"><label class="form-label">الدور</label>
           <select id="tm-role" class="form-control">
             <option value="owner">👑 مالك</option>
@@ -3250,7 +3259,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div class="form-group"><label class="form-label">الخلية</label><select id="loss-hive" class="form-control"></select></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">التاريخ</label><input id="loss-date" type="date" class="form-control"></div>
+        <div class="form-group"><label class="form-label" data-i18n="lbl_date">التاريخ</label><input id="loss-date" type="date" class="form-control"></div>
         <div class="form-group"><label class="form-label">الخسارة المالية</label><input id="loss-cost" type="number" class="form-control" placeholder="0"></div>
       </div>
       <div class="form-group"><label class="form-label">التفاصيل</label><textarea id="loss-desc" class="form-control" rows="2"></textarea></div>
@@ -3372,7 +3381,18 @@ function toggleTheme(){
 }
 
 /* ── NAVIGATION ──────────────────────────────────── */
-const TITLES={dashboard:'لوحة التحكم',apiaries:'المناحل',map:'📍 الخريطة',advanced:'📈 مقاييس متقدمة',hives:'الخلايا',calendar:'التقويم',inspections:'الفحوصات',treatments:'💊 العلاجات',weights:'الأوزان',harvest:'الحصاد',batches:'🏷️ دفعات العسل',queens:'جينات الملكات',health:'الشهادات',assets:'المعدات',inventory:'المخزن',store:'المتجر',crm:'العملاء',sales:'المبيعات',expenses:'المصاريف',profit:'الربح والخسارة',finance:'التقارير',settings:'الإعدادات',ai:'🤖 الذكاء الاصطناعي',contact:'📬 اتصل بنا',goals:'🎯 أهداف الإنتاج',seasonal:'📅 الجدول الموسمي',radar:'📊 مقارنة الخلايا',weather:'🌡️ طقس المناحل',wareport:'📱 تقرير واتساب',plants:'🌿 نباتات المناحل',disease:'🐛 دليل الأمراض',calcs:'🧮 الحاسبات',notifs:'🔔 التذكيرات',journal:'📝 المذكرة اليومية',achievements:'🏆 الإنجازات والشارات',scanner:'📷 ماسح الباركود',compare:'🔄 مقارنة السنوات',tempmon:'🌡️ مراقبة الحرارة',advstats:'📊 إحصائيات متقدمة',orders:'📦 الطلبات والشحن',tasks:'🗓️ مهام الأسبوع',pushnotifs:'🔔 إشعارات الهاتف',fieldmode:'🌾 وضع الحقل',annual:'📋 التقرير السنوي',themes:'🎨 الثيمات',integrations:'🔗 التكاملات',aiplus:'🧠 AI+ متقدم',invoice:'🔢 الفواتير',honeylabs:'🧪 مختبر العسل',team:'👥 فريق العمل',foragemap:'🗺️ خريطة الرعي',losses:'📉 تحليل الخسائر',security:'🔐 الأمان'};
+// TITLES — يستخدم i18n إذا كان متاحاً
+const _TITLES_AR={dashboard:'لوحة التحكم',apiaries:'المناحل',map:'📍 الخريطة',advanced:'📈 مقاييس متقدمة',hives:'الخلايا',calendar:'التقويم',inspections:'الفحوصات',treatments:'💊 العلاجات',weights:'الأوزان',harvest:'الحصاد',batches:'🏷️ دفعات العسل',queens:'جينات الملكات',health:'الشهادات',assets:'المعدات',inventory:'المخزن',store:'المتجر',crm:'العملاء',sales:'المبيعات',expenses:'المصاريف',profit:'الربح والخسارة',finance:'التقارير',settings:'الإعدادات',ai:'🤖 الذكاء الاصطناعي',contact:'📬 اتصل بنا',goals:'🎯 أهداف الإنتاج',seasonal:'📅 الجدول الموسمي',radar:'📊 مقارنة الخلايا',weather:'🌡️ طقس المناحل',wareport:'📱 تقرير واتساب',plants:'🌿 نباتات المناحل',disease:'🐛 دليل الأمراض',calcs:'🧮 الحاسبات',notifs:'🔔 التذكيرات',journal:'📝 المذكرة اليومية',achievements:'🏆 الإنجازات والشارات',scanner:'📷 ماسح الباركود',compare:'🔄 مقارنة السنوات',tempmon:'🌡️ مراقبة الحرارة',advstats:'📊 إحصائيات متقدمة',orders:'📦 الطلبات والشحن',tasks:'🗓️ مهام الأسبوع',pushnotifs:'🔔 إشعارات الهاتف',fieldmode:'🌾 وضع الحقل',annual:'📋 التقرير السنوي',themes:'🎨 الثيمات',integrations:'🔗 التكاملات',aiplus:'🧠 AI+ متقدم',invoice:'🔢 الفواتير',honeylabs:'🧪 مختبر العسل',team:'👥 فريق العمل',foragemap:'🗺️ خريطة الرعي',losses:'📉 تحليل الخسائر',security:'🔐 الأمان'};
+const _TITLES_KEY={dashboard:'scr_dashboard',apiaries:'scr_apiaries',hives:'scr_hives',calendar:'scr_calendar',inspections:'scr_inspections',treatments:'scr_treatments',weights:'scr_weights',harvest:'scr_harvest',queens:'scr_queens',health:'scr_health',assets:'scr_assets',inventory:'scr_inventory',store:'scr_store',crm:'scr_crm',sales:'scr_sales',expenses:'scr_expenses',profit:'scr_profit',finance:'scr_finance',settings:'scr_settings',ai:'scr_ai',contact:'scr_contact',plants:'scr_plants',disease:'scr_disease',calcs:'scr_calcs',weather:'scr_weather',themes:'scr_themes',security:'scr_security',scanner:'scr_scanner'};
+const TITLES = new Proxy(_TITLES_AR, {
+  get(target, id){
+    if(window.I18N && I18N.current !== 'ar' && _TITLES_KEY[id]){
+      const t = I18N.t(_TITLES_KEY[id]);
+      if(t && t !== _TITLES_KEY[id]) return t;
+    }
+    return target[id] || id;
+  }
+});
 // Chart Registry — تتبع كل instances لتنظيفها
 const _chartRegistry = {};
 function _registerChart(id, instance) {
@@ -3415,7 +3435,11 @@ function _lazy(fn) {
 }
 
 const R={dashboard:renderDashboard,apiaries:renderApiaries,map:renderMapScreen,advanced:renderAdvanced,hives:renderHives,calendar:renderCalendar,inspections:renderInspections,treatments:renderTreatments,weights:renderWeights,harvest:renderHarvest,batches:renderBatches,queens:renderQueens,health:renderCerts,assets:renderAssets,inventory:renderInventory,store:renderStore,crm:renderCRM,sales:renderSales,expenses:renderExpenses,profit:renderProfit,finance:renderFinance,settings:loadSett,ai:()=>{},contact:renderContact,goals:renderGoals,seasonal:renderSeasonal,radar:renderRadarScreen,weather:renderWeather,wareport:renderWaReport,plants:_lazy(renderPlants),disease:_lazy(renderDiseaseGuide),calcs:()=>{requestAnimationFrame(()=>{calcHoneyCost();calcDose();calcSugar();});},notifs:renderNotifs,journal:renderJournal,achievements:renderAchievements,scanner:()=>{},compare:renderCompare,tempmon:renderTempMonitor,advstats:_lazy(renderAdvStats),orders:renderOrders,tasks:renderWeeklyTasks,pushnotifs:renderPushNotifs,fieldmode:renderFieldMode,annual:_lazy(renderAnnual),themes:renderThemes,integrations:()=>{},aiplus:_lazy(renderAIPlus),invoice:renderInvoices,honeylabs:_lazy(renderHoneyLabs),team:renderTeam,foragemap:_lazy(renderForageMap),losses:_lazy(renderLosses),security:renderSecurityPage};
-  if(R[id])R[id]();
+  if(R[id]) R[id]();
+  // ترجمة المحتوى الجديد بعد الـ render
+  if(window.I18N && I18N.current !== 'ar'){
+    setTimeout(() => I18N.translateAll(), 60);
+  }
 }
 
 /* ── HEALTH SCORE ────────────────────────────────── */
@@ -8477,7 +8501,7 @@ function fieldAction(type){
         <div class="form-group"><label class="form-label">الكمية (كغ)</label><input id="fq-qty" type="number" class="form-control" placeholder="5.5" step="0.1" min="0"></div>
       </div>
       <div class="form-row">
-        <div class="form-group"><label class="form-label">النوع</label><select id="fq-type" class="form-control"><option>sidr</option><option>acacia</option><option>wildflower</option><option>other</option></select></div>
+        <div class="form-group"><label class="form-label" data-i18n="lbl_type">النوع</label><select id="fq-type" class="form-control"><option>sidr</option><option>acacia</option><option>wildflower</option><option>other</option></select></div>
         <div class="form-group"><label class="form-label">السعر/كغ</label><input id="fq-price" type="number" class="form-control" placeholder="3500"></div>
       </div>
       <button class="btn btn-primary" style="width:100%;" onclick="saveFieldAction('harvest')">✅ حفظ الحصاد</button>
@@ -8506,7 +8530,7 @@ function fieldAction(type){
         <div class="form-group"><label class="form-label">الخلية</label><select id="fq-hive" class="form-control"><option value="all">كل الخلايا</option>${hiveOpts}</select></div>
         <div class="form-group"><label class="form-label">نوع الغذاء</label><select id="fq-ftype" class="form-control"><option>شراب سكر</option><option>حبوب لقاح</option><option>مربى</option><option>عسل</option></select></div>
       </div>
-      <div class="form-group"><label class="form-label">الكمية</label><input id="fq-qty" class="form-control" placeholder="مثال: 500مل"></div>
+      <div class="form-group"><label class="form-label" data-i18n="lbl_quantity">الكمية</label><input id="fq-qty" class="form-control" placeholder="مثال: 500مل"></div>
       <button class="btn btn-primary" style="width:100%;" onclick="saveFieldAction('feed')">✅ حفظ</button>
     </div>`,
     alert:`<div class="field-quick-result" style="border-color:var(--red);">

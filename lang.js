@@ -1265,33 +1265,8 @@ const I18N = {
 
   /* ── تطبيق RTL/LTR على هيكل التطبيق ── */
   _applyLayout(dir){
-    const isLTR = dir === 'ltr';
-    const sidebar = document.getElementById('sidebar');
-    const main    = document.getElementById('main');
-    const style   = document.getElementById('_i18n_layout_style') ||
-                    (() => { const s = document.createElement('style');
-                             s.id = '_i18n_layout_style';
-                             document.head.appendChild(s); return s; })();
-
-    if(isLTR){
-      style.textContent = `
-        #sidebar { right: unset !important; left: 0 !important; }
-        #main { margin-right: 0 !important; margin-left: var(--sidebar-w) !important; }
-        .nav-item.active { border-right: none !important; border-left: 3px solid var(--gold) !important; }
-        .logo { text-align: left !important; }
-        .ph, .card-header, .card-title { text-align: left !important; }
-        .form-label { text-align: left !important; }
-        .bn-item { flex-direction: column; }
-        #lang-picker { direction: ltr !important; }
-        #trial-warn-banner { direction: ltr !important; }
-        #update-banner { direction: ltr !important; }
-        .topbar-actions { flex-direction: row !important; }
-      `;
-      if(sidebar) { sidebar.style.right = 'unset'; sidebar.style.left = '0'; }
-    } else {
-      style.textContent = '';
-      if(sidebar) { sidebar.style.right = ''; sidebar.style.left = ''; }
-    }
+    document.documentElement.dir = dir;
+    document.body && (document.body.dir = dir);
   },
 
   /* ── قائمة اللغات ── */
@@ -1318,9 +1293,29 @@ const I18N = {
 /* ── تشغيل فوري بمجرد تحميل DOM ── */
 function _i18nReady(){
   I18N.init();
-  // إعادة الترجمة بعد 300ms للعناصر التي تُنشأ لاحقاً
+  // إعادة الترجمة بعد 300ms و1000ms
   setTimeout(() => I18N.translateAll(), 300);
-  setTimeout(() => I18N.translateAll(), 1000);
+  setTimeout(() => I18N.translateAll(), 1200);
+
+  // ── MutationObserver: يترجم أي محتوى جديد يُضاف للـ DOM ──
+  const _obs = new MutationObserver(mutations => {
+    if(I18N.current === 'ar') return; // العربية افتراضية — لا حاجة
+    let hasNew = false;
+    for(const m of mutations){
+      if(m.type === 'childList' && m.addedNodes.length > 0){
+        hasNew = true; break;
+      }
+    }
+    if(!hasNew) return;
+    // ترجمة بعد تأخير قصير لإتاحة الوقت للـ render
+    clearTimeout(_obs._t);
+    _obs._t = setTimeout(() => I18N.translateAll(), 80);
+  });
+
+  _obs.observe(document.body || document.documentElement, {
+    childList: true,
+    subtree: true
+  });
 }
 
 if(document.readyState === 'loading'){
