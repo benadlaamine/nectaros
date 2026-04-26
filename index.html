@@ -1837,7 +1837,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <!-- ══ قسم اللغة ══ -->
       <div class="ann-section">
         <div style="font-weight:700;font-size:13px;color:var(--gold);margin-bottom:12px;">🌍 اللغة / Language</div>
-        <div id="lang-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+        <div id="lang-grid-themes" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
       </div>
       <div class="ann-section">
         <div style="font-weight:700;font-size:13px;color:var(--gold);margin-bottom:12px;">🌙 الوضع</div>
@@ -7836,24 +7836,25 @@ function renderTrialInfo(){
   const lic  = getLicense();
   const el   = document.getElementById('trial-info');
   if(!el) return;
+  const _ = (key, ...a) => window.I18N ? I18N.t(key,...a) : key;
 
   /* ─── مرخّص ─────────────────────────────────── */
   if(lic && lic.active){
     const expDate = lic.serial_expires
-      ? new Date(lic.serial_expires).toLocaleDateString('ar-DZ')
-      : 'دائم';
+      ? new Date(lic.serial_expires).toLocaleDateString()
+      : _('lbl_active');
     el.innerHTML = `
       <div style="text-align:center;padding:16px 8px;">
         <div style="font-size:52px;margin-bottom:6px;">✅</div>
-        <div style="font-size:16px;font-weight:800;color:var(--green);margin-bottom:6px;">ترخيص مفعّل</div>
-        <div class="lic-badge lic-active" style="margin:0 auto 10px;">نشط</div>
+        <div style="font-size:16px;font-weight:800;color:var(--green);margin-bottom:6px;">${_('trial_active')}</div>
+        <div class="lic-badge lic-active" style="margin:0 auto 10px;">${_('lbl_active')}</div>
         <div style="font-size:10px;color:var(--text3);">🔑 ${lic.serial}</div>
-        <div style="font-size:10px;color:var(--text3);margin-top:4px;">📅 صالح حتى: <b style="color:var(--green);">${expDate}</b></div>
+        <div style="font-size:10px;color:var(--text3);margin-top:4px;">📅 ${expDate}</div>
       </div>`;
     const extBtn = document.getElementById('trial-extend-btn');
     if(extBtn) extBtn.style.display='none';
     const enterBtn = document.getElementById('trial-enter-btn');
-    if(enterBtn){ enterBtn.textContent='🐝 دخول التطبيق'; enterBtn.disabled=false; }
+    if(enterBtn){ enterBtn.textContent='🐝 '+_('lic_enter_app'); enterBtn.disabled=false; }
     return;
   }
 
@@ -7862,34 +7863,32 @@ function renderTrialInfo(){
     el.innerHTML = `
       <div style="text-align:center;padding:14px 8px;">
         <div style="font-size:48px;margin-bottom:8px;">⏰</div>
-        <div style="font-size:15px;font-weight:800;color:var(--red);margin-bottom:6px;">انتهت فترة التجربة</div>
+        <div style="font-size:15px;font-weight:800;color:var(--red);margin-bottom:6px;">${_('trial_ended_title')}</div>
         <div style="font-size:11px;color:var(--text2);line-height:1.7;margin-bottom:12px;">
-          استمتعت بـ <b>${total} يوماً</b> من تجربة NectarOS<br>
-          فعّل ترخيصك للاستمرار وحفظ بياناتك
+          ${_('trial_ended_sub', total).replace(/\n/g,'<br>')}
         </div>
         <div style="background:rgba(244,67,54,.08);border:1px solid rgba(244,67,54,.2);border-radius:10px;padding:12px;margin-bottom:12px;">
-          <div style="font-size:11px;color:var(--red);font-weight:700;margin-bottom:6px;">⚠️ بياناتك في خطر</div>
-          <div style="font-size:10px;color:var(--text2);">بياناتك محفوظة محلياً — لن تُحذف، لكن لن تتمكن من الوصول إليها بدون ترخيص</div>
+          <div style="font-size:11px;color:var(--red);font-weight:700;margin-bottom:6px;">${_('trial_data_warning')}</div>
+          <div style="font-size:10px;color:var(--text2);">${_('trial_data_warning_sub')}</div>
         </div>
       </div>`;
     const extBtn = document.getElementById('trial-extend-btn');
     if(extBtn) extBtn.style.display='none';
     const enterBtn = document.getElementById('trial-enter-btn');
-    if(enterBtn){ enterBtn.disabled=true; enterBtn.textContent='🔒 انتهت التجربة'; enterBtn.style.opacity='.5'; }
+    if(enterBtn){ enterBtn.disabled=true; enterBtn.textContent=_('trial_enter_expired'); enterBtn.style.opacity='.5'; }
     return;
   }
 
   /* ─── تجريبي نشط ─────────────────────────────── */
-  const urgency = left <= 3 ? 'red' : left <= 7 ? 'orange' : left <= 10 ? 'gold' : 'green';
+  const urgency = left<=3?'red':left<=7?'orange':left<=10?'gold':'green';
   const urgencyHex = {red:'#f44336',orange:'#FF9800',gold:'#FFC107',green:'#4CAF50'}[urgency];
-  const emoji  = left <= 3 ? '🔴' : left <= 7 ? '🟠' : left <= 10 ? '🟡' : '🟢';
+  const emoji = left<=3?'🔴':left<=7?'🟠':left<=10?'🟡':'🟢';
+  const statusText = left<=3?_('trial_almost_up'):left<=7?_('trial_few_days'):_('trial_mode');
 
-  /* شريط دائري SVG */
-  const r = 42, circ = 2 * Math.PI * r;
-  const dash = circ * (1 - pct/100);
+  const r = 42, circ = 2*Math.PI*r;
+  const dash = circ*(1-pct/100);
 
   el.innerHTML = `
-    <!-- عداد دائري مرئي -->
     <div style="text-align:center;padding:12px 8px 6px;">
       <div style="position:relative;display:inline-block;margin-bottom:8px;">
         <svg width="110" height="110" viewBox="0 0 100 100" style="transform:rotate(-90deg);">
@@ -7900,55 +7899,44 @@ function renderTrialInfo(){
         </svg>
         <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;">
           <div style="font-size:26px;font-weight:900;color:${urgencyHex};line-height:1;">${left}</div>
-          <div style="font-size:9px;color:var(--text3);">يوم</div>
+          <div style="font-size:9px;color:var(--text3);">${_('trial_days_left').split(' ')[0]}</div>
         </div>
       </div>
-      <div style="font-size:13px;font-weight:700;color:var(--text);">${emoji} ${left <= 3 ? 'الوقت ينفد!' : left <= 7 ? 'أيام قليلة متبقية' : 'وضع تجريبي'}</div>
-      <div style="font-size:10px;color:var(--text3);margin-top:3px;">${elapsed} من أصل ${total} يوم مضت</div>
+      <div style="font-size:13px;font-weight:700;color:var(--text);">${emoji} ${statusText}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:3px;">${elapsed} ${_('trial_of')} ${total} ${_('trial_elapsed')}</div>
     </div>
-
-    <!-- شريط تقدم -->
     <div class="trial-progress" style="margin:6px 0 12px;">
       <div class="trial-bar" style="width:${pct}%;background:${urgencyHex};transition:width .6s;"></div>
     </div>
-
-    <!-- معلومات مختصرة -->
     <div style="display:flex;gap:6px;margin-bottom:10px;">
       <div style="flex:1;background:var(--bg3);border-radius:8px;padding:8px;text-align:center;">
         <div style="font-size:16px;font-weight:800;color:${urgencyHex};">${left}</div>
-        <div style="font-size:9px;color:var(--text3);">يوم متبقٍ</div>
+        <div style="font-size:9px;color:var(--text3);">${_('trial_days_left')}</div>
       </div>
       <div style="flex:1;background:var(--bg3);border-radius:8px;padding:8px;text-align:center;">
         <div style="font-size:16px;font-weight:800;color:var(--text);">${total}</div>
-        <div style="font-size:9px;color:var(--text3);">إجمالي الأيام</div>
+        <div style="font-size:9px;color:var(--text3);">${_('trial_total_days')}</div>
       </div>
       <div style="flex:1;background:var(--bg3);border-radius:8px;padding:8px;text-align:center;">
         <div style="font-size:16px;font-weight:800;color:var(--text);">${t.extended?'✅':'⏳'}</div>
-        <div style="font-size:9px;color:var(--text3);">تمديد</div>
+        <div style="font-size:9px;color:var(--text3);">${_('trial_extension')}</div>
       </div>
     </div>
-
-    ${left <= 7 ? `
-    <!-- تحذير عاجل -->
+    ${left<=7?`
     <div style="background:rgba(255,152,0,.08);border:1px solid rgba(255,152,0,.25);border-radius:10px;padding:10px;margin-bottom:8px;text-align:center;">
-      <div style="font-size:11px;color:var(--orange);font-weight:700;">⚡ فعّل الترخيص قبل انتهاء الوقت</div>
-      <div style="font-size:10px;color:var(--text2);margin-top:3px;">بياناتك محفوظة وستنتقل للنسخة المدفوعة تلقائياً</div>
-    </div>` : ''}
-
-    <!-- التمديد -->
+      <div style="font-size:11px;color:var(--orange);font-weight:700;">${_('trial_activate_now')}</div>
+      <div style="font-size:10px;color:var(--text2);margin-top:3px;">${_('trial_data_safe')}</div>
+    </div>`:''}
     <div class="lic-info-row">
-      <span style="font-size:11px;">🔄 تمديد إضافي (15 يوم)</span>
-      <span class="lic-badge ${t.extended?'lic-expired':'lic-trial'}">${t.extended?'تم الاستخدام':'متاح'}</span>
+      <span style="font-size:11px;">🔄 ${_('trial_extension')} (15)</span>
+      <span class="lic-badge ${t.extended?'lic-expired':'lic-trial'}">${t.extended?_('trial_used'):_('trial_available')}</span>
     </div>
   `;
 
-  /* زر التمديد */
   const extBtn = document.getElementById('trial-extend-btn');
-  if(extBtn) extBtn.style.display = (!t.extended && left <= 5 && left > 0) ? 'block' : 'none';
-
-  /* زر الدخول */
+  if(extBtn) extBtn.style.display=(!t.extended&&left<=5&&left>0)?'block':'none';
   const enterBtn = document.getElementById('trial-enter-btn');
-  if(enterBtn){ enterBtn.textContent='🐝 دخول التطبيق (تجريبي)'; enterBtn.disabled=false; }
+  if(enterBtn){ enterBtn.textContent=_('trial_enter_trial'); enterBtn.disabled=false; }
 }
 
 function licTab(tab){
@@ -8118,7 +8106,6 @@ function doImportLicense(input){
    ⏳  TRIAL WARNING BANNER — شريط تحذير التجربة
 ══════════════════════════════════════════════════ */
 function initTrialWarningBanner(){
-  // لا تُظهر إذا كان مرخّصاً
   const lic = getLicense();
   if(lic && lic.active) return;
   if(localStorage.getItem('_nec_owner_verified') === '1') return;
@@ -8126,10 +8113,7 @@ function initTrialWarningBanner(){
   const t    = getTrialInfo();
   const left = getTrialDaysLeft(t);
 
-  // لا تُظهر إذا كان الوقت متسع (أكثر من 7 أيام)
   if(left > 7) return;
-
-  // لا تُظهر إذا أُغلق في هذه الجلسة
   if(sessionStorage.getItem('_twb_dismissed') === '1') return;
 
   const banner = document.getElementById('trial-warn-banner');
@@ -8138,26 +8122,26 @@ function initTrialWarningBanner(){
   const sub    = document.getElementById('twb-sub');
   if(!banner) return;
 
+  const _ = (key,...a) => window.I18N ? I18N.t(key,...a) : key;
+
   if(left <= 0){
     banner.style.background = 'linear-gradient(135deg,#b71c1c,#c62828)';
     if(icon)  icon.textContent  = '🔒';
-    if(title) title.textContent = 'انتهت فترة التجربة!';
-    if(sub)   sub.textContent   = 'فعّل ترخيصك للاستمرار في استخدام التطبيق';
+    if(title) title.textContent = _('trial_ended_title');
+    if(sub)   sub.textContent   = _('trial_wa_hint') || _('lic_wa_hint');
   } else if(left <= 3){
     banner.style.background = 'linear-gradient(135deg,#e53935,#ef5350)';
     if(icon)  icon.textContent  = '🔴';
-    if(title) title.textContent = `${left} أيام فقط قبل انتهاء التجربة!`;
-    if(sub)   sub.textContent   = 'فعّل الترخيص الآن لتجنب انقطاع الوصول';
+    if(title) title.textContent = `${left} — ${_('trial_almost_up')}`;
+    if(sub)   sub.textContent   = _('trial_activate_now');
   } else {
     banner.style.background = 'linear-gradient(135deg,#E65100,#FF6D00)';
     if(icon)  icon.textContent  = '⚠️';
-    if(title) title.textContent = `متبقٍ ${left} أيام من التجربة`;
-    if(sub)   sub.textContent   = 'اضغط "تفعيل" للحصول على الترخيص الكامل';
+    if(title) title.textContent = `${left} ${_('trial_days_left')}`;
+    if(sub)   sub.textContent   = _('trial_activate_now');
   }
 
   banner.style.display = 'flex';
-
-  // ضبط padding-top للـ topbar كي لا يتغطى بالبانر
   const app = document.getElementById('app');
   if(app) app.style.paddingTop = '40px';
 }
@@ -8197,73 +8181,74 @@ function initLangUI(){
 ══════════════════════════════════════════════════ */
 
 function selectLang(code){
-  if(window.I18N){
-    I18N.apply(code);
-  }
-  localStorage.setItem('_nec_lang', code);
+  if(!window.I18N || !window.NECTAR_LANGS || !NECTAR_LANGS[code]) return;
+  I18N.apply(code);
   // أغلق منتقي اللغة
-  document.getElementById('lang-picker').style.display = 'none';
-  // حدّث زر اللغة في الـ topbar
-  updateLangTopbarBtn();
+  const picker = document.getElementById('lang-picker');
+  if(picker) picker.style.display = 'none';
   // حدّث شبكة اللغات في الإعدادات
   renderLangGrid();
-  toast('✅ ' + (window.I18N ? I18N.t('lang_current') : 'Language') + ': ' + code.toUpperCase(), 'success');
+  const lang = NECTAR_LANGS[code];
+  toast('✅ ' + (lang ? lang._name : code), 'success');
 }
 
 function openLangPicker(){
-  document.getElementById('lang-picker').style.display = 'flex';
-}
-
-function updateLangTopbarBtn(){
-  const btn = document.getElementById('lang-topbar-btn');
-  if(!btn || !window.I18N) return;
-  const lang = NECTAR_LANGS[I18N.current];
-  btn.textContent = lang ? lang._flag : '🌐';
-  btn.title = lang ? lang._name : 'Language';
+  const picker = document.getElementById('lang-picker');
+  if(picker) picker.style.display = 'flex';
 }
 
 function renderLangGrid(){
-  const grid = document.getElementById('lang-grid');
-  if(!grid || !window.I18N) return;
-  const langs = I18N.getList();
+  if(!window.I18N || !window.NECTAR_LANGS) return;
+  const langs  = I18N.getList();
   const current = I18N.current;
-  grid.innerHTML = langs.map(l => `
+
+  const html = langs.map(l => `
     <button onclick="selectLang('${l.code}')" style="
-      background:${l.code===current ? 'rgba(255,193,7,.12)' : 'var(--bg3)'};
-      border:1.5px solid ${l.code===current ? 'var(--gold)' : 'var(--border)'};
-      color:${l.code===current ? 'var(--gold)' : 'var(--text)'};
+      background:${l.code===current?'rgba(255,193,7,.12)':'var(--bg3)'};
+      border:1.5px solid ${l.code===current?'var(--gold)':'var(--border)'};
+      color:${l.code===current?'var(--gold)':'var(--text)'};
       border-radius:10px;padding:10px 8px;cursor:pointer;
       display:flex;align-items:center;gap:8px;
       font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;
-      transition:.18s;width:100%;">
+      width:100%;transition:.18s;">
       <span style="font-size:20px;">${l.flag}</span>
-      <div style="text-align:${l.dir==='rtl'?'right':'left'};">
+      <div>
         <div style="font-weight:700;">${l.name}</div>
-        ${l.code===current ? '<div style="font-size:9px;opacity:.7;">✓ Current / الحالي</div>' : ''}
+        ${l.code===current?'<div style="font-size:9px;opacity:.7;">✓</div>':''}
       </div>
     </button>`).join('');
 
-  // حدّث علم اللغة الحالية
+  ['lang-grid','lang-grid-themes'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) el.innerHTML = html;
+  });
+
+  // علم اللغة الحالية في الـ header
   const flagEl = document.getElementById('current-lang-flag');
-  if(flagEl){
-    const cur = langs.find(l => l.code === current);
-    if(cur) flagEl.textContent = cur.flag;
-  }
+  if(flagEl){ const cur = langs.find(l=>l.code===current); if(cur) flagEl.textContent=cur.flag; }
 }
 
-// ── عند أول تشغيل: تحقق هل المستخدم اختار لغة من قبل ──
 function initLangSystem(){
+  if(!window.I18N) return;
   const saved = localStorage.getItem('_nec_lang');
   if(!saved){
-    // أول مرة — أظهر منتقي اللغة
+    // أول مرة — أظهر منتقي اللغة بعد ثانية
     setTimeout(() => {
-      document.getElementById('lang-picker').style.display = 'flex';
-    }, 500);
-  } else {
-    // طبّق اللغة المحفوظة
-    if(window.I18N) I18N.apply(saved, false);
+      const picker = document.getElementById('lang-picker');
+      if(picker) picker.style.display = 'flex';
+    }, 800);
   }
-  updateLangTopbarBtn();
+  // حدّث زر الـ topbar
+  const btn = document.getElementById('lang-topbar-btn');
+  const lang = window.NECTAR_LANGS && NECTAR_LANGS[I18N.current];
+  if(btn && lang) btn.textContent = lang._flag;
+  // استمع لأحداث تغيير اللغة لإعادة الترجمة
+  window.addEventListener('langchange', () => {
+    renderLangGrid();
+    const b = document.getElementById('lang-topbar-btn');
+    const l = NECTAR_LANGS[I18N.current];
+    if(b && l) b.textContent = l._flag;
+  });
 }
 
 function checkForUpdates(){

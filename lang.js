@@ -1201,73 +1201,97 @@ nl: {
 
 
 /* ═══════════════════════════════════════════════════════════════
-   i18n ENGINE
+
+/* ═══════════════════════════════════════════════════════════════
+   i18n ENGINE v2.0 — موثوق ومتزامن مع DOM
 ═══════════════════════════════════════════════════════════════ */
 
 const I18N = {
 
-  /* ── الحالة ── */
-  current: 'ar',
-  _data: null,
+  current: localStorage.getItem('_nec_lang') || 'ar',
 
-  /* ── تهيئة ── */
-  init(){
-    const saved = localStorage.getItem('_nec_lang') || 'ar';
-    this.apply(saved, false);
-  },
-
-  /* ── الترجمة الفورية ── */
+  /* ── الترجمة ── */
   t(key, ...args){
-    const d = this._data || NECTAR_LANGS.ar;
+    const d = NECTAR_LANGS[this.current] || NECTAR_LANGS.ar;
     let str = d[key] || NECTAR_LANGS.ar[key] || key;
-    // استبدال %d بالأرقام
     args.forEach(a => { str = str.replace('%d', a); });
     return str;
   },
 
-  /* ── تطبيق اللغة ── */
+  /* ── تطبيق اللغة على الصفحة كاملة ── */
   apply(lang, save = true){
     if(!NECTAR_LANGS[lang]) lang = 'ar';
     this.current = lang;
-    this._data   = NECTAR_LANGS[lang];
-    const dir    = this._data._dir || 'rtl';
+    const d   = NECTAR_LANGS[lang];
+    const dir = d._dir || 'rtl';
 
     if(save) localStorage.setItem('_nec_lang', lang);
 
-    /* اتجاه الصفحة */
+    /* 1. اتجاه الصفحة */
     document.documentElement.lang = lang;
     document.documentElement.dir  = dir;
     document.documentElement.setAttribute('data-lang', lang);
+    document.body && (document.body.dir = dir);
 
-    /* ترجمة كل عناصر data-i18n */
+    /* 2. ترجمة كل [data-i18n] */
+    this.translateAll();
+
+    /* 3. تحديث زر اللغة */
+    const btn = document.getElementById('lang-topbar-btn');
+    if(btn) btn.textContent = d._flag || '🌐';
+
+    /* 4. RTL/LTR layout */
+    this._applyLayout(dir);
+
+    /* 5. إطلاق حدث */
+    window.dispatchEvent(new CustomEvent('langchange', { detail: { lang, dir } }));
+  },
+
+  /* ── ترجمة كل العناصر [data-i18n] ── */
+  translateAll(){
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
       const val = this.t(key);
+      if(!val || val === key) return;
       if(el.tagName === 'INPUT' || el.tagName === 'TEXTAREA'){
         el.placeholder = val;
+      } else if(el.tagName === 'OPTION'){
+        el.textContent = val;
       } else {
         el.textContent = val;
       }
     });
+  },
 
-    /* تحديث أزرار البناف بار السفلي */
-    const bnMap = {
-      'bn-dashboard':'bn_dashboard','bn-hives':'bn_hives',
-      'bn-apiaries':'bn_apiaries','bn-ai':'bn_ai','bn-more':'bn_more'
-    };
-    Object.entries(bnMap).forEach(([id, key]) => {
-      const el = document.querySelector(`#${id} .bn-label`);
-      if(el) el.textContent = this.t(key);
-    });
+  /* ── تطبيق RTL/LTR على هيكل التطبيق ── */
+  _applyLayout(dir){
+    const isLTR = dir === 'ltr';
+    const sidebar = document.getElementById('sidebar');
+    const main    = document.getElementById('main');
+    const style   = document.getElementById('_i18n_layout_style') ||
+                    (() => { const s = document.createElement('style');
+                             s.id = '_i18n_layout_style';
+                             document.head.appendChild(s); return s; })();
 
-    /* تحديث عناصر القائمة الجانبية */
-    document.querySelectorAll('[data-i18n-nav]').forEach(el => {
-      const key = el.getAttribute('data-i18n-nav');
-      el.textContent = this.t(key);
-    });
-
-    /* إطلاق حدث للتطبيق */
-    window.dispatchEvent(new CustomEvent('langchange', { detail: { lang, dir } }));
+    if(isLTR){
+      style.textContent = `
+        #sidebar { right: unset !important; left: 0 !important; }
+        #main { margin-right: 0 !important; margin-left: var(--sidebar-w) !important; }
+        .nav-item.active { border-right: none !important; border-left: 3px solid var(--gold) !important; }
+        .logo { text-align: left !important; }
+        .ph, .card-header, .card-title { text-align: left !important; }
+        .form-label { text-align: left !important; }
+        .bn-item { flex-direction: column; }
+        #lang-picker { direction: ltr !important; }
+        #trial-warn-banner { direction: ltr !important; }
+        #update-banner { direction: ltr !important; }
+        .topbar-actions { flex-direction: row !important; }
+      `;
+      if(sidebar) { sidebar.style.right = 'unset'; sidebar.style.left = '0'; }
+    } else {
+      style.textContent = '';
+      if(sidebar) { sidebar.style.right = ''; sidebar.style.left = ''; }
+    }
   },
 
   /* ── قائمة اللغات ── */
@@ -1277,15 +1301,35 @@ const I18N = {
     }));
   },
 
+  /* ── تهيئة (يُستدعى بعد DOM) ── */
+  init(){
+    const lang = localStorage.getItem('_nec_lang');
+    if(!lang){
+      // أول مرة — لا تطبّق ترجمة الآن، انتظر اختيار المستخدم
+      // لكن طبّق العربية كافتراضي مبدئي
+      this.apply('ar', false);
+      return;
+    }
+    this.apply(lang, false);
+  },
+
 };
 
-/* ── تشغيل تلقائي عند تحميل الملف ── */
-if(document.readyState === 'loading'){
-  document.addEventListener('DOMContentLoaded', () => I18N.init());
-} else {
+/* ── تشغيل فوري بمجرد تحميل DOM ── */
+function _i18nReady(){
   I18N.init();
+  // إعادة الترجمة بعد 300ms للعناصر التي تُنشأ لاحقاً
+  setTimeout(() => I18N.translateAll(), 300);
+  setTimeout(() => I18N.translateAll(), 1000);
+}
+
+if(document.readyState === 'loading'){
+  document.addEventListener('DOMContentLoaded', _i18nReady);
+} else {
+  _i18nReady();
 }
 
 /* ── تصدير عالمي ── */
 window.I18N = I18N;
+window.NECTAR_LANGS = NECTAR_LANGS;
 window.__ = (key, ...args) => I18N.t(key, ...args);
