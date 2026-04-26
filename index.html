@@ -1128,7 +1128,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
                 <span style="font-family:monospace;font-weight:700;color:var(--green);">61</span>
               </div>
               <div style="display:flex;justify-content:space-between;align-items:center;">
-                <span style="color:var(--text3);">الاسم</span>
+                <span style="color:var(--text3);" data-i18n="lbl_name">الاسم</span>
                 <span style="font-weight:600;color:var(--text);">BENADLA MOHAMMED AMINE</span>
               </div>
             </div>
@@ -1222,7 +1222,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div id="owner-pin-err" style="color:#f44336;font-size:11px;min-height:16px;font-weight:600;"></div>
     <div style="display:flex;gap:10px;width:100%;">
       <button onclick="_ownerPinSubmit()" style="flex:1;background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:10px;padding:11px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Cairo',sans-serif;">دخول ✓</button>
-      <button onclick="closeOwnerPin()" style="flex:1;background:#2a2a2a;color:#aaa;border:1px solid #444;border-radius:10px;padding:11px;cursor:pointer;font-size:13px;font-family:'Cairo',sans-serif;">إلغاء</button>
+      <button onclick="closeOwnerPin()" style="flex:1;background:#2a2a2a;color:#aaa;border:1px solid #444;border-radius:10px;padding:11px;cursor:pointer;font-size:13px;font-family:'Cairo',sans-serif;">${_('btn_cancel')}</button>
     </div>
   </div>
 </div>
@@ -1401,7 +1401,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div><div class="pt" data-i18n="scr_hives">⬡ الخلايا</div><div class="ps" id="hives-sub"></div></div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
           <select id="hf-api" class="form-control" style="width:auto;font-size:11px;" onchange="renderHives()"><option value="all">كل المناحل</option></select>
-          <select id="hf-str" class="form-control" style="width:auto;font-size:11px;" onchange="renderHives()"><option value="all">كل القوى</option><option value="strong">💪 قوية</option><option value="medium">😐 متوسطة</option><option value="weak">😟 ضعيفة</option></select>
+          <select id="hf-str" class="form-control" style="width:auto;font-size:11px;" onchange="renderHives()"><option value="all">كل القوى</option><option value="strong">💪 💪</option><option value="medium">😐 متوسطة</option><option value="weak">😟 ضعيفة</option></select>
           <button class="btn btn-primary btn-sm" onclick="openHiveModal()">➕ خلية</button>
         </div>
       </div>
@@ -1501,7 +1501,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="grid-2 mb10" id="sales-stats" style="margin-bottom:11px;"></div>
       <div class="card"><div class="card-header"><span class="card-title">📋 الفواتير</span></div>
         <div class="table-wrap"><table>
-          <thead><tr><th>رقم</th><th>العميل</th><th>الإجمالي</th><th>الدفع</th><th>التاريخ</th><th></th></tr></thead>
+          <thead><tr><th>رقم</th><th>العميل</th><th>الإجمالي</th><th>الدفع</th><th>${_('lbl_date')}</th><th></th></tr></thead>
           <tbody id="sales-tb"></tbody>
         </table></div>
       </div>
@@ -1512,7 +1512,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="ph"><div class="pt" data-i18n="scr_expenses">💸 المصاريف</div><button class="btn btn-primary btn-sm" onclick="openExpenseModal()">➕ مصروف</button></div>
       <div class="grid-2 mb10" id="exp-stats" style="margin-bottom:11px;"></div>
       <div class="table-wrap"><table>
-        <thead><tr><th>الوصف</th><th>الفئة</th><th>المبلغ</th><th>التاريخ</th><th></th></tr></thead>
+        <thead><tr><th data-i18n="lbl_description">الوصف</th><th>الفئة</th><th>المبلغ</th><th>${_('lbl_date')}</th><th></th></tr></thead>
         <tbody id="exp-tb"></tbody>
       </table></div>
     </div>
@@ -2627,7 +2627,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="modal-body">
     <input type="hidden" id="api-eid">
     <div class="form-group"><label class="form-label">الاسم *</label><input id="api-name" class="form-control"></div>
-    <div class="form-row"><div class="form-group"><label class="form-label" data-i18n="lbl_location">الموقع</label><input id="api-loc" class="form-control" placeholder="المدينة / المنطقة"></div>
+    <div class="form-row"><div class="form-group"><label class="form-label" data-i18n="lbl_location" data-i18n="lbl_location">الموقع</label><input id="api-loc" class="form-control" placeholder="المدينة / المنطقة"></div>
     <div class="form-group"><label class="form-label">التضاريس</label><select id="api-terrain" class="form-control"><option value="mountain">🏔️ جبلي</option><option value="plain">🌾 سهلي</option><option value="forest">🌲 غابة</option><option value="garden">🌸 بستان</option></select></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">الارتفاع (م)</label><input id="api-alt" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">الطاقة (خلايا)</label><input id="api-cap" type="number" class="form-control"></div></div>
@@ -2655,7 +2655,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="api-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-apiary')">إلغاء</button><button class="btn btn-primary" onclick="saveApiary()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-apiary')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveApiary()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- HIVE -->
@@ -2669,11 +2669,11 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">السلالة</label><select id="h-breed" class="form-control"><option value="carniolan">كارنيولية</option><option value="italian">إيطالية</option><option value="caucasian">قوقازية</option><option value="buckfast">باكفاست</option><option value="local">محلية</option><option value="saharan">صحراوية</option><option value="unknown">غير معروف</option></select></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">الملكة</label><select id="h-queen" class="form-control"><option value="yes">✅ موجودة</option><option value="no">❌ غائبة</option><option value="unknown">❓</option></select></div>
     <div class="form-group"><label class="form-label">البيض</label><select id="h-eggs" class="form-control"><option value="yes">✅</option><option value="no">❌</option></select></div></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">القوة</label><select id="h-str" class="form-control"><option value="weak">😟 ضعيفة</option><option value="medium">😐 متوسطة</option><option value="strong">💪 قوية</option></select></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">القوة</label><select id="h-str" class="form-control"><option value="weak">😟 ضعيفة</option><option value="medium">😐 متوسطة</option><option value="strong">💪 💪</option></select></div>
     <div class="form-group"><label class="form-label">الغذاء (1-5)</label><select id="h-food" class="form-control"><option value="1">1 ⭐</option><option value="2">2 ⭐⭐</option><option value="3">3 ⭐⭐⭐</option><option value="4">4 ⭐⭐⭐⭐</option><option value="5">5 ⭐⭐⭐⭐⭐</option></select></div></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="h-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-hive')">إلغاء</button><button class="btn btn-primary" onclick="saveHive()">💾 حفظ + باركود</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-hive')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveHive()">💾 حفظ + باركود</button></div></div>
 </div>
 
 <!-- HIVE QR VIEW -->
@@ -2691,7 +2691,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">التاريخ *</label><input id="i-date" type="date" class="form-control"></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">الملكة</label><select id="i-queen" class="form-control"><option value="yes">✅ موجودة</option><option value="no">❌ غائبة</option><option value="unknown">❓</option></select></div>
     <div class="form-group"><label class="form-label">البيض</label><select id="i-eggs" class="form-control"><option value="yes">✅</option><option value="no">❌</option></select></div></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">القوة</label><select id="i-str" class="form-control"><option value="weak">ضعيفة</option><option value="medium">متوسطة</option><option value="strong">قوية</option></select></div>
+    <div class="form-row"><div class="form-group"><label class="form-label">القوة</label><select id="i-str" class="form-control"><option value="weak">ضعيفة</option><option value="medium">متوسطة</option><option value="strong">💪</option></select></div>
     <div class="form-group"><label class="form-label">الغذاء</label><select id="i-food" class="form-control"><option value="1">1⭐</option><option value="2">2⭐⭐</option><option value="3">3⭐⭐⭐</option><option value="4">4⭐⭐⭐⭐</option><option value="5">5⭐⭐⭐⭐⭐</option></select></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">الإطارات</label><input id="i-frames" type="number" class="form-control" min="0"></div>
     <div class="form-group"><label class="form-label">تقدير العسل (كغ)</label><input id="i-honey" type="number" class="form-control" min="0"></div></div>
@@ -2704,7 +2704,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">التقييم (1-5)</label><select id="i-rating" class="form-control"><option value="3">3 ⭐⭐⭐</option><option value="4">4 ⭐⭐⭐⭐</option><option value="5">5 ⭐⭐⭐⭐⭐</option><option value="2">2 ⭐⭐</option><option value="1">1 ⭐</option></select></div></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="i-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-insp')">إلغاء</button><button class="btn btn-primary" onclick="saveInspection()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-insp')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveInspection()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- WEIGHT -->
@@ -2717,7 +2717,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-row"><div class="form-group"><label class="form-label">الطقس</label><select id="w-weather" class="form-control"><option value="sunny">☀️ مشمس</option><option value="cloudy">⛅ غائم</option><option value="rainy">🌧️ ممطر</option><option value="hot">🔥 حار</option><option value="cold">❄️ بارد</option></select></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><input id="w-notes" class="form-control"></div></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-weight')">إلغاء</button><button class="btn btn-primary" onclick="saveWeight()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-weight')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveWeight()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- HARVEST -->
@@ -2733,7 +2733,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">إضافة للمخزن تلقائياً؟</label><select id="hv-addstock" class="form-control"><option value="yes">✅ نعم</option><option value="no">لا</option></select></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="hv-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-harvest')">إلغاء</button><button class="btn btn-primary" onclick="saveHarvest()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-harvest')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveHarvest()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- QUEEN -->
@@ -2748,7 +2748,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-row"><div class="form-group"><label class="form-label">تاريخ التقييم</label><input type="date" id="q-date" class="form-control"></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><input id="q-notes" class="form-control"></div></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-queen')">إلغاء</button><button class="btn btn-primary" onclick="saveQueen()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-queen')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveQueen()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- CERT -->
@@ -2804,7 +2804,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   </div>
   <div class="modal-footer no-print">
     <button class="btn btn-secondary" onclick="cm('mod-cert')">إغلاق</button>
-    <button class="btn btn-teal" onclick="saveCert()">💾 حفظ</button>
+    <button class="btn btn-teal" onclick="saveCert()">${_('btn_save')}</button>
     <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة</button>
   </div></div>
 </div>
@@ -2817,10 +2817,10 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-row"><div class="form-group"><label class="form-label">الرقم التسلسلي *</label><input id="a-sn" class="form-control" placeholder="SN-001"></div>
     <div class="form-group"><label class="form-label">تاريخ الشراء</label><input type="date" id="a-date" class="form-control"></div></div>
     <div class="form-row"><div class="form-group"><label class="form-label">السعر (دج)</label><input type="number" id="a-price" class="form-control"></div>
-    <div class="form-group"><label class="form-label" data-i18n="lbl_status">الحالة</label><select id="a-cond" class="form-control"><option value="new">✨ جديد</option><option value="good">✅ جيد</option><option value="fair">⚠️ مقبول</option><option value="repair">🔧 إصلاح</option></select></div></div>
+    <div class="form-group"><label class="form-label" data-i18n="lbl_status" data-i18n="lbl_status">الحالة</label><select id="a-cond" class="form-control"><option value="new">✨ جديد</option><option value="good">✅ جيد</option><option value="fair">⚠️ مقبول</option><option value="repair">🔧 إصلاح</option></select></div></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><input id="a-notes" class="form-control"></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-asset')">إلغاء</button><button class="btn btn-primary" onclick="saveAsset()">💾 حفظ + باركود</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-asset')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveAsset()">💾 حفظ + باركود</button></div></div>
 </div>
 
 <!-- PRODUCT -->
@@ -2836,7 +2836,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-row"><div class="form-group"><label class="form-label">المخزون</label><input id="p-stock" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">حد التنبيه</label><input id="p-min" type="number" class="form-control" placeholder="10"></div></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-product')">إلغاء</button><button class="btn btn-primary" onclick="saveProduct()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-product')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveProduct()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- STORE ITEM -->
@@ -2844,12 +2844,12 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="modal" style="max-width:440px;"><div class="modal-header"><span class="modal-title">🛒 منتج المتجر</span><button class="modal-close" onclick="cm('mod-store')">✕</button></div>
   <div class="modal-body">
     <div class="form-group"><label class="form-label">اسم المنتج *</label><input id="si-name" class="form-control"></div>
-    <div class="form-row"><div class="form-group"><label class="form-label" data-i18n="lbl_price">السعر</label><input id="si-price" type="number" class="form-control"></div>
+    <div class="form-row"><div class="form-group"><label class="form-label" data-i18n="lbl_price" data-i18n="lbl_price">السعر</label><input id="si-price" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">الوحدة</label><select id="si-unit" class="form-control"><option value="kg">كغ</option><option value="piece">قطعة</option><option value="liter">لتر</option></select></div></div>
     <div class="form-group"><label class="form-label">الكمية المتاحة</label><input id="si-qty" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">وصف</label><textarea id="si-desc" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-store')">إلغاء</button><button class="btn btn-primary" onclick="saveStoreItem()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-store')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveStoreItem()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- CUSTOMER -->
@@ -2858,12 +2858,12 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="modal-body">
     <input type="hidden" id="cust-eid">
     <div class="form-group"><label class="form-label">الاسم *</label><input id="c-name" class="form-control"></div>
-    <div class="form-row"><div class="form-group"><label class="form-label">الهاتف</label><input id="c-phone" class="form-control"></div>
+    <div class="form-row"><div class="form-group"><label class="form-label" data-i18n="lbl_phone">الهاتف</label><input id="c-phone" class="form-control"></div>
     <div class="form-group"><label class="form-label">المدينة</label><input id="c-city" class="form-control"></div></div>
     <div class="form-group"><label class="form-label">نوع العميل</label><select id="c-type" class="form-control"><option value="retail">مفرق</option><option value="wholesale">جملة</option><option value="vip">VIP</option></select></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="c-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-customer')">إلغاء</button><button class="btn btn-primary" onclick="saveCustomer()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-customer')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveCustomer()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- SALE -->
@@ -2871,7 +2871,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="modal" style="max-width:580px;"><div class="modal-header"><span class="modal-title">🧾 فاتورة جديدة</span><button class="modal-close" onclick="cm('mod-sale')">✕</button></div>
   <div class="modal-body">
     <div class="form-row"><div class="form-group"><label class="form-label">العميل</label><select id="s-cust" class="form-control"><option value="">-- اختر --</option></select></div>
-    <div class="form-group"><label class="form-label" data-i18n="lbl_date">التاريخ</label><input id="s-date" type="date" class="form-control"></div></div>
+    <div class="form-group"><label class="form-label" data-i18n="lbl_date" data-i18n="lbl_date">التاريخ</label><input id="s-date" type="date" class="form-control"></div></div>
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
       <span class="form-label" style="margin:0;">المنتجات</span><button class="btn btn-xs btn-secondary" onclick="addSaleRow()">➕</button>
     </div>
@@ -2884,7 +2884,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظات</label><input id="s-notes" class="form-control"></div>
     </div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-sale')">إلغاء</button><button class="btn btn-primary" onclick="saveSale()">✅ حفظ الفاتورة</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-sale')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveSale()">✅ حفظ الفاتورة</button></div></div>
 </div>
 
 <!-- INVOICE VIEW -->
@@ -2903,7 +2903,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">المبلغ (دج) *</label><input id="e-amount" type="number" class="form-control"></div></div>
     <div class="form-group"><label class="form-label" data-i18n="lbl_date">التاريخ</label><input id="e-date" type="date" class="form-control"></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-expense')">إلغاء</button><button class="btn btn-primary" onclick="saveExpense()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-expense')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveExpense()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- CALENDAR EVENT -->
@@ -2916,14 +2916,14 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">الخلية المرتبطة</label><select id="ev-hive" class="form-control"><option value="">-- لا يوجد --</option></select></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="ev-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-event')">إلغاء</button><button class="btn btn-primary" onclick="saveEvent()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-event')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveEvent()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- CONFIRM -->
 <div class="modal-overlay" id="mod-confirm">
   <div class="modal" style="max-width:360px;"><div class="modal-header"><span class="modal-title" id="conf-title">تأكيد</span><button class="modal-close" onclick="cm('mod-confirm')">✕</button></div>
   <div class="modal-body"><p id="conf-msg" style="font-size:12px;line-height:1.8;color:var(--text2);"></p></div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-confirm')">إلغاء</button><button class="btn btn-danger" id="conf-ok">تأكيد</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-confirm')">${_('btn_cancel')}</button><button class="btn btn-danger" id="conf-ok">تأكيد</button></div></div>
 </div>
 
 <!-- TREATMENT -->
@@ -2954,7 +2954,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">التكلفة (${cur()})</label><input id="treat-cost" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="treat-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-treatment')">إلغاء</button><button class="btn btn-primary" onclick="saveTreatment()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-treatment')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveTreatment()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- BATCH -->
@@ -2992,7 +2992,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
     <div class="form-group"><label class="form-label">ملاحظات الجودة</label><textarea id="batch-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-batch')">إلغاء</button><button class="btn btn-primary" onclick="saveBatch()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-batch')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveBatch()">${_('btn_save')}</button></div></div>
 </div>
 
 
@@ -3025,7 +3025,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="notif-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-notif')">إلغاء</button><button class="btn btn-primary" onclick="saveNotif()">💾 حفظ</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-notif')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveNotif()">${_('btn_save')}</button></div></div>
 </div>
 
 <!-- PHOTO VIEWER -->
@@ -3070,8 +3070,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-order')">إلغاء</button>
-      <button class="btn btn-primary btn-sm" onclick="saveOrder()">💾 حفظ</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-order')">${_('btn_cancel')}</button>
+      <button class="btn btn-primary btn-sm" onclick="saveOrder()">${_('btn_save')}</button>
     </div>
   </div>
 </div>
@@ -3108,8 +3108,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="task-notes" class="form-control" rows="2"></textarea></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-task')">إلغاء</button>
-      <button class="btn btn-primary btn-sm" onclick="saveWeekTask()">💾 حفظ</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-task')">${_('btn_cancel')}</button>
+      <button class="btn btn-primary btn-sm" onclick="saveWeekTask()">${_('btn_save')}</button>
     </div>
   </div>
 </div>
@@ -3130,8 +3130,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظات</label><input id="temp-notes" class="form-control"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-temp')">إلغاء</button>
-      <button class="btn btn-primary btn-sm" onclick="saveTemp()">💾 حفظ</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-temp')">${_('btn_cancel')}</button>
+      <button class="btn btn-primary btn-sm" onclick="saveTemp()">${_('btn_save')}</button>
     </div>
   </div>
 </div>
@@ -3158,9 +3158,9 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group" style="margin-top:8px;"><label class="form-label">ملاحظات</label><textarea id="inv-notes" class="form-control" rows="2"></textarea></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-invoice')">إلغاء</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-invoice')">${_('btn_cancel')}</button>
       <button class="btn btn-teal btn-sm" onclick="previewInvoice()">👁️ معاينة</button>
-      <button class="btn btn-primary btn-sm" onclick="saveInvoice()">💾 حفظ</button>
+      <button class="btn btn-primary btn-sm" onclick="saveInvoice()">${_('btn_save')}</button>
     </div>
   </div>
 </div>
@@ -3198,8 +3198,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظة</label><input id="tm-notes" class="form-control"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-team')">إلغاء</button>
-      <button class="btn btn-primary btn-sm" onclick="saveTeamMember()">💾 حفظ</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-team')">${_('btn_cancel')}</button>
+      <button class="btn btn-primary btn-sm" onclick="saveTeamMember()">${_('btn_save')}</button>
     </div>
   </div>
 </div>
@@ -3231,8 +3231,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="fg-notes" class="form-control" rows="2"></textarea></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-forage')">إلغاء</button>
-      <button class="btn btn-primary btn-sm" onclick="saveForageZone()">💾 حفظ</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-forage')">${_('btn_cancel')}</button>
+      <button class="btn btn-primary btn-sm" onclick="saveForageZone()">${_('btn_save')}</button>
     </div>
   </div>
 </div>
@@ -3266,8 +3266,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">الإجراء المتخذ</label><input id="loss-action" class="form-control" placeholder="ما الذي فعلته للتعامل مع المشكلة؟"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-loss')">إلغاء</button>
-      <button class="btn btn-primary btn-sm" onclick="saveLoss()">💾 حفظ</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-loss')">${_('btn_cancel')}</button>
+      <button class="btn btn-primary btn-sm" onclick="saveLoss()">${_('btn_save')}</button>
     </div>
   </div>
 </div>
@@ -3438,7 +3438,13 @@ const R={dashboard:renderDashboard,apiaries:renderApiaries,map:renderMapScreen,a
   if(R[id]) R[id]();
   // ترجمة المحتوى الجديد بعد الـ render
   if(window.I18N && I18N.current !== 'ar'){
-    setTimeout(() => I18N.translateAll(), 60);
+    setTimeout(() => {
+      I18N.translateAll();
+      const screen = document.getElementById('screen-'+id);
+      if(screen && typeof translateNode === 'function'){
+        translateNode(screen, I18N.current);
+      }
+    }, 80);
   }
 }
 
@@ -3489,13 +3495,14 @@ function renderDashboard(){
   const strong=hives.filter(h=>h.strength==='strong').length;
   const profit=totSales-totExp;
   const currency=cur();
+  const _=window.__||((k)=>k);
   document.getElementById('dash-stats').innerHTML=`
-    <div class="kpi"><div class="kpi-bg-icon">💰</div><div class="kpi-label">المبيعات</div><div class="kpi-val" style="font-size:15px;">${(totSales/1000).toFixed(0)}k</div><div class="kpi-sub">${currency}</div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--gold),var(--gold3));"></div></div>
-    <div class="kpi"><div class="kpi-bg-icon">⬡</div><div class="kpi-label">الخلايا</div><div class="kpi-val">${hives.length}</div><div class="kpi-sub">💪 ${strong} قوية</div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--green),#81C784);"></div></div>
-    <div class="kpi"><div class="kpi-bg-icon">💹</div><div class="kpi-label">الربح</div><div class="kpi-val" style="font-size:15px;color:${profit>=0?'var(--green)':'var(--red)'};">${(profit/1000).toFixed(0)}k</div><div class="kpi-sub">${currency}</div><div class="kpi-bar" style="background:linear-gradient(90deg,${profit>=0?'var(--green)':'var(--red)'},${profit>=0?'#81C784':'#EF9A9A'});"></div></div>
-    <div class="kpi"><div class="kpi-bg-icon">🍯</div><div class="kpi-label">الحصاد</div><div class="kpi-val">${totHarv.toFixed(0)}</div><div class="kpi-sub">كغ إجمالي</div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--teal),#80CBC4);"></div></div>
-    <div class="kpi"><div class="kpi-bg-icon">🗺️</div><div class="kpi-label">المناحل</div><div class="kpi-val">${gA().length}</div><div class="kpi-sub">منحل نشط</div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--blue),#90CAF9);"></div></div>
-    <div class="kpi"><div class="kpi-bg-icon">👥</div><div class="kpi-label">العملاء</div><div class="kpi-val">${gC().length}</div><div class="kpi-sub">مسجل</div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--orange),#FFCC80);"></div></div>
+    <div class="kpi"><div class="kpi-bg-icon">💰</div><div class="kpi-label" data-i18n="nav_sales">${_('nav_sales')}</div><div class="kpi-val" style="font-size:15px;">${(totSales/1000).toFixed(0)}k</div><div class="kpi-sub">${currency}</div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--gold),var(--gold3));"></div></div>
+    <div class="kpi"><div class="kpi-bg-icon">⬡</div><div class="kpi-label" data-i18n="nav_hives">${_('nav_hives')}</div><div class="kpi-val">${hives.length}</div><div class="kpi-sub">💪 ${strong}</div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--green),#81C784);"></div></div>
+    <div class="kpi"><div class="kpi-bg-icon">💹</div><div class="kpi-label" data-i18n="nav_profit">${_('nav_profit')}</div><div class="kpi-val" style="font-size:15px;color:${profit>=0?'var(--green)':'var(--red)'};">${(profit/1000).toFixed(0)}k</div><div class="kpi-sub">${currency}</div><div class="kpi-bar" style="background:linear-gradient(90deg,${profit>=0?'var(--green)':'var(--red)'},${profit>=0?'#81C784':'#EF9A9A'});"></div></div>
+    <div class="kpi"><div class="kpi-bg-icon">🍯</div><div class="kpi-label" data-i18n="nav_harvest">${_('nav_harvest')}</div><div class="kpi-val">${totHarv.toFixed(0)}</div><div class="kpi-sub">kg</div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--teal),#80CBC4);"></div></div>
+    <div class="kpi"><div class="kpi-bg-icon">🗺️</div><div class="kpi-label" data-i18n="nav_apiaries">${_('nav_apiaries')}</div><div class="kpi-val">${gA().length}</div><div class="kpi-sub"></div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--blue),#90CAF9);"></div></div>
+    <div class="kpi"><div class="kpi-bg-icon">👥</div><div class="kpi-label" data-i18n="nav_crm">${_('nav_crm')}</div><div class="kpi-val">${gC().length}</div><div class="kpi-sub"></div><div class="kpi-bar" style="background:linear-gradient(90deg,var(--orange),#FFCC80);"></div></div>
   `;
 
   // Charts
@@ -3508,7 +3515,7 @@ function renderDashboard(){
   const str={weak:0,medium:0,strong:0};hives.forEach(h=>{if(str[h.strength]!==undefined)str[h.strength]++;});
   const ctx2=document.getElementById('ch-hives');
   if(ctx2){if(ch2){ch2.destroy();ch2=null;}
-    if(hives.length)ch2=new Chart(ctx2,{type:'doughnut',data:{labels:['ضعيفة','متوسطة','قوية'],datasets:[{data:Object.values(str),backgroundColor:['rgba(244,67,54,.6)','rgba(255,152,0,.6)','rgba(76,175,80,.6)'],borderColor:['var(--red)','var(--orange)','var(--green)'],borderWidth:2}]},options:{responsive:true,plugins:{legend:{labels:{color:'#aaa',font:{family:'Cairo',size:10}}}}}});
+    if(hives.length)ch2=new Chart(ctx2,{type:'doughnut',data:{labels:['ضعيفة','متوسطة','💪'],datasets:[{data:Object.values(str),backgroundColor:['rgba(244,67,54,.6)','rgba(255,152,0,.6)','rgba(76,175,80,.6)'],borderColor:['var(--red)','var(--orange)','var(--green)'],borderWidth:2}]},options:{responsive:true,plugins:{legend:{labels:{color:'#aaa',font:{family:'Cairo',size:10}}}}}});
   }
 
   // Goals mini-progress
@@ -3548,6 +3555,7 @@ function renderDashboard(){
    APIARIES
 ══════════════════════════════════════════════════ */
 function renderApiaries(){
+  const _=window.__||((k,d)=>d||k);
   const list=gA();
   document.getElementById('api-sub').textContent=`${list.length} منحل`;
   const tI={mountain:'🏔️',plain:'🌾',forest:'🌲',garden:'🌸'};
@@ -3640,6 +3648,7 @@ const BREEDS={carniolan:'كارنيولية',italian:'إيطالية',caucasian:
 const BCOLORS={carniolan:'var(--blue)',italian:'var(--orange)',caucasian:'var(--purple)',buckfast:'var(--teal)',local:'var(--gold)',saharan:'var(--gold2)',unknown:'var(--text3)'};
 
 function renderHives(){
+  const _=window.__||((k,d)=>d||k);
   showSkeleton('hives-grid', 'cards', 6);
   // إعادة الصفحة عند البحث أو الفلترة
   if(window._lastHiveFilter === undefined) window._lastHiveFilter = '';
@@ -3767,7 +3776,7 @@ function showHiveQR(id){
       <div class="hive-qr-info" style="text-align:right;">
         <div>🗺️ ${ap?.name||'—'} &nbsp;|&nbsp; 🐝 ${BREEDS[h.breed]||'—'}</div>
         <div>${{langstroth:'لانجستروث',warre:'وار','top-bar':'قضبان',traditional:'تقليدية'}[h.type]||h.type||'—'} &nbsp;|&nbsp; ${h.queen==='yes'?'👑 ملكة موجودة':'⛔ بلا ملكة'}</div>
-        <div>${h.strength==='strong'?'💪 قوية':h.strength==='medium'?'😐 متوسطة':'😟 ضعيفة'} &nbsp;|&nbsp; غذاء: ${'⭐'.repeat(Number(h.food)||1)}</div>
+        <div>${h.strength==='strong'?'💪 💪':h.strength==='medium'?'😐 متوسطة':'😟 ضعيفة'} &nbsp;|&nbsp; غذاء: ${'⭐'.repeat(Number(h.food)||1)}</div>
         <div>📊 درجة الصحة: <b>${sc}/100</b></div>
         <div style="font-size:9px;color:var(--text3);margin-top:4px;">📅 ${fmtD(h.date)} &nbsp;|&nbsp; ID: ${h.id.slice(-8)}</div>
       </div>
@@ -3879,6 +3888,7 @@ function saveInspection(){
   log(`فحص خلية ${hive?.hid||''}`,'var(--blue)');toast('تم حفظ الفحص','success');cm('mod-insp');renderInspections();
 }
 function renderInspections(){
+  const _=window.__||((k,d)=>d||k);
   populateSels();
   const hf=document.getElementById('if-hive')?.value||'all';
   const mf=document.getElementById('if-month')?.value||'';
@@ -3894,7 +3904,7 @@ function renderInspections(){
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">
         <div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">الملكة</div><div style="font-weight:700;font-size:11px;color:${i.queen==='yes'?'var(--green)':'var(--red)'};">${i.queen==='yes'?'👑':'⛔'}</div></div>
-        <div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">القوة</div><div style="font-weight:700;font-size:10px;color:${sc2[i.strength]};">${i.strength==='strong'?'قوية':i.strength==='medium'?'متوسطة':'ضعيفة'}</div></div>
+        <div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">القوة</div><div style="font-weight:700;font-size:10px;color:${sc2[i.strength]};">${i.strength==='strong'?'💪':i.strength==='medium'?'متوسطة':'ضعيفة'}</div></div>
         ${i.frames?`<div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">الإطارات</div><div style="font-weight:700;font-size:11px;">${i.frames}</div></div>`:'<div></div>'}
         ${i.honey?`<div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">العسل</div><div style="font-weight:700;font-size:11px;color:var(--gold);">${i.honey}كغ</div></div>`:`${i.weight?`<div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">الوزن</div><div style="font-weight:700;font-size:11px;color:var(--cyan);">${i.weight}كغ</div></div>`:'<div></div>'}`}
       </div>
@@ -3923,6 +3933,7 @@ function saveWeight(){
   DB.set('weights',list);cm('mod-weight');log(`وزن ${hive?.hid||''}: ${val} كغ`,'var(--cyan)');toast('تم الحفظ','success');renderWeights();
 }
 function renderWeights(){
+  const _=window.__||((k,d)=>d||k);
   populateSels();
   const hf=document.getElementById('wf-hive')?.value||'all';
   let list=gW().filter(w=>hf==='all'||w.hiveId===hf).sort((a,b)=>a.date.localeCompare(b.date));
@@ -3937,7 +3948,7 @@ function renderWeights(){
   }else if(ctx&&!list.length){if(wChart){wChart.destroy();wChart=null;}}
   // Table
   document.getElementById('weights-list').innerHTML=list.length?`<div class="table-wrap"><table>
-    <thead><tr><th>الخلية</th><th>الوزن (كغ)</th><th>الطقس</th><th>التاريخ</th><th>ملاحظات</th><th></th></tr></thead>
+    <thead><tr><th>الخلية</th><th>الوزن (كغ)</th><th>الطقس</th><th>${_('lbl_date')}</th><th>ملاحظات</th><th></th></tr></thead>
     <tbody>${list.slice().reverse().slice(0,30).map(w=>`<tr>
       <td class="text-g fw9">${w.hiveHid}</td>
       <td style="font-size:15px;font-weight:900;">${w.value}</td>
@@ -3978,6 +3989,7 @@ function saveHarvest(){
   log(`حصاد ${qty} كغ من ${hive?.hid||'كل الخلايا'}`,'var(--gold)');toast('تم حفظ الحصاد','success');cm('mod-harvest');renderHarvest();
 }
 function renderHarvest(){
+  const _=window.__||((k,d)=>d||k);
   const list=gHv().sort((a,b)=>b.date.localeCompare(a.date));
   const total=list.reduce((a,h)=>a+h.qty,0);
   const rev=list.reduce((a,h)=>a+h.qty*h.price,0);
@@ -3987,7 +3999,7 @@ function renderHarvest(){
     <div class="sc bl"><div class="si">📋</div><div class="sl">عدد الحصادات</div><div class="sv">${list.length}</div></div>
   `;
   document.getElementById('harv-list').innerHTML=list.length?`<div class="table-wrap"><table>
-    <thead><tr><th>الخلية</th><th>الكمية</th><th>النوع</th><th>الجودة</th><th>السعر/كغ</th><th>التاريخ</th><th>ملاحظات</th><th></th></tr></thead>
+    <thead><tr><th>الخلية</th><th>${_('lbl_quantity')}</th><th>النوع</th><th>الجودة</th><th>السعر/كغ</th><th>${_('lbl_date')}</th><th>ملاحظات</th><th></th></tr></thead>
     <tbody>${list.map(h=>`<tr>
       <td class="text-g fw9">${h.hiveHid}</td>
       <td style="font-weight:900;">${h.qty} كغ</td>
@@ -4005,6 +4017,7 @@ function delHarv(id){confirm2('حذف','',()=>{DB.set('harvest',gHv().filter(h=>
    QUEENS
 ══════════════════════════════════════════════════ */
 function renderQueens(){
+  const _=window.__||((k,d)=>d||k);
   const list=gQ().map(q=>({...q,avg:((q.calm||0)+(q.prod||0)+(q.clean||0)+(q.resist||5))/4})).sort((a,b)=>b.avg-a.avg);
   const apis=gA();
   document.getElementById('queens-tb').innerHTML=list.length?list.map((q,i)=>{
@@ -4100,6 +4113,7 @@ function saveCert(){
   DB.set('certs',list);cm('mod-cert');renderCerts();log('إصدار شهادة صحية','var(--teal)');toast('تم حفظ الشهادة','success');
 }
 function renderCerts(){
+  const _=window.__||((k,d)=>d||k);
   const list=gCe().sort((a,b)=>b.date.localeCompare(a.date));
   document.getElementById('certs-list').innerHTML=list.length?list.map(c=>`
     <div class="card">
@@ -4136,6 +4150,7 @@ function saveAsset(){
   DB.set('assets',list);cm('mod-asset');renderAssets();log('إضافة معدة: '+sn,'var(--teal)');toast('تم الحفظ + باركود','success');
 }
 function renderAssets(){
+  const _=window.__||((k,d)=>d||k);
   const list=gAs();
   document.getElementById('assets-grid').innerHTML=list.length?list.map(a=>`
     <div class="card" style="text-align:center;">
@@ -4190,6 +4205,7 @@ function saveProduct(){
   DB.set('products',list);cm('mod-product');renderInventory();log((eid?'تعديل':'إضافة')+' منتج: '+name);toast('تم','success');
 }
 function renderInventory(){
+  const _=window.__||((k,d)=>d||k);
   const list=gP();
   document.getElementById('inv-grid').innerHTML=list.length?list.map(p=>{
     const low=p.stock<=p.minStock;const pct=Math.min(100,Math.round((p.stock/Math.max((p.minStock||1)*3,1))*100));
@@ -4231,6 +4247,7 @@ function saveStoreItem(){
   DB.set('store',list);cm('mod-store');renderStore();log('إضافة للمتجر: '+name,'var(--blue)');toast('تم','success');
 }
 function renderStore(){
+  const _=window.__||((k,d)=>d||k);
   const list=gSt();
   document.getElementById('store-grid').innerHTML=list.length?list.map(s=>`
     <div class="store-item">
@@ -4276,6 +4293,7 @@ function saveCustomer(){
   DB.set('customers',list);cm('mod-customer');renderCRM();log((eid?'تعديل':'إضافة')+' عميل: '+name,eid?'var(--blue)':'var(--green)');toast('تم','success');
 }
 function renderCRM(){
+  const _=window.__||((k,d)=>d||k);
   const q=document.getElementById('crm-search')?.value.toLowerCase()||'';
   const list=gC().filter(c=>!q||c.name.includes(q)||c.phone?.includes(q));
   const ctypeL={retail:'مفرق',wholesale:'جملة',vip:'VIP'};
@@ -4338,6 +4356,7 @@ function saveSale(){
   log(`فاتورة ${sale.invoiceNo} — ${fmt$(sale.total)}`,'var(--gold)');toast('تم حفظ الفاتورة','success');cm('mod-sale');renderSales();
 }
 function renderSales(){
+  const _=window.__||((k,d)=>d||k);
   const sales=gS();const total=sales.reduce((a,s)=>a+Number(s.total||0),0);
   const pending=sales.filter(s=>s.payment==='pending').reduce((a,s)=>a+Number(s.total||0),0);
   document.getElementById('sales-stats').innerHTML=`
@@ -4374,7 +4393,7 @@ function viewInvoice(id){
       </div>
       <div style="font-size:11px;margin-bottom:9px;"><b>العميل:</b> ${s.customerName} | <b>الدفع:</b> ${pyL[s.payment]||'—'}</div>
       <table style="width:100%;border-collapse:collapse;font-size:11px;">
-        <thead><tr style="background:#FFF9C4;"><th style="padding:5px;text-align:right;border:1px solid #ddd;">المنتج</th><th style="padding:5px;border:1px solid #ddd;">الكمية</th><th style="padding:5px;border:1px solid #ddd;">السعر</th><th style="padding:5px;border:1px solid #ddd;">المجموع</th></tr></thead>
+        <thead><tr style="background:#FFF9C4;"><th style="padding:5px;text-align:right;border:1px solid #ddd;">المنتج</th><th style="padding:5px;border:1px solid #ddd;">${_('lbl_quantity')}</th><th style="padding:5px;border:1px solid #ddd;">${_('lbl_price')}</th><th style="padding:5px;border:1px solid #ddd;">${_('lbl_total')}</th></tr></thead>
         <tbody>${s.items?.map(r=>`<tr><td style="padding:4px;border:1px solid #ddd;">${r.productName}</td><td style="padding:4px;border:1px solid #ddd;text-align:center;">${r.qty} ${r.unit}</td><td style="padding:4px;border:1px solid #ddd;text-align:center;">${fmt$(r.price)}</td><td style="padding:4px;border:1px solid #ddd;text-align:center;font-weight:700;color:#FF6F00;">${fmt$(r.price*r.qty)}</td></tr>`).join('')}</tbody>
       </table>
       <div style="font-size:16px;font-weight:900;color:#FF6F00;text-align:left;margin-top:9px;padding-top:7px;border-top:2px solid #FFC107;">الإجمالي: ${fmt$(s.total)}</div>
@@ -4401,6 +4420,7 @@ function saveExpense(){
   DB.set('expenses',list);cm('mod-expense');renderExpenses();log(`مصروف: ${desc} (${fmt$(amount)})`,'var(--red)');toast('تم','success');
 }
 function renderExpenses(){
+  const _=window.__||((k,d)=>d||k);
   const list=gE();const total=list.reduce((a,e)=>a+Number(e.amount||0),0);
   const catL={medicine:'💊 أدوية',equipment:'🔧 معدات',feed:'🍽️ تغذية',transport:'🚗 نقل',labor:'👷 عمالة',rent:'🏠 إيجار',other:'📋 أخرى'};
   document.getElementById('exp-stats').innerHTML=`
@@ -4422,6 +4442,7 @@ function delExp(id){confirm2('حذف','',()=>{DB.set('expenses',gE().filter(e=>e
 ══════════════════════════════════════════════════ */
 let profChart=null;
 function renderProfit(){
+  const _=window.__||((k,d)=>d||k);
   const sales=gS(),exps=gE(),harv=gHv();
   const totRev=sales.reduce((a,s)=>a+Number(s.total||0),0);
   const totExp=exps.reduce((a,e)=>a+Number(e.amount||0),0);
@@ -4461,6 +4482,7 @@ function renderProfit(){
 ══════════════════════════════════════════════════ */
 let annChart=null,catChart2=null;
 function renderFinance(){
+  const _=window.__||((k,d)=>d||k);
   const sales=gS(),exps=gE();
   const totR=sales.reduce((a,s)=>a+Number(s.total||0),0);
   const totE=exps.reduce((a,e)=>a+Number(e.amount||0),0);
@@ -4498,6 +4520,7 @@ function renderFinance(){
 ══════════════════════════════════════════════════ */
 let calY=new Date().getFullYear(),calM=new Date().getMonth();
 function renderCalendar(){
+  const _=window.__||((k,d)=>d||k);
   const days=['أحد','اثن','ثلا','أرب','خمي','جمع','سبت'];
   document.getElementById('cal-heads').innerHTML=days.map(d=>`<div class="cal-dh">${d}</div>`).join('');
   document.getElementById('cal-lbl').textContent=new Date(calY,calM).toLocaleString('ar-DZ',{month:'long',year:'numeric'});
@@ -4805,7 +4828,7 @@ function exportPDF(){
   const s=gSet();const hives=gH();const sales=gS();const exps=gE();const harv=gHv();
   const totR=sales.reduce((a,s)=>a+Number(s.total||0),0);const totE=exps.reduce((a,e)=>a+Number(e.amount||0),0);
   const totH=harv.reduce((a,h)=>a+Number(h.qty||0),0);const net=totR-totE;const apis=gA();
-  const sm={weak:'ضعيفة',medium:'متوسطة',strong:'قوية'};
+  const sm={weak:'ضعيفة',medium:'متوسطة',strong:'💪'};
   const logo=DB.get('farm_logo');
   const ac=DB.get('accent_color')||'#FFC107';
   const logoHTML=logo?`<img src="${logo}" style="height:60px;object-fit:contain;margin-bottom:6px;">`:'<div style="font-size:40px;">🐝</div>';
@@ -4841,7 +4864,7 @@ function exportPDF(){
   <div class="stat-row">
     <div class="stat">🗺️ المناحل: ${apis.length}</div>
     <div class="stat">⬡ الخلايا: ${hives.length}</div>
-    <div class="stat">💪 قوية: ${hives.filter(h=>h.strength==='strong').length}</div>
+    <div class="stat">💪 💪: ${hives.filter(h=>h.strength==='strong').length}</div>
     <div class="stat">💰 الإيرادات: ${fmt$(totR)}</div>
     <div class="stat">💸 المصاريف: ${fmt$(totE)}</div>
     <div class="stat" style="background:${net>=0?'#e8f5e9':'#ffebee'};">💹 الربح: ${fmt$(net)}</div>
@@ -4849,7 +4872,7 @@ function exportPDF(){
     <div class="stat">👥 العملاء: ${gC().length}</div>
   </div>
   <h2>🗺️ المناحل</h2>
-  <table><thead><tr><th>الاسم</th><th>الموقع</th><th>التضاريس</th><th>الخلايا</th><th>النباتات</th></tr></thead><tbody>
+  <table><thead><tr><th>${_('lbl_name')}</th><th>الموقع</th><th>التضاريس</th><th>الخلايا</th><th>النباتات</th></tr></thead><tbody>
   ${apis.map(a=>{const t={mountain:'🏔️ جبلي',plain:'🌾 سهلي',forest:'🌲 غابة',garden:'🌸 بستان'};return`<tr><td><b>${a.name}</b></td><td>${a.location||'—'}</td><td>${t[a.terrain]||'—'}</td><td><b>${gH().filter(h=>h.apiaryId===a.id).length}</b></td><td>${a.plants||'—'}</td></tr>`;}).join('')}
   </tbody></table>
   <h2>⬡ حالة الخلايا</h2>
@@ -4857,7 +4880,7 @@ function exportPDF(){
   ${hives.map(h=>{const ap=apis.find(a=>a.id===h.apiaryId);const sc=score(h);const scCol=sc>=80?'green':sc>=60?'orange':'red';return`<tr><td><b>${h.hid}</b></td><td>${ap?.name||'—'}</td><td>${BREEDS[h.breed]||'—'}</td><td><b style="color:${scCol};">${sc}/100</b></td><td>${h.queen==='yes'?'✅':'❌'}</td><td>${sm[h.strength]||h.strength}</td><td>${'★'.repeat(Number(h.food)||1)}</td></tr>`;}).join('')}
   </tbody></table>
   <h2>🍯 سجل الحصاد</h2>
-  <table><thead><tr><th>الخلية</th><th>الكمية (كغ)</th><th>النوع</th><th>الجودة</th><th>السعر/كغ</th><th>التاريخ</th></tr></thead><tbody>
+  <table><thead><tr><th>الخلية</th><th>الكمية (كغ)</th><th>النوع</th><th>الجودة</th><th>السعر/كغ</th><th>${_('lbl_date')}</th></tr></thead><tbody>
   ${harv.slice(-20).map(h=>`<tr><td>${h.hiveHid}</td><td><b>${h.qty}</b></td><td>${h.type||'—'}</td><td>${h.quality==='premium'?'★★★':h.quality==='good'?'★★':'★'}</td><td>${Number(h.price||0).toLocaleString()}</td><td>${fmtD(h.date)}</td></tr>`).join('')}
   </tbody></table>
   <h2>💰 الملخص المالي</h2>
@@ -4875,7 +4898,16 @@ function exportPDF(){
 /* ══════════════════════════════════════════════════
    MODALS
 ══════════════════════════════════════════════════ */
-function om(id){document.getElementById(id).classList.add('open');}
+function om(id){
+  document.getElementById(id).classList.add('open');
+  if(window.I18N && I18N.current!=='ar'){
+    setTimeout(()=>{
+      const m=document.getElementById(id);
+      if(m&&typeof translateNode==='function') translateNode(m,I18N.current);
+      I18N.translateAll();
+    },60);
+  }
+}
 function cm(id){document.getElementById(id).classList.remove('open');}
 document.querySelectorAll('.modal-overlay').forEach(m=>{m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');});});
 let _cb=null;
@@ -4927,6 +4959,7 @@ function buildDistSels(){
   if(db){db.innerHTML=opts||'<option>لا مناحل</option>';if(apis.length>1)db.selectedIndex=1;}
 }
 function renderMapScreen(){
+  const _=window.__||((k,d)=>d||k);
   buildDistSels();
   if(typeof L==='undefined'){
     document.getElementById('leaflet-map').innerHTML='<div style="padding:40px;text-align:center;color:var(--text3);"><div style="font-size:32px;margin-bottom:10px;">⚠️</div><div>تعذّر تحميل الخريطة.<br>تحقق من الاتصال بالإنترنت.</div></div>';
@@ -4962,7 +4995,7 @@ function addMapMarkers(){
     const popup=`<div style="font-family:'Cairo',sans-serif;">
       <div style="font-size:15px;font-weight:900;color:#FFC107;margin-bottom:6px;">🏠 ${a.name}</div>
       ${a.location?`<div style="font-size:11px;margin-bottom:3px;">📍 ${a.location}${a.altitude?' · '+a.altitude+' م':''}</div>`:''}
-      <div style="font-size:11px;margin-bottom:4px;">⬡ ${hc} خلية &nbsp;|&nbsp; 💪 ${strong} قوية &nbsp;|&nbsp; ⚠️ ${weak} ضعيفة${noQ?` &nbsp;|&nbsp; <span style="color:#f44336;">⛔ ${noQ} بلا ملكة</span>`:''}</div>
+      <div style="font-size:11px;margin-bottom:4px;">⬡ ${hc} خلية &nbsp;|&nbsp; 💪 ${strong} 💪 &nbsp;|&nbsp; ⚠️ ${weak} ضعيفة${noQ?` &nbsp;|&nbsp; <span style="color:#f44336;">⛔ ${noQ} بلا ملكة</span>`:''}</div>
       <div style="font-size:11px;"><b>الحالة:</b> <span style="color:${color};font-weight:700;">${label}</span></div>
       ${a.plants?`<div style="font-size:10px;color:#aaa;margin-top:4px;">🌿 ${a.plants}</div>`:''}
       <div style="font-size:9px;color:#666;margin-top:4px;">${coords[0].toFixed(4)}, ${coords[1].toFixed(4)}</div>
@@ -4982,7 +5015,7 @@ function haversineKm(lat1,lon1,lat2,lon2){
 function calcMapDist(){
   const idA=document.getElementById('dist-a')?.value;
   const idB=document.getElementById('dist-b')?.value;
-  if(!idA||!idB){toast('لا توجد مناحل كافية','warning');return;}
+  if(!idA||!idB){toast('${_('lbl_no_data')} كافية','warning');return;}
   if(idA===idB){toast('اختر منحلين مختلفين','warning');return;}
   const a=gA().find(x=>x.id===idA);const b=gA().find(x=>x.id===idB);
   if(!a||!b)return;
@@ -5006,6 +5039,7 @@ function calcMapDist(){
 ══════════════════════════════════════════════════ */
 let chForecast=null;
 function renderAdvanced(){
+  const _=window.__||((k,d)=>d||k);
   renderROIList();
   renderRaceBars();
   renderForecastChart2();
@@ -5441,7 +5475,7 @@ function aiAnalyze(question){
 }
 
 function aiHealthReport(hives,apis,insp,queens){
-  if(!hives.length) return '🐝 لا توجد خلايا مسجلة بعد. أضف خلاياك أولاً.';
+  if(!hives.length) return '🐝 ${_('lbl_no_data')} مسجلة بعد. أضف خلاياك أولاً.';
   const noQueen=hives.filter(h=>h.queen==='no');
   const noEggs=hives.filter(h=>h.eggs==='no'&&h.queen!=='no');
   const weak=hives.filter(h=>h.strength==='weak');
@@ -5457,7 +5491,7 @@ function aiHealthReport(hives,apis,insp,queens){
   const avgScore=hives.length?(totalScore/hives.length).toFixed(0):0;
   const healthLevel=avgScore>=80?'ممتازة 🟢':avgScore>=60?'جيدة 🟡':avgScore>=40?'متوسطة 🟠':'تحتاج عناية 🔴';
   let r='## 🔍 تقرير الصحة الشامل\n\n';
-  r+=`**📊 نظرة عامة:**\n- إجمالي الخلايا: **${hives.length}** في **${apis.length}** مناحل\n- متوسط درجة الصحة: **${avgScore}/100** — ${healthLevel}\n- قوية: **${strong.length}** | متوسطة: **${hives.filter(h=>h.strength==='medium').length}** | ضعيفة: **${weak.length}**\n\n`;
+  r+=`**📊 نظرة عامة:**\n- إجمالي الخلايا: **${hives.length}** في **${apis.length}** مناحل\n- متوسط درجة الصحة: **${avgScore}/100** — ${healthLevel}\n- 💪: **${strong.length}** | متوسطة: **${hives.filter(h=>h.strength==='medium').length}** | ضعيفة: **${weak.length}**\n\n`;
   if(noQueen.length){
     r+=`**🚨 تنبيه عاجل — خلايا بدون ملكة (${noQueen.length}):**\n`;
     noQueen.forEach(h=>{const ap=apis.find(a=>a.id===h.apiaryId);r+=`- الخلية **${h.hid}** (${ap?.name||'—'}) ← تدخل خلال 24-48 ساعة\n`;});
@@ -5477,12 +5511,12 @@ function aiHealthReport(hives,apis,insp,queens){
   r+='**💡 توصيات الأسبوع:**\n';
   r+=`- ${overdueList.length?'ابدأ بفحص الخلايا المتأخرة':'فحص دوري كل 14-21 يوم'}\n`;
   r+=`- ${lowFood.length?'أولوية التغذية للخلايا ⭐⭐':'مستويات الغذاء جيدة'}\n`;
-  r+='- راقب علامات التطريد في الخلايا القوية\n';
+  r+='- راقب علامات التطريد في الخلايا ال💪\n';
   return r;
 }
 
 function aiHarvestForecast(hives,apis,harv){
-  if(!hives.length) return '🍯 لا توجد خلايا. أضف خلاياك أولاً.';
+  if(!hives.length) return '🍯 ${_('lbl_no_data')}. أضف خلاياك أولاً.';
   const totHarv=harv.reduce((a,h)=>a+Number(h.qty||0),0);
   const strong=hives.filter(h=>h.strength==='strong').length;
   const medium=hives.filter(h=>h.strength==='medium').length;
@@ -5500,7 +5534,7 @@ function aiHarvestForecast(hives,apis,harv){
   r+=`| 🟢 متفائل | **${optimistic} كغ** | **${(optimistic*avgPrice).toLocaleString()} ${currency}** |\n`;
   r+=`| 🟡 واقعي | **${forecast} كغ** | **${(forecast*avgPrice).toLocaleString()} ${currency}** |\n`;
   r+=`| 🔴 متحفظ | **${pessimistic} كغ** | **${(pessimistic*avgPrice).toLocaleString()} ${currency}** |\n\n`;
-  r+=`**📈 توزيع الخلايا:**\n- قوية: ${strong} → 12-16 كغ/خلية\n- متوسطة: ${medium} → 7-10 كغ/خلية\n- ضعيفة: ${weak} → 3-5 كغ/خلية\n`;
+  r+=`**📈 توزيع الخلايا:**\n- 💪: ${strong} → 12-16 كغ/خلية\n- متوسطة: ${medium} → 7-10 كغ/خلية\n- ضعيفة: ${weak} → 3-5 كغ/خلية\n`;
   if(noQueen>0) r+=`- ⚠️ ${noQueen} خلية بدون ملكة → إنتاج صفر\n`;
   r+='\n**💡 لزيادة الإنتاج:**\n- عالج الخلايا الضعيفة وغذّها أسبوعياً\n- أضف صناديق عسل عند اكتمال 80% من الإطارات\n- تأكد من قرب النبات: سدر، زعتر، خزامى\n';
   return r;
@@ -5591,7 +5625,7 @@ function aiQueenAnalysis(queens,hives,apis){
 }
 
 function aiApiaryCompare(apis,hives,harv,insp){
-  if(!apis.length) return '🗺️ لا توجد مناحل مسجلة بعد.';
+  if(!apis.length) return '🗺️ ${_('lbl_no_data')} مسجلة بعد.';
   const apData=apis.map(a=>{
     const ah=hives.filter(h=>h.apiaryId===a.id);
     const ahIds=ah.map(h=>h.id);
@@ -5605,7 +5639,7 @@ function aiApiaryCompare(apis,hives,harv,insp){
   let r='## 🗺️ مقارنة المناحل\n\n';
   apData.forEach((d,i)=>{
     r+=`**${i+1}. ${d.a.name}** ${terrain[d.a.terrain]||''}\n`;
-    r+=`   📍 ${d.a.location||'—'} | خلايا: **${d.hiveCount}** | قوية: **${d.strong}**\n`;
+    r+=`   📍 ${d.a.location||'—'} | خلايا: **${d.hiveCount}** | 💪: **${d.strong}**\n`;
     r+=`   🍯 الحصاد: **${d.totHarv.toFixed(1)} كغ** | صحة: **${d.avgScore.toFixed(0)}/100**\n`;
     if(d.noQ) r+=`   ⚠️ ${d.noQ} خلية بدون ملكة\n`;
     r+='\n';
@@ -5625,11 +5659,11 @@ function aiProductivityAdvice(hives,apis,harv,sales,exps){
   const totExp=exps.reduce((a,e)=>a+Number(e.amount||0),0);
   const profit=totSales-totExp;
   let r='## 💡 خطة تحسين الإنتاجية (90 يوم)\n\n';
-  r+=`**وضعك الحالي:** ${hives.length} خلية، ${strong} قوية، ${totHarv.toFixed(1)} كغ حصاد، ربح ${profit.toLocaleString()} ${cur()}\n\n`;
+  r+=`**وضعك الحالي:** ${hives.length} خلية، ${strong} 💪، ${totHarv.toFixed(1)} كغ حصاد، ربح ${profit.toLocaleString()} ${cur()}\n\n`;
   r+='**الشهر الأول — تعزيز الخلايا:**\n';
   r+='- افحص كل الخلايا الضعيفة وحدد السبب\n- غذّ المتوسطة أسبوعياً بمحلول 50% سكر\n- استبدل ملكات الخلايا الضعيفة\n\n';
   r+='**الشهر الثاني — توسيع الإنتاج:**\n';
-  r+='- أضف صناديق عسل للخلايا القوية\n- تأكد من توفر مصادر ماء نظيف\n- خطط لموسم جمع النبات\n\n';
+  r+='- أضف صناديق عسل للخلايا ال💪\n- تأكد من توفر مصادر ماء نظيف\n- خطط لموسم جمع النبات\n\n';
   r+='**الشهر الثالث — تحسين الإيراد:**\n';
   r+=`- تنويع المنتجات: شمع (+${(hives.length*0.3).toFixed(0)} كغ متوقع)، حبوب لقاح، غذاء ملكي\n`;
   r+='- استهدف عملاء الجملة لتحسين الهامش\n- روّج عبر واتساب لزيادة المبيعات المباشرة\n\n';
@@ -5642,8 +5676,8 @@ function aiSeasonalAdvice(hives,apis){
   const seasons=[
     {s:'❄️ الشتاء',a:['لا تفتح الخلايا إلا عند الضرورة','تحقق من وزن الخلايا أسبوعياً (يجب +15 كغ)','غذّ بكعكة السكر إذا كانت المخزونات منخفضة','صيانة الأدوات وتحضير الموسم القادم','اطلب ملكات جديدة مسبقاً']},
     {s:'❄️ الشتاء',a:['لا تفتح الخلايا إلا عند الضرورة','تحقق من وزن الخلايا أسبوعياً','غذّ بكعكة السكر عند الحاجة','خطط لموسم الربيع']},
-    {s:'🌸 الربيع',a:['موسم التوسع — أضف صناديق عسل للقوية','راقب التطريد يومياً في الخلايا الممتلئة','مثالي لتكاثر الملكات وتقسيم الخلايا','تغذية تحفيزية بمحلول خفيف 30%']},
-    {s:'🌸 الربيع',a:['ذروة نشاط الربيع — راقب التطريد','أضف إطارات للخلايا القوية','تقسيم الخلايا الممتلئة لمنع التطريد']},
+    {s:'🌸 الربيع',a:['موسم التوسع — أضف صناديق عسل لل💪','راقب التطريد يومياً في الخلايا الممتلئة','مثالي لتكاثر الملكات وتقسيم الخلايا','تغذية تحفيزية بمحلول خفيف 30%']},
+    {s:'🌸 الربيع',a:['ذروة نشاط الربيع — راقب التطريد','أضف إطارات للخلايا ال💪','تقسيم الخلايا الممتلئة لمنع التطريد']},
     {s:'🌸 الربيع',a:['استعد للحصاد الأول','افحص جاهزية الإطارات','ضع طوابق عسل إضافية']},
     {s:'☀️ الصيف',a:['موسم الحصاد — جهّز المستخرج والأدوات','وفّر الظل والتهوية للخلايا','ماء نظيف وبارد قرب المناحل يومياً','احصد عند اكتمال 80% بشمع مختوم']},
     {s:'☀️ الصيف',a:['ذروة الإنتاج — احصد بانتظام','راقب فاروا — تنتشر في الصيف','تغذية مائية ضرورية']},
@@ -5674,7 +5708,7 @@ function aiGeneralSummary(hives,apis,harv,sales,exps,insp,queens){
   let r='## 🐝 ملخص مزرعتك\n\n';
   r+='| المؤشر | القيمة | الحالة |\n|---|---|---|\n';
   r+=`| المناحل | ${apis.length} | ${apis.length>=2?'✅':'➕ أضف المزيد'} |\n`;
-  r+=`| الخلايا | ${hives.length} | ${strong} قوية |\n`;
+  r+=`| الخلايا | ${hives.length} | ${strong} 💪 |\n`;
   r+=`| الصحة العامة | — | ${health} |\n`;
   r+=`| الحصاد | ${totHarv.toFixed(1)} كغ | ${totHarv>0?'✅':'لا حصاد بعد'} |\n`;
   r+=`| الربح | ${profit.toLocaleString()} ${cur()} | ${profit>0?'✅':'⚠️'} |\n`;
@@ -5848,6 +5882,7 @@ function renderPurchaseSection(){
 const TREAT_NAMES={varroa:'فاروا',nosema:'نوسيما',antibiotic:'مضاد حيوي',vitamin:'فيتامين',other:'أخرى'};
 const TREAT_CSS={varroa:'treat-varroa',nosema:'treat-nosema',antibiotic:'treat-antibiotic',vitamin:'treat-vitamin',other:'treat-other'};
 function renderTreatments(){
+  const _=window.__||((k,d)=>d||k);
   const hf=document.getElementById('tf-hive')?.value||'all';
   const tf=document.getElementById('tf-type')?.value||'all';
   let list=gTr().filter(t=>(hf==='all'||t.hiveId===hf)&&(tf==='all'||t.type===tf))
@@ -5912,6 +5947,7 @@ const BATCH_STATUS={production:'🔵 في الإنتاج',storage:'🟠 تخزي
 const BATCH_CSS={production:'bs-production',storage:'bs-storage',sold:'bs-sold',expired:'bs-expired'};
 const HONEY_TYPES={sidr:'سدر',thyme:'زعتر',lavender:'خزامى',orange:'برتقال',forest:'غابة',mixed:'خليط',other:'أخرى'};
 function renderBatches(){
+  const _=window.__||((k,d)=>d||k);
   const list=gBa().sort((a,b)=>b.date.localeCompare(a.date));
   document.getElementById('batch-sub').textContent=`${list.length} دفعة — ${list.reduce((s,b)=>s+Number(b.qty||0),0).toFixed(1)} كغ إجمالي`;
   const grid=document.getElementById('batches-grid');
@@ -5985,6 +6021,7 @@ function delBatch(id){confirm2('حذف الدفعة','',()=>{DB.set('batches',gB
    🎯 GOALS
 ══════════════════════════════════════════════════ */
 function renderGoals(){
+  const _=window.__||((k,d)=>d||k);
   const goals=gGo();
   const year=goals.year||new Date().getFullYear();
   document.getElementById('goals-year').textContent=year;
@@ -6036,7 +6073,7 @@ function saveGoals(){
 const SEASONAL_TASKS=[
   {m:1,n:'يناير ❄️',tasks:[{id:'j1',cat:'فحص',text:'فحص مخزون الغذاء أسبوعياً',col:'var(--blue)'},{id:'j2',cat:'صيانة',text:'صيانة وطلاء الصناديق',col:'var(--orange)'},{id:'j3',cat:'تخطيط',text:'طلب ملكات الموسم القادم',col:'var(--purple)'},{id:'j4',cat:'علاج',text:'علاج فاروا بحمض الأكساليك',col:'var(--red)'}]},
   {m:2,n:'فبراير ❄️',tasks:[{id:'f1',cat:'فحص',text:'أول فحص للربيع — تأكد من وجود الملكة',col:'var(--blue)'},{id:'f2',cat:'تغذية',text:'تغذية تحفيزية خفيفة 30%',col:'var(--teal)'},{id:'f3',cat:'صيانة',text:'تجديد الشمع القديم',col:'var(--orange)'}]},
-  {m:3,n:'مارس 🌸',tasks:[{id:'m1',cat:'توسع',text:'إضافة صناديق عسل للخلايا القوية',col:'var(--green)'},{id:'m2',cat:'فحص',text:'مراقبة التطريد يومياً',col:'var(--red)'},{id:'m3',cat:'تكاثر',text:'تقسيم الخلايا الممتلئة',col:'var(--purple)'},{id:'m4',cat:'تغذية',text:'وقف التغذية — النبات متوفر',col:'var(--teal)'}]},
+  {m:3,n:'مارس 🌸',tasks:[{id:'m1',cat:'توسع',text:'إضافة صناديق عسل للخلايا ال💪',col:'var(--green)'},{id:'m2',cat:'فحص',text:'مراقبة التطريد يومياً',col:'var(--red)'},{id:'m3',cat:'تكاثر',text:'تقسيم الخلايا الممتلئة',col:'var(--purple)'},{id:'m4',cat:'تغذية',text:'وقف التغذية — النبات متوفر',col:'var(--teal)'}]},
   {m:4,n:'أبريل 🌼',tasks:[{id:'a1',cat:'ملكات',text:'إدخال ملكات جديدة للخلايا الضعيفة',col:'var(--purple)'},{id:'a2',cat:'توسع',text:'إضافة طوابق عسل إضافية',col:'var(--green)'},{id:'a3',cat:'فحص',text:'فحص أسبوعي — موسم ذروة',col:'var(--blue)'}]},
   {m:5,n:'مايو ☀️',tasks:[{id:'ma1',cat:'حصاد',text:'الحصاد الأول — زعتر وخزامى',col:'var(--gold)'},{id:'ma2',cat:'فحص',text:'فحص رطوبة العسل قبل الاستخراج (<20%)',col:'var(--blue)'},{id:'ma3',cat:'صحة',text:'فحص شامل لأمراض الحضنة',col:'var(--red)'}]},
   {m:6,n:'يونيو ☀️',tasks:[{id:'jn1',cat:'حصاد',text:'استخراج العسل وتعبئته',col:'var(--gold)'},{id:'jn2',cat:'ظل',text:'توفير ظل وماء بارد للمناحل',col:'var(--cyan)'},{id:'jn3',cat:'علاج',text:'علاج فاروا صيفي (API-Life Var)',col:'var(--red)'}]},
@@ -6048,6 +6085,7 @@ const SEASONAL_TASKS=[
   {m:12,n:'ديسمبر ❄️',tasks:[{id:'dc1',cat:'تخطيط',text:'وضع خطة الموسم القادم',col:'var(--purple)'},{id:'dc2',cat:'تغذية',text:'كعكة السكر عند انخفاض المخزون',col:'var(--teal)'},{id:'dc3',cat:'مالية',text:'تقرير مالي سنوي وحساب الأرباح',col:'var(--gold)'}]},
 ];
 function renderSeasonal(){
+  const _=window.__||((k,d)=>d||k);
   const saved=gST();const curMonth=new Date().getMonth()+1;
   document.getElementById('seasonal-list').innerHTML=SEASONAL_TASKS.map(m=>{
     const isCurrentMonth=m.m===curMonth;
@@ -6093,6 +6131,7 @@ function resetSeasonalTasks(){confirm2('إعادة ضبط المهام','سيت�
 let radarChart=null;
 let selectedRadarHives=[];
 function renderRadarScreen(){
+  const _=window.__||((k,d)=>d||k);
   const hives=gH();
   const el=document.getElementById('radar-hive-select');
   if(!el)return;
@@ -6140,12 +6179,13 @@ function renderRadar(){
 ══════════════════════════════════════════════════ */
 let weatherCache={};
 async function renderWeather(){
+  const _=window.__||((k,d)=>d||k);
   DB.set('weather_visited', today());
   const apis=gA();
   const el=document.getElementById('weather-content');
   if(!apis.length){el.innerHTML='<div class="empty-s"><div class="ei">🗺️</div><p>أضف مناحل بإحداثيات GPS أولاً</p></div>';return;}
   const withCoords=apis.filter(a=>a.lat&&a.lng);
-  if(!withCoords.length){el.innerHTML='<div class="alert alert-warn">⚠️ لا توجد مناحل بإحداثيات GPS — افتح منحل وحدد موقعه على الخريطة</div>';return;}
+  if(!withCoords.length){el.innerHTML='<div class="alert alert-warn">⚠️ ${_('lbl_no_data')} بإحداثيات GPS — افتح منحل وحدد موقعه على الخريطة</div>';return;}
   el.innerHTML='<div class="empty-s"><div class="ei">⏳</div><p>جاري جلب بيانات الطقس...</p></div>';
   try{
     const results=await Promise.all(withCoords.map(async a=>{
@@ -6191,7 +6231,8 @@ function refreshWeather(){renderWeather();}
    📱 WHATSAPP REPORT
 ══════════════════════════════════════════════════ */
 let waReportText='';
-function renderWaReport(){generateWaReport();}
+function renderWaReport(){
+  const _=window.__||((k,d)=>d||k);generateWaReport();}
 function generateWaReport(){
   const type=document.getElementById('wa-type')?.value||'daily';
   const lang=document.getElementById('wa-lang')?.value||'ar';
@@ -6213,7 +6254,7 @@ function generateWaReport(){
     txt+=`${'━'.repeat(28)}\n\n`;
     txt+=`📊 *ملخص المزرعة:*\n`;
     txt+=`• المناحل: ${apis.length} | الخلايا: ${hives.length}\n`;
-    txt+=`• قوية: ${strong} | متوسطة: ${hives.filter(h=>h.strength==='medium').length} | ضعيفة: ${hives.filter(h=>h.strength==='weak').length}\n`;
+    txt+=`• 💪: ${strong} | متوسطة: ${hives.filter(h=>h.strength==='medium').length} | ضعيفة: ${hives.filter(h=>h.strength==='weak').length}\n`;
     if(noQ>0)txt+=`⚠️ *تنبيه:* ${noQ} خلية بدون ملكة!\n`;
     if(overdue>0)txt+=`⏰ ${overdue} خلية تجاوزت 21 يوم بدون فحص\n`;
     txt+=`\n🍯 *الإنتاج:*\n`;
@@ -6334,7 +6375,7 @@ function printApiaryCard(id){
       <div class="idcard-row"><span class="idcard-label">📍 الموقع:</span><span>${a.location||'—'} ${a.altitude?'· '+a.altitude+'م':''}</span></div>
       <div class="idcard-row"><span class="idcard-label">🌍 التضاريس:</span><span>${terrain[a.terrain]||a.terrain||'—'}</span></div>
       <div class="idcard-row"><span class="idcard-label">⬡ الخلايا:</span><span>${hives.length} (طاقة: ${a.capacity||'—'})</span></div>
-      <div class="idcard-row"><span class="idcard-label">💪 قوية:</span><span>${strong} (${hives.length?((strong/hives.length)*100).toFixed(0):0}%)</span></div>
+      <div class="idcard-row"><span class="idcard-label">💪 💪:</span><span>${strong} (${hives.length?((strong/hives.length)*100).toFixed(0):0}%)</span></div>
       <div class="idcard-row"><span class="idcard-label">🌿 النباتات:</span><span>${a.plants||'—'}</span></div>
       <div class="idcard-row"><span class="idcard-label">🍯 إجمالي الحصاد:</span><span>${totHarv.toFixed(1)} كغ</span></div>
       ${a.lat&&a.lng?`<div class="idcard-row"><span class="idcard-label">📡 الإحداثيات:</span><span style="font-family:monospace;font-size:11px;">${Number(a.lat).toFixed(5)}, ${Number(a.lng).toFixed(5)}</span></div>`:''}
@@ -6348,7 +6389,7 @@ function printApiaryCard(id){
    🌿 PLANTS DATABASE
 ══════════════════════════════════════════════════ */
 const PLANTS_DB=[
-  {icon:'🌿',name:'الزعتر البري',latin:'Thymus vulgaris',season:['spring','summer'],honey:'ممتاز',rating:5,desc:'من أفضل مصادر الرحيق في شمال أفريقيا. عسله ذهبي اللون برائحة قوية.',bloom:'مارس — يونيو',range:'200-1500م'},
+  {icon:'🌿',name:'الزعتر البري',latin:'Thymus vulgaris',season:['spring','summer'],honey:'ممتاز',rating:5,desc:'من أفضل مصادر الرحيق في شمال أفريقيا. عسله ذهبي اللون برائحة 💪.',bloom:'مارس — يونيو',range:'200-1500م'},
   {icon:'🌸',name:'الخزامى',latin:'Lavandula officinalis',season:['summer'],honey:'ممتاز',rating:5,desc:'رحيق غني وعطري. من أشهر نباتات النحل في الجزائر.',bloom:'يونيو — أغسطس',range:'300-1800م'},
   {icon:'🌳',name:'السدر / النبق',latin:'Ziziphus lotus',season:['autumn'],honey:'ممتاز',rating:5,desc:'ينتج أثمن أنواع العسل. يزهر في الخريف ويُعطي عسلاً داكناً ثميناً.',bloom:'سبتمبر — نوفمبر',range:'0-800م'},
   {icon:'🌼',name:'حبة البركة',latin:'Nigella sativa',season:['spring'],honey:'جيد',rating:4,desc:'مصدر رحيق وحبوب لقاح. عسله له خواص طبية مميزة.',bloom:'أبريل — يونيو',range:'0-600م'},
@@ -6362,6 +6403,7 @@ const PLANTS_DB=[
   {icon:'🌵',name:'الرتم / الجنات',latin:'Retama raetam',season:['spring'],honey:'جيد',rating:4,desc:'شجيرة صحراوية مزهرة. مصدر جيد للرحيق في المناطق الجافة.',bloom:'فبراير — أبريل',range:'0-1200م'},
 ];
 function renderPlants(){
+  const _=window.__||((k,d)=>d||k);
   const q=(document.getElementById('plant-search')?.value||'').toLowerCase();
   const sf=document.getElementById('plant-season')?.value||'all';
   const list=PLANTS_DB.filter(p=>(!q||(p.name.toLowerCase().includes(q)||p.latin.toLowerCase().includes(q)))&&(sf==='all'||p.season.includes(sf)));
@@ -6397,11 +6439,11 @@ const DISEASE_DB=[
   {name:'التعفن الأوروبي (EFB)',type:'bacteria',severity:'medium',icon:'🔶',timing:'يظهر في الربيع عند ضعف الخلايا',
    symptoms:['يرقات صفراء في وضع غير طبيعي','رائحة حامضة خفيفة','بدون خيط عند اختبار السحب'],
    treatment:['Oxytetracycline: 1غ/لتر شراب — 3 جرعات','تغذية كثيفة بالشراب','استبدال الملكة في الحالات الشديدة'],
-   prevention:['تقوية الخلايا الضعيفة','تجنب الإجهاد الغذائي','فحص الحضنة الشهري']},
+   prevention:['ت💪 الخلايا الضعيفة','تجنب الإجهاد الغذائي','فحص الحضنة الشهري']},
   {name:'عثة الشمع الكبرى',type:'pest',severity:'medium',icon:'🦋',timing:'يكثر في الصيف والخريف',
    symptoms:['خيوط حريرية بيضاء على الأقراص','يرقات تتغذى على الشمع','أنفاق في الأقراص'],
    treatment:['Bacillus thuringiensis: رش الأقراص المصابة','التجميد -15°م لمدة 24 ساعة','أسيتيك أسيد 80% قبل التخزين'],
-   prevention:['تخزين الأقراص في أماكن هوائية باردة','تقوية الخلايا الضعيفة','فحص الأقراص المخزنة']},
+   prevention:['تخزين الأقراص في أماكن هوائية باردة','ت💪 الخلايا الضعيفة','فحص الأقراص المخزنة']},
   {name:'الدبور / القرنيت',type:'pest',severity:'high',icon:'🐝',timing:'أكتوبر — نوفمبر (أعلى كثافة)',
    symptoms:['نحل ميت أمام الخلية','نحل مذعور لا يخرج','انخفاض حاد في النشاط'],
    treatment:['أفخاخ السكر والخل لصيد الملكات في الربيع','شبك واق أمام مدخل الخلية (10مم)','إبلاغ السلطات للمكافحة الجماعية'],
@@ -6412,6 +6454,7 @@ const DISEASE_DB=[
    prevention:['السيطرة على الفاروا = الوقاية الأساسية','تجنب نقل الأقراص بين الخلايا']},
 ];
 function renderDiseaseGuide(){
+  const _=window.__||((k,d)=>d||k);
   const f=document.getElementById('disease-filter')?.value||'all';
   const list=DISEASE_DB.filter(d=>f==='all'||d.type===f);
   const sev={high:{css:'sev-high',label:'خطورة عالية'},medium:{css:'sev-med',label:'خطورة متوسطة'},low:{css:'sev-low',label:'خطورة منخفضة'}};
@@ -6508,6 +6551,7 @@ function calcSugar(){
 const gN=()=>DB.get('notifications')||[];
 const NOTIF_ICONS={inspection:'🔍',treatment:'💊',harvest:'🍯',feeding:'🍽️',purchase:'🛒',other:'📌'};
 function renderNotifs(){
+  const _=window.__||((k,d)=>d||k);
   populateSels();
   const list=gN().sort((a,b)=>a.date.localeCompare(b.date));
   const today_=today();
@@ -6643,6 +6687,7 @@ function openJournalEntry(){
   document.getElementById('journal-text')?.focus();
 }
 function renderJournal(){
+  const _=window.__||((k,d)=>d||k);
   const list=gJ();
   const el=document.getElementById('journal-list');if(!el)return;
   if(!list.length){el.innerHTML='<div class="empty-s"><div class="ei">📝</div><p>لا إدخالات — ابدأ بكتابة أول مذكرة</p></div>';return;}
@@ -6688,6 +6733,7 @@ const ACHIEVEMENTS=[
   {id:'treatment_5',icon:'💊',name:'طبيب النحل',desc:'سجّل 5 علاجات',check:()=>gTr().length>=5},
 ];
 function renderAchievements(){
+  const _=window.__||((k,d)=>d||k);
   const unlocked=ACHIEVEMENTS.filter(a=>a.check());
   const locked=ACHIEVEMENTS.filter(a=>!a.check());
   document.getElementById('ach-sub').textContent=`${unlocked.length}/${ACHIEVEMENTS.length} إنجاز مفتوح`;
@@ -6780,11 +6826,12 @@ function manualScan(){
 ══════════════════════════════════════════════════ */
 let compareYears=[];
 function renderCompare(){
+  const _=window.__||((k,d)=>d||k);
   const sales=gS();const harv=gHv();const exps=gE();const insp=gI();
   // Get all years from data
   const allDates=[...sales.map(s=>s.date),...harv.map(h=>h.date),...exps.map(e=>e.date),...insp.map(i=>i.date)];
   const years=[...new Set(allDates.map(d=>d?.slice(0,4)).filter(Boolean))].sort().reverse();
-  if(!years.length){document.getElementById('compare-content').innerHTML='<div class="empty-s"><div class="ei">📊</div><p>لا بيانات كافية للمقارنة — سجّل بيانات لأكثر من سنة</p></div>';return;}
+  if(!years.length){document.getElementById('compare-content').innerHTML='<div class="empty-s"><div class="ei">📊</div><p>${_('lbl_no_data')} كافية للمقارنة — سجّل بيانات لأكثر من سنة</p></div>';return;}
   // Year buttons
   document.getElementById('compare-year-btns').innerHTML=years.map(y=>`<button class="compare-year-btn ${compareYears.includes(y)?'active':''}" onclick="toggleCompareYear('${y}')">${y}</button>`).join('');
   if(compareYears.length<2){document.getElementById('compare-content').innerHTML='<div style="color:var(--text3);text-align:center;padding:20px;font-size:12px;">اختر سنتين للمقارنة</div>';return;}
@@ -6912,6 +6959,7 @@ function saveTemp(){
 }
 
 function renderTempMonitor(){
+  const _=window.__||((k,d)=>d||k);
   // Fill quick hive select
   const qs=document.getElementById('temp-hive-quick');
   if(qs)qs.innerHTML=gH().map(h=>`<option value="${h.id}">${h.hid}</option>`).join('');
@@ -7016,6 +7064,7 @@ function delTemp(id){
 let advChart1=null,advChart2=null,advChart3=null;
 
 function renderAdvStats(){
+  const _=window.__||((k,d)=>d||k);
   const hives=gH(),apis=gA(),harv=gHv(),sales=gS(),exps=gE(),insp=gI();
   const kpiEl=document.getElementById('advstats-kpis');
   if(!kpiEl)return;
@@ -7035,7 +7084,7 @@ function renderAdvStats(){
     {v:fmt$(profit),l:'صافي الربح',t:profit>=0?'up':'dn',icon:'💹'},
     {v:roi.toFixed(1)+'%',l:'معدل العائد ROI',t:roi>=20?'up':'dn',icon:'📈'},
     {v:avgHarvPerHive.toFixed(1)+' كغ',l:'متوسط حصاد/خلية',t:'',icon:'🔢'},
-    {v:strongPct.toFixed(0)+'%',l:'الخلايا القوية',t:strongPct>=50?'up':'dn',icon:'💪'},
+    {v:strongPct.toFixed(0)+'%',l:'الخلايا ال💪',t:strongPct>=50?'up':'dn',icon:'💪'},
   ].map(k=>`<div class="stat-kpi">
     <div style="font-size:22px;margin-bottom:4px;">${k.icon}</div>
     <div class="stat-kpi-val">${k.v}</div>
@@ -7181,6 +7230,7 @@ function filterOrders(status,btn){
 }
 
 function renderOrders(filter='all'){
+  const _=window.__||((k,d)=>d||k);
   let list=gOrd().sort((a,b)=>b.date.localeCompare(a.date));
   if(filter!=='all')list=list.filter(o=>o.status===filter);
 
@@ -7314,6 +7364,7 @@ function saveWeekTask(){
 }
 
 function renderWeeklyTasks(){
+  const _=window.__||((k,d)=>d||k);
   const weekDates=getWeekDates(currentWeekOffset);
   const todayStr=today();
   const tasks=gTasks();
@@ -7373,6 +7424,7 @@ function delWeekTask(id){
 let pushEnabled=false;
 
 function renderPushNotifs(){
+  const _=window.__||((k,d)=>d||k);
   const statusEl=document.getElementById('pn-status-box');
   if(!statusEl)return;
 
@@ -8475,6 +8527,7 @@ setTimeout(hideSplash,400);
    🌾 FIELD MODE
 ══════════════════════════════════════════════════ */
 function renderFieldMode(){
+  const _=window.__||((k,d)=>d||k);
   renderFieldRecent();
 }
 function fieldAction(type){
@@ -8488,7 +8541,7 @@ function fieldAction(type){
       <div class="form-group"><label class="form-label">الخلية</label><select id="fq-hive" class="form-control">${hiveOpts}</select></div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">الملكة</label><select id="fq-queen" class="form-control"><option value="present">موجودة</option><option value="absent">غائبة</option><option value="eggs">بيض فقط</option></select></div>
-        <div class="form-group"><label class="form-label">القوة</label><select id="fq-str" class="form-control"><option value="strong">قوية</option><option value="medium">متوسطة</option><option value="weak">ضعيفة</option></select></div>
+        <div class="form-group"><label class="form-label">القوة</label><select id="fq-str" class="form-control"><option value="strong">💪</option><option value="medium">متوسطة</option><option value="weak">ضعيفة</option></select></div>
       </div>
       <div class="form-group"><label class="form-label">الغذاء (1-5)</label><input id="fq-food" type="range" min="1" max="5" value="3" class="form-control" style="padding:4px;"></div>
       <div class="form-group"><label class="form-label">ملاحظة سريعة</label><input id="fq-note" class="form-control" placeholder="أي ملاحظة..."></div>
@@ -8530,7 +8583,7 @@ function fieldAction(type){
         <div class="form-group"><label class="form-label">الخلية</label><select id="fq-hive" class="form-control"><option value="all">كل الخلايا</option>${hiveOpts}</select></div>
         <div class="form-group"><label class="form-label">نوع الغذاء</label><select id="fq-ftype" class="form-control"><option>شراب سكر</option><option>حبوب لقاح</option><option>مربى</option><option>عسل</option></select></div>
       </div>
-      <div class="form-group"><label class="form-label" data-i18n="lbl_quantity">الكمية</label><input id="fq-qty" class="form-control" placeholder="مثال: 500مل"></div>
+      <div class="form-group"><label class="form-label" data-i18n="lbl_quantity" data-i18n="lbl_quantity">الكمية</label><input id="fq-qty" class="form-control" placeholder="مثال: 500مل"></div>
       <button class="btn btn-primary" style="width:100%;" onclick="saveFieldAction('feed')">✅ حفظ</button>
     </div>`,
     alert:`<div class="field-quick-result" style="border-color:var(--red);">
@@ -8621,6 +8674,7 @@ function renderFieldRecent(){
 let annChart4=null;
 
 function renderAnnual(){
+  const _=window.__||((k,d)=>d||k);
   const sel=document.getElementById('ann-year-sel');
   const allDates=[...gS().map(s=>s.date),...gHv().map(h=>h.date),...gE().map(e=>e.date)];
   const years=[...new Set(allDates.map(d=>d?.slice(0,4)).filter(Boolean))].sort().reverse();
@@ -8714,6 +8768,7 @@ const THEME_PRESETS=[
 ];
 
 function renderThemes(){
+  const _=window.__||((k,d)=>d||k);
   const grid=document.getElementById('theme-presets-grid');
   if(grid){
     const saved=DB.get('active_theme')||'NectarOS';
@@ -8808,6 +8863,7 @@ function saveEmailReport(){
    🧠 AI PLUS
 ══════════════════════════════════════════════════ */
 function renderAIPlus(){
+  const _=window.__||((k,d)=>d||k);
   // Auto-render seasonal advice
   const hives=gH(),apis=gA();
   const el=document.getElementById('aip-season-result');
@@ -9006,7 +9062,7 @@ function previewInvoice(){
         <div style="font-size:11px;color:#555;">العميل: ${cust?.name||'عميل عام'}</div>
       </div>
     </div>
-    <table><thead><tr><th>الوصف</th><th>الكمية</th><th>السعر</th><th>الإجمالي</th></tr></thead>
+    <table><thead><tr><th>الوصف</th><th>${_('lbl_quantity')}</th><th>${_('lbl_price')}</th><th>الإجمالي</th></tr></thead>
     <tbody>${invItemRows.map(r=>`<tr><td>${r.name}</td><td>${r.qty}</td><td>${fmt$(r.price)}</td><td>${fmt$(r.qty*r.price)}</td></tr>`).join('')}</tbody>
     <tfoot>
       ${disc>0?`<tr><td colspan="3">خصم ${disc}%</td><td>-${fmt$(discAmt)}</td></tr>`:''}
@@ -9020,6 +9076,7 @@ function previewInvoice(){
 }
 
 function renderInvoices(){
+  const _=window.__||((k,d)=>d||k);
   const list=gInv().slice().reverse();
   const statsEl=document.getElementById('invoice-stats');
   const listEl=document.getElementById('invoice-list');
@@ -9087,6 +9144,7 @@ const LAB_GRADES={
 };
 
 function renderHoneyLabs(){
+  const _=window.__||((k,d)=>d||k);
   const sel=document.getElementById('lab-batch-sel');
   if(sel)sel.innerHTML='<option value="">— اختر دفعة —</option>'+gBa().map(b=>`<option value="${b.id}">${b.num||b.id.slice(-4)} — ${b.qty}كغ ${b.htype||''}</option>`).join('');
 }
@@ -9181,6 +9239,7 @@ function saveTeamMember(){
   toast('✅ تم حفظ العضو','success');renderTeam();
 }
 function renderTeam(){
+  const _=window.__||((k,d)=>d||k);
   const list=gTeam();
   const el=document.getElementById('team-members-list');if(!el)return;
   const ROLE_COLORS={owner:'role-owner',worker:'role-worker',viewer:'role-viewer'};
@@ -9266,6 +9325,7 @@ function saveForageZone(){
   toast('✅ تم إضافة منطقة الرعي','success');renderForageMap();
 }
 function renderForageMap(){
+  const _=window.__||((k,d)=>d||k);
   const zones=gForage();
   const el=document.getElementById('forage-zones-list');
   const calEl=document.getElementById('forage-calendar');
@@ -9345,6 +9405,7 @@ function saveLoss(){
   toast('✅ تم تسجيل الخسارة','success');renderLosses();
 }
 function renderLosses(){
+  const _=window.__||((k,d)=>d||k);
   const losses=gLosses().slice().reverse();
   const statsEl=document.getElementById('loss-stats');
   const listEl=document.getElementById('loss-list');
@@ -9396,6 +9457,7 @@ function delLoss(id){confirm2('حذف السجل؟','',()=>{DB.set('colony_losse
    🔐 SECURITY & PRIVACY
 ══════════════════════════════════════════════════ */
 function renderSecurityPage(){
+  const _=window.__||((k,d)=>d||k);
   // تفعيل لوحة المطوّر للمالك
   if(localStorage.getItem('_nec_owner_verified')==='1'){
     const dp=document.getElementById('dev-panel');
@@ -9446,7 +9508,7 @@ function renderSecurityPage(){
     const auth = { username: _dbA.username||'admin', password: _dbA.password||_bpw||'1234' };
     const encSettings=DB.get('enc_settings')||{};
     const checks=[
-      {label:'كلمة المرور',ok:auth.password&&auth.password.length>=6,ok_msg:'قوية',warn_msg:'ضعيفة — أقل من 6 أحرف'},
+      {label:'كلمة المرور',ok:auth.password&&auth.password.length>=6,ok_msg:'💪',warn_msg:'ضعيفة — أقل من 6 أحرف'},
       {label:'تشفير البيانات',ok:encSettings.db,ok_msg:'مفعّل',warn_msg:'غير مفعّل'},
       {label:'النسخ الاحتياطي',ok:!!DB.get('last_backup'),ok_msg:`آخر نسخة: ${fmtD(DB.get('last_backup'))}`,warn_msg:'لم يتم بعد'},
       {label:'الجلسة',ok:true,ok_msg:'24 ساعة صلاحية',warn_msg:''},
@@ -9723,7 +9785,7 @@ async function adminExtendLicense(deviceId){
         <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">📅 تمديد الترخيص</div>
         <div style="font-size:10px;color:var(--text3);margin-bottom:10px;font-family:monospace;">${deviceId}</div>
         ${options.map((o,i)=>`<button onclick="this.closest('div[style]').dataset.choice='${days[i]}'" style="display:block;width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px;margin-bottom:6px;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;text-align:right;">${o}</button>`).join('')}
-        <button onclick="this.closest('div[style]').dataset.choice='cancel'" style="width:100%;background:none;border:none;color:var(--text3);font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;margin-top:4px;">إلغاء</button>
+        <button onclick="this.closest('div[style]').dataset.choice='cancel'" style="width:100%;background:none;border:none;color:var(--text3);font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;margin-top:4px;">${_('btn_cancel')}</button>
       </div>`;
     document.body.appendChild(overlay);
     const check = setInterval(()=>{
