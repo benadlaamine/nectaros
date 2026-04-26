@@ -3034,29 +3034,33 @@ const I18N = {
 /* ── تشغيل فوري بمجرد تحميل DOM ── */
 function _i18nReady(){
   I18N.init();
-  // إعادة الترجمة بعد 300ms و1000ms
-  setTimeout(() => I18N.translateAll(), 300);
-  setTimeout(() => I18N.translateAll(), 1200);
+  setTimeout(() => I18N.translateAll(), 400);
 
-  // ── MutationObserver: يترجم أي محتوى جديد يُضاف للـ DOM ──
+  // MutationObserver — يترجم العناصر الجديدة فقط (ليس الصفحة كاملة)
   const _obs = new MutationObserver(mutations => {
     if(I18N.current === 'ar') return;
-    let hasNew = false;
     const newNodes = [];
     for(const m of mutations){
-      if(m.type === 'childList' && m.addedNodes.length > 0){
-        hasNew = true;
+      if(m.type === 'childList'){
         m.addedNodes.forEach(n => { if(n.nodeType===1) newNodes.push(n); });
       }
     }
-    if(!hasNew) return;
+    if(!newNodes.length) return;
     clearTimeout(_obs._t);
     _obs._t = setTimeout(() => {
-      I18N.translateAll();
-      if(typeof translateNode === 'function'){
-        newNodes.forEach(n => translateNode(n, I18N.current));
-      }
-    }, 80);
+      // ترجمة data-i18n في العناصر الجديدة فقط
+      newNodes.forEach(n => {
+        n.querySelectorAll && n.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          const val = I18N.t(key);
+          if(val && val !== key) el.textContent = val;
+        });
+        // ترجمة النصوص الديناميكية في العنصر الجديد
+        if(typeof translateNode === 'function'){
+          translateNode(n, I18N.current);
+        }
+      });
+    }, 100);
   });
 
   _obs.observe(document.body || document.documentElement, {
