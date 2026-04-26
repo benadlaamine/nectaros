@@ -12,6 +12,7 @@
 <meta name="application-name" content="NectarOS">
 <meta name="msapplication-TileColor" content="#FFC107">
 <link rel="manifest" href="./manifest.json">
+<script src="./lang.js"></script>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22body%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C8%20484%2C136%20484%2C376%20256%2C504%2028%2C376%2028%2C136%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C20%20472%2C144%20472%2C368%20256%2C492%2040%2C368%2040%2C144%22%20fill%3D%22%231a1a00%22%20opacity%3D%220.3%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22256%22%20cy%3D%22230%22%20rx%3D%2258%22%20ry%3D%2278%22%20fill%3D%22url%28%23body%29%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22195%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22227%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22259%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22154%22%20r%3D%2236%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22242%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22270%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22186%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C186%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22326%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C326%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22192%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%28-20%2C192%2C215%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22320%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%2820%2C320%2C215%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C295%20248%2C340%20264%2C340%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%20%20%3Cline%20x1%3D%22242%22%20y1%3D%22120%22%20x2%3D%22222%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Cline%20x1%3D%22270%22%20y1%3D%22120%22%20x2%3D%22290%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22220%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22292%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%3C%2Fsvg%3E">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bd%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C3%20181%2C51%20181%2C141%2096%2C189%2011%2C141%2011%2C51%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2296%22%20cy%3D%2287%22%20rx%3D%2222%22%20ry%3D%2229%22%20fill%3D%22url%28%23bd%29%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2274%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2286%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2298%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2296%22%20cy%3D%2258%22%20r%3D%2214%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2291%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22101%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2269%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C69%2C70%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22123%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C123%2C70%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C111%2092%2C128%20100%2C128%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%3C%2Fsvg%3E">
 <script>
@@ -344,6 +345,9 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .bn-item.active .bn-icon,.bn-item.active .bn-label{color:var(--gold);}
 .bn-icon{font-size:20px;line-height:1;}
 .bn-label{font-size:9px;font-weight:600;color:var(--text3);white-space:nowrap;}
+.lang-btn{background:var(--bg3);border:1.5px solid var(--border);border-radius:10px;padding:8px 4px;color:var(--text);font-family:'Cairo',sans-serif;cursor:pointer;font-size:18px;text-align:center;line-height:1.4;transition:.15s;}
+.lang-btn:hover{border-color:var(--gold);background:rgba(255,193,7,.08);}
+.lang-btn.lang-active{border-color:var(--gold)!important;background:rgba(255,193,7,.15)!important;}
 /* push content up on mobile */
 @media(max-width:768px){#content{padding-bottom:96px;}}
 
@@ -656,6 +660,16 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .update-banner-text{flex:1;}
 .update-banner-btn{padding:7px 14px;border-radius:8px;border:none;background:linear-gradient(135deg,#FFD600,#FFA000);color:#000;cursor:pointer;font-family:'Cairo',sans-serif;font-size:12px;font-weight:800;white-space:nowrap;box-shadow:0 2px 8px rgba(255,214,0,.4);}
 .update-banner-close{background:none;border:none;color:rgba(255,255,255,.6);cursor:pointer;font-size:18px;flex-shrink:0;}
+/* ── Language Picker ── */
+.lang-pick-btn{background:var(--bg3);border:1.5px solid var(--border);color:var(--text);border-radius:12px;padding:14px 10px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;font-family:'Cairo',sans-serif;transition:.2s;width:100%;}
+.lang-pick-btn:hover,.lang-pick-btn:active{border-color:var(--gold);background:rgba(255,193,7,.1);color:var(--gold);}
+#lang-topbar-btn{background:none;border:1px solid var(--border);border-radius:8px;padding:4px 8px;cursor:pointer;font-size:16px;color:var(--text);}
+/* RTL/LTR dynamic layout fixes */
+[dir="ltr"] #sidebar{right:unset;left:0;}
+[dir="ltr"] #main{margin-right:0;margin-left:var(--sidebar-w);}
+[dir="ltr"] .nav-item.active{border-right:none;border-left:3px solid var(--gold);}
+[dir="ltr"] .ph,[dir="ltr"] .card{text-align:left;}
+[dir="ltr"] .form-label,[dir="ltr"] .card-title{text-align:left;}
 
 /* ═══════════ LOGIN SCREEN ═══════════ */
 #login-screen{position:fixed;inset:0;z-index:9000;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;animation:fadeIn .4s ease;}
@@ -873,7 +887,6 @@ tr:hover td{background:rgba(255,255,255,.02);}
 /* Section divider */
 .section-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin:14px 0 8px;display:flex;align-items:center;gap:7px;}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
-
 </style>
 </head>
 <body>
@@ -930,7 +943,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
   </div>
   <!-- الإصدار -->
-  <div class="splash-version">v5.1 · نظام إدارة المناحل</div>
+  <div class="splash-version">v5.1 · <span data-i18n="app_sub">نظام إدارة المناحل</span></div>
 </div>
 
 <!-- ═══════════ LOGIN SCREEN ═══════════ -->
@@ -939,11 +952,61 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <div id="update-banner">
   <span class="update-banner-icon">🚀</span>
   <div class="update-banner-text">
-    <b id="update-banner-text-main">🎉 إصدار جديد متاح — اضغط لتحديث التطبيق</b>
-    <div style="font-size:10px;opacity:.75;margin-top:2px;">NectarOS <span id="update-banner-ver"></span> — بياناتك محفوظة بأمان</div>
+    <b id="update-banner-text-main"><span data-i18n="update_available">🎉 إصدار جديد متاح — اضغط لتحديث التطبيق</span></b>
+    <div style="font-size:10px;opacity:.75;margin-top:2px;">NectarOS <span id="update-banner-ver"></span> — <span data-i18n="update_safe">بياناتك محفوظة بأمان</span></div>
   </div>
   <button class="update-banner-btn" onclick="applyUpdate()">⬆️ تحديث</button>
   <button class="update-banner-close" onclick="dismissUpdate()">✕</button>
+</div>
+
+<!-- ══ LANGUAGE PICKER — يظهر مرة واحدة للمستخدم الجديد ══ -->
+<div id="lang-picker" style="display:none;position:fixed;inset:0;z-index:9200;background:var(--bg);direction:ltr;flex-direction:column;align-items:center;justify-content:center;padding:24px;">
+  <div style="font-size:52px;margin-bottom:12px;">🐝</div>
+  <div style="font-family:'Syne','Cairo',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:6px;text-align:center;">NectarOS</div>
+  <div style="font-size:12px;color:var(--text3);margin-bottom:28px;text-align:center;">Choose your language / Choisissez votre langue</div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;max-width:320px;">
+    <button onclick="selectLang('ar')" class="lang-pick-btn" style="flex-direction:column;">
+      <span style="font-size:24px;">🇩🇿</span>
+      <span style="font-size:14px;font-weight:700;">العربية</span>
+      <span style="font-size:10px;opacity:.7;">Arabic</span>
+    </button>
+    <button onclick="selectLang('en')" class="lang-pick-btn" style="flex-direction:column;">
+      <span style="font-size:24px;">🇬🇧</span>
+      <span style="font-size:14px;font-weight:700;">English</span>
+      <span style="font-size:10px;opacity:.7;">English</span>
+    </button>
+    <button onclick="selectLang('fr')" class="lang-pick-btn" style="flex-direction:column;">
+      <span style="font-size:24px;">🇫🇷</span>
+      <span style="font-size:14px;font-weight:700;">Français</span>
+      <span style="font-size:10px;opacity:.7;">French</span>
+    </button>
+    <button onclick="selectLang('tr')" class="lang-pick-btn" style="flex-direction:column;">
+      <span style="font-size:24px;">🇹🇷</span>
+      <span style="font-size:14px;font-weight:700;">Türkçe</span>
+      <span style="font-size:10px;opacity:.7;">Turkish</span>
+    </button>
+    <button onclick="selectLang('es')" class="lang-pick-btn" style="flex-direction:column;">
+      <span style="font-size:24px;">🇪🇸</span>
+      <span style="font-size:14px;font-weight:700;">Español</span>
+      <span style="font-size:10px;opacity:.7;">Spanish</span>
+    </button>
+    <button onclick="selectLang('de')" class="lang-pick-btn" style="flex-direction:column;">
+      <span style="font-size:24px;">🇩🇪</span>
+      <span style="font-size:14px;font-weight:700;">Deutsch</span>
+      <span style="font-size:10px;opacity:.7;">German</span>
+    </button>
+    <button onclick="selectLang('it')" class="lang-pick-btn" style="flex-direction:column;">
+      <span style="font-size:24px;">🇮🇹</span>
+      <span style="font-size:14px;font-weight:700;">Italiano</span>
+      <span style="font-size:10px;opacity:.7;">Italian</span>
+    </button>
+    <button onclick="selectLang('nl')" class="lang-pick-btn" style="flex-direction:column;">
+      <span style="font-size:24px;">🇳🇱</span>
+      <span style="font-size:14px;font-weight:700;">Nederlands</span>
+      <span style="font-size:10px;opacity:.7;">Dutch</span>
+    </button>
+  </div>
 </div>
 
 <!-- ══ TRIAL WARNING BANNER ══ -->
@@ -965,17 +1028,30 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <!-- ═══════════ LICENSE SCREEN ═══════════ -->
 <div id="license-screen" class="hidden">
   <div class="lic-wrap">
+
+    <!-- منتقي اللغة المدمج -->
+    <div style="display:flex;justify-content:center;gap:8px;margin-bottom:16px;flex-wrap:wrap;">
+      <button onclick="setAppLang('ar')" title="العربية" style="background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:16px;transition:.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">🇩🇿</button>
+      <button onclick="setAppLang('en')" title="English"  style="background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:16px;transition:.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">🇬🇧</button>
+      <button onclick="setAppLang('fr')" title="Français" style="background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:16px;transition:.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">🇫🇷</button>
+      <button onclick="setAppLang('tr')" title="Türkçe"   style="background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:16px;transition:.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">🇹🇷</button>
+      <button onclick="setAppLang('es')" title="Español"  style="background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:16px;transition:.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">🇪🇸</button>
+      <button onclick="setAppLang('de')" title="Deutsch"  style="background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:16px;transition:.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">🇩🇪</button>
+      <button onclick="setAppLang('it')" title="Italiano" style="background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:16px;transition:.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">🇮🇹</button>
+      <button onclick="setAppLang('nl')" title="Nederlands" style="background:none;border:1px solid var(--border);border-radius:8px;padding:4px 10px;cursor:pointer;font-size:16px;transition:.15s;" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='var(--border)'">🇳🇱</button>
+    </div>
+
     <div class="lic-hex">🐝</div>
     <div style="text-align:center;margin-bottom:18px;">
       <div style="font-family:'Syne','Cairo',sans-serif;font-size:22px;font-weight:800;color:var(--gold);">NectarOS</div>
-      <div id="lic-status-line" style="font-size:11px;color:var(--text3);margin-top:3px;">نظام الترخيص</div>
+      <div id="lic-status-line" data-i18n="lic_sub" style="font-size:11px;color:var(--text3);margin-top:3px;">نظام الترخيص</div>
     </div>
 
     <!-- Tabs -->
     <div class="lic-tabs">
-      <button class="lic-tab active" onclick="licTab('trial')">⏱️ التجربة</button>
-      <button class="lic-tab" onclick="licTab('activate')">🔑 تفعيل</button>
-      <button class="lic-tab" onclick="licTab('devices')">📱 الأجهزة</button>
+      <button class="lic-tab active" onclick="licTab('trial')"><span data-i18n="lic_tab_trial">⏱️ التجربة</span></button>
+      <button class="lic-tab" onclick="licTab('activate')"><span data-i18n="lic_tab_activate">🔑 تفعيل</span></button>
+      <button class="lic-tab" onclick="licTab('devices')"><span data-i18n="lic_tab_devices">📱 الأجهزة</span></button>
     </div>
 
     <!-- Trial tab -->
@@ -1162,10 +1238,10 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="nav-section">
     <div class="nav-label" data-i18n="nav_bee_health">صحة النحل</div>
     <div class="nav-item" id="nav-inspections" onclick="go('inspections')"><span class="nav-icon">🔍</span><span class="nav-text" data-i18n="nav_inspections">سجل الفحوصات</span></div>
-    <div class="nav-item" id="nav-treatments" onclick="go('treatments')"><span class="nav-icon">💊</span><span class="nav-text">سجل العلاجات</span></div>
+    <div class="nav-item" id="nav-treatments" onclick="go('treatments')"><span class="nav-icon">💊</span><span class="nav-text" data-i18n="nav_treatments">سجل العلاجات</span></div>
     <div class="nav-item" id="nav-weights" onclick="go('weights')"><span class="nav-icon">⚖️</span><span class="nav-text" data-i18n="nav_weights">سجل الأوزان</span></div>
     <div class="nav-item" id="nav-harvest" onclick="go('harvest')"><span class="nav-icon">🍯</span><span class="nav-text" data-i18n="nav_harvest">سجل الحصاد</span></div>
-    <div class="nav-item" id="nav-batches" onclick="go('batches')"><span class="nav-icon">🏷️</span><span class="nav-text">دفعات العسل</span></div>
+    <div class="nav-item" id="nav-batches" onclick="go('batches')"><span class="nav-icon">🏷️</span><span class="nav-text" data-i18n="nav_batches">دفعات العسل</span></div>
     <div class="nav-item" id="nav-queens" onclick="go('queens')"><span class="nav-icon">🧬</span><span class="nav-text" data-i18n="nav_queens">جينات الملكات</span></div>
     <div class="nav-item" id="nav-health" onclick="go('health')"><span class="nav-icon">📜</span><span class="nav-text" data-i18n="nav_health">الشهادات الصحية</span></div>
   </div>
@@ -1188,63 +1264,63 @@ tr:hover td{background:rgba(255,255,255,.02);}
   </div>
   <!-- ══ الذكاء الاصطناعي ══ -->
   <div class="nav-section">
-    <div class="nav-label">الذكاء الاصطناعي</div>
-    <div class="nav-item" id="nav-ai" onclick="go('ai')"><span class="nav-icon">🤖</span><span class="nav-text">الذكاء الاصطناعي</span></div>
-    <div class="nav-item" id="nav-aiplus" onclick="go('aiplus')"><span class="nav-icon">🧠</span><span class="nav-text">AI+ متقدم</span></div>
+    <div class="nav-label" data-i18n="nav_ai_section">الذكاء الاصطناعي</div>
+    <div class="nav-item" id="nav-ai" onclick="go('ai')"><span class="nav-icon">🤖</span><span class="nav-text" data-i18n="nav_ai">الذكاء الاصطناعي</span></div>
+    <div class="nav-item" id="nav-aiplus" onclick="go('aiplus')"><span class="nav-icon">🧠</span><span class="nav-text" data-i18n="nav_aiplus">AI+ متقدم</span></div>
   </div>
   <!-- ══ التحليل والتخطيط ══ -->
   <div class="nav-section">
-    <div class="nav-label">التحليل والتخطيط</div>
-    <div class="nav-item" id="nav-goals" onclick="go('goals')"><span class="nav-icon">🎯</span><span class="nav-text">أهداف الإنتاج</span></div>
-    <div class="nav-item" id="nav-seasonal" onclick="go('seasonal')"><span class="nav-icon">📅</span><span class="nav-text">الجدول الموسمي</span></div>
-    <div class="nav-item" id="nav-radar" onclick="go('radar')"><span class="nav-icon">📊</span><span class="nav-text">مقارنة الخلايا</span></div>
-    <div class="nav-item" id="nav-compare" onclick="go('compare')"><span class="nav-icon">🔄</span><span class="nav-text">مقارنة السنوات</span></div>
-    <div class="nav-item" id="nav-advstats" onclick="go('advstats')"><span class="nav-icon">📈</span><span class="nav-text">إحصائيات متقدمة</span></div>
-    <div class="nav-item" id="nav-losses" onclick="go('losses')"><span class="nav-icon">📉</span><span class="nav-text">تحليل الخسائر</span></div>
-    <div class="nav-item" id="nav-annual" onclick="go('annual')"><span class="nav-icon">📋</span><span class="nav-text">التقرير السنوي</span></div>
+    <div class="nav-label" data-i18n="nav_analytics">التحليل والتخطيط</div>
+    <div class="nav-item" id="nav-goals" onclick="go('goals')"><span class="nav-icon">🎯</span><span class="nav-text" data-i18n="nav_goals">أهداف الإنتاج</span></div>
+    <div class="nav-item" id="nav-seasonal" onclick="go('seasonal')"><span class="nav-icon">📅</span><span class="nav-text" data-i18n="nav_seasonal">الجدول الموسمي</span></div>
+    <div class="nav-item" id="nav-radar" onclick="go('radar')"><span class="nav-icon">📊</span><span class="nav-text" data-i18n="nav_radar">مقارنة الخلايا</span></div>
+    <div class="nav-item" id="nav-compare" onclick="go('compare')"><span class="nav-icon">🔄</span><span class="nav-text" data-i18n="nav_compare">مقارنة السنوات</span></div>
+    <div class="nav-item" id="nav-advstats" onclick="go('advstats')"><span class="nav-icon">📈</span><span class="nav-text" data-i18n="nav_advstats">إحصائيات متقدمة</span></div>
+    <div class="nav-item" id="nav-losses" onclick="go('losses')"><span class="nav-icon">📉</span><span class="nav-text" data-i18n="nav_losses">تحليل الخسائر</span></div>
+    <div class="nav-item" id="nav-annual" onclick="go('annual')"><span class="nav-icon">📋</span><span class="nav-text" data-i18n="nav_annual">التقرير السنوي</span></div>
   </div>
   <!-- ══ المراقبة والميدان ══ -->
   <div class="nav-section">
-    <div class="nav-label">المراقبة والميدان</div>
-    <div class="nav-item" id="nav-weather" onclick="go('weather')"><span class="nav-icon">🌡️</span><span class="nav-text">طقس المناحل</span></div>
-    <div class="nav-item" id="nav-tempmon" onclick="go('tempmon')"><span class="nav-icon">🌡️</span><span class="nav-text">مراقبة الحرارة</span></div>
-    <div class="nav-item" id="nav-fieldmode" onclick="go('fieldmode')"><span class="nav-icon">🌾</span><span class="nav-text">وضع الحقل</span></div>
-    <div class="nav-item" id="nav-scanner" onclick="go('scanner')"><span class="nav-icon">📷</span><span class="nav-text">ماسح الباركود</span></div>
-    <div class="nav-item" id="nav-foragemap" onclick="go('foragemap')"><span class="nav-icon">🗺️</span><span class="nav-text">خريطة الرعي</span></div>
+    <div class="nav-label" data-i18n="nav_monitoring">المراقبة والميدان</div>
+    <div class="nav-item" id="nav-weather" onclick="go('weather')"><span class="nav-icon">🌡️</span><span class="nav-text" data-i18n="nav_weather">طقس المناحل</span></div>
+    <div class="nav-item" id="nav-tempmon" onclick="go('tempmon')"><span class="nav-icon">🌡️</span><span class="nav-text" data-i18n="nav_tempmon">مراقبة الحرارة</span></div>
+    <div class="nav-item" id="nav-fieldmode" onclick="go('fieldmode')"><span class="nav-icon">🌾</span><span class="nav-text" data-i18n="nav_fieldmode">وضع الحقل</span></div>
+    <div class="nav-item" id="nav-scanner" onclick="go('scanner')"><span class="nav-icon">📷</span><span class="nav-text" data-i18n="nav_scanner">ماسح الباركود</span></div>
+    <div class="nav-item" id="nav-foragemap" onclick="go('foragemap')"><span class="nav-icon">🗺️</span><span class="nav-text" data-i18n="nav_foragemap">خريطة الرعي</span></div>
   </div>
   <!-- ══ الموارد والمعرفة ══ -->
   <div class="nav-section">
-    <div class="nav-label">الموارد والمعرفة</div>
-    <div class="nav-item" id="nav-plants" onclick="go('plants')"><span class="nav-icon">🌿</span><span class="nav-text">نباتات المناحل</span></div>
-    <div class="nav-item" id="nav-disease" onclick="go('disease')"><span class="nav-icon">🐛</span><span class="nav-text">دليل الأمراض</span></div>
-    <div class="nav-item" id="nav-calcs" onclick="go('calcs')"><span class="nav-icon">🧮</span><span class="nav-text">الحاسبات</span></div>
-    <div class="nav-item" id="nav-honeylabs" onclick="go('honeylabs')"><span class="nav-icon">🧪</span><span class="nav-text">مختبر العسل</span></div>
+    <div class="nav-label" data-i18n="nav_resources">الموارد والمعرفة</div>
+    <div class="nav-item" id="nav-plants" onclick="go('plants')"><span class="nav-icon">🌿</span><span class="nav-text" data-i18n="nav_plants">نباتات المناحل</span></div>
+    <div class="nav-item" id="nav-disease" onclick="go('disease')"><span class="nav-icon">🐛</span><span class="nav-text" data-i18n="nav_disease">دليل الأمراض</span></div>
+    <div class="nav-item" id="nav-calcs" onclick="go('calcs')"><span class="nav-icon">🧮</span><span class="nav-text" data-i18n="nav_calcs">الحاسبات</span></div>
+    <div class="nav-item" id="nav-honeylabs" onclick="go('honeylabs')"><span class="nav-icon">🧪</span><span class="nav-text" data-i18n="nav_honeylabs">مختبر العسل</span></div>
   </div>
   <!-- ══ التنظيم الشخصي ══ -->
   <div class="nav-section">
-    <div class="nav-label">التنظيم الشخصي</div>
-    <div class="nav-item" id="nav-notifs" onclick="go('notifs')"><span class="nav-icon">🔔</span><span class="nav-text">التذكيرات</span></div>
-    <div class="nav-item" id="nav-pushnotifs" onclick="go('pushnotifs')"><span class="nav-icon">📲</span><span class="nav-text">إشعارات الهاتف</span></div>
-    <div class="nav-item" id="nav-tasks" onclick="go('tasks')"><span class="nav-icon">🗓️</span><span class="nav-text">مهام الأسبوع</span></div>
-    <div class="nav-item" id="nav-journal" onclick="go('journal')"><span class="nav-icon">📝</span><span class="nav-text">المذكرة اليومية</span></div>
-    <div class="nav-item" id="nav-achievements" onclick="go('achievements')"><span class="nav-icon">🏆</span><span class="nav-text">الإنجازات</span></div>
+    <div class="nav-label" data-i18n="nav_personal">التنظيم الشخصي</div>
+    <div class="nav-item" id="nav-notifs" onclick="go('notifs')"><span class="nav-icon">🔔</span><span class="nav-text" data-i18n="nav_notifs">التذكيرات</span></div>
+    <div class="nav-item" id="nav-pushnotifs" onclick="go('pushnotifs')"><span class="nav-icon">📲</span><span class="nav-text" data-i18n="nav_pushnotifs">إشعارات الهاتف</span></div>
+    <div class="nav-item" id="nav-tasks" onclick="go('tasks')"><span class="nav-icon">🗓️</span><span class="nav-text" data-i18n="nav_tasks">مهام الأسبوع</span></div>
+    <div class="nav-item" id="nav-journal" onclick="go('journal')"><span class="nav-icon">📝</span><span class="nav-text" data-i18n="nav_journal">المذكرة اليومية</span></div>
+    <div class="nav-item" id="nav-achievements" onclick="go('achievements')"><span class="nav-icon">🏆</span><span class="nav-text" data-i18n="nav_achievements">الإنجازات</span></div>
   </div>
   <!-- ══ العمليات المتقدمة ══ -->
   <div class="nav-section">
-    <div class="nav-label">العمليات المتقدمة</div>
-    <div class="nav-item" id="nav-orders" onclick="go('orders')"><span class="nav-icon">📦</span><span class="nav-text">الطلبات والشحن</span></div>
-    <div class="nav-item" id="nav-invoice" onclick="go('invoice')"><span class="nav-icon">🔢</span><span class="nav-text">الفواتير</span></div>
-    <div class="nav-item" id="nav-wareport" onclick="go('wareport')"><span class="nav-icon">📱</span><span class="nav-text">تقرير واتساب</span></div>
-    <div class="nav-item" id="nav-team" onclick="go('team')"><span class="nav-icon">👥</span><span class="nav-text">فريق العمل</span></div>
-    <div class="nav-item" id="nav-integrations" onclick="go('integrations')"><span class="nav-icon">🔗</span><span class="nav-text">التكاملات</span></div>
+    <div class="nav-label" data-i18n="nav_operations">العمليات المتقدمة</div>
+    <div class="nav-item" id="nav-orders" onclick="go('orders')"><span class="nav-icon">📦</span><span class="nav-text" data-i18n="nav_orders">الطلبات والشحن</span></div>
+    <div class="nav-item" id="nav-invoice" onclick="go('invoice')"><span class="nav-icon">🔢</span><span class="nav-text" data-i18n="nav_invoice">الفواتير</span></div>
+    <div class="nav-item" id="nav-wareport" onclick="go('wareport')"><span class="nav-icon">📱</span><span class="nav-text" data-i18n="nav_wareport">تقرير واتساب</span></div>
+    <div class="nav-item" id="nav-team" onclick="go('team')"><span class="nav-icon">👥</span><span class="nav-text" data-i18n="nav_team">فريق العمل</span></div>
+    <div class="nav-item" id="nav-integrations" onclick="go('integrations')"><span class="nav-icon">🔗</span><span class="nav-text" data-i18n="nav_integrations">التكاملات</span></div>
   </div>
   <!-- ══ النظام ══ -->
   <div class="sidebar-bottom">
-    <div class="nav-item" id="nav-themes" onclick="go('themes')"><span class="nav-icon">🎨</span><span class="nav-text">الثيمات والمظهر</span></div>
-    <div class="nav-item" id="nav-security" onclick="go('security')"><span class="nav-icon">🔐</span><span class="nav-text">الأمان والخصوصية</span></div>
-    <div class="nav-item" id="nav-contact" onclick="go('contact')"><span class="nav-icon">📬</span><span class="nav-text">اتصل بنا</span></div>
-    <div class="nav-item" id="nav-settings" onclick="go('settings')"><span class="nav-icon">⚙️</span><span class="nav-text">الإعدادات</span></div>
-    <div class="nav-item" onclick="doLogout()" style="color:var(--red);"><span class="nav-icon">🚪</span><span class="nav-text">تسجيل الخروج</span></div>
+    <div class="nav-item" id="nav-themes" onclick="go('themes')"><span class="nav-icon">🎨</span><span class="nav-text" data-i18n="nav_themes">الثيمات والمظهر</span></div>
+    <div class="nav-item" id="nav-security" onclick="go('security')"><span class="nav-icon">🔐</span><span class="nav-text" data-i18n="nav_security">الأمان والخصوصية</span></div>
+    <div class="nav-item" id="nav-contact" onclick="go('contact')"><span class="nav-icon">📬</span><span class="nav-text" data-i18n="nav_contact">اتصل بنا</span></div>
+    <div class="nav-item" id="nav-settings" onclick="go('settings')"><span class="nav-icon">⚙️</span><span class="nav-text" data-i18n="nav_settings">الإعدادات</span></div>
+    <div class="nav-item" onclick="doLogout()" style="color:var(--red);"><span class="nav-icon">🚪</span><span class="nav-text" data-i18n="nav_logout">تسجيل الخروج</span></div>
   </div>
 </nav>
 <div id="overlay" onclick="closeSB()"></div>
@@ -1260,6 +1336,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div id="alert-badge" class="badge br" style="display:none;">⚠️ <span id="alert-num">0</span></div>
       <button class="btn-icon" onclick="go('ai')" title="الذكاء الاصطناعي" style="color:var(--gold);">🤖</button>
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
+      <button id="lang-topbar-btn" onclick="openLangPicker()" title="Language"></button>
       <button class="btn-icon" onclick="exportData()" title="تصدير">📤</button>
       <button class="btn-icon" onclick="exportPDF()" title="PDF" style="color:var(--red);">📄</button>
       <button class="btn-icon" onclick="triggerImport()">📥</button>
@@ -1305,14 +1382,14 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ APIARIES ══ -->
     <div id="screen-apiaries" class="screen">
-      <div class="ph"><div><div class="pt">🗺️ المناحل</div><div class="ps" id="api-sub"></div></div><button class="btn btn-primary btn-sm" onclick="openApiaryModal()">➕ منحل</button></div>
+      <div class="ph"><div><div class="pt" data-i18n="scr_apiaries">🗺️ المناحل</div><div class="ps" id="api-sub"></div></div><button class="btn btn-primary btn-sm" onclick="openApiaryModal()">➕ منحل</button></div>
       <div class="grid-auto" id="apiaries-grid"></div>
     </div>
 
     <!-- ══ HIVES ══ -->
     <div id="screen-hives" class="screen">
       <div class="ph">
-        <div><div class="pt">⬡ الخلايا</div><div class="ps" id="hives-sub"></div></div>
+        <div><div class="pt" data-i18n="scr_hives">⬡ الخلايا</div><div class="ps" id="hives-sub"></div></div>
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
           <select id="hf-api" class="form-control" style="width:auto;font-size:11px;" onchange="renderHives()"><option value="all">كل المناحل</option></select>
           <select id="hf-str" class="form-control" style="width:auto;font-size:11px;" onchange="renderHives()"><option value="all">كل القوى</option><option value="strong">💪 قوية</option><option value="medium">😐 متوسطة</option><option value="weak">😟 ضعيفة</option></select>
@@ -1326,7 +1403,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <!-- ══ CALENDAR ══ -->
     <div id="screen-calendar" class="screen">
       <div class="ph">
-        <div class="pt">📅 التقويم</div>
+        <div class="pt" data-i18n="scr_calendar">📅 التقويم</div>
         <div style="display:flex;gap:6px;align-items:center;">
           <button class="btn-icon" onclick="calPrev()">‹</button>
           <span id="cal-lbl" style="font-weight:700;font-size:13px;min-width:110px;text-align:center;"></span>
@@ -1353,7 +1430,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ WEIGHTS ══ -->
     <div id="screen-weights" class="screen">
-      <div class="ph"><div><div class="pt">⚖️ سجل الأوزان</div><div class="ps">تتبع وزن الخلايا أسبوعياً</div></div><button class="btn btn-primary btn-sm" onclick="openWeightModal()">➕ وزن</button></div>
+      <div class="ph"><div><div class="pt" data-i18n="scr_weights">⚖️ سجل الأوزان</div><div class="ps">تتبع وزن الخلايا أسبوعياً</div></div><button class="btn btn-primary btn-sm" onclick="openWeightModal()">➕ وزن</button></div>
       <div style="display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap;">
         <select id="wf-hive" class="form-control" style="width:auto;" onchange="renderWeights()"><option value="all">كل الخلايا</option></select>
       </div>
@@ -1363,7 +1440,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ HARVEST ══ -->
     <div id="screen-harvest" class="screen">
-      <div class="ph"><div class="pt">🍯 سجل الحصاد</div><button class="btn btn-primary btn-sm" onclick="openHarvestModal()">➕ حصاد</button></div>
+      <div class="ph"><div class="pt" data-i18n="scr_harvest">🍯 سجل الحصاد</div><button class="btn btn-primary btn-sm" onclick="openHarvestModal()">➕ حصاد</button></div>
       <div class="grid-3 mb10" id="harv-stats" style="margin-bottom:11px;"></div>
       <div class="card"><div class="card-header"><span class="card-title">📋 تفاصيل الحصاد</span></div><div id="harv-list"></div></div>
     </div>
@@ -1391,7 +1468,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ INVENTORY ══ -->
     <div id="screen-inventory" class="screen">
-      <div class="ph"><div class="pt">📦 المخزن</div><button class="btn btn-primary btn-sm" onclick="openProductModal()">➕ منتج</button></div>
+      <div class="ph"><div class="pt" data-i18n="scr_inventory">📦 المخزن</div><button class="btn btn-primary btn-sm" onclick="openProductModal()">➕ منتج</button></div>
       <div class="grid-auto" id="inv-grid"></div>
     </div>
 
@@ -1404,14 +1481,14 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ CRM ══ -->
     <div id="screen-crm" class="screen">
-      <div class="ph"><div class="pt">👥 العملاء</div><button class="btn btn-primary btn-sm" onclick="openCustomerModal()">➕ عميل</button></div>
+      <div class="ph"><div class="pt" data-i18n="scr_crm">👥 العملاء</div><button class="btn btn-primary btn-sm" onclick="openCustomerModal()">➕ عميل</button></div>
       <input class="form-control" id="crm-search" placeholder="🔍 بحث..." oninput="renderCRM()" style="margin-bottom:11px;max-width:260px;">
       <div class="grid-auto" id="crm-grid"></div>
     </div>
 
     <!-- ══ SALES ══ -->
     <div id="screen-sales" class="screen">
-      <div class="ph"><div class="pt">💰 المبيعات</div><button class="btn btn-primary btn-sm" onclick="openSaleModal()">🧾 فاتورة</button></div>
+      <div class="ph"><div class="pt" data-i18n="scr_sales">💰 المبيعات</div><button class="btn btn-primary btn-sm" onclick="openSaleModal()">🧾 فاتورة</button></div>
       <div class="grid-2 mb10" id="sales-stats" style="margin-bottom:11px;"></div>
       <div class="card"><div class="card-header"><span class="card-title">📋 الفواتير</span></div>
         <div class="table-wrap"><table>
@@ -1423,7 +1500,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ EXPENSES ══ -->
     <div id="screen-expenses" class="screen">
-      <div class="ph"><div class="pt">💸 المصاريف</div><button class="btn btn-primary btn-sm" onclick="openExpenseModal()">➕ مصروف</button></div>
+      <div class="ph"><div class="pt" data-i18n="scr_expenses">💸 المصاريف</div><button class="btn btn-primary btn-sm" onclick="openExpenseModal()">➕ مصروف</button></div>
       <div class="grid-2 mb10" id="exp-stats" style="margin-bottom:11px;"></div>
       <div class="table-wrap"><table>
         <thead><tr><th>الوصف</th><th>الفئة</th><th>المبلغ</th><th>التاريخ</th><th></th></tr></thead>
@@ -1444,7 +1521,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ FINANCE ══ -->
     <div id="screen-finance" class="screen">
-      <div class="ph"><div class="pt">📈 التقارير المالية</div><button class="btn btn-danger btn-sm" onclick="exportPDF()">📄 PDF</button></div>
+      <div class="ph"><div class="pt" data-i18n="scr_finance">📈 التقارير المالية</div><button class="btn btn-danger btn-sm" onclick="exportPDF()">📄 PDF</button></div>
       <div class="grid-3 mb10" id="fin-stats" style="margin-bottom:11px;"></div>
       <div class="grid-2">
         <div class="card"><div class="card-header"><span class="card-title">📊 إيرادات سنوية</span></div><canvas id="ch-annual" height="180"></canvas></div>
@@ -1458,7 +1535,25 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ SETTINGS ══ -->
     <div id="screen-settings" class="screen">
-      <div class="ph"><div class="pt">⚙️ الإعدادات</div></div>
+      <div class="ph"><div class="pt" data-i18n="nav_settings">⚙️ الإعدادات</div></div>
+
+      <!-- Language Picker -->
+      <div class="card" style="border-color:rgba(33,150,243,.25);">
+        <div class="card-header" style="background:rgba(33,150,243,.06);">
+          <span class="card-title">🌍 <span data-i18n="lang_select">اختر لغتك</span></span>
+          <span id="lang-current-flag" style="font-size:18px;">🇩🇿</span>
+        </div>
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:4px 0;">
+          <button onclick="setAppLang('ar')"  id="lang-btn-ar"  class="lang-btn" style="background:rgba(255,193,7,.12);border:2px solid var(--gold);">🇩🇿<br><span style="font-size:9px;">العربية</span></button>
+          <button onclick="setAppLang('en')"  id="lang-btn-en"  class="lang-btn">🇬🇧<br><span style="font-size:9px;">English</span></button>
+          <button onclick="setAppLang('fr')"  id="lang-btn-fr"  class="lang-btn">🇫🇷<br><span style="font-size:9px;">Français</span></button>
+          <button onclick="setAppLang('tr')"  id="lang-btn-tr"  class="lang-btn">🇹🇷<br><span style="font-size:9px;">Türkçe</span></button>
+          <button onclick="setAppLang('es')"  id="lang-btn-es"  class="lang-btn">🇪🇸<br><span style="font-size:9px;">Español</span></button>
+          <button onclick="setAppLang('de')"  id="lang-btn-de"  class="lang-btn">🇩🇪<br><span style="font-size:9px;">Deutsch</span></button>
+          <button onclick="setAppLang('it')"  id="lang-btn-it"  class="lang-btn">🇮🇹<br><span style="font-size:9px;">Italiano</span></button>
+          <button onclick="setAppLang('nl')"  id="lang-btn-nl"  class="lang-btn">🇳🇱<br><span style="font-size:9px;">Nederlands</span></button>
+        </div>
+      </div>
 
       <!-- Farm Info -->
       <div class="card">
@@ -1529,9 +1624,18 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div id="smart-reminder-result" style="margin-top:8px;font-size:11px;"></div>
       </div>
 
+      <!-- اختيار اللغة -->
+      <div class="card mt10" style="border-color:rgba(33,150,243,.2);">
+        <div class="card-header">
+          <span class="card-title">🌐 <span data-i18n="lang_select">اختر لغتك</span></span>
+          <span id="current-lang-flag" style="font-size:18px;">🇩🇿</span>
+        </div>
+        <div id="lang-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;"></div>
+      </div>
+
       <!-- روابط سريعة -->
       <div class="card mt10" style="border-color:rgba(255,193,7,.2);">
-        <div class="card-header"><span class="card-title">💾 النسخ الاحتياطي السريع</span></div>
+        <div class="card-header"><span class="card-title">💾 <span data-i18n="btn_backup">النسخ الاحتياطي السريع</span></span></div>
         <div style="display:flex;gap:7px;flex-wrap:wrap;">
           <button class="btn btn-primary btn-sm" onclick="autoBackup()">💾 نسخ احتياطي</button>
           <button class="btn btn-secondary btn-sm" onclick="exportData()">📤 تصدير</button>
@@ -1728,7 +1832,13 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ THEMES ══ -->
     <div id="screen-themes" class="screen">
-      <div class="ph"><div><div class="pt">🎨 الثيمات والمظهر</div><div class="ps">خصّص شكل التطبيق</div></div></div>
+      <div class="ph"><div><div class="pt" data-i18n="scr_themes">🎨 الثيمات والمظهر</div><div class="ps">خصّص شكل التطبيق</div></div></div>
+
+      <!-- ══ قسم اللغة ══ -->
+      <div class="ann-section">
+        <div style="font-weight:700;font-size:13px;color:var(--gold);margin-bottom:12px;">🌍 اللغة / Language</div>
+        <div id="lang-grid" style="display:grid;grid-template-columns:repeat(2,1fr);gap:8px;"></div>
+      </div>
       <div class="ann-section">
         <div style="font-weight:700;font-size:13px;color:var(--gold);margin-bottom:12px;">🌙 الوضع</div>
         <div style="display:flex;gap:8px;">
@@ -2278,7 +2388,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ WEATHER ══ -->
     <div id="screen-weather" class="screen">
-      <div class="ph"><div><div class="pt">🌡️ طقس المناحل</div><div class="ps">بيانات حية من Open-Meteo — مجاني</div></div>
+      <div class="ph"><div><div class="pt" data-i18n="scr_weather">🌡️ طقس المناحل</div><div class="ps">بيانات حية من Open-Meteo — مجاني</div></div>
         <button class="btn btn-primary btn-sm" onclick="refreshWeather()">🔄 تحديث</button>
       </div>
       <div id="weather-content"><div class="empty-s"><div class="ei">🌤️</div><p>اضغط تحديث لجلب الطقس</p></div></div>
@@ -2322,7 +2432,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ PLANTS DATABASE ══ -->
     <div id="screen-plants" class="screen">
-      <div class="ph"><div class="pt">🌿 نباتات المناحل</div><div class="ps">قاعدة بيانات النباتات المثالية لتربية النحل</div></div>
+      <div class="ph"><div class="pt" data-i18n="scr_plants">🌿 نباتات المناحل</div><div class="ps">قاعدة بيانات النباتات المثالية لتربية النحل</div></div>
       <div style="display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap;">
         <input id="plant-search" class="form-control" placeholder="🔍 ابحث عن نبات..." oninput="renderPlants()" style="flex:1;max-width:260px;">
         <select id="plant-season" class="form-control" style="width:auto;" onchange="renderPlants()">
@@ -2353,7 +2463,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ CALCULATORS ══ -->
     <div id="screen-calcs" class="screen">
-      <div class="ph"><div class="pt">🧮 الحاسبات</div></div>
+      <div class="ph"><div class="pt" data-i18n="scr_calcs">🧮 الحاسبات</div></div>
       <!-- Cost Calculator -->
       <div class="card" style="margin-bottom:12px;">
         <div class="card-header"><span class="card-title">🍯 حاسبة تكلفة إنتاج العسل</span></div>
@@ -2490,11 +2600,11 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
 <!-- ══ BOTTOM NAV (mobile only) ══ -->
 <nav id="bottom-nav">
-  <div class="bn-item" id="bn-dashboard" onclick="go('dashboard')"><span class="bn-icon">📊</span><span class="bn-label">الرئيسية</span></div>
-  <div class="bn-item" id="bn-hives" onclick="go('hives')"><span class="bn-icon">⬡</span><span class="bn-label">الخلايا</span></div>
-  <div class="bn-item" id="bn-apiaries" onclick="go('apiaries')"><span class="bn-icon">🗺️</span><span class="bn-label">المناحل</span></div>
-  <div class="bn-item" id="bn-ai" onclick="go('ai')"><span class="bn-icon">🤖</span><span class="bn-label">الذكاء</span></div>
-  <div class="bn-item" id="bn-more" onclick="toggleSB()"><span class="bn-icon">☰</span><span class="bn-label">المزيد</span></div>
+  <div class="bn-item" id="bn-dashboard" onclick="go('dashboard')"><span class="bn-icon">📊</span><span class="bn-label" data-i18n="bn_dashboard">الرئيسية</span></div>
+  <div class="bn-item" id="bn-hives" onclick="go('hives')"><span class="bn-icon">⬡</span><span class="bn-label" data-i18n="bn_hives">الخلايا</span></div>
+  <div class="bn-item" id="bn-apiaries" onclick="go('apiaries')"><span class="bn-icon">🗺️</span><span class="bn-label" data-i18n="bn_apiaries">المناحل</span></div>
+  <div class="bn-item" id="bn-ai" onclick="go('ai')"><span class="bn-icon">🤖</span><span class="bn-label" data-i18n="bn_ai">الذكاء</span></div>
+  <div class="bn-item" id="bn-more" onclick="toggleSB()"><span class="bn-icon">☰</span><span class="bn-label" data-i18n="bn_more">المزيد</span></div>
 </nav>
 
 </div><!-- /app -->
@@ -4509,6 +4619,8 @@ function loadSett(){
   const gsUrl=DB.get('gsheets_url');
   const gsFld=document.getElementById('gsheets-url');
   if(gsFld&&gsUrl)gsFld.value=gsUrl;
+  // رسم شبكة اللغات
+  renderLangGrid();
 }
 function saveSett(){
   const s=gSet();
@@ -8050,6 +8162,110 @@ function initTrialWarningBanner(){
   if(app) app.style.paddingTop = '40px';
 }
 
+/* ══════════════════════════════════════════════════
+   🌍  LANGUAGE SWITCHER
+══════════════════════════════════════════════════ */
+function setAppLang(lang){
+  if(typeof I18N === 'undefined'){ toast('⚠️ ملف lang.js غير محمّل','error'); return; }
+  I18N.apply(lang);
+  updateLangUI(lang);
+  toast('✅ ' + (NECTAR_LANGS[lang]?._name || lang), 'success');
+  // إعادة رسم الشاشة الحالية لتطبيق الترجمة على المحتوى الديناميكي
+  if(typeof go === 'function') setTimeout(()=> go(window._currentScreen||'settings'), 100);
+}
+
+function updateLangUI(lang){
+  // تحديث أزرار اللغة
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('lang-active'));
+  const activeBtn = document.getElementById('lang-btn-' + lang);
+  if(activeBtn) activeBtn.classList.add('lang-active');
+  // تحديث الأيقونة الحالية
+  const flag = document.getElementById('lang-current-flag');
+  if(flag && typeof NECTAR_LANGS !== 'undefined') flag.textContent = NECTAR_LANGS[lang]?._flag || '🌍';
+  // اتجاه التطبيق
+  const dir = typeof NECTAR_LANGS !== 'undefined' ? (NECTAR_LANGS[lang]?._dir || 'rtl') : 'rtl';
+  document.getElementById('app')?.style.setProperty('direction', dir);
+}
+
+function initLangUI(){
+  if(typeof I18N === 'undefined') return;
+  updateLangUI(I18N.current);
+}
+
+/* ══════════════════════════════════════════════════
+   🌍  LANGUAGE SYSTEM — نظام اللغات
+══════════════════════════════════════════════════ */
+
+function selectLang(code){
+  if(window.I18N){
+    I18N.apply(code);
+  }
+  localStorage.setItem('_nec_lang', code);
+  // أغلق منتقي اللغة
+  document.getElementById('lang-picker').style.display = 'none';
+  // حدّث زر اللغة في الـ topbar
+  updateLangTopbarBtn();
+  // حدّث شبكة اللغات في الإعدادات
+  renderLangGrid();
+  toast('✅ ' + (window.I18N ? I18N.t('lang_current') : 'Language') + ': ' + code.toUpperCase(), 'success');
+}
+
+function openLangPicker(){
+  document.getElementById('lang-picker').style.display = 'flex';
+}
+
+function updateLangTopbarBtn(){
+  const btn = document.getElementById('lang-topbar-btn');
+  if(!btn || !window.I18N) return;
+  const lang = NECTAR_LANGS[I18N.current];
+  btn.textContent = lang ? lang._flag : '🌐';
+  btn.title = lang ? lang._name : 'Language';
+}
+
+function renderLangGrid(){
+  const grid = document.getElementById('lang-grid');
+  if(!grid || !window.I18N) return;
+  const langs = I18N.getList();
+  const current = I18N.current;
+  grid.innerHTML = langs.map(l => `
+    <button onclick="selectLang('${l.code}')" style="
+      background:${l.code===current ? 'rgba(255,193,7,.12)' : 'var(--bg3)'};
+      border:1.5px solid ${l.code===current ? 'var(--gold)' : 'var(--border)'};
+      color:${l.code===current ? 'var(--gold)' : 'var(--text)'};
+      border-radius:10px;padding:10px 8px;cursor:pointer;
+      display:flex;align-items:center;gap:8px;
+      font-family:'Cairo',sans-serif;font-size:12px;font-weight:600;
+      transition:.18s;width:100%;">
+      <span style="font-size:20px;">${l.flag}</span>
+      <div style="text-align:${l.dir==='rtl'?'right':'left'};">
+        <div style="font-weight:700;">${l.name}</div>
+        ${l.code===current ? '<div style="font-size:9px;opacity:.7;">✓ Current / الحالي</div>' : ''}
+      </div>
+    </button>`).join('');
+
+  // حدّث علم اللغة الحالية
+  const flagEl = document.getElementById('current-lang-flag');
+  if(flagEl){
+    const cur = langs.find(l => l.code === current);
+    if(cur) flagEl.textContent = cur.flag;
+  }
+}
+
+// ── عند أول تشغيل: تحقق هل المستخدم اختار لغة من قبل ──
+function initLangSystem(){
+  const saved = localStorage.getItem('_nec_lang');
+  if(!saved){
+    // أول مرة — أظهر منتقي اللغة
+    setTimeout(() => {
+      document.getElementById('lang-picker').style.display = 'flex';
+    }, 500);
+  } else {
+    // طبّق اللغة المحفوظة
+    if(window.I18N) I18N.apply(saved, false);
+  }
+  updateLangTopbarBtn();
+}
+
 function checkForUpdates(){
   const CACHE_KEY = 'nectaros-v7'; // يجب أن يطابق اسم الكاش في السيرفس ووركر
   const storedCache = localStorage.getItem('_nec_cache_ver');
@@ -8176,6 +8392,8 @@ checkNotifBadge();
 setTimeout(()=>{calcHoneyCost();calcDose();calcSugar();},100);
 // Check for app updates (non-destructive)
 checkForUpdates();
+// نظام اللغات
+initLangSystem();
 // شريط تحذير التجربة
 initTrialWarningBanner();
 // ══ فحص فوري لجهاز المالك — يعمل قبل checkLicense ══

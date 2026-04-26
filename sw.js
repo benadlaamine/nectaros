@@ -3,7 +3,7 @@ const APP_VERSION = 'v5.3';
 const CACHE   = 'nectaros-v7';
 const RUNTIME = 'nectaros-rt-v7';
 
-const STATIC = ['./', './manifest.json'];
+const STATIC = ['./', './manifest.json', './lang.js'];
 const CDN = [
   'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js',
