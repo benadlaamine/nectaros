@@ -1478,13 +1478,13 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ INVENTORY ══ -->
     <div id="screen-inventory" class="screen">
-      <div class="ph"><div class="pt" data-i18n="scr_inventory">📦 المخزن</div><button class="btn btn-primary btn-sm" onclick="openProductModal()">➕ منتج</button></div>
+      <div class="ph"><div class="pt" data-i18n="scr_inventory">📦 المخزن</div><button class="btn btn-primary btn-sm" onclick="openProductModal()"><span data-i18n="add_product">➕ منتج</span></button></div>
       <div class="grid-auto" id="inv-grid"></div>
     </div>
 
     <!-- ══ STORE ══ -->
     <div id="screen-store" class="screen">
-      <div class="ph"><div class="pt">🛒 المتجر المباشر</div><button class="btn btn-primary btn-sm" onclick="openStoreModal()">➕ منتج</button></div>
+      <div class="ph"><div class="pt">🛒 المتجر المباشر</div><button class="btn btn-primary btn-sm" onclick="openStoreModal()"><span data-i18n="add_product">➕ منتج</span></button></div>
       <div class="grid-auto" id="store-grid"></div>
       <button class="btn btn-secondary" style="width:100%;margin-top:10px;" onclick="copyStoreLink()">🔗 نسخ رابط المتجر</button>
     </div>
@@ -2341,7 +2341,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ TREATMENTS ══ -->
     <div id="screen-treatments" class="screen">
-      <div class="ph"><div><div class="pt">💊 سجل العلاجات والأدوية</div><div class="ps" id="treat-sub">0 علاج</div></div><button class="btn btn-primary btn-sm" onclick="openTreatmentModal()">➕ علاج جديد</button></div>
+      <div class="ph"><div><div class="pt">💊 سجل العلاجات والأدوية</div><div class="ps" id="treat-sub">0 علاج</div></div><button class="btn btn-primary btn-sm" onclick="openTreatmentModal()"><span data-i18n="add_treatment">➕ علاج جديد</span></button></div>
       <div style="display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap;">
         <select id="tf-hive" class="form-control" style="width:auto;" onchange="renderTreatments()"><option value="all">كل الخلايا</option></select>
         <select id="tf-type" class="form-control" style="width:auto;" onchange="renderTreatments()"><option value="all">كل الأنواع</option><option value="varroa">فاروا</option><option value="nosema">نوسيما</option><option value="antibiotic">مضاد حيوي</option><option value="vitamin">فيتامين</option><option value="other">أخرى</option></select>
@@ -3054,7 +3054,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       </div>
       <div class="form-group"><label class="form-label">المنتجات (حدد وكمية)</label>
         <div id="ord-items-wrap"></div>
-        <button class="btn btn-secondary btn-xs" style="margin-top:5px;" onclick="addOrderItem()">+ إضافة منتج</button>
+        <button class="btn btn-secondary btn-xs" style="margin-top:5px;" onclick="addOrderItem()"><span data-i18n="add_product">+ إضافة منتج</span></button>
       </div>
       <div class="form-row">
         <div class="form-group"><label class="form-label">عنوان الشحن</label><input id="ord-addr" class="form-control" placeholder="المدينة، الحي، الشارع"></div>
@@ -3516,7 +3516,7 @@ function renderDashboard(){
   const str={weak:0,medium:0,strong:0};hives.forEach(h=>{if(str[h.strength]!==undefined)str[h.strength]++;});
   const ctx2=document.getElementById('ch-hives');
   if(ctx2){if(ch2){ch2.destroy();ch2=null;}
-    if(hives.length)ch2=new Chart(ctx2,{type:'doughnut',data:{labels:['ضعيفة','متوسطة','💪'],datasets:[{data:Object.values(str),backgroundColor:['rgba(244,67,54,.6)','rgba(255,152,0,.6)','rgba(76,175,80,.6)'],borderColor:['var(--red)','var(--orange)','var(--green)'],borderWidth:2}]},options:{responsive:true,plugins:{legend:{labels:{color:'#aaa',font:{family:'Cairo',size:10}}}}}});
+    if(hives.length)ch2=new Chart(ctx2,{type:'doughnut',data:{labels:[_tr('ضعيفة'),_tr('متوسطة'),'💪'],datasets:[{data:Object.values(str),backgroundColor:['rgba(244,67,54,.6)','rgba(255,152,0,.6)','rgba(76,175,80,.6)'],borderColor:['var(--red)','var(--orange)','var(--green)'],borderWidth:2}]},options:{responsive:true,plugins:{legend:{labels:{color:'#aaa',font:{family:'Cairo',size:10}}}}}});
   }
 
   // Goals mini-progress
@@ -3905,7 +3905,7 @@ function renderInspections(){
       </div>
       <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:5px;">
         <div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">الملكة</div><div style="font-weight:700;font-size:11px;color:${i.queen==='yes'?'var(--green)':'var(--red)'};">${i.queen==='yes'?'👑':'⛔'}</div></div>
-        <div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">القوة</div><div style="font-weight:700;font-size:10px;color:${sc2[i.strength]};">${i.strength==='strong'?'💪':i.strength==='medium'?'متوسطة':'ضعيفة'}</div></div>
+        <div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">القوة</div><div style="font-weight:700;font-size:10px;color:${sc2[i.strength]};">${i.strength==='strong'?'💪':i.strength==='medium'?_tr('متوسطة'):_tr('ضعيفة')}</div></div>
         ${i.frames?`<div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">الإطارات</div><div style="font-weight:700;font-size:11px;">${i.frames}</div></div>`:'<div></div>'}
         ${i.honey?`<div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">العسل</div><div style="font-weight:700;font-size:11px;color:var(--gold);">${i.honey}كغ</div></div>`:`${i.weight?`<div style="background:var(--bg3);border-radius:6px;padding:5px;text-align:center;"><div style="font-size:8px;color:var(--text3);">الوزن</div><div style="font-weight:700;font-size:11px;color:var(--cyan);">${i.weight}كغ</div></div>`:'<div></div>'}`}
       </div>
@@ -4208,21 +4208,27 @@ function saveProduct(){
 function renderInventory(){
   const _=window.__||((k,d)=>d||k);
   const list=gP();
+  const stockLbl   = _('low_stock')   || 'منخفض';
+  const stockLabel = _('lbl_quantity') || 'المخزون';
+  const wholesale  = {'en':'Wholesale','fr':'Gros','tr':'Toptan','es':'Mayoreo','de':'Großhandel','it':'Ingrosso','nl':'Groothandel'}[window.I18N?.current] || 'جملة';
+  const available  = {'en':'Available','fr':'Disponible','tr':'Mevcut','es':'Disponible','de':'Verfügbar','it':'Disponibile','nl':'Beschikbaar'}[window.I18N?.current] || 'متاح';
+
   document.getElementById('inv-grid').innerHTML=list.length?list.map(p=>{
-    const low=p.stock<=p.minStock;const pct=Math.min(100,Math.round((p.stock/Math.max((p.minStock||1)*3,1))*100));
+    const low=p.stock<=p.minStock;
+    const pct=Math.min(100,Math.round((p.stock/Math.max((p.minStock||1)*3,1))*100));
     return`<div class="card">
       <div style="font-size:26px;margin-bottom:5px;">${CICO[p.category]||'📦'}</div>
       <div style="font-weight:700;font-size:12px;">${p.name}</div>
       <div style="font-size:15px;font-weight:900;color:var(--gold);margin:5px 0;">${fmt$(p.price)}<span style="font-size:10px;font-weight:400;color:var(--text3)"> / ${p.unit}</span></div>
-      ${p.wholesale?`<div style="font-size:10px;color:var(--teal);">جملة: ${fmt$(p.wholesale)}</div>`:''}
-      <div style="font-size:10px;color:${low?'var(--red)':'var(--text2)'};">المخزون: ${p.stock} ${low?'⚠️ منخفض':''}</div>
+      ${p.wholesale?`<div style="font-size:10px;color:var(--teal);">${wholesale}: ${fmt$(p.wholesale)}</div>`:''}
+      <div style="font-size:10px;color:${low?'var(--red)':'var(--text2)'};">${stockLabel}: ${p.stock} ${low?`⚠️ ${stockLbl}`:''}</div>
       <div style="height:3px;background:var(--border);border-radius:2px;margin:5px 0;"><div style="height:100%;border-radius:2px;background:${low?'var(--red)':pct<50?'var(--orange)':'var(--green)'};width:${pct}%;"></div></div>
       <div style="display:flex;gap:4px;flex-wrap:wrap;margin-top:7px;">
         <button class="btn btn-xs btn-secondary" onclick="editProd('${p.id}')">✏️</button>
         <button class="btn btn-xs btn-danger" onclick="delProd('${p.id}')">🗑️</button>
         <button class="btn btn-xs btn-blue" onclick="adjStock('${p.id}')">📦±</button>
       </div>
-    </div>`;}).join(''):`<div class="empty-s" style="grid-column:1/-1"><div class="ei">📦</div><p>لا منتجات في المخزن</p></div>`;
+    </div>`;}).join(''):`<div class="empty-s" style="grid-column:1/-1"><div class="ei">📦</div><p data-i18n="lbl_no_data">${_('lbl_no_data')||'لا منتجات'}</p></div>`;
 }
 function delProd(id){confirm2('حذف','',()=>{DB.set('products',gP().filter(p=>p.id!==id));renderInventory();toast('تم','warning');});}
 function adjStock(id){
@@ -4319,7 +4325,7 @@ function renderCRM(){
         <button class="btn btn-xs btn-secondary" onclick="editCust('${c.id}')">✏️</button>
         <button class="btn btn-xs btn-danger" onclick="delCust('${c.id}')">🗑️</button>
       </div>
-    </div>`;}).join(''):`<div class="empty-s" style="grid-column:1/-1"><div class="ei">👥</div><p>لا عملاء</p></div>`;
+    </div>`;}).join(''):`<div class="empty-s" style="grid-column:1/-1"><div class="ei">👥</div><p><span data-i18n='lbl_no_data'>لا عملاء</span></p></div>`;
 }
 function delCust(id){confirm2('حذف','',()=>{DB.set('customers',gC().filter(c=>c.id!==id));renderCRM();toast('تم','warning');});}
 
@@ -4434,7 +4440,7 @@ function renderExpenses(){
     <td style="font-weight:900;color:var(--red);">${fmt$(e.amount)}</td>
     <td style="color:var(--text3)">${fmtD(e.date)}</td>
     <td><button class="btn btn-xs btn-danger" onclick="delExp('${e.id}')">🗑️</button></td>
-  </tr>`).join(''):`<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:24px;">لا مصاريف</td></tr>`;
+  </tr>`).join(''):`<tr><td colspan="5" style="text-align:center;color:var(--text3);padding:24px;"><span data-i18n='lbl_no_data'>لا مصاريف</span></td></tr>`;
 }
 function delExp(id){confirm2('حذف','',()=>{DB.set('expenses',gE().filter(e=>e.id!==id));renderExpenses();toast('تم','warning');});}
 
@@ -4829,7 +4835,7 @@ function exportPDF(){
   const s=gSet();const hives=gH();const sales=gS();const exps=gE();const harv=gHv();
   const totR=sales.reduce((a,s)=>a+Number(s.total||0),0);const totE=exps.reduce((a,e)=>a+Number(e.amount||0),0);
   const totH=harv.reduce((a,h)=>a+Number(h.qty||0),0);const net=totR-totE;const apis=gA();
-  const sm={weak:'ضعيفة',medium:'متوسطة',strong:'💪'};
+  const sm={weak:_tr('ضعيفة'),medium:_tr('متوسطة'),strong:'💪'};
   const logo=DB.get('farm_logo');
   const ac=DB.get('accent_color')||'#FFC107';
   const logoHTML=logo?`<img src="${logo}" style="height:60px;object-fit:contain;margin-bottom:6px;">`:'<div style="font-size:40px;">🐝</div>';
@@ -7555,6 +7561,18 @@ const APP_VERSION = '5.3';
 const APP_VERSION_CODE = 530;
 const TRIAL_DAYS = 15;
 const MAX_DEVICES = 4;
+/* ── مساعد ترجمة النصوص الديناميكية ── */
+function _dt(arText, enText, frText, trText, esText, deText, itText, nlText){
+  const lang = window.I18N?.current || 'ar';
+  const map = {ar:arText,en:enText,fr:frText,tr:trText,es:esText,de:deText,it:itText,nl:nlText};
+  return map[lang] || (window.AR_LOOKUP?.[arText]?.[lang]) || arText;
+}
+/* ── ترجمة نص بسيط من AR_LOOKUP ── */
+function _tr(arText){
+  if(!window.I18N || I18N.current==='ar') return arText;
+  return (window.AR_LOOKUP?.[arText]?.[I18N.current]) || arText;
+}
+
 const _SALT = 'NectarOS2025Bee';
 
 // ── Supabase Config ────────────────────────────────
