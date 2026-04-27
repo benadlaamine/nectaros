@@ -1222,7 +1222,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div id="owner-pin-err" style="color:#f44336;font-size:11px;min-height:16px;font-weight:600;"></div>
     <div style="display:flex;gap:10px;width:100%;">
       <button onclick="_ownerPinSubmit()" style="flex:1;background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;border:none;border-radius:10px;padding:11px;font-weight:700;font-size:13px;cursor:pointer;font-family:'Cairo',sans-serif;">دخول ✓</button>
-      <button onclick="closeOwnerPin()" style="flex:1;background:#2a2a2a;color:#aaa;border:1px solid #444;border-radius:10px;padding:11px;cursor:pointer;font-size:13px;font-family:'Cairo',sans-serif;">${_('btn_cancel')}</button>
+      <button onclick="closeOwnerPin()" style="flex:1;background:#2a2a2a;color:#aaa;border:1px solid #444;border-radius:10px;padding:11px;cursor:pointer;font-size:13px;font-family:'Cairo',sans-serif;" data-i18n="btn_cancel">إلغاء</button>
     </div>
   </div>
 </div>
@@ -1501,7 +1501,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="grid-2 mb10" id="sales-stats" style="margin-bottom:11px;"></div>
       <div class="card"><div class="card-header"><span class="card-title">📋 الفواتير</span></div>
         <div class="table-wrap"><table>
-          <thead><tr><th>رقم</th><th>العميل</th><th>الإجمالي</th><th>الدفع</th><th>${_('lbl_date')}</th><th></th></tr></thead>
+          <thead><tr><th>رقم</th><th>العميل</th><th>الإجمالي</th><th>الدفع</th><th data-i18n="lbl_date">التاريخ</th><th></th></tr></thead>
           <tbody id="sales-tb"></tbody>
         </table></div>
       </div>
@@ -1512,7 +1512,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="ph"><div class="pt" data-i18n="scr_expenses">💸 المصاريف</div><button class="btn btn-primary btn-sm" onclick="openExpenseModal()">➕ مصروف</button></div>
       <div class="grid-2 mb10" id="exp-stats" style="margin-bottom:11px;"></div>
       <div class="table-wrap"><table>
-        <thead><tr><th data-i18n="lbl_description">الوصف</th><th>الفئة</th><th>المبلغ</th><th>${_('lbl_date')}</th><th></th></tr></thead>
+        <thead><tr><th data-i18n="lbl_description">الوصف</th><th>الفئة</th><th>المبلغ</th><th data-i18n="lbl_date">التاريخ</th><th></th></tr></thead>
         <tbody id="exp-tb"></tbody>
       </table></div>
     </div>
@@ -2655,7 +2655,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="api-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-apiary')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveApiary()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-apiary')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveApiary()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- HIVE -->
@@ -2673,7 +2673,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">الغذاء (1-5)</label><select id="h-food" class="form-control"><option value="1">1 ⭐</option><option value="2">2 ⭐⭐</option><option value="3">3 ⭐⭐⭐</option><option value="4">4 ⭐⭐⭐⭐</option><option value="5">5 ⭐⭐⭐⭐⭐</option></select></div></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="h-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-hive')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveHive()">💾 حفظ + باركود</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-hive')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveHive()">💾 حفظ + باركود</button></div></div>
 </div>
 
 <!-- HIVE QR VIEW -->
@@ -2704,7 +2704,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">التقييم (1-5)</label><select id="i-rating" class="form-control"><option value="3">3 ⭐⭐⭐</option><option value="4">4 ⭐⭐⭐⭐</option><option value="5">5 ⭐⭐⭐⭐⭐</option><option value="2">2 ⭐⭐</option><option value="1">1 ⭐</option></select></div></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="i-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-insp')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveInspection()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-insp')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveInspection()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- WEIGHT -->
@@ -2717,7 +2717,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-row"><div class="form-group"><label class="form-label">الطقس</label><select id="w-weather" class="form-control"><option value="sunny">☀️ مشمس</option><option value="cloudy">⛅ غائم</option><option value="rainy">🌧️ ممطر</option><option value="hot">🔥 حار</option><option value="cold">❄️ بارد</option></select></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><input id="w-notes" class="form-control"></div></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-weight')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveWeight()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-weight')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveWeight()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- HARVEST -->
@@ -2733,7 +2733,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">إضافة للمخزن تلقائياً؟</label><select id="hv-addstock" class="form-control"><option value="yes">✅ نعم</option><option value="no">لا</option></select></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="hv-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-harvest')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveHarvest()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-harvest')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveHarvest()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- QUEEN -->
@@ -2748,7 +2748,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-row"><div class="form-group"><label class="form-label">تاريخ التقييم</label><input type="date" id="q-date" class="form-control"></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><input id="q-notes" class="form-control"></div></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-queen')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveQueen()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-queen')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveQueen()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- CERT -->
@@ -2804,7 +2804,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   </div>
   <div class="modal-footer no-print">
     <button class="btn btn-secondary" onclick="cm('mod-cert')">إغلاق</button>
-    <button class="btn btn-teal" onclick="saveCert()">${_('btn_save')}</button>
+    <button class="btn btn-teal" onclick="saveCert()" data-i18n="btn_save">حفظ</button>
     <button class="btn btn-primary" onclick="window.print()">🖨️ طباعة</button>
   </div></div>
 </div>
@@ -2820,7 +2820,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label" data-i18n="lbl_status" data-i18n="lbl_status">الحالة</label><select id="a-cond" class="form-control"><option value="new">✨ جديد</option><option value="good">✅ جيد</option><option value="fair">⚠️ مقبول</option><option value="repair">🔧 إصلاح</option></select></div></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><input id="a-notes" class="form-control"></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-asset')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveAsset()">💾 حفظ + باركود</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-asset')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveAsset()">💾 حفظ + باركود</button></div></div>
 </div>
 
 <!-- PRODUCT -->
@@ -2836,7 +2836,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-row"><div class="form-group"><label class="form-label">المخزون</label><input id="p-stock" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">حد التنبيه</label><input id="p-min" type="number" class="form-control" placeholder="10"></div></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-product')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveProduct()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-product')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveProduct()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- STORE ITEM -->
@@ -2849,7 +2849,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">الكمية المتاحة</label><input id="si-qty" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">وصف</label><textarea id="si-desc" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-store')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveStoreItem()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-store')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveStoreItem()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- CUSTOMER -->
@@ -2863,7 +2863,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">نوع العميل</label><select id="c-type" class="form-control"><option value="retail">مفرق</option><option value="wholesale">جملة</option><option value="vip">VIP</option></select></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="c-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-customer')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveCustomer()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-customer')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveCustomer()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- SALE -->
@@ -2884,7 +2884,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظات</label><input id="s-notes" class="form-control"></div>
     </div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-sale')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveSale()">✅ حفظ الفاتورة</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-sale')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveSale()">✅ حفظ الفاتورة</button></div></div>
 </div>
 
 <!-- INVOICE VIEW -->
@@ -2903,7 +2903,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">المبلغ (دج) *</label><input id="e-amount" type="number" class="form-control"></div></div>
     <div class="form-group"><label class="form-label" data-i18n="lbl_date">التاريخ</label><input id="e-date" type="date" class="form-control"></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-expense')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveExpense()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-expense')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveExpense()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- CALENDAR EVENT -->
@@ -2916,14 +2916,14 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">الخلية المرتبطة</label><select id="ev-hive" class="form-control"><option value="">-- لا يوجد --</option></select></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="ev-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-event')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveEvent()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-event')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveEvent()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- CONFIRM -->
 <div class="modal-overlay" id="mod-confirm">
   <div class="modal" style="max-width:360px;"><div class="modal-header"><span class="modal-title" id="conf-title">تأكيد</span><button class="modal-close" onclick="cm('mod-confirm')">✕</button></div>
   <div class="modal-body"><p id="conf-msg" style="font-size:12px;line-height:1.8;color:var(--text2);"></p></div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-confirm')">${_('btn_cancel')}</button><button class="btn btn-danger" id="conf-ok">تأكيد</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-confirm')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-danger" id="conf-ok">تأكيد</button></div></div>
 </div>
 
 <!-- TREATMENT -->
@@ -2954,7 +2954,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label">التكلفة (${cur()})</label><input id="treat-cost" type="number" class="form-control"></div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="treat-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-treatment')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveTreatment()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-treatment')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveTreatment()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- BATCH -->
@@ -2992,7 +2992,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
     <div class="form-group"><label class="form-label">ملاحظات الجودة</label><textarea id="batch-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-batch')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveBatch()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-batch')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveBatch()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 
@@ -3025,7 +3025,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
     <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="notif-notes" class="form-control"></textarea></div>
   </div>
-  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-notif')">${_('btn_cancel')}</button><button class="btn btn-primary" onclick="saveNotif()">${_('btn_save')}</button></div></div>
+  <div class="modal-footer"><button class="btn btn-secondary" onclick="cm('mod-notif')" data-i18n="btn_cancel">إلغاء</button><button class="btn btn-primary" onclick="saveNotif()" data-i18n="btn_save">حفظ</button></div></div>
 </div>
 
 <!-- PHOTO VIEWER -->
@@ -3070,8 +3070,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       </div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-order')">${_('btn_cancel')}</button>
-      <button class="btn btn-primary btn-sm" onclick="saveOrder()">${_('btn_save')}</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-order')" data-i18n="btn_cancel">إلغاء</button>
+      <button class="btn btn-primary btn-sm" onclick="saveOrder()" data-i18n="btn_save">حفظ</button>
     </div>
   </div>
 </div>
@@ -3108,8 +3108,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="task-notes" class="form-control" rows="2"></textarea></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-task')">${_('btn_cancel')}</button>
-      <button class="btn btn-primary btn-sm" onclick="saveWeekTask()">${_('btn_save')}</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-task')" data-i18n="btn_cancel">إلغاء</button>
+      <button class="btn btn-primary btn-sm" onclick="saveWeekTask()" data-i18n="btn_save">حفظ</button>
     </div>
   </div>
 </div>
@@ -3130,8 +3130,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظات</label><input id="temp-notes" class="form-control"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-temp')">${_('btn_cancel')}</button>
-      <button class="btn btn-primary btn-sm" onclick="saveTemp()">${_('btn_save')}</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-temp')" data-i18n="btn_cancel">إلغاء</button>
+      <button class="btn btn-primary btn-sm" onclick="saveTemp()" data-i18n="btn_save">حفظ</button>
     </div>
   </div>
 </div>
@@ -3158,9 +3158,9 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group" style="margin-top:8px;"><label class="form-label">ملاحظات</label><textarea id="inv-notes" class="form-control" rows="2"></textarea></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-invoice')">${_('btn_cancel')}</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-invoice')" data-i18n="btn_cancel">إلغاء</button>
       <button class="btn btn-teal btn-sm" onclick="previewInvoice()">👁️ معاينة</button>
-      <button class="btn btn-primary btn-sm" onclick="saveInvoice()">${_('btn_save')}</button>
+      <button class="btn btn-primary btn-sm" onclick="saveInvoice()" data-i18n="btn_save">حفظ</button>
     </div>
   </div>
 </div>
@@ -3198,8 +3198,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظة</label><input id="tm-notes" class="form-control"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-team')">${_('btn_cancel')}</button>
-      <button class="btn btn-primary btn-sm" onclick="saveTeamMember()">${_('btn_save')}</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-team')" data-i18n="btn_cancel">إلغاء</button>
+      <button class="btn btn-primary btn-sm" onclick="saveTeamMember()" data-i18n="btn_save">حفظ</button>
     </div>
   </div>
 </div>
@@ -3231,8 +3231,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">ملاحظات</label><textarea id="fg-notes" class="form-control" rows="2"></textarea></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-forage')">${_('btn_cancel')}</button>
-      <button class="btn btn-primary btn-sm" onclick="saveForageZone()">${_('btn_save')}</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-forage')" data-i18n="btn_cancel">إلغاء</button>
+      <button class="btn btn-primary btn-sm" onclick="saveForageZone()" data-i18n="btn_save">حفظ</button>
     </div>
   </div>
 </div>
@@ -3266,8 +3266,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="form-group"><label class="form-label">الإجراء المتخذ</label><input id="loss-action" class="form-control" placeholder="ما الذي فعلته للتعامل مع المشكلة؟"></div>
     </div>
     <div class="modal-footer">
-      <button class="btn btn-secondary btn-sm" onclick="cm('modal-loss')">${_('btn_cancel')}</button>
-      <button class="btn btn-primary btn-sm" onclick="saveLoss()">${_('btn_save')}</button>
+      <button class="btn btn-secondary btn-sm" onclick="cm('modal-loss')" data-i18n="btn_cancel">إلغاء</button>
+      <button class="btn btn-primary btn-sm" onclick="saveLoss()" data-i18n="btn_save">حفظ</button>
     </div>
   </div>
 </div>
@@ -3948,7 +3948,7 @@ function renderWeights(){
   }else if(ctx&&!list.length){if(wChart){wChart.destroy();wChart=null;}}
   // Table
   document.getElementById('weights-list').innerHTML=list.length?`<div class="table-wrap"><table>
-    <thead><tr><th>الخلية</th><th>الوزن (كغ)</th><th>الطقس</th><th>${_('lbl_date')}</th><th>ملاحظات</th><th></th></tr></thead>
+    <thead><tr><th>الخلية</th><th>الوزن (كغ)</th><th>الطقس</th><th data-i18n="lbl_date">التاريخ</th><th>ملاحظات</th><th></th></tr></thead>
     <tbody>${list.slice().reverse().slice(0,30).map(w=>`<tr>
       <td class="text-g fw9">${w.hiveHid}</td>
       <td style="font-size:15px;font-weight:900;">${w.value}</td>
@@ -3999,7 +3999,7 @@ function renderHarvest(){
     <div class="sc bl"><div class="si">📋</div><div class="sl">عدد الحصادات</div><div class="sv">${list.length}</div></div>
   `;
   document.getElementById('harv-list').innerHTML=list.length?`<div class="table-wrap"><table>
-    <thead><tr><th>الخلية</th><th>${_('lbl_quantity')}</th><th>النوع</th><th>الجودة</th><th>السعر/كغ</th><th>${_('lbl_date')}</th><th>ملاحظات</th><th></th></tr></thead>
+    <thead><tr><th>الخلية</th><th data-i18n="lbl_quantity">الكمية</th><th>النوع</th><th>الجودة</th><th>السعر/كغ</th><th data-i18n="lbl_date">التاريخ</th><th>ملاحظات</th><th></th></tr></thead>
     <tbody>${list.map(h=>`<tr>
       <td class="text-g fw9">${h.hiveHid}</td>
       <td style="font-weight:900;">${h.qty} كغ</td>
@@ -4393,7 +4393,7 @@ function viewInvoice(id){
       </div>
       <div style="font-size:11px;margin-bottom:9px;"><b>العميل:</b> ${s.customerName} | <b>الدفع:</b> ${pyL[s.payment]||'—'}</div>
       <table style="width:100%;border-collapse:collapse;font-size:11px;">
-        <thead><tr style="background:#FFF9C4;"><th style="padding:5px;text-align:right;border:1px solid #ddd;">المنتج</th><th style="padding:5px;border:1px solid #ddd;">${_('lbl_quantity')}</th><th style="padding:5px;border:1px solid #ddd;">${_('lbl_price')}</th><th style="padding:5px;border:1px solid #ddd;">${_('lbl_total')}</th></tr></thead>
+        <thead><tr style="background:#FFF9C4;"><th style="padding:5px;text-align:right;border:1px solid #ddd;">المنتج</th><th style="padding:5px;border:1px solid #ddd;" data-i18n="lbl_quantity">الكمية</th><th style="padding:5px;border:1px solid #ddd;" data-i18n="lbl_price">السعر</th><th style="padding:5px;border:1px solid #ddd;">${_('lbl_total')}</th></tr></thead>
         <tbody>${s.items?.map(r=>`<tr><td style="padding:4px;border:1px solid #ddd;">${r.productName}</td><td style="padding:4px;border:1px solid #ddd;text-align:center;">${r.qty} ${r.unit}</td><td style="padding:4px;border:1px solid #ddd;text-align:center;">${fmt$(r.price)}</td><td style="padding:4px;border:1px solid #ddd;text-align:center;font-weight:700;color:#FF6F00;">${fmt$(r.price*r.qty)}</td></tr>`).join('')}</tbody>
       </table>
       <div style="font-size:16px;font-weight:900;color:#FF6F00;text-align:left;margin-top:9px;padding-top:7px;border-top:2px solid #FFC107;">الإجمالي: ${fmt$(s.total)}</div>
@@ -4880,7 +4880,7 @@ function exportPDF(){
   ${hives.map(h=>{const ap=apis.find(a=>a.id===h.apiaryId);const sc=score(h);const scCol=sc>=80?'green':sc>=60?'orange':'red';return`<tr><td><b>${h.hid}</b></td><td>${ap?.name||'—'}</td><td>${BREEDS[h.breed]||'—'}</td><td><b style="color:${scCol};">${sc}/100</b></td><td>${h.queen==='yes'?'✅':'❌'}</td><td>${sm[h.strength]||h.strength}</td><td>${'★'.repeat(Number(h.food)||1)}</td></tr>`;}).join('')}
   </tbody></table>
   <h2>🍯 سجل الحصاد</h2>
-  <table><thead><tr><th>الخلية</th><th>الكمية (كغ)</th><th>النوع</th><th>الجودة</th><th>السعر/كغ</th><th>${_('lbl_date')}</th></tr></thead><tbody>
+  <table><thead><tr><th>الخلية</th><th>الكمية (كغ)</th><th>النوع</th><th>الجودة</th><th>السعر/كغ</th><th data-i18n="lbl_date">التاريخ</th></tr></thead><tbody>
   ${harv.slice(-20).map(h=>`<tr><td>${h.hiveHid}</td><td><b>${h.qty}</b></td><td>${h.type||'—'}</td><td>${h.quality==='premium'?'★★★':h.quality==='good'?'★★':'★'}</td><td>${Number(h.price||0).toLocaleString()}</td><td>${fmtD(h.date)}</td></tr>`).join('')}
   </tbody></table>
   <h2>💰 الملخص المالي</h2>
@@ -5015,7 +5015,7 @@ function haversineKm(lat1,lon1,lat2,lon2){
 function calcMapDist(){
   const idA=document.getElementById('dist-a')?.value;
   const idB=document.getElementById('dist-b')?.value;
-  if(!idA||!idB){toast('${_('lbl_no_data')} كافية','warning');return;}
+  if(!idA||!idB){toast((_('lbl_no_data')||'لا بيانات')+' كافية','warning');return;}
   if(idA===idB){toast('اختر منحلين مختلفين','warning');return;}
   const a=gA().find(x=>x.id===idA);const b=gA().find(x=>x.id===idB);
   if(!a||!b)return;
@@ -5475,7 +5475,7 @@ function aiAnalyze(question){
 }
 
 function aiHealthReport(hives,apis,insp,queens){
-  if(!hives.length) return '🐝 ${_('lbl_no_data')} مسجلة بعد. أضف خلاياك أولاً.';
+  if(!hives.length) return '🐝 لا خلايا مسجلة بعد. أضف خلاياك أولاً.';
   const noQueen=hives.filter(h=>h.queen==='no');
   const noEggs=hives.filter(h=>h.eggs==='no'&&h.queen!=='no');
   const weak=hives.filter(h=>h.strength==='weak');
@@ -5516,7 +5516,7 @@ function aiHealthReport(hives,apis,insp,queens){
 }
 
 function aiHarvestForecast(hives,apis,harv){
-  if(!hives.length) return '🍯 ${_('lbl_no_data')}. أضف خلاياك أولاً.';
+  if(!hives.length) return '🍯 لا بيانات. أضف خلاياك أولاً.';
   const totHarv=harv.reduce((a,h)=>a+Number(h.qty||0),0);
   const strong=hives.filter(h=>h.strength==='strong').length;
   const medium=hives.filter(h=>h.strength==='medium').length;
@@ -5625,7 +5625,7 @@ function aiQueenAnalysis(queens,hives,apis){
 }
 
 function aiApiaryCompare(apis,hives,harv,insp){
-  if(!apis.length) return '🗺️ ${_('lbl_no_data')} مسجلة بعد.';
+  if(!apis.length) return '🗺️ لا مناحل مسجلة بعد.';
   const apData=apis.map(a=>{
     const ah=hives.filter(h=>h.apiaryId===a.id);
     const ahIds=ah.map(h=>h.id);
@@ -6185,7 +6185,7 @@ async function renderWeather(){
   const el=document.getElementById('weather-content');
   if(!apis.length){el.innerHTML='<div class="empty-s"><div class="ei">🗺️</div><p>أضف مناحل بإحداثيات GPS أولاً</p></div>';return;}
   const withCoords=apis.filter(a=>a.lat&&a.lng);
-  if(!withCoords.length){el.innerHTML='<div class="alert alert-warn">⚠️ ${_('lbl_no_data')} بإحداثيات GPS — افتح منحل وحدد موقعه على الخريطة</div>';return;}
+  if(!withCoords.length){el.innerHTML='<div class="alert alert-warn">⚠️ لا مناحل بإحداثيات GPS — افتح منحل وحدد موقعه على الخريطة</div>';return;}
   el.innerHTML='<div class="empty-s"><div class="ei">⏳</div><p>جاري جلب بيانات الطقس...</p></div>';
   try{
     const results=await Promise.all(withCoords.map(async a=>{
@@ -6831,7 +6831,7 @@ function renderCompare(){
   // Get all years from data
   const allDates=[...sales.map(s=>s.date),...harv.map(h=>h.date),...exps.map(e=>e.date),...insp.map(i=>i.date)];
   const years=[...new Set(allDates.map(d=>d?.slice(0,4)).filter(Boolean))].sort().reverse();
-  if(!years.length){document.getElementById('compare-content').innerHTML='<div class="empty-s"><div class="ei">📊</div><p>${_('lbl_no_data')} كافية للمقارنة — سجّل بيانات لأكثر من سنة</p></div>';return;}
+  if(!years.length){document.getElementById('compare-content').innerHTML='<div class="empty-s"><div class="ei">📊</div><p>لا بيانات كافية للمقارنة — سجّل بيانات لأكثر من سنة</p></div>';return;}
   // Year buttons
   document.getElementById('compare-year-btns').innerHTML=years.map(y=>`<button class="compare-year-btn ${compareYears.includes(y)?'active':''}" onclick="toggleCompareYear('${y}')">${y}</button>`).join('');
   if(compareYears.length<2){document.getElementById('compare-content').innerHTML='<div style="color:var(--text3);text-align:center;padding:20px;font-size:12px;">اختر سنتين للمقارنة</div>';return;}
@@ -9062,7 +9062,7 @@ function previewInvoice(){
         <div style="font-size:11px;color:#555;">العميل: ${cust?.name||'عميل عام'}</div>
       </div>
     </div>
-    <table><thead><tr><th>الوصف</th><th>${_('lbl_quantity')}</th><th>${_('lbl_price')}</th><th>الإجمالي</th></tr></thead>
+    <table><thead><tr><th>الوصف</th><th data-i18n="lbl_quantity">الكمية</th><th data-i18n="lbl_price">السعر</th><th>الإجمالي</th></tr></thead>
     <tbody>${invItemRows.map(r=>`<tr><td>${r.name}</td><td>${r.qty}</td><td>${fmt$(r.price)}</td><td>${fmt$(r.qty*r.price)}</td></tr>`).join('')}</tbody>
     <tfoot>
       ${disc>0?`<tr><td colspan="3">خصم ${disc}%</td><td>-${fmt$(discAmt)}</td></tr>`:''}
@@ -9785,7 +9785,7 @@ async function adminExtendLicense(deviceId){
         <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">📅 تمديد الترخيص</div>
         <div style="font-size:10px;color:var(--text3);margin-bottom:10px;font-family:monospace;">${deviceId}</div>
         ${options.map((o,i)=>`<button onclick="this.closest('div[style]').dataset.choice='${days[i]}'" style="display:block;width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px;margin-bottom:6px;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;text-align:right;">${o}</button>`).join('')}
-        <button onclick="this.closest('div[style]').dataset.choice='cancel'" style="width:100%;background:none;border:none;color:var(--text3);font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;margin-top:4px;">${_('btn_cancel')}</button>
+        <button onclick="this.closest('div[style]').dataset.choice='cancel'" style="width:100%;background:none;border:none;color:var(--text3);font-family:'Cairo',sans-serif;font-size:11px;cursor:pointer;margin-top:4px;" data-i18n="btn_cancel">إلغاء</button>
       </div>`;
     document.body.appendChild(overlay);
     const check = setInterval(()=>{
