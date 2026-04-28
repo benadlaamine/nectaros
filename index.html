@@ -13,7 +13,6 @@
 <meta name="msapplication-TileColor" content="#FFC107">
 <link rel="manifest" href="./manifest.json">
 <script src="./lang.js"></script>
-<!-- i18n system is built into lang.js — no separate file needed -->
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22body%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C8%20484%2C136%20484%2C376%20256%2C504%2028%2C376%2028%2C136%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C20%20472%2C144%20472%2C368%20256%2C492%2040%2C368%2040%2C144%22%20fill%3D%22%231a1a00%22%20opacity%3D%220.3%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22256%22%20cy%3D%22230%22%20rx%3D%2258%22%20ry%3D%2278%22%20fill%3D%22url%28%23body%29%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22195%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22227%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22259%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22154%22%20r%3D%2236%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22242%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22270%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22186%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C186%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22326%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C326%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22192%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%28-20%2C192%2C215%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22320%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%2820%2C320%2C215%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C295%20248%2C340%20264%2C340%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%20%20%3Cline%20x1%3D%22242%22%20y1%3D%22120%22%20x2%3D%22222%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Cline%20x1%3D%22270%22%20y1%3D%22120%22%20x2%3D%22290%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22220%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22292%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%3C%2Fsvg%3E">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bd%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C3%20181%2C51%20181%2C141%2096%2C189%2011%2C141%2011%2C51%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2296%22%20cy%3D%2287%22%20rx%3D%2222%22%20ry%3D%2229%22%20fill%3D%22url%28%23bd%29%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2274%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2286%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2298%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2296%22%20cy%3D%2258%22%20r%3D%2214%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2291%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22101%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2269%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C69%2C70%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22123%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C123%2C70%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C111%2092%2C128%20100%2C128%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%3C%2Fsvg%3E">
 <script>
@@ -646,7 +645,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
 
 /* ═══════════ LICENSE / SERIAL SYSTEM ═══════════ */
-#license-screen{position:fixed;inset:0;z-index:9100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;direction:<span data-i18n="_dir">rtl</span>;}
+#license-screen{position:fixed;inset:0;z-index:9100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;direction:inherit;}
 #license-screen.hidden{display:none;}
 #license-screen::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 30%,rgba(255,193,7,.06) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(255,111,0,.05) 0%,transparent 40%);pointer-events:none;}
 .lic-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative;z-index:1;}
@@ -671,7 +670,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .device-this{border-color:rgba(255,193,7,.4);}
 
 /* ═══════════ UPDATE NOTIFICATION ═══════════ */
-#update-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#1a237e,#283593);color:#fff;padding:12px 16px;align-items:center;gap:10px;font-size:12px;direction:rtl;box-shadow:0 4px 20px rgba(0,0,0,.5);border-bottom:2px solid #FFD600;}
+#update-banner{display:none;position:fixed;top:0;left:0;right:0;z-index:9999;background:linear-gradient(135deg,#1a237e,#283593);color:#fff;padding:12px 16px;align-items:center;gap:10px;font-size:12px;box-shadow:0 4px 20px rgba(0,0,0,.5);border-bottom:2px solid #FFD600;}
 #update-banner.show{display:flex;animation:slideDown .4s ease;}
 @keyframes slideDown{from{transform:translateY(-100%);opacity:0;}to{transform:translateY(0);opacity:1;}}
 .update-banner-icon{font-size:22px;flex-shrink:0;animation:hpulse 1.5s infinite;}
@@ -898,6 +897,24 @@ tr:hover td{background:rgba(255,255,255,.02);}
 /* Section divider */
 .section-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:1px;text-transform:uppercase;margin:14px 0 8px;display:flex;align-items:center;gap:7px;}
 .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+/* ═══ i18n Direction System ═══ */
+html[dir="ltr"] * { font-family: inherit; }
+html[dir="ltr"] .modal, html[dir="ltr"] .card,
+html[dir="ltr"] .form-group, html[dir="ltr"] .ph,
+html[dir="ltr"] .screen { direction: ltr; text-align: left; }
+html[dir="ltr"] .topbar { direction: ltr; }
+html[dir="ltr"] .sidebar { direction: ltr; }
+html[dir="ltr"] #update-banner { direction: ltr; }
+html[dir="ltr"] #trial-warn-banner { direction: ltr; }
+html[dir="ltr"] #owner-pin-box { direction: ltr; }
+html[dir="ltr"] .login-card { direction: ltr; }
+html[dir="ltr"] #license-screen { direction: ltr; }
+html[dir="ltr"] .toast { direction: ltr; text-align: left; }
+html[dir="ltr"] .modal-footer { flex-direction: row; }
+html[dir="ltr"] .form-row { flex-direction: row; }
+html[dir="rtl"] .modal, html[dir="rtl"] .card { direction: rtl; }
+html[dir="rtl"] #update-banner { direction: rtl; }
 </style>
 </head>
 <body>
@@ -950,11 +967,11 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="splash-bar"><div class="splash-fill"></div></div>
     <div class="splash-status">
       <span class="splash-dots"><span class="splash-dot"></span><span class="splash-dot"></span><span class="splash-dot"></span></span>
-      <span id="splash-msg" data-i18n="loading">جاري التحميل</span>
+      <span id="splash-msg"><span data-i18n="loading">جاري التحميل</span></span>
     </div>
   </div>
   <!-- الإصدار -->
-  <div class="splash-version">v5.1 · نظام إدارة <span data-i18n="bn_apiaries">المناحل</span></div>
+  <div class="splash-version">v5.1 · <span>نظام إدارة <span data-i18n="bn_apiaries">المناحل</span></span></div>
 </div>
 
 <!-- ═══════════ LOGIN SCREEN ═══════════ -->
@@ -963,8 +980,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <div id="update-banner">
   <span class="update-banner-icon">🚀</span>
   <div class="update-banner-text">
-    <b id="update-banner-text-main"><span data-i18n="update_available">🎉 إصدار جديد متاح — اضغط لتحديث التطبيق</span></b>
-    <div style="font-size:10px;opacity:.75;margin-top:2px;"><span data-i18n="lic_title">NectarOS</span> <span id="update-banner-ver"></span> — <span data-i18n="update_safe">بياناتك محفوظة بأمان</span></div>
+    <b id="update-banner-text-main"><span><span data-i18n="update_available">🎉 إصدار جديد متاح — اضغط لتحديث التطبيق</span></span></b>
+    <div style="font-size:10px;opacity:.75;margin-top:2px;"><span data-i18n="lic_title">NectarOS</span> <span id="update-banner-ver"></span> — <span><span data-i18n="update_safe">بياناتك محفوظة بأمان</span></span></div>
   </div>
   <button class="update-banner-btn" onclick="applyUpdate()"><span data-i18n="update_btn">⬆️ تحديث</span></button>
   <button class="update-banner-close" onclick="dismissUpdate()">✕</button>
@@ -1021,7 +1038,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 </div>
 
 <!-- ══ TRIAL WARNING BANNER ══ -->
-<div id="trial-warn-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:8500;padding:9px 14px;direction:rtl;align-items:center;gap:10px;font-size:12px;box-shadow:0 3px 12px rgba(0,0,0,.4);">
+<div id="trial-warn-banner" style="display:none;position:fixed;top:0;left:0;right:0;z-index:8500;padding:9px 14px;align-items:center;gap:10px;font-size:12px;box-shadow:0 3px 12px rgba(0,0,0,.4);">
   <span id="twb-icon" style="font-size:18px;flex-shrink:0;"></span>
   <div style="flex:1;">
     <b id="twb-title" style="font-size:12px;"></b>
@@ -1060,7 +1077,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- Tabs -->
     <div class="lic-tabs">
-      <button class="lic-tab active" onclick="licTab('trial')"><span data-i18n="lic_tab_trial">⏱️ التجربة</span></button>
+      <button class="lic-tab active" onclick="licTab('trial')"><span><span data-i18n="lic_tab_trial">⏱️ التجربة</span></span></button>
       <button class="lic-tab" onclick="licTab('activate')"><span>🔑 <span data-i18n="btn_activate">تفعيل</span></span></button>
       <button class="lic-tab" onclick="licTab('devices')"><span data-i18n="lic_tab_devices">📱 الأجهزة</span></button>
     </div>
@@ -1069,7 +1086,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div id="lic-panel-trial" class="lic-tab-panel active">
       <div id="trial-info"></div>
       <button id="trial-extend-btn" class="btn btn-secondary" style="width:100%;margin-top:10px;display:none;" onclick="extendTrial()">
-        <span>⏳ <span data-i18n="trial_extension">تمديد</span> <span data-i18n="lic_extend_text">التجربة 15 يوم إضافياً</span></span>
+        <span>⏳ <span data-i18n="trial_extension">تمديد</span> التجربة 15 يوم إضافياً</span>
       </button>
       <button id="trial-enter-btn" class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="enterTrialApp()">
         <span data-i18n="lic_enter_app">🐝 دخول التطبيق</span>
@@ -1079,13 +1096,13 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <!-- Activate tab -->
     <div id="lic-panel-activate" class="lic-tab-panel">
       <div style="font-size:10px;color:var(--text3);margin-bottom:8px;"><span data-i18n="lic_device_hint">🔑 معرّف جهازك (أرسله للمطوّر للحصول على السيريال)</span></div>
-      <div class="device-id-box" id="lic-device-id"><span data-i18n="loading">جاري التحميل</span>...</div>
-      <button onclick="copyDeviceId()" class="btn btn-xs btn-secondary" style="width:100%;margin-bottom:12px;"><span><span data-i18n="btn_copy">📋 نسخ</span> <span data-i18n="device_id_label">معرّف الجهاز</span></span></button>
+      <div class="device-id-box" id="lic-device-id"><span><span data-i18n="loading">جاري التحميل</span>...</span></div>
+      <button onclick="copyDeviceId()" class="btn btn-xs btn-secondary" style="width:100%;margin-bottom:12px;"><span><span data-i18n="btn_copy">📋 نسخ</span> معرّف الجهاز</span></button>
       <div class="form-group">
         <label class="form-label"><span>أدخل رمز ال<span data-i18n="btn_activate">تفعيل</span> (Serial)</span></label>
         <input id="lic-serial-input" class="form-control serial-input" placeholder="XXXX-XXXX-XXXX-XXXX" maxlength="19" oninput="formatSerial(this)" dir="ltr">
       </div>
-      <button class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="activateLicense()"><span data-i18n="lic_activate_btn">✅ تفعيل الترخيص</span></button>
+      <button class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="activateLicense()"><span>✅ <span data-i18n="btn_activate">تفعيل</span> الترخيص</span></button>
       <div id="lic-activate-msg" style="font-size:10px;text-align:center;margin-top:8px;min-height:14px;"></div>
 
       <!-- ── قسم شراء الترخيص ── -->
@@ -1096,7 +1113,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div style="font-size:10px;color:var(--text2);margin-bottom:12px;line-height:1.8;">
           1️⃣ انسخ <b style="color:var(--gold);">معرّف جهازك</b> من الأعلى<br>
           2️⃣ <span data-i18n="lic_buy_step2">أرسله مع الدفع عبر إحدى الطرق أدناه</span><br>
-          3️⃣ <span data-i18n="lic_buy_step3">ستصلك رمز التفعيل خلال 24 ساعة</span>
+          3️⃣ <span>ستصلك رمز ال<span data-i18n="btn_activate">تفعيل</span> خلال 24 ساعة</span>
         </div>
 
         <!-- PayPal -->
@@ -1199,10 +1216,10 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="form-group"><label class="form-label" id="lbl-user"><span data-i18n="login_user">اسم المستخدم</span></label>
       <input id="login-user" class="form-control" placeholder="admin" autocomplete="username">
     </div>
-    <div class="form-group"><label class="form-label" id="lbl-pass">كلمة المرور</label>
+    <div class="form-group"><label class="form-label" id="lbl-pass" data-i18n="lbl_pass">كلمة المرور</label>
       <input id="login-pass" class="form-control" type="password" placeholder="••••••••" autocomplete="current-password">
     </div>
-    <button class="btn btn-primary" style="width:100%;margin-top:4px;padding:11px;" onclick="doLogin()" id="login-btn">🐝 دخول</button>
+    <button class="btn btn-primary" style="width:100%;margin-top:4px;padding:11px;" onclick="doLogin()" id="login-btn" data-i18n="login_btn">🐝 دخول</button>
     <div class="login-err" id="login-err"></div>
     <div style="margin-top:12px;padding:9px 11px;background:rgba(255,193,7,.06);border:1px solid rgba(255,193,7,.14);border-radius:8px;font-size:10px;color:var(--text3);text-align:center;">
       🔑 الدخول الافتراضي: <span style="color:var(--gold);font-weight:700;">admin</span> / <span style="color:var(--gold);font-weight:700;">1234</span>
@@ -1213,7 +1230,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 </div>
 
 <!-- ══ OWNER PIN BOX — فوق كل الشاشات — z-index:999999 ══ -->
-<div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:999999;align-items:center;justify-content:center;flex-direction:column;direction:rtl;">
+<div id="owner-pin-box" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.9);z-index:999999;align-items:center;justify-content:center;flex-direction:column;">
   <div style="background:#1a1a1a;border:2px solid #FFC107;border-radius:18px;padding:28px 24px;width:290px;display:flex;flex-direction:column;align-items:center;gap:14px;box-shadow:0 0 60px rgba(255,193,7,.25);">
     <div style="font-size:30px;">🔑</div>
     <div style="color:#FFC107;font-size:14px;font-weight:700;">كود المطوّر</div>
@@ -1240,7 +1257,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="nav-section">
     <div class="nav-label"><span data-i18n="bn_dashboard">الرئيسية</span></div>
     <div class="nav-item active" id="nav-dashboard" onclick="go('dashboard')"><span class="nav-icon">📊</span><span class="nav-text"><span data-i18n="scr_dashboard">لوحة التحكم</span></span></div>
-    <div class="nav-item" id="nav-apiaries" onclick="go('apiaries')"><span class="nav-icon">🗺️</span><span class="nav-text"><span><span data-i18n="bn_apiaries">المناحل</span> والمواقع</span></span></div>
+    <div class="nav-item" id="nav-apiaries" onclick="go('apiaries')"><span class="nav-icon">🗺️</span><span class="nav-text" data-i18n="nav_apiaries"><span><span data-i18n="bn_apiaries">المناحل</span> والمواقع</span></span></div>
     <div class="nav-item" id="nav-map" onclick="go('map')"><span class="nav-icon">📍</span><span class="nav-text"><span data-i18n="nav_map">الخريطة التفاعلية</span></span></div>
     <div class="nav-item" id="nav-advanced" onclick="go('advanced')"><span class="nav-icon">📈</span><span class="nav-text"><span data-i18n="nav_advanced">مقاييس متقدمة</span></span></div>
     <div class="nav-item" id="nav-hives" onclick="go('hives')"><span class="nav-icon">⬡</span><span class="nav-text"><span data-i18n="scr_hives">الخلايا</span></span></div>
@@ -1257,13 +1274,13 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="nav-item" id="nav-health" onclick="go('health')"><span class="nav-icon">📜</span><span class="nav-text"><span data-i18n="nav_health">الشهادات الصحية</span></span></div>
   </div>
   <div class="nav-section">
-    <div class="nav-label"><span data-i18n="scr_assets">المعدات</span> و<span data-i18n="nav_inventory">المخزن</span></div>
-    <div class="nav-item" id="nav-assets" onclick="go('assets')"><span class="nav-icon">🏷️</span><span class="nav-text"><span>باركود <span data-i18n="scr_assets">المعدات</span></span></span></div>
-    <div class="nav-item" id="nav-inventory" onclick="go('inventory')"><span class="nav-icon">📦</span><span class="nav-text"><span data-i18n="nav_inventory">المخزن</span></div>
+    <div class="nav-label" data-i18n="nav_equipment"><span><span data-i18n="scr_assets">المعدات</span> و<span data-i18n="nav_inventory">المخزن</span></span></div>
+    <div class="nav-item" id="nav-assets" onclick="go('assets')"><span class="nav-icon">🏷️</span><span class="nav-text" data-i18n="nav_assets"><span>باركود <span data-i18n="scr_assets">المعدات</span></span></span></div>
+    <div class="nav-item" id="nav-inventory" onclick="go('inventory')"><span class="nav-icon">📦</span><span class="nav-text"><span data-i18n="nav_inventory">المخزن</span></span></div>
   </div>
   <div class="nav-section">
     <div class="nav-label"><span data-i18n="nav_commerce">التجارة</span></div>
-    <div class="nav-item" id="nav-store" onclick="go('store')"><span class="nav-icon">🛒</span><span class="nav-text"><span><span data-i18n="scr_store">المتجر</span> المباشر</span></span></div>
+    <div class="nav-item" id="nav-store" onclick="go('store')"><span class="nav-icon">🛒</span><span class="nav-text" data-i18n="nav_store"><span><span data-i18n="scr_store">المتجر</span> المباشر</span></span></div>
     <div class="nav-item" id="nav-crm" onclick="go('crm')"><span class="nav-icon">👥</span><span class="nav-text"><span data-i18n="nav_crm">العملاء</span></span></div>
     <div class="nav-item" id="nav-sales" onclick="go('sales')"><span class="nav-icon">💰</span><span class="nav-text"><span data-i18n="scr_sales">المبيعات</span></span></div>
   </div>
@@ -1284,7 +1301,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="nav-label"><span data-i18n="nav_analytics">التحليل والتخطيط</span></div>
     <div class="nav-item" id="nav-goals" onclick="go('goals')"><span class="nav-icon">🎯</span><span class="nav-text"><span data-i18n="production_goals">أهداف الإنتاج</span></span></div>
     <div class="nav-item" id="nav-seasonal" onclick="go('seasonal')"><span class="nav-icon">📅</span><span class="nav-text"><span data-i18n="nav_seasonal">الجدول الموسمي</span></span></div>
-    <div class="nav-item" id="nav-radar" onclick="go('radar')"><span class="nav-icon">📊</span><span class="nav-text"><span>مقارنة <span data-i18n="scr_hives">الخلايا</span></span></span></div>
+    <div class="nav-item" id="nav-radar" onclick="go('radar')"><span class="nav-icon">📊</span><span class="nav-text" data-i18n="nav_radar"><span>مقارنة <span data-i18n="scr_hives">الخلايا</span></span></span></div>
     <div class="nav-item" id="nav-compare" onclick="go('compare')"><span class="nav-icon">🔄</span><span class="nav-text"><span data-i18n="nav_compare">مقارنة السنوات</span></span></div>
     <div class="nav-item" id="nav-advstats" onclick="go('advstats')"><span class="nav-icon">📈</span><span class="nav-text"><span data-i18n="nav_advstats">إحصائيات متقدمة</span></span></div>
     <div class="nav-item" id="nav-losses" onclick="go('losses')"><span class="nav-icon">📉</span><span class="nav-text"><span data-i18n="nav_losses">تحليل الخسائر</span></span></div>
@@ -1293,7 +1310,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <!-- ══ المراقبة والميدان ══ -->
   <div class="nav-section">
     <div class="nav-label"><span data-i18n="nav_monitoring">المراقبة والميدان</span></div>
-    <div class="nav-item" id="nav-weather" onclick="go('weather')"><span class="nav-icon">🌡️</span><span class="nav-text"><span>طقس <span data-i18n="bn_apiaries">المناحل</span></span></span></div>
+    <div class="nav-item" id="nav-weather" onclick="go('weather')"><span class="nav-icon">🌡️</span><span class="nav-text" data-i18n="nav_weather"><span>طقس <span data-i18n="bn_apiaries">المناحل</span></span></span></div>
     <div class="nav-item" id="nav-tempmon" onclick="go('tempmon')"><span class="nav-icon">🌡️</span><span class="nav-text"><span data-i18n="nav_tempmon">مراقبة الحرارة</span></span></div>
     <div class="nav-item" id="nav-fieldmode" onclick="go('fieldmode')"><span class="nav-icon">🌾</span><span class="nav-text"><span data-i18n="nav_fieldmode">وضع الحقل</span></span></div>
     <div class="nav-item" id="nav-scanner" onclick="go('scanner')"><span class="nav-icon">📷</span><span class="nav-text"><span data-i18n="nav_scanner">ماسح الباركود</span></span></div>
@@ -1302,7 +1319,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <!-- ══ الموارد والمعرفة ══ -->
   <div class="nav-section">
     <div class="nav-label"><span data-i18n="nav_resources">الموارد والمعرفة</span></div>
-    <div class="nav-item" id="nav-plants" onclick="go('plants')"><span class="nav-icon">🌿</span><span class="nav-text"><span>نباتات <span data-i18n="bn_apiaries">المناحل</span></span></span></div>
+    <div class="nav-item" id="nav-plants" onclick="go('plants')"><span class="nav-icon">🌿</span><span class="nav-text" data-i18n="nav_plants"><span>نباتات <span data-i18n="bn_apiaries">المناحل</span></span></span></div>
     <div class="nav-item" id="nav-disease" onclick="go('disease')"><span class="nav-icon">🐛</span><span class="nav-text"><span data-i18n="scr_disease">دليل الأمراض</span></span></div>
     <div class="nav-item" id="nav-calcs" onclick="go('calcs')"><span class="nav-icon">🧮</span><span class="nav-text"><span data-i18n="nav_calcs">الحاسبات</span></span></div>
     <div class="nav-item" id="nav-honeylabs" onclick="go('honeylabs')"><span class="nav-icon">🧪</span><span class="nav-text"><span data-i18n="nav_honeylabs">مختبر العسل</span></span></div>
@@ -1311,9 +1328,9 @@ tr:hover td{background:rgba(255,255,255,.02);}
   <div class="nav-section">
     <div class="nav-label"><span data-i18n="nav_personal">التنظيم الشخصي</span></div>
     <div class="nav-item" id="nav-notifs" onclick="go('notifs')"><span class="nav-icon">🔔</span><span class="nav-text"><span data-i18n="nav_notifs">التذكيرات</span></span></div>
-    <div class="nav-item" id="nav-pushnotifs" onclick="go('pushnotifs')"><span class="nav-icon">📲</span><span class="nav-text"><span>إشعارات <span data-i18n="lbl_phone">الهاتف</span></span></span></div>
+    <div class="nav-item" id="nav-pushnotifs" onclick="go('pushnotifs')"><span class="nav-icon">📲</span><span class="nav-text" data-i18n="nav_pushnotifs"><span>إشعارات <span data-i18n="lbl_phone">الهاتف</span></span></span></div>
     <div class="nav-item" id="nav-tasks" onclick="go('tasks')"><span class="nav-icon">🗓️</span><span class="nav-text"><span data-i18n="nav_tasks">مهام الأسبوع</span></span></div>
-    <div class="nav-item" id="nav-journal" onclick="go('journal')"><span class="nav-icon">📝</span><span class="nav-text"><span>المذكرة <span data-i18n="today">اليوم</span>ية</span></span></div>
+    <div class="nav-item" id="nav-journal" onclick="go('journal')"><span class="nav-icon">📝</span><span class="nav-text" data-i18n="nav_journal"><span>المذكرة <span data-i18n="today">اليوم</span>ية</span></span></div>
     <div class="nav-item" id="nav-achievements" onclick="go('achievements')"><span class="nav-icon">🏆</span><span class="nav-text"><span data-i18n="nav_achievements">الإنجازات</span></span></div>
   </div>
   <!-- ══ العمليات المتقدمة ══ -->
@@ -1327,7 +1344,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   </div>
   <!-- ══ النظام ══ -->
   <div class="sidebar-bottom">
-    <div class="nav-item" id="nav-themes" onclick="go('themes')"><span class="nav-icon">🎨</span><span class="nav-text"><span><span data-i18n="scr_themes">الثيمات</span> والمظهر</span></span></div>
+    <div class="nav-item" id="nav-themes" onclick="go('themes')"><span class="nav-icon">🎨</span><span class="nav-text" data-i18n="nav_themes"><span><span data-i18n="scr_themes">الثيمات</span> والمظهر</span></span></div>
     <div class="nav-item" id="nav-security" onclick="go('security')"><span class="nav-icon">🔐</span><span class="nav-text"><span data-i18n="nav_security">الأمان والخصوصية</span></span></div>
     <div class="nav-item" id="nav-contact" onclick="go('contact')"><span class="nav-icon">📬</span><span class="nav-text"><span data-i18n="scr_contact">اتصل بنا</span></span></div>
     <div class="nav-item" id="nav-settings" onclick="go('settings')"><span class="nav-icon">⚙️</span><span class="nav-text"><span data-i18n="scr_settings">الإعدادات</span></span></div>
@@ -1364,25 +1381,25 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div id="dash-alerts"></div>
       <!-- Quick Actions -->
       <div class="quick-actions">
-        <button class="qa-btn" onclick="openApiaryModal()"><span class="qa-icon">🗺️</span>منحل جديد</button>
-        <button class="qa-btn" onclick="openHiveModal()"><span class="qa-icon">⬡</span>خلية جديدة</button>
-        <button class="qa-btn" onclick="openInspectionModal()"><span class="qa-icon">🔍</span>فحص سريع</button>
-        <button class="qa-btn" onclick="openHarvestModal()"><span class="qa-icon">🍯</span>تسجيل حصاد</button>
+        <button class="qa-btn" onclick="openApiaryModal()"><span class="qa-icon">🗺️</span><span data-i18n="qa_new_apiary">منحل جديد</span></button>
+        <button class="qa-btn" onclick="openHiveModal()"><span class="qa-icon">⬡</span><span data-i18n="qa_new_hive">خلية جديدة</span></button>
+        <button class="qa-btn" onclick="openInspectionModal()"><span class="qa-icon">🔍</span><span data-i18n="qa_quick_inspect">فحص سريع</span></button>
+        <button class="qa-btn" onclick="openHarvestModal()"><span class="qa-icon">🍯</span><span data-i18n="qa_harvest">تسجيل حصاد</span></button>
         <button class="qa-btn" onclick="go('wareport')"><span class="qa-icon">📱</span><span data-i18n="nav_wareport">تقرير واتساب</span></button>
-        <button class="qa-btn" onclick="exportCSV()"><span class="qa-icon">📊</span>تصدير CSV</button>
-        <button class="qa-btn" onclick="go('scanner')"><span class="qa-icon">📷</span>مسح باركود</button>
+        <button class="qa-btn" onclick="exportCSV()"><span class="qa-icon">📊</span><span data-i18n="qa_export_csv">تصدير CSV</span></button>
+        <button class="qa-btn" onclick="go('scanner')"><span class="qa-icon">📷</span><span data-i18n="qa_scan">مسح باركود</span></button>
         <button class="qa-btn" onclick="go('journal')"><span class="qa-icon">📝</span>مذكرة <span data-i18n="today">اليوم</span></button>
       </div>
       <div class="kpi-row" id="dash-stats"></div>
       <div class="grid-2">
-        <div class="card"><div class="card-header"><span class="card-title">📊 مبيعات 6 أشهر</span></div><canvas id="ch-sales" height="160"></canvas></div>
+        <div class="card"><div class="card-header"><span class="card-title">📊 <span data-i18n="card_sales_chart">مبيعات 6 أشهر</span></span></div><canvas id="ch-sales" height="160"></canvas></div>
         <div class="card"><div class="card-header"><span class="card-title">⬡ قوة <span data-i18n="scr_hives">الخلايا</span></span></div><canvas id="ch-hives" height="160"></canvas></div>
       </div>
       <!-- Goals Progress -->
       <div id="dash-goals-row" style="margin-bottom:12px;"></div>
       <div class="grid-2">
-        <div class="card"><div class="card-header"><span class="card-title">🧬 ترشيحات الملكات</span></div><div id="dash-queens"></div></div>
-        <div class="card"><div class="card-header"><span class="card-title">📋 آخر النشاطات</span></div><div id="dash-acts"></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">🧬 <span data-i18n="card_queens">ترشيحات الملكات</span></span></div><div id="dash-queens"></div></div>
+        <div class="card"><div class="card-header"><span class="card-title">📋 <span data-i18n="card_recent_acts">آخر النشاطات</span></span></div><div id="dash-acts"></div></div>
       </div>
       <!-- Today's events + upcoming notifs -->
       <div class="grid-2" style="margin-top:12px;">
@@ -1393,7 +1410,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ APIARIES ══ -->
     <div id="screen-apiaries" class="screen">
-      <div class="ph"><div><div class="pt">🗺️ <span data-i18n="bn_apiaries">المناحل</span></div><div class="ps" id="api-sub"></div></div><button class="btn btn-primary btn-sm" onclick="openApiaryModal()">➕ منحل</button></div>
+      <div class="ph"><div><div class="pt">🗺️ <span data-i18n="bn_apiaries">المناحل</span></div><div class="ps" id="api-sub"></div></div><button class="btn btn-primary btn-sm" onclick="openApiaryModal()" data-i18n="btn_add_apiary">➕ منحل</button></div>
       <div class="grid-auto" id="apiaries-grid"></div>
     </div>
 
@@ -1404,7 +1421,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div style="display:flex;gap:6px;flex-wrap:wrap;">
           <select id="hf-api" class="form-control" style="width:auto;font-size:11px;" onchange="renderHives()"><option value="all">كل <span data-i18n="bn_apiaries">المناحل</span></option></select>
           <select id="hf-str" class="form-control" style="width:auto;font-size:11px;" onchange="renderHives()"><option value="all">كل القوى</option><option value="strong">💪 💪</option><option value="medium">😐 متوسطة</option><option value="weak">😟 ضعيفة</option></select>
-          <button class="btn btn-primary btn-sm" onclick="openHiveModal()">➕ خلية</button>
+          <button class="btn btn-primary btn-sm" onclick="openHiveModal()" data-i18n="btn_add_hive">➕ خلية</button>
         </div>
       </div>
       <input class="form-control" id="hive-search" placeholder="🔍 بحث..." oninput="renderHives()" style="margin-bottom:11px;max-width:260px;">
@@ -1426,12 +1443,12 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div class="cal-grid mb10" id="cal-heads" style="margin-bottom:8px;"></div>
         <div class="cal-grid" id="cal-body"></div>
       </div>
-      <div class="card"><div class="card-header"><span class="card-title">📋 أحداث الشهر</span></div><div id="cal-events"></div></div>
+      <div class="card"><div class="card-header"><span class="card-title">📋 <span data-i18n="card_month_events">أحداث الشهر</span></span></div><div id="cal-events"></div></div>
     </div>
 
     <!-- ══ INSPECTIONS ══ -->
     <div id="screen-inspections" class="screen">
-      <div class="ph"><div class="pt">🔍 الفحوصات</div><button class="btn btn-primary btn-sm" onclick="openInspectionModal()">➕ فحص</button></div>
+      <div class="ph"><div class="pt">🔍 <span data-i18n="scr_inspections">الفحوصات</span></div><button class="btn btn-primary btn-sm" onclick="openInspectionModal()" data-i18n="btn_add_inspect">➕ فحص</button></div>
       <div style="display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap;">
         <select id="if-hive" class="form-control" style="width:auto;" onchange="renderInspections()"><option value="all">كل <span data-i18n="scr_hives">الخلايا</span></option></select>
         <input type="month" id="if-month" class="form-control" style="width:auto;" onchange="renderInspections()">
@@ -1441,65 +1458,65 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ WEIGHTS ══ -->
     <div id="screen-weights" class="screen">
-      <div class="ph"><div><div class="pt">⚖️ <span data-i18n="scr_weights">سجل الأوزان</span></div><div class="ps" data-i18n="ps_weights">تتبع وزن الخلايا أسبوعياً</div></div><button class="btn btn-primary btn-sm" onclick="openWeightModal()">➕ وزن</button></div>
+      <div class="ph"><div><div class="pt">⚖️ <span data-i18n="scr_weights">سجل الأوزان</span></div><div class="ps">تتبع وزن <span data-i18n="scr_hives">الخلايا</span> أسبوعياً</div></div><button class="btn btn-primary btn-sm" onclick="openWeightModal()" data-i18n="btn_add_weight">➕ وزن</button></div>
       <div style="display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap;">
         <select id="wf-hive" class="form-control" style="width:auto;" onchange="renderWeights()"><option value="all">كل <span data-i18n="scr_hives">الخلايا</span></option></select>
       </div>
-      <div class="card mb10"><div class="card-header"><span class="card-title">📈 منحنى الأوزان</span></div><canvas id="ch-weights" height="190"></canvas></div>
+      <div class="card mb10"><div class="card-header"><span class="card-title">📈 <span data-i18n="card_weight_chart">منحنى الأوزان</span></span></div><canvas id="ch-weights" height="190"></canvas></div>
       <div id="weights-list"></div>
     </div>
 
     <!-- ══ HARVEST ══ -->
     <div id="screen-harvest" class="screen">
-      <div class="ph"><div class="pt">🍯 <span data-i18n="nav_harvest">سجل الحصاد</span></div><button class="btn btn-primary btn-sm" onclick="openHarvestModal()">➕ حصاد</button></div>
+      <div class="ph"><div class="pt">🍯 <span data-i18n="nav_harvest">سجل الحصاد</span></div><button class="btn btn-primary btn-sm" onclick="openHarvestModal()" data-i18n="btn_add_harvest">➕ حصاد</button></div>
       <div class="grid-3 mb10" id="harv-stats" style="margin-bottom:11px;"></div>
-      <div class="card"><div class="card-header"><span class="card-title">📋 تفاصيل الحصاد</span></div><div id="harv-list"></div></div>
+      <div class="card"><div class="card-header"><span class="card-title">📋 <span data-i18n="card_harv_detail">تفاصيل الحصاد</span></span></div><div id="harv-list"></div></div>
     </div>
 
     <!-- ══ QUEENS ══ -->
     <div id="screen-queens" class="screen">
       <div class="ph"><div class="pt">🧬 <span data-i18n="scr_queens">جينات الملكات</span></div><button class="btn btn-primary btn-sm" onclick="openQueenModal()">➕ تقييم</button></div>
       <div class="table-wrap"><table>
-        <thead><tr><th>الخلية</th><th>المنحل</th><th>هدوء</th><th>إنتاج</th><th>نظافة</th><th>مقاومة</th><th>المتوسط</th><th>التوصية</th><th></th></tr></thead>
+        <thead><tr><th data-i18n="tbl_hive">الخلية</th><th data-i18n="tbl_apiary">المنحل</th><th data-i18n="tbl_calm">هدوء</th><th data-i18n="tbl_prod">إنتاج</th><th data-i18n="tbl_clean">نظافة</th><th data-i18n="tbl_resist">مقاومة</th><th data-i18n="tbl_avg">المتوسط</th><th data-i18n="tbl_rec">التوصية</th><th></th></tr></thead>
         <tbody id="queens-tb"></tbody>
       </table></div>
     </div>
 
     <!-- ══ HEALTH CERTS ══ -->
     <div id="screen-health" class="screen">
-      <div class="ph"><div class="pt">📜 <span data-i18n="nav_health">الشهادات الصحية</span></div><button class="btn btn-primary btn-sm" onclick="openCertModal()">➕ إصدار</button></div>
+      <div class="ph"><div class="pt">📜 <span data-i18n="nav_health">الشهادات الصحية</span></div><button class="btn btn-primary btn-sm" onclick="openCertModal()" data-i18n="btn_add_cert">➕ إصدار</button></div>
       <div id="certs-list"></div>
     </div>
 
     <!-- ══ ASSETS ══ -->
     <div id="screen-assets" class="screen">
-      <div class="ph"><div class="pt">🏷️ <span>باركود <span data-i18n="scr_assets">المعدات</span></span></div><button class="btn btn-primary btn-sm" onclick="openAssetModal()">➕ معدة</button></div>
+      <div class="ph"><div class="pt">🏷️ <span>باركود <span data-i18n="scr_assets">المعدات</span></span></div><button class="btn btn-primary btn-sm" onclick="openAssetModal()" data-i18n="btn_add_asset">➕ معدة</button></div>
       <div class="grid-auto" id="assets-grid"></div>
     </div>
 
     <!-- ══ INVENTORY ══ -->
     <div id="screen-inventory" class="screen">
-      <div class="ph"><div class="pt">📦 <span data-i18n="nav_inventory">المخزن</span></div><button class="btn btn-primary btn-sm" onclick="openProductModal()"><span data-i18n="add_product">➕ منتج</span></button></div>
+      <div class="ph"><div class="pt">📦 <span data-i18n="nav_inventory">المخزن</span></div><button class="btn btn-primary btn-sm" onclick="openProductModal()"><span><span data-i18n="add_product">➕ منتج</span></span></button></div>
       <div class="grid-auto" id="inv-grid"></div>
     </div>
 
     <!-- ══ STORE ══ -->
     <div id="screen-store" class="screen">
-      <div class="ph"><div class="pt">🛒 <span><span data-i18n="scr_store">المتجر</span> المباشر</span></div><button class="btn btn-primary btn-sm" onclick="openStoreModal()"><span data-i18n="add_product">➕ منتج</span></button></div>
+      <div class="ph"><div class="pt">🛒 <span><span data-i18n="scr_store">المتجر</span> المباشر</span></div><button class="btn btn-primary btn-sm" onclick="openStoreModal()"><span><span data-i18n="add_product">➕ منتج</span></span></button></div>
       <div class="grid-auto" id="store-grid"></div>
       <button class="btn btn-secondary" style="width:100%;margin-top:10px;" onclick="copyStoreLink()">🔗 نسخ رابط <span data-i18n="scr_store">المتجر</span></button>
     </div>
 
     <!-- ══ CRM ══ -->
     <div id="screen-crm" class="screen">
-      <div class="ph"><div class="pt">👥 <span data-i18n="nav_crm">العملاء</span></div><button class="btn btn-primary btn-sm" onclick="openCustomerModal()">➕ عميل</button></div>
+      <div class="ph"><div class="pt">👥 <span data-i18n="nav_crm">العملاء</span></div><button class="btn btn-primary btn-sm" onclick="openCustomerModal()" data-i18n="btn_add_customer">➕ عميل</button></div>
       <input class="form-control" id="crm-search" placeholder="🔍 بحث..." oninput="renderCRM()" style="margin-bottom:11px;max-width:260px;">
       <div class="grid-auto" id="crm-grid"></div>
     </div>
 
     <!-- ══ SALES ══ -->
     <div id="screen-sales" class="screen">
-      <div class="ph"><div class="pt">💰 <span data-i18n="scr_sales">المبيعات</span></div><button class="btn btn-primary btn-sm" onclick="openSaleModal()">🧾 فاتورة</button></div>
+      <div class="ph"><div class="pt">💰 <span data-i18n="scr_sales">المبيعات</span></div><button class="btn btn-primary btn-sm" onclick="openSaleModal()" data-i18n="btn_add_sale">🧾 فاتورة</button></div>
       <div class="grid-2 mb10" id="sales-stats" style="margin-bottom:11px;"></div>
       <div class="card"><div class="card-header"><span class="card-title">📋 <span data-i18n="nav_invoice">الفواتير</span></span></div>
         <div class="table-wrap"><table>
@@ -1511,7 +1528,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ EXPENSES ══ -->
     <div id="screen-expenses" class="screen">
-      <div class="ph"><div class="pt">💸 <span data-i18n="nav_expenses">المصاريف</span></div><button class="btn btn-primary btn-sm" onclick="openExpenseModal()">➕ مصروف</button></div>
+      <div class="ph"><div class="pt">💸 <span data-i18n="nav_expenses">المصاريف</span></div><button class="btn btn-primary btn-sm" onclick="openExpenseModal()" data-i18n="btn_add_expense">➕ مصروف</button></div>
       <div class="grid-2 mb10" id="exp-stats" style="margin-bottom:11px;"></div>
       <div class="table-wrap"><table>
         <thead><tr><th data-i18n="lbl_description">الوصف</th><th>الفئة</th><th>المبلغ</th><th data-i18n="lbl_date">التاريخ</th><th></th></tr></thead>
@@ -1521,7 +1538,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ PROFIT ══ -->
     <div id="screen-profit" class="screen">
-      <div class="ph"><div class="pt">💹 الربح والخسارة</div></div>
+      <div class="ph"><div class="pt">💹 <span data-i18n="scr_profit">الربح والخسارة</span></div></div>
       <div class="grid-3 mb10" id="profit-stats" style="margin-bottom:11px;"></div>
       <div class="card mb10"><div class="card-header"><span class="card-title">📊 إيرادات مقابل مصاريف (6 أشهر)</span></div><canvas id="ch-profit" height="190"></canvas></div>
       <div class="grid-2">
@@ -1532,7 +1549,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ FINANCE ══ -->
     <div id="screen-finance" class="screen">
-      <div class="ph"><div class="pt">📈 <span data-i18n="nav_finance">التقارير المالية</span></div><button class="btn btn-danger btn-sm" onclick="exportPDF()">📄 PDF</button></div>
+      <div class="ph"><div class="pt">📈 <span data-i18n="nav_finance">التقارير المالية</span></div><button class="btn btn-danger btn-sm" onclick="exportPDF()" data-i18n="btn_pdf">📄 PDF</button></div>
       <div class="grid-3 mb10" id="fin-stats" style="margin-bottom:11px;"></div>
       <div class="grid-2">
         <div class="card"><div class="card-header"><span class="card-title">📊 إيرادات سنوية</span></div><canvas id="ch-annual" height="180"></canvas></div>
@@ -1551,7 +1568,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <!-- Language Picker -->
       <div class="card" style="border-color:rgba(33,150,243,.25);">
         <div class="card-header" style="background:rgba(33,150,243,.06);">
-          <span class="card-title">🌍 <span data-i18n="lang_select">اختر لغتك</span></span>
+          <span class="card-title">🌍 <span><span data-i18n="lang_select">اختر لغتك</span></span></span>
           <span id="lang-current-flag" style="font-size:18px;"><span data-i18n="_flag">🇩🇿</span></span>
         </div>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:4px 0;">
@@ -1638,7 +1655,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <!-- اختيار اللغة -->
       <div class="card mt10" style="border-color:rgba(33,150,243,.2);">
         <div class="card-header">
-          <span class="card-title">🌐 <span data-i18n="lang_select">اختر لغتك</span></span>
+          <span class="card-title">🌐 <span><span data-i18n="lang_select">اختر لغتك</span></span></span>
           <span id="current-lang-flag" style="font-size:18px;"><span data-i18n="_flag">🇩🇿</span></span>
         </div>
         <div id="lang-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:4px;"></div>
@@ -1650,7 +1667,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div style="display:flex;gap:7px;flex-wrap:wrap;">
           <button class="btn btn-primary btn-sm" onclick="autoBackup()"><span data-i18n="btn_backup">💾 نسخ احتياطي</span></button>
           <button class="btn btn-secondary btn-sm" onclick="exportData()"><span data-i18n="btn_export">📤 تصدير</span></button>
-          <button class="btn btn-secondary btn-sm" onclick="triggerImport()">📥 استيراد</button>
+          <button class="btn btn-secondary btn-sm" onclick="triggerImport()" data-i18n="btn_import_data">📥 استيراد</button>
           <button class="btn btn-danger btn-sm" onclick="confirmClear()"><span data-i18n="btn_delete">🗑️ حذف</span> <span data-i18n="lbl_all">الكل</span></button>
         </div>
         <div style="margin-top:6px;font-size:10px;color:var(--text3);" id="ds-info"></div>
@@ -1662,7 +1679,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <!-- ══ TEMP MONITOR ══ -->
     <div id="screen-tempmon" class="screen">
       <div class="ph">
-        <div><div class="pt">🌡️ مراقبة درجة الحرارة</div><div class="ps">تتبع حرارة <span data-i18n="scr_hives">الخلايا</span> يدوياً أو عبر مستشعر</div></div>
+        <div><div class="pt">🌡️ <span data-i18n="scr_tempmon">مراقبة درجة الحرارة</span></div><div class="ps">تتبع حرارة <span data-i18n="scr_hives">الخلايا</span> يدوياً أو عبر مستشعر</div></div>
         <button class="btn btn-primary btn-sm" onclick="openTempModal()">+ إضافة قراءة</button>
       </div>
       <div class="temp-add-form">
@@ -1690,7 +1707,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div id="screen-advstats" class="screen">
       <div class="ph">
         <div><div class="pt">📊 <span data-i18n="nav_advstats">إحصائيات متقدمة</span></div><div class="ps">تحليل شامل لأداء المنحل</div></div>
-        <button class="btn btn-primary btn-sm" onclick="renderAdvStats()">🔄 تحديث</button>
+        <button class="btn btn-primary btn-sm" onclick="renderAdvStats()" data-i18n="btn_refresh">🔄 تحديث</button>
       </div>
       <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-bottom:12px;" id="advstats-kpis"></div>
       <div class="stat-section">
@@ -1835,7 +1852,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div><div class="pt">📋 <span data-i18n="nav_annual">التقرير السنوي</span></div><div class="ps">ملخص شامل للسنة</div></div>
         <div style="display:flex;gap:6px;">
           <select id="ann-year-sel" class="form-control" style="width:90px;font-size:11px;" onchange="renderAnnual()"></select>
-          <button class="btn btn-primary btn-sm" onclick="exportAnnualPDF()">🖨️ طباعة</button>
+          <button class="btn btn-primary btn-sm" onclick="exportAnnualPDF()" data-i18n="btn_print">🖨️ طباعة</button>
         </div>
       </div>
       <div id="annual-content"></div>
@@ -1843,7 +1860,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ THEMES ══ -->
     <div id="screen-themes" class="screen">
-      <div class="ph"><div><div class="pt">🎨 <span><span data-i18n="scr_themes">الثيمات</span> والمظهر</span></div><div class="ps">خصّص شكل التطبيق</div></div></div>
+      <div class="ph"><div><div class="pt" data-i18n="scr_themes">🎨 <span><span data-i18n="scr_themes">الثيمات</span> والمظهر</span></div><div class="ps">خصّص شكل التطبيق</div></div></div>
 
       <!-- ══ قسم اللغة ══ -->
       <div class="ann-section">
@@ -2236,7 +2253,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ CONTACT ══ -->
     <div id="screen-contact" class="screen">
-      <div class="ph"><div class="pt">📬 <span data-i18n="scr_contact">اتصل بنا</span></div></div>
+      <div class="ph"><div class="pt" data-i18n="contact_title"><span>📬 <span data-i18n="scr_contact">اتصل بنا</span></span></div></div>
       <div class="card" style="text-align:center;padding:24px 20px;">
         <div style="font-size:48px;margin-bottom:12px;">🐝</div>
         <div style="font-family:'Syne','Cairo',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:6px;"><span data-i18n="lic_title">NectarOS</span></div>
@@ -2399,7 +2416,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ WEATHER ══ -->
     <div id="screen-weather" class="screen">
-      <div class="ph"><div><div class="pt">🌡️ <span>طقس <span data-i18n="bn_apiaries">المناحل</span></span></div><div class="ps">بيانات حية من Open-Meteo — مجاني</div></div>
+      <div class="ph"><div><div class="pt" data-i18n="scr_weather">🌡️ <span>طقس <span data-i18n="bn_apiaries">المناحل</span></span></div><div class="ps">بيانات حية من Open-Meteo — مجاني</div></div>
         <button class="btn btn-primary btn-sm" onclick="refreshWeather()">🔄 تحديث</button>
       </div>
       <div id="weather-content"><div class="empty-s"><div class="ei">🌤️</div><p>اضغط تحديث لجلب الطقس</p></div></div>
@@ -2443,7 +2460,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ PLANTS DATABASE ══ -->
     <div id="screen-plants" class="screen">
-      <div class="ph"><div class="pt">🌿 <span>نباتات <span data-i18n="bn_apiaries">المناحل</span></span></div><div class="ps">قاعدة بيانات النباتات المثالية لتربية النحل</div></div>
+      <div class="ph"><div class="pt" data-i18n="scr_plants">🌿 <span>نباتات <span data-i18n="bn_apiaries">المناحل</span></span></div><div class="ps">قاعدة بيانات النباتات المثالية لتربية النحل</div></div>
       <div style="display:flex;gap:7px;margin-bottom:11px;flex-wrap:wrap;">
         <input id="plant-search" class="form-control" placeholder="🔍 ابحث عن نبات..." oninput="renderPlants()" style="flex:1;max-width:260px;">
         <select id="plant-season" class="form-control" style="width:auto;" onchange="renderPlants()">
@@ -2612,10 +2629,10 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <!-- ══ BOTTOM NAV (mobile only) ══ -->
 <nav id="bottom-nav">
   <div class="bn-item" id="bn-dashboard" onclick="go('dashboard')"><span class="bn-icon">📊</span><span class="bn-label" data-i18n="bn_dashboard">الرئيسية</span></div>
-  <div class="bn-item" id="bn-hives" onclick="go('hives')"><span class="bn-icon">⬡</span><span class="bn-label" data-i18n="bn_hives">الخلايا</span></div>
+  <div class="bn-item" id="bn-hives" onclick="go('hives')"><span class="bn-icon">⬡</span><span class="bn-label"><span data-i18n="scr_hives">الخلايا</span></span></div>
   <div class="bn-item" id="bn-apiaries" onclick="go('apiaries')"><span class="bn-icon">🗺️</span><span class="bn-label" data-i18n="bn_apiaries">المناحل</span></div>
   <div class="bn-item" id="bn-ai" onclick="go('ai')"><span class="bn-icon">🤖</span><span class="bn-label" data-i18n="bn_ai">الذكاء</span></div>
-  <div class="bn-item" id="bn-more" onclick="toggleSB()"><span class="bn-icon">☰</span><span class="bn-label" data-i18n="btn_more">المزيد</span></div>
+  <div class="bn-item" id="bn-more" onclick="toggleSB()"><span class="bn-icon">☰</span><span class="bn-label"><span data-i18n="btn_more">المزيد</span></span></div>
 </nav>
 
 </div><!-- /app -->
@@ -3174,7 +3191,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="modal-body">
       <input type="hidden" id="tm-id">
       <div class="form-row">
-        <div class="form-group"><label class="form-label"><span data-i18n="lbl_name">الاسم</span></label><input id="tm-name" class="form-control" placeholder="اسم العضو"></div>
+        <div class="form-group"><label class="form-label" data-i18n="lbl_name">الاسم</label><input id="tm-name" class="form-control" placeholder="اسم العضو"></div>
         <div class="form-group"><label class="form-label">الدور</label>
           <select id="tm-role" class="form-control">
             <option value="owner">👑 مالك</option>
@@ -4844,7 +4861,7 @@ function exportPDF(){
   w.document.write(`<!DOCTYPE html><html dir="rtl" lang="ar"><head><meta charset="UTF-8"><title>تقرير <span data-i18n="lic_title">NectarOS</span> — ${s.name||'المزرعة'}</title>
   <style>
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:Arial,'Cairo',sans-serif;background:#fff;color:#1a1a00;padding:24px;font-size:12px;direction:<span data-i18n="_dir">rtl</span>;}
+    body{font-family:Arial,'Cairo',sans-serif;background:#fff;color:#1a1a00;padding:24px;font-size:12px;direction:inherit;}
     h1{color:${ac};font-size:22px;border-bottom:3px solid ${ac};padding-bottom:8px;margin-bottom:16px;}
     h2{color:#664400;font-size:14px;margin:18px 0 8px;border-right:4px solid ${ac};padding-right:8px;}
     table{width:100%;border-collapse:collapse;margin-bottom:14px;}
@@ -5282,8 +5299,7 @@ function doLogin(){
   if(u===saved.username&&p===saved.password){
     DB.set('session',{user:u,lang:currentLang,time:Date.now()});
     document.getElementById('login-screen').classList.add('hidden');
-    // إعادة تطبيق الترجمة على التطبيق كاملاً بعد الدخول
-    if(window.I18N) setTimeout(()=>{ I18N.apply(I18N.current, false); }, 50);
+    if(window.I18N) setTimeout(()=>I18N.apply(I18N.current,false),50);
     toast('مرحباً '+u+' 👋','success');
   } else {
     err.textContent=s.login_err_wrong;
@@ -5780,7 +5796,7 @@ async function licContactWhatsApp(){
   let devId = document.getElementById('lic-device-id')?.textContent?.trim() || '';
 
   // إذا لم يكن جاهزاً — نجلبه مباشرة
-  if(!devId || devId === '<span data-i18n="loading">جاري التحميل</span>...' || devId.length < 5){
+  if(!devId || devId === '<span><span data-i18n="loading">جاري التحميل</span>...</span>' || devId.length < 5){
     try{
       const fp = _deviceFP || await getDeviceFingerprint();
       devId = getDeviceId(fp);
@@ -7657,7 +7673,7 @@ function _showInstallGuide(){
   const old=document.getElementById('_pwa_guide');if(old)old.remove();
   const d=document.createElement('div');
   d.id='_pwa_guide';
-  d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:999998;display:flex;align-items:center;justify-content:center;direction:<span data-i18n="_dir">rtl</span>;padding:20px;';
+  d.style.cssText='position:fixed;inset:0;background:rgba(0,0,0,.86);z-index:999998;display:flex;align-items:center;justify-content:center;direction:inherit;padding:20px;';
   d.innerHTML=`<div style="background:#1a1a1a;border:2px solid #FFC107;border-radius:18px;padding:26px 22px;max-width:340px;width:100%;box-shadow:0 0 50px rgba(255,193,7,.2);">
     <div style="text-align:center;margin-bottom:16px;"><div style="font-size:34px;">📲</div><div style="color:#FFC107;font-weight:800;font-size:15px;margin-top:5px;">تثبيت <span data-i18n="lic_title">NectarOS</span></div><div style="color:#888;font-size:11px;margin-top:3px;">${browser}</div></div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:18px;">${steps.map(s=>`<div style="background:#252525;border-radius:9px;padding:10px 13px;font-size:12px;color:#e0e0e0;line-height:1.6;">${s}</div>`).join('')}</div>
@@ -8526,17 +8542,12 @@ if(_isOwnerNow){
 function hideSplash(){
   const s=document.getElementById('splash');
   if(!s||s.classList.contains('hide'))return;
-  // استخدام I18N لترجمة رسائل الـ splash
-  const _t = (k, fb) => (window.I18N ? I18N.t(k) : null) || fb;
-  const msgs=[
-    _t('splash_loading',  'جاري تحميل البيانات...'),
-    _t('splash_init',     'تهيئة الواجهة...'),
-    _t('splash_ready',    'جاهز! 🐝')
-  ];
+  const _t=(k,fb)=>(window.I18N?I18N.t(k):null)||fb;
+  const msgs=[_t('splash_loading','Loading...'),_t('splash_init','Initializing...'),_t('splash_ready','Ready! 🐝')];
   let i=0;
   const iv=setInterval(()=>{
     const m=document.getElementById('splash-msg');
-    if(m&&msgs[i]) m.textContent=msgs[i];
+    if(m&&msgs[i])m.textContent=msgs[i];
     i++;
     if(i>=msgs.length){
       clearInterval(iv);
@@ -8549,7 +8560,7 @@ function hideSplash(){
   // Fallback: force remove after 3 seconds no matter what
   setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} }, 3000);
 }
-// hideSplash is already called in checkLicense().finally() above
+// hideSplash called in checkLicense().finally()
 
 /* ══════════════════════════════════════════════════
    🌾 FIELD MODE
@@ -9090,7 +9101,7 @@ function previewInvoice(){
         <div style="font-size:11px;color:#555;">العميل: ${cust?.name||'عميل عام'}</div>
       </div>
     </div>
-    <table><thead><tr><th>الوصف</th><th data-i18n="lbl_quantity">الكمية</th><th data-i18n="lbl_price">السعر</th><th>الإجمالي</th></tr></thead>
+    <table><thead><tr><th>الوصف</th><th data-i18n="lbl_quantity">الكمية</th><th><span data-i18n="lbl_price">السعر</span></th><th>الإجمالي</th></tr></thead>
     <tbody>${invItemRows.map(r=>`<tr><td>${r.name}</td><td>${r.qty}</td><td>${fmt$(r.price)}</td><td>${fmt$(r.qty*r.price)}</td></tr>`).join('')}</tbody>
     <tfoot>
       ${disc>0?`<tr><td colspan="3">خصم ${disc}%</td><td>-${fmt$(discAmt)}</td></tr>`:''}
@@ -9809,7 +9820,7 @@ async function adminExtendLicense(deviceId){
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:9999;display:flex;align-items:center;justify-content:center;';
     overlay.innerHTML = `
-      <div style="background:var(--card);border-radius:14px;padding:20px;width:280px;direction:rtl;">
+      <div style="background:var(--card);border-radius:14px;padding:20px;width:280px;">
         <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;">📅 <span data-i18n="trial_extension">تمديد</span> الترخيص</div>
         <div style="font-size:10px;color:var(--text3);margin-bottom:10px;font-family:monospace;">${deviceId}</div>
         ${options.map((o,i)=>`<button onclick="this.closest('div[style]').dataset.choice='${days[i]}'" style="display:block;width:100%;background:var(--bg3);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px;margin-bottom:6px;font-family:'Cairo',sans-serif;font-size:12px;cursor:pointer;text-align:right;">${o}</button>`).join('')}
