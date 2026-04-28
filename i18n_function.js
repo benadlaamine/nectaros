@@ -4,7 +4,7 @@
 ═══════════════════════════════════════════════════════════════ */
 
 // Current language (default: Arabic)
-let CURRENT_LANG = localStorage.getItem('nectaros_lang') || 'ar';
+// CURRENT_LANG handled by lang.js
 
 // Initialize i18n system
 function initI18n() {

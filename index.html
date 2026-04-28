@@ -916,6 +916,7 @@ html[dir="ltr"] .form-row { flex-direction: row; }
 html[dir="rtl"] .modal, html[dir="rtl"] .card { direction: rtl; }
 html[dir="rtl"] #update-banner { direction: rtl; }
 </style>
+  <script src="./i18n_function.js"></script>
 </head>
 <body>
 
@@ -4876,7 +4877,8 @@ function exportPDF(){
     .profit-row{background:${net>=0?'#e8f5e9':'#ffebee'}!important;}
     footer{text-align:center;margin-top:24px;padding-top:12px;border-top:1px solid #eee;color:#aaa;font-size:9px;}
     @media print{body{padding:10px;}h2{page-break-after:avoid;}table{page-break-inside:auto;}}
-  </style></head><body>
+  </style>  <script src="./i18n_function.js"></script>
+</head><body>
   <div class="header">
     <div style="flex-shrink:0;">${logoHTML}</div>
     <div class="header-text">
@@ -4916,7 +4918,15 @@ function exportPDF(){
   ${totH>0?`<tr><td>🍯 متوسط سعر العسل</td><td>${(totR/totH).toFixed(0)} ${s.currency||'دج'}/<span data-i18n="kg">كغ</span></td></tr>`:''}
   </tbody></table>
   <footer><span data-i18n="lic_title">NectarOS</span> v5.2 — Smart Beekeeping Platform &nbsp;|&nbsp; ${s.name||''} &nbsp;|&nbsp; ${fmtD(today())}</footer>
-  <script>window.onload=()=>window.print();<\/script></body></html>`);
+  <script>window.onload=()=>window.print();<\/script>
+<script>
+window.addEventListener('load', () => {
+  const loaders = document.querySelectorAll('[data-i18n="loading"]');
+  loaders.forEach(el => el.style.display = 'none');
+});
+</script>
+
+</body></html>`);
   w.document.close();log('تصدير تقرير PDF','var(--red)');
 }
 
@@ -6372,7 +6382,15 @@ function addPhoto(input){
 function viewFullPhoto(photoId){
   const p=(DB.get('photos')||[]).find(x=>x.id===photoId);if(!p)return;
   const w=window.open('','_blank');
-  w.document.write('<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="'+p.data+'" style="max-width:100%;max-height:100vh;object-fit:contain;"></body></html>');
+  w.document.write('<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="'+p.data+'" style="max-width:100%;max-height:100vh;object-fit:contain;">
+<script>
+window.addEventListener('load', () => {
+  const loaders = document.querySelectorAll('[data-i18n="loading"]');
+  loaders.forEach(el => el.style.display = 'none');
+});
+</script>
+
+</body></html>');
 }
 function delPhoto(photoId){
   DB.set('photos',(DB.get('photos')||[]).filter(p=>p.id!==photoId));
@@ -9089,7 +9107,8 @@ function previewInvoice(){
   .inv-paper{border:1px solid #ddd;border-radius:8px;padding:24px;}
   table{width:100%;border-collapse:collapse;}th,td{padding:8px 10px;border-bottom:1px solid #eee;text-align:right;}
   th{background:#FFF8E1;font-weight:700;}tfoot td{font-weight:700;border-top:2px solid #FFE082;}
-  @media print{button{display:none;}}</style></head><body>
+  @media print{button{display:none;}}</style>  <script src="./i18n_function.js"></script>
+</head><body>
   <div class="inv-paper">
     <div style="display:flex;justify-content:space-between;border-bottom:3px solid #FFC107;padding-bottom:14px;margin-bottom:16px;">
       <div><div style="font-size:26px;font-weight:900;color:#FF8F00;">🐝 ${s.name||'<span data-i18n="lic_title">NectarOS</span>'}</div>
@@ -9111,7 +9130,15 @@ function previewInvoice(){
     ${document.getElementById('inv-notes').value?`<div style="margin-top:16px;padding:10px;background:#FFF8E1;border-radius:6px;font-size:11px;">${document.getElementById('inv-notes').value}</div>`:''}
   </div>
   <div style="text-align:center;margin-top:12px;"><button onclick="window.print()" style="padding:10px 24px;background:#FFC107;border:none;border-radius:8px;font-weight:700;cursor:pointer;">🖨️ طباعة</button></div>
-  </body></html>`);
+  
+<script>
+window.addEventListener('load', () => {
+  const loaders = document.querySelectorAll('[data-i18n="loading"]');
+  loaders.forEach(el => el.style.display = 'none');
+});
+</script>
+
+</body></html>`);
 }
 
 function renderInvoices(){
@@ -9944,5 +9971,13 @@ function logActivity(action){
 }
 
 </script>
+
+<script>
+window.addEventListener('load', () => {
+  const loaders = document.querySelectorAll('[data-i18n="loading"]');
+  loaders.forEach(el => el.style.display = 'none');
+});
+</script>
+
 </body>
 </html>
