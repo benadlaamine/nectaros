@@ -3,122 +3,48 @@
    Applies translations to all elements with data-i18n attribute
 ═══════════════════════════════════════════════════════════════ */
 
-// Current language (default: Arabic)
-let CURRENT_LANG = localStorage.getItem('nectaros_lang') || 'ar';
-
-// Initialize i18n system
-function initI18n() {
+// Global translation function that doesn't interfere with existing logic
+window.__i18n = function() {
   try {
-    // Apply translations on page load
-    applyTranslations();
-    
-    // Set document language and direction
-    setLanguageAttributes(CURRENT_LANG);
-    
-    // Listen for language changes
-    window.addEventListener('languageChanged', (e) => {
-      CURRENT_LANG = e.detail.lang;
-      applyTranslations();
-      setLanguageAttributes(CURRENT_LANG);
-    });
-    
-    console.log('i18n system initialized');
-  } catch (e) {
-    console.error('Failed to initialize i18n:', e);
-  }
-}
+    const lang = localStorage.getItem('nectaros_lang') || 'ar';
+    if (typeof NECTAR_LANGS === 'undefined') return;
+    const langObj = NECTAR_LANGS[lang];
+    if (!langObj) return;
 
-// Apply translations to all elements with data-i18n attribute
-function applyTranslations() {
-  try {
     const elements = document.querySelectorAll('[data-i18n]');
-    
-    elements.forEach(element => {
-      const key = element.getAttribute('data-i18n');
-      const translation = getTranslation(key, CURRENT_LANG);
-      
+    elements.forEach(el => {
+      const key = el.getAttribute('data-i18n');
+      const translation = langObj[key];
       if (translation) {
-        // Check if element has child nodes or is a simple text element
-        if (element.children.length === 0) {
-          // Simple text element
-          element.textContent = translation;
+        // Only update if it's a simple text element or has no children
+        if (el.children.length === 0) {
+          el.textContent = translation;
         } else {
-          // Element with child nodes - update only the first text node
-          let firstTextNode = null;
-          for (let node of element.childNodes) {
-            if (node.nodeType === 3 && node.textContent.trim()) { // Node.TEXT_NODE = 3
-              firstTextNode = node;
+          // Update only the first text node to preserve icons/spans
+          for (let node of el.childNodes) {
+            if (node.nodeType === 3 && node.textContent.trim()) {
+              node.textContent = translation;
               break;
             }
           }
-          
-          if (firstTextNode) {
-            firstTextNode.textContent = translation;
-          } else {
-            // If no text node found, prepend the translation
-            element.insertBefore(document.createTextNode(translation), element.firstChild);
-          }
         }
-        
-        // Also update common attributes
-        if (element.hasAttribute('placeholder')) {
-          element.setAttribute('placeholder', translation);
-        }
-        if (element.hasAttribute('title')) {
-          element.setAttribute('title', translation);
-        }
-        if (element.hasAttribute('alt')) {
-          element.setAttribute('alt', translation);
-        }
+        // Attributes
+        if (el.hasAttribute('placeholder')) el.setAttribute('placeholder', translation);
+        if (el.hasAttribute('title')) el.setAttribute('title', translation);
       }
     });
+    
+    // Set document direction
+    if (langObj._dir) document.documentElement.setAttribute('dir', langObj._dir);
+    document.documentElement.setAttribute('lang', lang);
   } catch (e) {
-    console.error('Error applying translations:', e);
+    console.warn('i18n error:', e);
   }
-}
+};
 
-// Get translation from NECTAR_LANGS object
-function getTranslation(key, lang) {
-  if (typeof NECTAR_LANGS === 'undefined') {
-    return null;
-  }
-  
-  const langObj = NECTAR_LANGS[lang];
-  if (!langObj) {
-    return null;
-  }
-  
-  return langObj[key] || null;
-}
-
-// Set language attributes on HTML element
-function setLanguageAttributes(lang) {
-  try {
-    const htmlElement = document.documentElement;
-    htmlElement.setAttribute('lang', lang);
-    
-    if (typeof NECTAR_LANGS !== 'undefined' && NECTAR_LANGS[lang] && NECTAR_LANGS[lang]._dir) {
-      htmlElement.setAttribute('dir', NECTAR_LANGS[lang]._dir);
-    }
-  } catch (e) {}
-}
-
-// Change language globally
-function changeLanguage(lang) {
-  if (typeof NECTAR_LANGS !== 'undefined' && NECTAR_LANGS[lang]) {
-    CURRENT_LANG = lang;
-    localStorage.setItem('nectaros_lang', lang);
-    applyTranslations();
-    setLanguageAttributes(lang);
-    
-    // Dispatch custom event for other components to listen to
-    window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
-  }
-}
-
-// Initialize i18n when DOM is ready
+// Run on load
 if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initI18n);
+  document.addEventListener('DOMContentLoaded', window.__i18n);
 } else {
-  initI18n();
+  window.__i18n();
 }
