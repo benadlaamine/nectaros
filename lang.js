@@ -299,6 +299,11 @@ ar: {
   lbl_location:'الموقع',
   lic_sub:'نظام الترخيص',
   lic_tab_devices:'📱 الأجهزة',
+  login_err_empty:'أدخل اسم المستخدم وكلمة المرور',
+  login_err_wrong:'اسم المستخدم أو كلمة المرور خاطئة',
+  contact_form_title:'📨 أرسل رسالة',
+  contact_your_name:'اسمك',
+  contact_your_msg:'رسالتك',
 },
 
 /* ─────────────────────────────────────────────────────────────
@@ -581,6 +586,11 @@ en: {
   lbl_location:'Location',
   lic_sub:'License System',
   lic_tab_devices:'📱 Devices',
+  login_err_empty:'Please enter your credentials',
+  login_err_wrong:'Invalid username or password',
+  contact_form_title:'📨 Send a Message',
+  contact_your_name:'Your Name',
+  contact_your_msg:'Your Message',
 },
 
 /* ─────────────────────────────────────────────────────────────
@@ -3932,6 +3942,9 @@ const I18N = {
   apply(lang, save = true){
     if(!NECTAR_LANGS[lang]) lang = 'ar';
     this.current = lang;
+    window._I18N_LANG = lang;
+    // Sync with T system in index.html
+    if(typeof window.currentLang !== 'undefined') window.currentLang = lang;
     const d   = NECTAR_LANGS[lang];
     const dir = d._dir || 'rtl';
 
@@ -3941,6 +3954,7 @@ const I18N = {
     document.documentElement.lang = lang;
     document.documentElement.dir  = dir;
     document.documentElement.setAttribute('data-lang', lang);
+    document.body && (document.body.dir = dir);
     document.body && (document.body.dir = dir);
 
     /* 2. ترجمة كل [data-i18n] */
@@ -3969,27 +3983,33 @@ const I18N = {
       const tag = el.tagName;
       if(tag==='INPUT'||tag==='TEXTAREA'){
         if(el.placeholder) el.placeholder = val;
-        else el.value = val;
+        if(el.type==='submit'||el.type==='button') el.value = val;
+      } else if(tag==='OPTION'){
+        el.text = val;
       } else if(el.children.length===0){
         el.textContent = val;
       } else {
-        // عنصر يحتوي children: نُحدّث أول text node أو الـ textContent الخالص
-        let updated = false;
+        // Mixed content: update first text node only
+        let done=false;
         for(const node of el.childNodes){
-          if(node.nodeType===3 && node.textContent.trim()){
-            node.textContent = val;
-            updated = true;
-            break;
+          if(node.nodeType===3&&node.textContent.trim()){
+            node.textContent=val;done=true;break;
           }
         }
-        if(!updated) el.firstChild && (el.firstChild.textContent = val);
+        if(!done && el.firstChild) el.firstChild.textContent=val;
       }
+      if(el.hasAttribute('title')&&el.title) el.title=val;
     });
 
-    // 2. إذا اللغة عربية لا حاجة لترجمة ديناميكية
+    // 2. ترجمة ديناميكية إضافية بالـ T system في index.html
+    if(typeof window.applyLang==='function' && lang!==window.currentLang){
+      // لا تستدعي applyLang من هنا لتجنب infinite loop
+    }
+
+    // 3. إذا اللغة عربية لا حاجة لترجمة ديناميكية
     if(lang === 'ar') return;
 
-    // 3. ترجمة ديناميكية للنصوص العربية في الشاشة الحالية
+    // 4. ترجمة ديناميكية للنصوص العربية في الشاشة الحالية
     const screen = document.querySelector('.screen.active') || document.getElementById('content');
     if(screen && typeof translateNode === 'function'){
       translateNode(screen, lang);

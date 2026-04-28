@@ -1,128 +1,116 @@
 /* ═══════════════════════════════════════════════════════════════
-   NectarOS i18n System — Internationalization Function
-   Applies translations to all elements with data-i18n attribute
+   NectarOS i18n Bridge v2.0
+   يعمل كجسر بين نظام I18N (lang.js) ونظام T (index.html)
+   الأولوية: I18N من lang.js ← T من index.html ← النص الأصلي
 ═══════════════════════════════════════════════════════════════ */
 
-// Current language (default: Arabic)
-// CURRENT_LANG handled by lang.js
-
-// Initialize i18n system
-function initI18n() {
-  // Apply translations on page load
-  applyTranslations();
-  
-  // Set document language and direction
-  setLanguageAttributes(CURRENT_LANG);
-  
-  // Listen for language changes
-  window.addEventListener('languageChanged', (e) => {
-    CURRENT_LANG = e.detail.lang;
-    applyTranslations();
-    setLanguageAttributes(CURRENT_LANG);
-  });
+/* الحصول على الترجمة مع fallback ذكي */
+function getTranslation(key, lang) {
+  lang = lang || (window.I18N && window.I18N.current) || 
+         localStorage.getItem('_nec_lang') || 'ar';
+  // 1. I18N system (lang.js)
+  if(window.I18N) {
+    const v = window.I18N.t(key);
+    if(v && v !== key) return v;
+  }
+  // 2. T system (index.html)
+  if(window.T && window.T[lang] && window.T[lang][key]) return window.T[lang][key];
+  if(window.T && window.T['ar'] && window.T['ar'][key]) return window.T['ar'][key];
+  return null;
 }
 
-// Apply translations to all elements with data-i18n attribute
-function applyTranslations() {
-  const elements = document.querySelectorAll('[data-i18n]');
-  
-  elements.forEach(element => {
-    const key = element.getAttribute('data-i18n');
-    const translation = getTranslation(key, CURRENT_LANG);
-    
-    if (translation) {
-      // Check if element has child nodes or is a simple text element
-      if (element.children.length === 0) {
-        // Simple text element
-        element.textContent = translation;
-      } else {
-        // Element with child nodes - update only the first text node
-        let firstTextNode = null;
-        for (let node of element.childNodes) {
-          if (node.nodeType === Node.TEXT_NODE && node.textContent.trim()) {
-            firstTextNode = node;
-            break;
-          }
+/* تطبيق الترجمات على كل العناصر */
+function applyTranslations(root) {
+  root = root || document;
+  const lang = (window.I18N && window.I18N.current) ||
+               localStorage.getItem('_nec_lang') || 'ar';
+  root.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    const val = getTranslation(key, lang);
+    if(!val || val === key) return;
+    const tag = el.tagName;
+    if(tag==='INPUT'||tag==='TEXTAREA'){
+      if(el.placeholder) el.placeholder = val;
+    } else if(tag==='OPTION'){
+      el.text = val;
+    } else if(el.children.length===0){
+      el.textContent = val;
+    } else {
+      for(const node of el.childNodes){
+        if(node.nodeType===3 && node.textContent.trim()){
+          node.textContent = val; break;
         }
-        
-        if (firstTextNode) {
-          firstTextNode.textContent = translation;
-        } else {
-          // If no text node found, prepend the translation
-          element.insertBefore(document.createTextNode(translation), element.firstChild);
-        }
-      }
-      
-      // Also update common attributes
-      if (element.hasAttribute('placeholder')) {
-        element.setAttribute('placeholder', translation);
-      }
-      if (element.hasAttribute('title')) {
-        element.setAttribute('title', translation);
-      }
-      if (element.hasAttribute('alt')) {
-        element.setAttribute('alt', translation);
       }
     }
   });
 }
 
-// Get translation from NECTAR_LANGS object
-function getTranslation(key, lang) {
-  if (typeof NECTAR_LANGS === 'undefined') {
-    console.warn('NECTAR_LANGS not loaded');
-    return null;
-  }
-  
-  const langObj = NECTAR_LANGS[lang];
-  if (!langObj) {
-    console.warn(`Language '${lang}' not found in NECTAR_LANGS`);
-    return null;
-  }
-  
-  return langObj[key] || null;
-}
-
-// Set language attributes on HTML element
+/* ضبط اتجاه الصفحة */
 function setLanguageAttributes(lang) {
-  const htmlElement = document.documentElement;
-  htmlElement.setAttribute('lang', lang);
-  
-  const langObj = NECTAR_LANGS[lang];
-  if (langObj && langObj._dir) {
-    htmlElement.setAttribute('dir', langObj._dir);
-  }
+  const isRTL = ['ar'].includes(lang);
+  const dir = isRTL ? 'rtl' : 'ltr';
+  document.documentElement.setAttribute('lang', lang);
+  document.documentElement.setAttribute('dir', dir);
+  document.body && (document.body.dir = dir);
 }
 
-// Change language globally
+/* تغيير اللغة */
 function changeLanguage(lang) {
-  if (NECTAR_LANGS[lang]) {
-    CURRENT_LANG = lang;
-    localStorage.setItem('nectaros_lang', lang);
-    applyTranslations();
-    setLanguageAttributes(lang);
-    
-    // Dispatch custom event for other components to listen to
-    window.dispatchEvent(new CustomEvent('languageChanged', { detail: { lang } }));
+  if(window.I18N) {
+    window.I18N.apply(lang, true);
+  }
+  if(typeof window.setLang === 'function') {
+    window.setLang(lang);
   } else {
-    console.error(`Language '${lang}' not supported`);
+    localStorage.setItem('_nec_lang', lang);
+    setLanguageAttributes(lang);
+    applyTranslations();
   }
 }
 
-// Get current language
+/* الحصول على اللغة الحالية */
 function getCurrentLanguage() {
-  return CURRENT_LANG;
+  return (window.I18N && window.I18N.current) ||
+         localStorage.getItem('_nec_lang') || 'ar';
 }
 
-// Get all available languages
+/* الحصول على اللغات المتاحة */
 function getAvailableLanguages() {
-  if (typeof NECTAR_LANGS === 'undefined') return [];
-  return Object.keys(NECTAR_LANGS);
+  if(window.NECTAR_LANGS) return Object.keys(window.NECTAR_LANGS);
+  if(window.T) return Object.keys(window.T);
+  return ['ar'];
 }
 
-// Initialize i18n when DOM is ready
-if (document.readyState === 'loading') {
+/* تهيئة النظام */
+function initI18n() {
+  const lang = getCurrentLanguage();
+  setLanguageAttributes(lang);
+  // انتظر I18N من lang.js
+  if(window.I18N) {
+    window.I18N.apply(lang, false);
+  } else {
+    applyTranslations();
+  }
+}
+
+/* تصدير للاستخدام العالمي */
+window.i18nBridge = { getTranslation, applyTranslations, changeLanguage, 
+                      getCurrentLanguage, getAvailableLanguages, initI18n };
+
+/* تشغيل تلقائي */
+if(document.readyState === 'loading'){
   document.addEventListener('DOMContentLoaded', initI18n);
 } else {
-  initI18n();
+  // تأخير بسيط لضمان تحميل lang.js أولاً
+  setTimeout(initI18n, 0);
 }
+
+/* الاستماع لتغييرات اللغة */
+window.addEventListener('langchange', e => {
+  const lang = e.detail && e.detail.lang;
+  if(lang) {
+    if(typeof window.currentLang !== 'undefined') window.currentLang = lang;
+    setLanguageAttributes(lang);
+    applyTranslations();
+  }
+});

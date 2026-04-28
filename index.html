@@ -13,6 +13,7 @@
 <meta name="msapplication-TileColor" content="#FFC107">
 <link rel="manifest" href="./manifest.json">
 <script src="./lang.js"></script>
+  <script src="./i18n_function.js"></script>
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20512%20512%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22body%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C8%20484%2C136%20484%2C376%20256%2C504%2028%2C376%2028%2C136%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C20%20472%2C144%20472%2C368%20256%2C492%2040%2C368%2040%2C144%22%20fill%3D%22%231a1a00%22%20opacity%3D%220.3%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22256%22%20cy%3D%22230%22%20rx%3D%2258%22%20ry%3D%2278%22%20fill%3D%22url%28%23body%29%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22195%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22227%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%22204%22%20y%3D%22259%22%20width%3D%22104%22%20height%3D%2218%22%20rx%3D%229%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22256%22%20cy%3D%22154%22%20r%3D%2236%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22242%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22270%22%20cy%3D%22143%22%20r%3D%227%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22186%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C186%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22326%22%20cy%3D%22185%22%20rx%3D%2248%22%20ry%3D%2224%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C326%2C185%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22192%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%28-20%2C192%2C215%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22320%22%20cy%3D%22215%22%20rx%3D%2232%22%20ry%3D%2216%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.2%29%22%20transform%3D%22rotate%2820%2C320%2C215%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%22256%2C295%20248%2C340%20264%2C340%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%20%20%3Cline%20x1%3D%22242%22%20y1%3D%22120%22%20x2%3D%22222%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Cline%20x1%3D%22270%22%20y1%3D%22120%22%20x2%3D%22290%22%20y2%3D%2292%22%20stroke%3D%22%23333%22%20stroke-width%3D%224%22%20stroke-linecap%3D%22round%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22220%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22292%22%20cy%3D%2290%22%20r%3D%225%22%20fill%3D%22%23333%22%2F%3E%0A%3C%2Fsvg%3E">
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20192%20192%22%3E%0A%20%20%3Cdefs%3E%0A%20%20%20%20%3CradialGradient%20id%3D%22bg%22%20cx%3D%2250%25%22%20cy%3D%2250%25%22%20r%3D%2250%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23E65100%22%2F%3E%0A%20%20%20%20%3C%2FradialGradient%3E%0A%20%20%20%20%3ClinearGradient%20id%3D%22bd%22%20x1%3D%220%25%22%20y1%3D%220%25%22%20x2%3D%220%25%22%20y2%3D%22100%25%22%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%220%25%22%20stop-color%3D%22%23FFD54F%22%2F%3E%0A%20%20%20%20%20%20%3Cstop%20offset%3D%22100%25%22%20stop-color%3D%22%23FF8F00%22%2F%3E%0A%20%20%20%20%3C%2FlinearGradient%3E%0A%20%20%3C%2Fdefs%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C3%20181%2C51%20181%2C141%2096%2C189%2011%2C141%2011%2C51%22%20fill%3D%22url%28%23bg%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2296%22%20cy%3D%2287%22%20rx%3D%2222%22%20ry%3D%2229%22%20fill%3D%22url%28%23bd%29%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2274%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2286%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Crect%20x%3D%2276%22%20y%3D%2298%22%20width%3D%2240%22%20height%3D%227%22%20rx%3D%223.5%22%20fill%3D%22%23222%22%20opacity%3D%220.8%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2296%22%20cy%3D%2258%22%20r%3D%2214%22%20fill%3D%22%23FFD54F%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%2291%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Ccircle%20cx%3D%22101%22%20cy%3D%2254%22%20r%3D%223%22%20fill%3D%22%23333%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%2269%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%28-25%2C69%2C70%29%22%2F%3E%0A%20%20%3Cellipse%20cx%3D%22123%22%20cy%3D%2270%22%20rx%3D%2218%22%20ry%3D%229%22%20fill%3D%22rgba%28255%2C255%2C255%2C0.35%29%22%20transform%3D%22rotate%2825%2C123%2C70%29%22%2F%3E%0A%20%20%3Cpolygon%20points%3D%2296%2C111%2092%2C128%20100%2C128%22%20fill%3D%22%23FF6F00%22%2F%3E%0A%3C%2Fsvg%3E">
 <script>
@@ -916,7 +917,6 @@ html[dir="ltr"] .form-row { flex-direction: row; }
 html[dir="rtl"] .modal, html[dir="rtl"] .card { direction: rtl; }
 html[dir="rtl"] #update-banner { direction: rtl; }
 </style>
-  <script src="./i18n_function.js"></script>
 </head>
 <body>
 
@@ -4877,8 +4877,7 @@ function exportPDF(){
     .profit-row{background:${net>=0?'#e8f5e9':'#ffebee'}!important;}
     footer{text-align:center;margin-top:24px;padding-top:12px;border-top:1px solid #eee;color:#aaa;font-size:9px;}
     @media print{body{padding:10px;}h2{page-break-after:avoid;}table{page-break-inside:auto;}}
-  </style>  <script src="./i18n_function.js"></script>
-</head><body>
+  </style></head><body>
   <div class="header">
     <div style="flex-shrink:0;">${logoHTML}</div>
     <div class="header-text">
@@ -4918,15 +4917,7 @@ function exportPDF(){
   ${totH>0?`<tr><td>🍯 متوسط سعر العسل</td><td>${(totR/totH).toFixed(0)} ${s.currency||'دج'}/<span data-i18n="kg">كغ</span></td></tr>`:''}
   </tbody></table>
   <footer><span data-i18n="lic_title">NectarOS</span> v5.2 — Smart Beekeeping Platform &nbsp;|&nbsp; ${s.name||''} &nbsp;|&nbsp; ${fmtD(today())}</footer>
-  <script>window.onload=()=>window.print();<\/script>
-<script>
-window.addEventListener('load', () => {
-  const loaders = document.querySelectorAll('[data-i18n="loading"]');
-  loaders.forEach(el => el.style.display = 'none');
-});
-</script>
-
-</body></html>`);
+  <script>window.onload=()=>window.print();<\/script></body></html>`);
   w.document.close();log('تصدير تقرير PDF','var(--red)');
 }
 
@@ -5270,14 +5261,27 @@ const T={
     dir:'ltr',locale:'en-US'
   }
 };
-let currentLang='ar';
+let currentLang=localStorage.getItem('_nec_lang')||localStorage.getItem('nectaros_lang')||'ar';
 function applyLang(l){
-  const s=T['ar'];
-  document.documentElement.lang='ar';
-  document.documentElement.dir='rtl';
+  // FIXED: use actual language parameter, not hardcoded 'ar'
+  const lang = l || currentLang || 'ar';
+  currentLang = lang;
+  // Use I18N system from lang.js (primary) with T fallback
+  if(window.I18N && window.NECTAR_LANGS && window.NECTAR_LANGS[lang]){
+    window.I18N.apply(lang, true);
+  }
+  const s = T[lang] || T['ar'];
+  const dir = s.dir || (lang==='ar' ? 'rtl' : 'ltr');
+  document.documentElement.lang = lang;
+  document.documentElement.dir  = dir;
+  document.body && (document.body.dir = dir);
+  // Apply T-based keys
   document.querySelectorAll('[data-i18n]').forEach(el=>{
     const key=el.getAttribute('data-i18n');
-    if(s[key]!==undefined)el.textContent=s[key];
+    // Try I18N first, then T fallback
+    let val = (window.I18N ? window.I18N.t(key) : null);
+    if(!val || val===key) val = s[key];
+    if(val && val!==key) el.textContent=val;
   });
   if(typeof TITLES!=='undefined'){
     TITLES.dashboard=s.nav_dashboard;TITLES.apiaries=s.nav_apiaries;TITLES.map=s.nav_map;
@@ -5292,7 +5296,13 @@ function applyLang(l){
   const activePg=document.querySelector('.nav-item.active')?.id?.replace('nav-','');
   if(activePg&&TITLES[activePg])document.getElementById('pg-title').textContent=TITLES[activePg];
 }
-function setLang(l){ currentLang='ar'; applyLang('ar'); }
+function setLang(l){
+  const lang = l || localStorage.getItem('_nec_lang') || 'ar';
+  currentLang = lang;
+  localStorage.setItem('_nec_lang', lang);
+  applyLang(lang);
+  updateLangUI(lang);
+}
 function doLogin(){
   const u=document.getElementById('login-user').value.trim();
   const p=document.getElementById('login-pass').value;
@@ -5309,7 +5319,11 @@ function doLogin(){
   if(u===saved.username&&p===saved.password){
     DB.set('session',{user:u,lang:currentLang,time:Date.now()});
     document.getElementById('login-screen').classList.add('hidden');
-    if(window.I18N) setTimeout(()=>I18N.apply(I18N.current,false),50);
+    // Apply translations after login with correct language
+    const _loginLang = currentLang || localStorage.getItem('_nec_lang') || 'ar';
+    if(window.I18N) { I18N.apply(_loginLang, false); }
+    applyLang(_loginLang);
+    setTimeout(()=>{ try{ go(window._currentScreen||'dashboard'); }catch(e){} }, 100);
     toast('مرحباً '+u+' 👋','success');
   } else {
     err.textContent=s.login_err_wrong;
@@ -6382,15 +6396,7 @@ function addPhoto(input){
 function viewFullPhoto(photoId){
   const p=(DB.get('photos')||[]).find(x=>x.id===photoId);if(!p)return;
   const w=window.open('','_blank');
-  w.document.write('<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="'+p.data+'" style="max-width:100%;max-height:100vh;object-fit:contain;">
-<script>
-window.addEventListener('load', () => {
-  const loaders = document.querySelectorAll('[data-i18n="loading"]');
-  loaders.forEach(el => el.style.display = 'none');
-});
-</script>
-
-</body></html>');
+  w.document.write('<html><body style="margin:0;background:#000;display:flex;align-items:center;justify-content:center;min-height:100vh;"><img src="'+p.data+'" style="max-width:100%;max-height:100vh;object-fit:contain;"></body></html>');
 }
 function delPhoto(photoId){
   DB.set('photos',(DB.get('photos')||[]).filter(p=>p.id!==photoId));
@@ -8283,11 +8289,14 @@ function initTrialWarningBanner(){
 ══════════════════════════════════════════════════ */
 function setAppLang(lang){
   if(typeof I18N === 'undefined'){ toast('⚠️ ملف lang.js غير محمّل','error'); return; }
-  I18N.apply(lang);
+  currentLang = lang;
+  localStorage.setItem('_nec_lang', lang);
+  I18N.apply(lang, true);
+  applyLang(lang);
   updateLangUI(lang);
   toast('✅ ' + (NECTAR_LANGS[lang]?._name || lang), 'success');
-  // إعادة رسم الشاشة الحالية لتطبيق الترجمة على المحتوى الديناميكي
-  if(typeof go === 'function') setTimeout(()=> go(window._currentScreen||'settings'), 100);
+  // Redraw current screen to apply dynamic translations
+  if(typeof go === 'function') setTimeout(()=> go(window._currentScreen||'settings'), 150);
 }
 
 function updateLangUI(lang){
@@ -8536,8 +8545,14 @@ checkLicense().catch(e => {
   console.warn('[LIC] checkLicense failed:', e);
   try { showLicenseScreen('trial'); } catch(e2) {}
 }).finally(() => {
-  // ضمان إخفاء splash في كل الأحوال
-  setTimeout(hideSplash, 100);
+  // Apply language before hiding splash
+  try{
+    const _initLang = localStorage.getItem('_nec_lang') || localStorage.getItem('nectaros_lang') || 'ar';
+    currentLang = _initLang;
+    if(window.I18N) I18N.apply(_initLang, false);
+    applyLang(_initLang);
+  } catch(e){ console.warn('lang init:', e); }
+  setTimeout(hideSplash, 50);
 });
 // Check session (valid for 24h) + دخول تلقائي للمالك
 const sess=DB.get('session');
@@ -8550,7 +8565,7 @@ if(_isOwnerNow){
   }
 } else if(sess&&sess.time&&(Date.now()-sess.time)<86400000){
   document.getElementById('login-screen').classList.add('hidden');
-  currentLang=sess.lang||'ar';
+  currentLang = sess.lang || localStorage.getItem('_nec_lang') || 'ar';
   setLang(currentLang);
 }
 
@@ -8560,6 +8575,11 @@ if(_isOwnerNow){
 function hideSplash(){
   const s=document.getElementById('splash');
   if(!s||s.classList.contains('hide'))return;
+  // Apply current language before hiding
+  try{
+    const lang=localStorage.getItem('_nec_lang')||'ar';
+    if(window.I18N) window.I18N.apply(lang,false);
+  }catch(e){}
   const _t=(k,fb)=>(window.I18N?I18N.t(k):null)||fb;
   const msgs=[_t('splash_loading','Loading...'),_t('splash_init','Initializing...'),_t('splash_ready','Ready! 🐝')];
   let i=0;
@@ -8571,12 +8591,15 @@ function hideSplash(){
       clearInterval(iv);
       setTimeout(()=>{
         s.classList.add('hide');
-        setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },600);
-      },200);
+        setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },400);
+      },100);
     }
-  },400);
-  // Fallback: force remove after 3 seconds no matter what
-  setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} }, 3000);
+  },250);
+  // Fallback: force remove after 2.5 seconds no matter what
+  setTimeout(()=>{
+    s.classList.add('hide');
+    setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },400);
+  }, 2500);
 }
 // hideSplash called in checkLicense().finally()
 
@@ -9107,8 +9130,18 @@ function previewInvoice(){
   .inv-paper{border:1px solid #ddd;border-radius:8px;padding:24px;}
   table{width:100%;border-collapse:collapse;}th,td{padding:8px 10px;border-bottom:1px solid #eee;text-align:right;}
   th{background:#FFF8E1;font-weight:700;}tfoot td{font-weight:700;border-top:2px solid #FFE082;}
-  @media print{button{display:none;}}</style>  <script src="./i18n_function.js"></script>
-</head><body>
+  @media print{button{display:none;}}
+/* ═══ i18n Dynamic Direction ═══ */
+html[dir="ltr"] .sidebar,html[dir="ltr"] .topbar,
+html[dir="ltr"] .modal,html[dir="ltr"] .card,
+html[dir="ltr"] .screen,html[dir="ltr"] .form-group,
+html[dir="ltr"] .ph,html[dir="ltr"] .login-card,
+html[dir="ltr"] #license-screen,html[dir="ltr"] #update-banner,
+html[dir="ltr"] #trial-warn-banner { direction:ltr; text-align:left; }
+html[dir="ltr"] .form-row { flex-direction:row; }
+html[dir="ltr"] .toast { direction:ltr; text-align:left; }
+html[dir="rtl"] .modal,html[dir="rtl"] .card { direction:rtl; text-align:right; }
+</style></head><body>
   <div class="inv-paper">
     <div style="display:flex;justify-content:space-between;border-bottom:3px solid #FFC107;padding-bottom:14px;margin-bottom:16px;">
       <div><div style="font-size:26px;font-weight:900;color:#FF8F00;">🐝 ${s.name||'<span data-i18n="lic_title">NectarOS</span>'}</div>
@@ -9130,15 +9163,7 @@ function previewInvoice(){
     ${document.getElementById('inv-notes').value?`<div style="margin-top:16px;padding:10px;background:#FFF8E1;border-radius:6px;font-size:11px;">${document.getElementById('inv-notes').value}</div>`:''}
   </div>
   <div style="text-align:center;margin-top:12px;"><button onclick="window.print()" style="padding:10px 24px;background:#FFC107;border:none;border-radius:8px;font-weight:700;cursor:pointer;">🖨️ طباعة</button></div>
-  
-<script>
-window.addEventListener('load', () => {
-  const loaders = document.querySelectorAll('[data-i18n="loading"]');
-  loaders.forEach(el => el.style.display = 'none');
-});
-</script>
-
-</body></html>`);
+  </body></html>`);
 }
 
 function renderInvoices(){
@@ -9971,13 +9996,5 @@ function logActivity(action){
 }
 
 </script>
-
-<script>
-window.addEventListener('load', () => {
-  const loaders = document.querySelectorAll('[data-i18n="loading"]');
-  loaders.forEach(el => el.style.display = 'none');
-});
-</script>
-
 </body>
 </html>
