@@ -1,50 +1,33 @@
 /* ═══════════════════════════════════════════════════════════════
-   NectarOS i18n System — Internationalization Function
-   Applies translations to all elements with data-i18n attribute
+   NectarOS i18n Bridge — يعمل مع نظام I18N في lang.js
+   هذا الملف محجوز للتوافقية — النظام الأساسي في lang.js
 ═══════════════════════════════════════════════════════════════ */
 
-// Global translation function that doesn't interfere with existing logic
-window.__i18n = function() {
-  try {
-    const lang = localStorage.getItem('nectaros_lang') || 'ar';
-    if (typeof NECTAR_LANGS === 'undefined') return;
-    const langObj = NECTAR_LANGS[lang];
-    if (!langObj) return;
+// Bridge: يعيد توجيه طلبات i18n.js إلى I18N في lang.js
+// لا يعرّف CURRENT_LANG منفصلاً لتجنب التعارض
 
-    const elements = document.querySelectorAll('[data-i18n]');
-    elements.forEach(el => {
-      const key = el.getAttribute('data-i18n');
-      const translation = langObj[key];
-      if (translation) {
-        // Only update if it's a simple text element or has no children
-        if (el.children.length === 0) {
-          el.textContent = translation;
-        } else {
-          // Update only the first text node to preserve icons/spans
-          for (let node of el.childNodes) {
-            if (node.nodeType === 3 && node.textContent.trim()) {
-              node.textContent = translation;
-              break;
-            }
-          }
-        }
-        // Attributes
-        if (el.hasAttribute('placeholder')) el.setAttribute('placeholder', translation);
-        if (el.hasAttribute('title')) el.setAttribute('title', translation);
-      }
-    });
-    
-    // Set document direction
-    if (langObj._dir) document.documentElement.setAttribute('dir', langObj._dir);
-    document.documentElement.setAttribute('lang', lang);
-  } catch (e) {
-    console.warn('i18n error:', e);
+function applyTranslations() {
+  if(window.I18N) {
+    window.I18N.translateAll();
   }
-};
+}
 
-// Run on load
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', window.__i18n);
-} else {
-  window.__i18n();
+function changeLanguage(lang) {
+  if(window.I18N) {
+    window.I18N.apply(lang);
+  }
+}
+
+function getCurrentLanguage() {
+  return window.I18N ? window.I18N.current : (localStorage.getItem('_nec_lang') || 'ar');
+}
+
+function getAvailableLanguages() {
+  if(window.NECTAR_LANGS) return Object.keys(window.NECTAR_LANGS);
+  return ['ar'];
+}
+
+// initI18n: no-op — lang.js handles initialization via _i18nReady()
+function initI18n() {
+  // handled by lang.js
 }

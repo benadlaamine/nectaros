@@ -14,6 +14,8 @@ ar: {
 
   /* App shell */
   app_name:'NectarOS', app_sub:'نظام إدارة المناحل الذكي',
+  splash_loading:'جاري تحميل البيانات...', splash_init:'تهيئة الواجهة...', splash_ready:'جاهز! 🐝',
+  lic_extend_text:'التجربة 15 يوم إضافياً', device_id_label:'معرّف الجهاز',
   loading:'جاري التحميل',
 
   /* Update banner */
@@ -223,6 +225,8 @@ en: {
   _dir:'ltr', _name:'English', _flag:'🇬🇧',
 
   app_name:'NectarOS', app_sub:'Smart Apiary Management System',
+  splash_loading:'Loading data...', splash_init:'Initializing interface...', splash_ready:'Ready! 🐝',
+  lic_extend_text:'15 extra trial days', device_id_label:'Device ID',
   loading:'Loading',
 
   update_available:'🎉 New version available — tap to update',
@@ -420,6 +424,8 @@ fr: {
   _dir:'ltr', _name:'Français', _flag:'🇫🇷',
 
   app_name:'NectarOS', app_sub:'Système Intelligent de Gestion du Rucher',
+  splash_loading:'Chargement des données...', splash_init:'Initialisation...', splash_ready:'Prêt! 🐝',
+  lic_extend_text:'15 jours d\'essai supplémentaires', device_id_label:'ID de l\'appareil',
   loading:'Chargement',
 
   update_available:'🎉 Nouvelle version disponible — appuyez pour mettre à jour',
@@ -618,6 +624,8 @@ tr: {
   _dir:'ltr', _name:'Türkçe', _flag:'🇹🇷',
 
   app_name:'NectarOS', app_sub:'Akıllı Arı Çiftliği Yönetim Sistemi',
+  splash_loading:'Veriler yükleniyor...', splash_init:'Arayüz başlatılıyor...', splash_ready:'Hazır! 🐝',
+  lic_extend_text:'15 ek deneme günü', device_id_label:'Cihaz Kimliği',
   loading:'Yükleniyor',
 
   update_available:'🎉 Yeni sürüm mevcut — güncellemek için dokunun',
@@ -815,6 +823,8 @@ es: {
   _dir:'ltr', _name:'Español', _flag:'🇪🇸',
 
   app_name:'NectarOS', app_sub:'Sistema Inteligente de Gestión de Colmenas',
+  splash_loading:'Cargando datos...', splash_init:'Inicializando interfaz...', splash_ready:'¡Listo! 🐝',
+  lic_extend_text:'15 días de prueba adicionales', device_id_label:'ID del dispositivo',
   loading:'Cargando',
 
   update_available:'🎉 Nueva versión disponible — toca para actualizar',
@@ -1012,6 +1022,8 @@ de: {
   _dir:'ltr', _name:'Deutsch', _flag:'🇩🇪',
 
   app_name:'NectarOS', app_sub:'Intelligentes Bienenstockmanagement-System',
+  splash_loading:'Daten werden geladen...', splash_init:'Oberfläche wird initialisiert...', splash_ready:'Bereit! 🐝',
+  lic_extend_text:'15 zusätzliche Testtage', device_id_label:'Geräte-ID',
   loading:'Laden',
 
   update_available:'🎉 Neue Version verfügbar — zum Aktualisieren tippen',
@@ -1209,6 +1221,8 @@ it: {
   _dir:'ltr', _name:'Italiano', _flag:'🇮🇹',
 
   app_name:'NectarOS', app_sub:'Sistema Intelligente di Gestione degli Apiari',
+  splash_loading:'Caricamento dati...', splash_init:'Inizializzazione interfaccia...', splash_ready:'Pronto! 🐝',
+  lic_extend_text:'15 giorni di prova aggiuntivi', device_id_label:'ID dispositivo',
   loading:'Caricamento',
 
   update_available:'🎉 Nuova versione disponibile — tocca per aggiornare',
@@ -1406,6 +1420,8 @@ nl: {
   _dir:'ltr', _name:'Nederlands', _flag:'🇳🇱',
 
   app_name:'NectarOS', app_sub:'Intelligent Bijenstal Beheersysteem',
+  splash_loading:'Gegevens laden...', splash_init:'Interface initialiseren...', splash_ready:'Klaar! 🐝',
+  lic_extend_text:'15 extra proefdagen', device_id_label:'Apparaat-ID',
   loading:'Laden',
 
   update_available:'🎉 Nieuwe versie beschikbaar — tik om bij te werken',
