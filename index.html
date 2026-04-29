@@ -19,7 +19,6 @@
 /* ══ SERVICE WORKER — خارجي حقيقي ══ */
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./sw.js', {scope:'./'}).then(reg=>{
-    // SW جديد ينتظر → أظهر البانر فوراً
     if(reg.waiting){ _showUpdateBanner(reg); }
     reg.addEventListener('updatefound', ()=>{
       const nw = reg.installing;
@@ -31,20 +30,25 @@ if('serviceWorker' in navigator){
       });
     });
   }).catch(()=>{});
-  let _reloading = false;
+  // ★ مُحسَّن: منع حلقة reload اللانهائية ★
+  // نُعيد التحميل مرة واحدة فقط كل 30 ثانية
   navigator.serviceWorker.addEventListener('controllerchange', ()=>{
-    if(!_reloading){ _reloading=true; location.reload(); }
+    const lastReload = parseInt(sessionStorage.getItem('_sw_reload')||'0');
+    if(Date.now() - lastReload > 30000){
+      sessionStorage.setItem('_sw_reload', Date.now().toString());
+      location.reload();
+    }
   });
 }
 </script>
 <title>NectarOS 🐝</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js" defer></script>
 <style>
 /* ═══════════════ THEME ═══════════════ */
 :root{
@@ -7746,32 +7750,22 @@ async function getDeviceFingerprint(){
   return fp;
 }
 
-/* ── _hashString: race timeout — إذا تجمّد crypto.subtle على موبايل → fallback سريع ── */
-function _fastHash(str){
-  // djb2 × 4 passes — ينتج 32 hex char بدون crypto
-  let h1=5381,h2=52711,h3=0x9e37,h4=0xd1b;
-  for(let i=0;i<str.length;i++){
-    const c=str.charCodeAt(i);
-    h1=((h1<<5)+h1)^c; h2=((h2<<5)+h2)^(c*31);
-    h3=((h3<<5)+h3)^(c*17); h4=((h4<<5)+h4)^(c*7);
-  }
-  const toHex=n=>((n>>>0).toString(16).padStart(8,'0'));
-  return toHex(h1)+toHex(h2)+toHex(h3)+toHex(h4);
-}
 async function _hashString(str){
   try{
     if(window.crypto&&crypto.subtle){
-      const _timeout = new Promise((_,rej)=>setTimeout(()=>rej(new Error('timeout')),800));
-      const _hash = (async()=>{
-        const enc=new TextEncoder();
-        const buf=await crypto.subtle.digest('SHA-256',enc.encode(str));
-        return Array.from(new Uint8Array(buf)).map(b=>b.toString(16).padStart(2,'0')).join('');
+      const _to=new Promise((_,r)=>setTimeout(()=>r(new Error('t')),800));
+      const _h=(async()=>{
+        const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
+        return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
       })();
-      return await Promise.race([_hash, _timeout]);
+      return await Promise.race([_h,_to]);
     }
   }catch(e){}
-  // fallback — لا يتعلق بأي API خارجي
-  return _fastHash(str);
+  // fallback djb2 — لا يحتاج أي API
+  let h=5381;for(let i=0;i<str.length;i++)h=((h<<5)+h)^str.charCodeAt(i);
+  const t=(n)=>((n>>>0).toString(16).padStart(8,'0'));
+  let h2=0x9e3779b9^(h>>>16);let h3=0x6c62272e^(h&0xffff);let h4=0xf4cfd400^h;
+  return t(h>>>0)+t(h2>>>0)+t(h3>>>0)+t(h4>>>0);
 }
 
 // Device ID shown to user (shorter, readable)
@@ -8387,7 +8381,7 @@ function initLangSystem(){
 }
 
 function checkForUpdates(){
-  const CACHE_KEY = 'nectaros-v9'; // يجب أن يطابق اسم الكاش في السيرفس ووركر
+  const CACHE_KEY = 'nectaros-v7'; // يجب أن يطابق اسم الكاش في السيرفس ووركر
   const storedCache = localStorage.getItem('_nec_cache_ver');
   const storedCode  = parseInt(localStorage.getItem('_nec_installed_ver')||'0');
 
@@ -8418,7 +8412,7 @@ function checkForUpdates(){
 
 function applyUpdate(){
   localStorage.setItem('_nec_installed_ver', APP_VERSION_CODE.toString());
-  localStorage.setItem('_nec_cache_ver', 'nectaros-v9');
+  localStorage.setItem('_nec_cache_ver', 'nectaros-v7');
   dismissUpdate();
   toast('⏳ جارٍ تطبيق التحديث...','success');
   // طبّق السيرفس ووركر الجديد إن وُجد، وإلا أعد التحميل
@@ -8534,23 +8528,6 @@ initTrialWarningBanner();
   } catch(e) {}
 })();
 
-// Check license / trial (async) — wrapped to prevent splash freeze
-// ★ HARD TIMEOUT: إذا checkLicense لم تنتهِ خلال 5 ثوان → أخفِ splash قسراً ★
-const _splashGuard = setTimeout(()=>{
-  console.warn('[NectarOS] checkLicense hard-timeout — forcing splash hide');
-  hideSplash();
-}, 5000);
-
-// race مع timeout 4.5 ثانية — يضمن أن Promise لا تتجمّد
-const _licTimeout = new Promise(res=>setTimeout(()=>res('timeout'),4500));
-Promise.race([checkLicense(), _licTimeout])
-  .catch(e=>{
-    console.warn('[LIC] checkLicense failed:', e);
-    try { showLicenseScreen('trial'); } catch(e2) {}
-  }).finally(()=>{
-    clearTimeout(_splashGuard);
-    setTimeout(hideSplash, 100);
-  });
 // Check session (valid for 24h) + دخول تلقائي للمالك
 const sess=DB.get('session');
 const _isOwnerNow = localStorage.getItem('_nec_owner_verified')==='1';
@@ -8572,7 +8549,6 @@ if(_isOwnerNow){
 function hideSplash(){
   const s=document.getElementById('splash');
   if(!s||s.classList.contains('hide'))return;
-  document.body.classList.remove('loading');
   const _t=(k,fb)=>(window.I18N?I18N.t(k):null)||fb;
   const msgs=[_t('splash_loading','Loading...'),_t('splash_init','Initializing...'),_t('splash_ready','Ready! 🐝')];
   let i=0;
@@ -8588,31 +8564,27 @@ function hideSplash(){
       },200);
     }
   },400);
-  // Absolute fallback — يزيل splash بعد 2.5 ثانية مهما حدث
-  setTimeout(()=>{
-    document.body.classList.remove('loading');
-    s.classList.add('hide');
-    setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },600);
-  }, 2500);
+  setTimeout(()=>{ s.classList.add('hide'); setTimeout(()=>{try{s.remove();}catch(e){s.style.display='none';}},600); },2500);
 }
 
-// ★ TRIPLE GUARD — يضمن إخفاء splash في أي ظرف ★
-// 1) بعد 4 ثوان من DOMContentLoaded — الحد الأقصى المطلق
-document.addEventListener('DOMContentLoaded', ()=>{
-  setTimeout(()=>{
-    document.body.classList.remove('loading');
-    const s=document.getElementById('splash');
-    if(s){ s.classList.add('hide'); setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },600); }
-  }, 4000);
+// ★ GUARD 1 — بعد 4 ثوان من DOMContentLoaded
+document.addEventListener('DOMContentLoaded',()=>{
+  setTimeout(()=>{ hideSplash(); },4000);
 });
-// 2) بعد load كامل للصفحة (صور + موارد) + 1 ثانية
-window.addEventListener('load', ()=>{
-  setTimeout(hideSplash, 1000);
-});
-// hideSplash called also in checkLicense().finally()
+// ★ GUARD 2 — بعد load كامل + 800ms
+window.addEventListener('load',()=>{ setTimeout(hideSplash,800); });
 
-/* ══════════════════════════════════════════════════
-   🌾 FIELD MODE
+// ★ GUARD 3 — checkLicense مع race timeout
+const _splashGuard=setTimeout(()=>hideSplash(),5000);
+const _licTO=new Promise(res=>setTimeout(()=>res('timeout'),4500));
+Promise.race([checkLicense(),_licTO])
+  .catch(e=>{
+    console.warn('[LIC]',e);
+    try{showLicenseScreen('trial');}catch(e2){}
+  }).finally(()=>{
+    clearTimeout(_splashGuard);
+    setTimeout(hideSplash,100);
+  });
 ══════════════════════════════════════════════════ */
 function renderFieldMode(){
   const _=window.__||((k,d)=>d||k);
