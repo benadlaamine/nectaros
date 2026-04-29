@@ -1,0 +1,2814 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta name="theme-color" content="#00E5FF">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ScanPro">
+<meta name="description" content="ScanPro - QR & Barcode Scanner with AI">
+<meta name="mobile-web-app-capable" content="yes">
+<title>ScanPro ⚡</title>
+
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+<!-- jsQR for QR/Barcode detection -->
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+
+<!-- ZXing for barcode support -->
+<script src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
+
+<!-- jsPDF -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<!-- Stripe.js -->
+<script src="https://js.stripe.com/v3/"></script>
+
+<style>
+/* ═══════════ DESIGN TOKENS ═══════════ */
+:root {
+  --bg: #030712;
+  --bg2: #0a0f1e;
+  --bg3: #0f172a;
+  --card: #111827;
+  --card2: #1e293b;
+  --border: #1e293b;
+  --border2: #334155;
+
+  --cyan: #00E5FF;
+  --cyan2: #00B8D9;
+  --cyan3: #006B7D;
+  --blue: #3B82F6;
+  --purple: #8B5CF6;
+  --green: #10B981;
+  --red: #EF4444;
+  --orange: #F59E0B;
+  --pink: #EC4899;
+
+  --text: #F1F5F9;
+  --text2: #94A3B8;
+  --text3: #475569;
+
+  --radius: 16px;
+  --radius-sm: 10px;
+  --shadow: 0 8px 32px rgba(0,0,0,.6);
+  --glow: 0 0 30px rgba(0,229,255,.15);
+  --glow-strong: 0 0 50px rgba(0,229,255,.3);
+
+  --nav-h: 62px;
+  --top-h: 56px;
+}
+
+[data-theme="light"] {
+  --bg: #F0F9FF;
+  --bg2: #E0F2FE;
+  --bg3: #F8FAFC;
+  --card: #FFFFFF;
+  --card2: #F1F5F9;
+  --border: #CBD5E1;
+  --border2: #94A3B8;
+  --text: #0F172A;
+  --text2: #475569;
+  --text3: #94A3B8;
+}
+
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+
+body {
+  font-family: 'Tajawal', 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background .3s, color .3s;
+}
+
+/* ══ SCROLLBAR ══ */
+::-webkit-scrollbar { width: 3px; height: 3px; }
+::-webkit-scrollbar-thumb { background: var(--cyan3); border-radius: 3px; }
+
+/* ══ LAYOUT ══ */
+#app { display: flex; flex-direction: column; height: 100vh; }
+#topbar {
+  height: var(--top-h);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 14px;
+  position: sticky; top: 0; z-index: 100;
+  flex-shrink: 0;
+}
+#content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: calc(var(--nav-h) + 12px);
+}
+#bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  height: var(--nav-h);
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+/* ══ TOP BAR ══ */
+.topbar-logo {
+  display: flex; align-items: center; gap: 8px;
+}
+.topbar-logo-icon {
+  width: 32px; height: 32px;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  box-shadow: var(--glow);
+}
+.topbar-title {
+  font-size: 15px; font-weight: 800;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -.3px;
+}
+.topbar-actions { display: flex; gap: 6px; align-items: center; }
+.btn-icon {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--text2);
+  width: 34px; height: 34px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  transition: .2s;
+}
+.btn-icon:hover { color: var(--cyan); border-color: rgba(0,229,255,.3); }
+
+/* ══ BOTTOM NAV ══ */
+.nav-tab {
+  flex: 1;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 3px;
+  cursor: pointer;
+  padding: 6px 0;
+  transition: .2s;
+  color: var(--text3);
+  border: none; background: none;
+  position: relative;
+}
+.nav-tab.active { color: var(--cyan); }
+.nav-tab.active::before {
+  content: '';
+  position: absolute; top: 0; left: 20%; right: 20%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  border-radius: 2px;
+}
+.nav-tab-icon { font-size: 19px; line-height: 1; }
+.nav-tab-label { font-size: 9px; font-weight: 600; letter-spacing: .3px; }
+
+/* ══ SCAN FAB ══ */
+.nav-tab.scan-tab {
+  flex: 0 0 70px;
+}
+.scan-fab {
+  width: 52px; height: 52px;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 20px rgba(0,229,255,.4);
+  transition: .2s;
+  margin-bottom: 2px;
+  animation: fabpulse 2.5s infinite;
+}
+@keyframes fabpulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(0,229,255,.4); }
+  50% { box-shadow: 0 4px 35px rgba(0,229,255,.7), 0 0 0 8px rgba(0,229,255,.08); }
+}
+.nav-tab.scan-tab.active .scan-fab {
+  transform: scale(1.05);
+}
+
+/* ══ PAGES ══ */
+.page { display: none; padding: 14px; animation: fadeIn .25s ease; }
+.page.active { display: block; }
+@keyframes fadeIn { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+
+/* ══ CARDS ══ */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.card-glow {
+  border-color: rgba(0,229,255,.2);
+  box-shadow: var(--glow);
+}
+.card-title {
+  font-size: 13px; font-weight: 700;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+  display: flex; align-items: center; gap: 6px;
+}
+.card-title span { color: var(--cyan); }
+
+/* ══ SCANNER ══ */
+#scanner-page { padding: 0; }
+#scanner-wrap {
+  position: relative;
+  width: 100%;
+  background: #000;
+  overflow: hidden;
+}
+#scanner-video {
+  width: 100%;
+  display: block;
+  max-height: 52vh;
+  object-fit: cover;
+}
+#scanner-canvas { display: none; }
+
+.scanner-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+.scan-frame {
+  width: 220px; height: 220px;
+  position: relative;
+}
+.scan-frame::before, .scan-frame::after,
+.scan-corner-tr, .scan-corner-bl {
+  content: '';
+  position: absolute;
+  width: 28px; height: 28px;
+  border-color: var(--cyan);
+  border-style: solid;
+}
+.scan-frame::before { top:0; left:0; border-width: 3px 0 0 3px; border-radius: 4px 0 0 0; }
+.scan-frame::after { top:0; right:0; border-width: 3px 3px 0 0; border-radius: 0 4px 0 0; }
+.scan-corner-tr { bottom:0; right:0; border-width: 0 3px 3px 0; border-radius: 0 0 4px 0; }
+.scan-corner-bl { bottom:0; left:0; border-width: 0 0 3px 3px; border-radius: 0 0 0 4px; }
+
+.scan-line {
+  position: absolute;
+  top: 0; left: 3px; right: 3px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--cyan), transparent);
+  animation: scanline 2s infinite;
+  box-shadow: 0 0 8px var(--cyan);
+}
+@keyframes scanline {
+  0% { top: 3px; }
+  100% { top: calc(100% - 5px); }
+}
+
+.scanner-success .scan-frame::before,
+.scanner-success .scan-frame::after,
+.scanner-success .scan-corner-tr,
+.scanner-success .scan-corner-bl {
+  border-color: var(--green) !important;
+}
+.scanner-success .scan-line { background: linear-gradient(90deg, transparent, var(--green), transparent); box-shadow: 0 0 8px var(--green); }
+
+.scanner-toolbar {
+  display: flex; gap: 8px; padding: 10px 14px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  justify-content: space-between;
+  align-items: center;
+}
+.scanner-mode-tabs {
+  display: flex; gap: 4px;
+  background: var(--bg3);
+  border-radius: var(--radius-sm);
+  padding: 3px;
+}
+.scanner-mode-tab {
+  padding: 5px 12px;
+  border-radius: 7px;
+  font-size: 11px; font-weight: 700;
+  cursor: pointer;
+  color: var(--text2);
+  border: none; background: none;
+  transition: .2s;
+}
+.scanner-mode-tab.active {
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  color: #000;
+}
+
+.btn {
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  font-size: 13px; font-weight: 700;
+  cursor: pointer;
+  border: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  transition: .2s;
+  font-family: 'Tajawal', sans-serif;
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  color: #000;
+  box-shadow: 0 4px 16px rgba(0,229,255,.25);
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(0,229,255,.4); }
+.btn-secondary {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  color: var(--text);
+}
+.btn-danger {
+  background: rgba(239,68,68,.15);
+  border: 1px solid rgba(239,68,68,.3);
+  color: var(--red);
+}
+.btn-success {
+  background: rgba(16,185,129,.15);
+  border: 1px solid rgba(16,185,129,.3);
+  color: var(--green);
+}
+.btn-sm { padding: 6px 12px; font-size: 11px; }
+.btn-full { width: 100%; justify-content: center; }
+
+/* ══ SCAN RESULT ══ */
+#scan-result-panel {
+  padding: 14px;
+  display: none;
+}
+#scan-result-panel.visible { display: block; }
+
+.result-card {
+  background: var(--card);
+  border: 1px solid rgba(0,229,255,.25);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--glow);
+}
+.result-header {
+  background: linear-gradient(90deg, rgba(0,229,255,.1), rgba(59,130,246,.1));
+  padding: 14px 16px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 1px solid var(--border);
+}
+.result-type-badge {
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  color: #000;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 10px; font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+}
+.result-body { padding: 14px 16px; }
+.result-raw {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  color: var(--cyan);
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  word-break: break-all;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+.result-parsed { }
+.parsed-row {
+  display: flex; gap: 8px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+}
+.parsed-row:last-child { border-bottom: none; }
+.parsed-key { color: var(--text3); min-width: 80px; font-weight: 600; }
+.parsed-val { color: var(--text); word-break: break-all; flex: 1; }
+.result-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; }
+
+/* ══ AI ANALYSIS ══ */
+.ai-result {
+  background: linear-gradient(135deg, rgba(139,92,246,.1), rgba(0,229,255,.05));
+  border: 1px solid rgba(139,92,246,.3);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-top: 10px;
+}
+.ai-header {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 10px;
+  font-size: 12px; font-weight: 700;
+  color: var(--purple);
+}
+.ai-text {
+  font-size: 12px;
+  color: var(--text);
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+.ai-loading {
+  display: flex; align-items: center; gap: 8px;
+  color: var(--text2); font-size: 12px;
+}
+.ai-dots span {
+  display: inline-block;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--purple);
+  animation: dot 1.2s infinite;
+}
+.ai-dots span:nth-child(2) { animation-delay: .2s; }
+.ai-dots span:nth-child(3) { animation-delay: .4s; }
+@keyframes dot { 0%,100%{opacity:.2} 50%{opacity:1} }
+
+/* ══ HISTORY ══ */
+.history-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 8px;
+  display: flex; gap: 10px; align-items: flex-start;
+  cursor: pointer;
+  transition: .2s;
+}
+.history-item:hover { border-color: rgba(0,229,255,.3); }
+.history-icon {
+  width: 36px; height: 36px;
+  border-radius: 9px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+.history-info { flex: 1; min-width: 0; }
+.history-type { font-size: 10px; font-weight: 700; letter-spacing: .5px; text-transform: uppercase; }
+.history-content {
+  font-size: 12px; color: var(--text2);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  margin-top: 2px;
+}
+.history-time { font-size: 9px; color: var(--text3); margin-top: 3px; }
+.history-fav { font-size: 14px; cursor: pointer; padding: 2px; }
+
+/* ══ STATS / DASHBOARD ══ */
+.stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  margin-bottom: 12px;
+}
+.stat-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  text-align: center;
+}
+.stat-number {
+  font-size: 28px; font-weight: 900;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+.stat-label { font-size: 10px; color: var(--text3); margin-top: 4px; font-weight: 600; text-transform: uppercase; }
+
+/* ══ SETTINGS ══ */
+.settings-group { margin-bottom: 16px; }
+.settings-group-title {
+  font-size: 10px; font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  padding: 0 2px 8px;
+  display: flex; align-items: center; gap: 6px;
+}
+.settings-item {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: .18s;
+}
+.settings-item:hover { border-color: rgba(0,229,255,.25); }
+.settings-item-left { display: flex; align-items: center; gap: 10px; }
+.settings-icon {
+  width: 32px; height: 32px;
+  border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px;
+  background: var(--bg3);
+}
+.settings-label { font-size: 13px; font-weight: 600; }
+.settings-sublabel { font-size: 10px; color: var(--text3); margin-top: 1px; }
+
+/* ══ TOGGLE ══ */
+.toggle {
+  width: 42px; height: 24px;
+  background: var(--border2);
+  border-radius: 12px;
+  position: relative;
+  cursor: pointer;
+  transition: .25s;
+  flex-shrink: 0;
+}
+.toggle.on { background: linear-gradient(90deg, var(--cyan), var(--blue)); }
+.toggle::after {
+  content: '';
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  background: #fff;
+  transition: .25s;
+  box-shadow: 0 2px 6px rgba(0,0,0,.3);
+}
+.toggle.on::after { transform: translateX(18px); }
+
+/* ══ INPUT ══ */
+.input-group { margin-bottom: 10px; }
+.input-label { font-size: 11px; font-weight: 700; color: var(--text2); margin-bottom: 5px; display: block; }
+.input {
+  width: 100%;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  padding: 10px 12px;
+  font-size: 13px;
+  font-family: 'Tajawal', sans-serif;
+  transition: .2s;
+  outline: none;
+}
+.input:focus { border-color: var(--cyan); box-shadow: 0 0 0 3px rgba(0,229,255,.1); }
+.input.mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; }
+textarea.input { resize: vertical; min-height: 80px; }
+
+/* ══ PAYMENT ══ */
+.payment-plan {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 10px;
+  transition: .2s;
+  cursor: pointer;
+}
+.payment-plan.featured {
+  border-color: rgba(0,229,255,.4);
+  box-shadow: var(--glow);
+  background: linear-gradient(135deg, rgba(0,229,255,.05), rgba(59,130,246,.05));
+}
+.plan-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.plan-name { font-size: 15px; font-weight: 800; }
+.plan-price {
+  font-size: 22px; font-weight: 900;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.plan-period { font-size: 10px; color: var(--text3); font-weight: 500; }
+.plan-features { list-style: none; }
+.plan-features li { font-size: 12px; color: var(--text2); padding: 4px 0; display: flex; align-items: center; gap: 6px; }
+.plan-features li::before { content: '✓'; color: var(--green); font-weight: 800; font-size: 11px; }
+.plan-badge {
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  color: #000;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 9px; font-weight: 800;
+  text-transform: uppercase;
+}
+
+/* ══ STRIPE ELEMENT ══ */
+#stripe-card-element {
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 10px;
+}
+#stripe-errors {
+  color: var(--red);
+  font-size: 12px;
+  margin-bottom: 8px;
+  display: none;
+}
+
+/* ══ ADMIN MODE ══ */
+.admin-badge {
+  background: linear-gradient(135deg, var(--orange), var(--red));
+  color: #fff;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 9px; font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  animation: adminglow 2s infinite;
+}
+@keyframes adminglow {
+  0%,100%{box-shadow:0 0 8px rgba(245,158,11,.3);}
+  50%{box-shadow:0 0 20px rgba(245,158,11,.7);}
+}
+.admin-panel {
+  background: linear-gradient(135deg, rgba(245,158,11,.07), rgba(239,68,68,.05));
+  border: 1px solid rgba(245,158,11,.25);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 12px;
+}
+.log-entry {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  color: var(--green);
+  padding: 3px 0;
+  border-bottom: 1px solid rgba(255,255,255,.05);
+  display: flex; gap: 8px;
+}
+.log-time { color: var(--text3); flex-shrink: 0; }
+.log-msg { flex: 1; word-break: break-all; }
+.log-type-error { color: var(--red); }
+.log-type-warn { color: var(--orange); }
+.log-type-info { color: var(--cyan); }
+
+/* ══ FEATURE TOGGLE ══ */
+.feature-toggle-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.feature-toggle-row:last-child { border-bottom: none; }
+.feature-name { font-size: 12px; font-weight: 600; }
+.feature-desc { font-size: 10px; color: var(--text3); }
+
+/* ══ CONTACT ══ */
+.contact-method {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: .2s;
+}
+.contact-method:hover { border-color: rgba(0,229,255,.3); }
+.contact-icon {
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+.contact-info .title { font-size: 13px; font-weight: 700; }
+.contact-info .sub { font-size: 11px; color: var(--text2); margin-top: 2px; }
+
+/* ══ MODAL ══ */
+#modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,.75);
+  z-index: 500;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  backdrop-filter: blur(4px);
+}
+#modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 380px;
+  max-height: 80vh;
+  overflow-y: auto;
+  animation: modalin .2s ease;
+}
+@keyframes modalin { from{opacity:0;transform:scale(.94)} to{opacity:1;transform:scale(1)} }
+.modal-header {
+  padding: 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 14px; font-weight: 800;
+  position: sticky; top: 0;
+  background: var(--card2);
+  z-index: 1;
+}
+.modal-body { padding: 16px; }
+
+/* ══ TOAST ══ */
+#toast-container {
+  position: fixed; bottom: calc(var(--nav-h) + 12px);
+  left: 12px; right: 12px;
+  z-index: 9999;
+  display: flex; flex-direction: column; gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  background: var(--card2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 12px; font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+  animation: toastin .3s ease, toastout .3s ease 3s forwards;
+  box-shadow: var(--shadow);
+}
+.toast.success { border-color: rgba(16,185,129,.4); color: var(--green); }
+.toast.error { border-color: rgba(239,68,68,.4); color: var(--red); }
+.toast.info { border-color: rgba(0,229,255,.3); color: var(--cyan); }
+.toast.warning { border-color: rgba(245,158,11,.3); color: var(--orange); }
+@keyframes toastin { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:translateY(0)} }
+@keyframes toastout { from{opacity:1} to{opacity:0;pointer-events:none} }
+
+/* ══ EMPTY STATE ══ */
+.empty-state {
+  text-align: center; padding: 40px 20px;
+  color: var(--text3);
+}
+.empty-icon { font-size: 40px; margin-bottom: 10px; opacity: .5; }
+.empty-text { font-size: 13px; }
+
+/* ══ CHIP ══ */
+.chip {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: var(--bg3);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 10px; font-weight: 700;
+  cursor: pointer;
+  transition: .18s;
+  color: var(--text2);
+}
+.chip.active { background: rgba(0,229,255,.12); border-color: rgba(0,229,255,.4); color: var(--cyan); }
+.chip-group { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+
+/* ══ SEARCH ══ */
+.search-bar {
+  display: flex; gap: 8px; margin-bottom: 12px;
+}
+.search-input {
+  flex: 1;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  padding: 9px 12px;
+  font-size: 12px;
+  font-family: 'Tajawal', sans-serif;
+  outline: none;
+  transition: .2s;
+}
+.search-input:focus { border-color: var(--cyan); }
+
+/* ══ PROGRESS ══ */
+.progress-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 6px 0;
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  border-radius: 2px;
+  transition: width .4s ease;
+}
+
+/* ══ CODE GENERATION ══ */
+.generate-preview {
+  background: #000;
+  border-radius: var(--radius);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 12px 0;
+  min-height: 140px;
+}
+#gen-qr-canvas, #gen-bar-canvas {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ══ CAMERA PROMPT ══ */
+.camera-prompt {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  background: #000;
+  min-height: 200px;
+}
+.camera-prompt-icon { font-size: 48px; margin-bottom: 12px; opacity: .6; }
+.camera-prompt-text { color: var(--text2); font-size: 13px; margin-bottom: 16px; }
+
+/* ══ RESPONSIVE ══ */
+@media (min-width:480px) {
+  .stats-grid { grid-template-columns: repeat(3,1fr); }
+}
+
+/* ══ UPLOAD SCAN ══ */
+.upload-drop {
+  border: 2px dashed var(--border2);
+  border-radius: var(--radius);
+  padding: 30px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: .2s;
+  background: var(--card);
+}
+.upload-drop:hover, .upload-drop.drag { border-color: var(--cyan); background: rgba(0,229,255,.05); }
+.upload-drop-icon { font-size: 32px; margin-bottom: 8px; }
+.upload-drop-text { font-size: 12px; color: var(--text2); }
+
+/* ══ GRADIENT TEXT UTIL ══ */
+.grad-text {
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.grad-text-purple {
+  background: linear-gradient(90deg, var(--purple), var(--pink));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ══ WELCOME / SPLASH ══ */
+#splash {
+  position: fixed; inset: 0;
+  background: var(--bg);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 9999;
+  transition: opacity .4s ease;
+}
+#splash.hidden { opacity: 0; pointer-events: none; }
+.splash-logo {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--cyan), var(--blue));
+  border-radius: 22px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 38px;
+  box-shadow: var(--glow-strong);
+  animation: splashpulse 1s ease infinite alternate;
+  margin-bottom: 20px;
+}
+@keyframes splashpulse { from{transform:scale(.95)} to{transform:scale(1.05)} }
+.splash-title {
+  font-size: 28px; font-weight: 900;
+  background: linear-gradient(90deg, var(--cyan), var(--blue));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -1px;
+}
+.splash-sub { font-size: 13px; color: var(--text3); margin-top: 6px; }
+.splash-progress { width: 120px; height: 3px; background: var(--border); border-radius: 3px; margin-top: 30px; overflow: hidden; }
+.splash-progress-fill { height: 100%; background: linear-gradient(90deg,var(--cyan),var(--blue)); width: 0; transition: width 1.5s ease; border-radius: 3px; }
+
+/* ══ PULSE DOT ══ */
+.pulse-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 0 0 rgba(16,185,129,.5);
+  animation: pulsedot 2s infinite;
+}
+.pulse-dot.red { background: var(--red); animation: pulsedotred 2s infinite; }
+@keyframes pulsedot { 0%{box-shadow:0 0 0 0 rgba(16,185,129,.5)} 70%{box-shadow:0 0 0 8px transparent} 100%{box-shadow:0 0 0 0 transparent} }
+@keyframes pulsedotred { 0%{box-shadow:0 0 0 0 rgba(239,68,68,.5)} 70%{box-shadow:0 0 0 8px transparent} 100%{box-shadow:0 0 0 0 transparent} }
+
+/* ══ SECTION HEADER ══ */
+.section-header {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 12px;
+}
+.section-title { font-size: 14px; font-weight: 800; }
+.section-action { font-size: 11px; color: var(--cyan); cursor: pointer; font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- SPLASH -->
+<div id="splash">
+  <div class="splash-logo">⚡</div>
+  <div class="splash-title">ScanPro</div>
+  <div class="splash-sub">QR & Barcode Scanner + AI</div>
+  <div class="splash-progress">
+    <div class="splash-progress-fill" id="splash-fill"></div>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast-container"></div>
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span id="modal-title">Modal</span>
+      <button class="btn-icon" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+  </div>
+</div>
+
+<!-- APP -->
+<div id="app">
+
+  <!-- TOP BAR -->
+  <div id="topbar">
+    <div class="topbar-logo">
+      <div class="topbar-logo-icon">⚡</div>
+      <span class="topbar-title">ScanPro</span>
+    </div>
+    <div class="topbar-actions">
+      <button class="btn-icon" onclick="toggleTheme()" id="theme-btn" title="تبديل الثيم">🌙</button>
+      <button class="btn-icon" onclick="openPage('settings')" title="الإعدادات">⚙️</button>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div id="content">
+
+    <!-- ══ SCANNER PAGE ══ -->
+    <div class="page active" id="page-scanner">
+      <div id="scanner-page">
+        <!-- Toolbar -->
+        <div class="scanner-toolbar">
+          <div class="scanner-mode-tabs">
+            <button class="scanner-mode-tab active" onclick="setScanMode('camera')" id="mode-camera">📷 كاميرا</button>
+            <button class="scanner-mode-tab" onclick="setScanMode('upload')" id="mode-upload">🖼️ صورة</button>
+            <button class="scanner-mode-tab" onclick="setScanMode('generate')" id="mode-gen">✨ توليد</button>
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;">
+            <div class="pulse-dot" id="cam-status-dot" style="display:none"></div>
+            <button class="btn-icon" onclick="toggleFlash()" id="flash-btn" title="فلاش" style="display:none">🔦</button>
+            <button class="btn-icon" onclick="flipCamera()" id="flip-btn" title="قلب الكاميرا" style="display:none">🔄</button>
+          </div>
+        </div>
+
+        <!-- Camera Mode -->
+        <div id="mode-camera-view">
+          <div id="scanner-wrap">
+            <div class="camera-prompt" id="camera-prompt">
+              <div class="camera-prompt-icon">📷</div>
+              <div class="camera-prompt-text">اضغط لبدء المسح الضوئي</div>
+              <button class="btn btn-primary" onclick="startScanner()">🚀 ابدأ المسح</button>
+            </div>
+            <video id="scanner-video" autoplay playsinline muted style="display:none"></video>
+            <canvas id="scanner-canvas"></canvas>
+            <div class="scanner-overlay" id="scanner-overlay" style="display:none">
+              <div class="scan-frame" id="scan-frame">
+                <div class="scan-corner-tr"></div>
+                <div class="scan-corner-bl"></div>
+                <div class="scan-line"></div>
+              </div>
+            </div>
+          </div>
+          <div style="padding:10px 14px;display:flex;gap:8px;" id="scanner-controls" style="display:none">
+            <button class="btn btn-danger btn-sm" onclick="stopScanner()" id="stop-btn" style="display:none">⏹ إيقاف</button>
+          </div>
+        </div>
+
+        <!-- Upload Mode -->
+        <div id="mode-upload-view" style="display:none; padding:14px;">
+          <div class="upload-drop" id="upload-drop" onclick="document.getElementById('file-input').click()">
+            <div class="upload-drop-icon">🖼️</div>
+            <div class="upload-drop-text">اسحب صورة هنا أو اضغط للاختيار</div>
+            <div style="font-size:10px;color:var(--text3);margin-top:4px;">PNG، JPG، GIF، WebP</div>
+          </div>
+          <input type="file" id="file-input" accept="image/*" style="display:none" onchange="scanFromFile(event)">
+          <canvas id="file-canvas" style="display:none"></canvas>
+        </div>
+
+        <!-- Generate Mode -->
+        <div id="mode-gen-view" style="display:none; padding:14px;">
+          <div class="card">
+            <div class="card-title"><span>✨</span> توليد QR / باركود</div>
+            <div class="chip-group">
+              <div class="chip active" onclick="setGenType('qr')">QR Code</div>
+              <div class="chip" onclick="setGenType('barcode')">Barcode</div>
+            </div>
+            <div class="input-group">
+              <label class="input-label">المحتوى</label>
+              <textarea class="input" id="gen-content" placeholder="أدخل النص أو الرابط أو أي محتوى...">https://example.com</textarea>
+            </div>
+            <div id="gen-size-option">
+              <div class="input-group">
+                <label class="input-label">الحجم (px)</label>
+                <input type="range" min="100" max="400" value="200" id="gen-size" oninput="genSizeLabel.textContent=this.value+'px'" style="width:100%;accent-color:var(--cyan)">
+                <span id="genSizeLabel" style="font-size:11px;color:var(--text3)">200px</span>
+              </div>
+            </div>
+            <div class="generate-preview" id="gen-preview">
+              <div style="color:var(--text3);font-size:12px;">اضغط توليد لرؤية النتيجة</div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-primary" onclick="generateCode()" style="flex:1">⚡ توليد</button>
+              <button class="btn btn-secondary" onclick="downloadGenCode()" id="download-gen-btn" style="display:none">💾 تحميل</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Result Panel -->
+        <div id="scan-result-panel">
+          <div class="result-card">
+            <div class="result-header">
+              <div>
+                <span class="result-type-badge" id="result-type">QR CODE</span>
+              </div>
+              <div style="margin-right:auto;padding:0 10px;font-size:11px;color:var(--text2)" id="result-timestamp"></div>
+              <button class="btn-icon" onclick="clearResult()">✕</button>
+            </div>
+            <div class="result-body">
+              <div class="result-raw" id="result-raw"></div>
+              <div class="result-parsed" id="result-parsed"></div>
+              <div class="result-actions">
+                <button class="btn btn-primary btn-sm" onclick="copyResult()">📋 نسخ</button>
+                <button class="btn btn-secondary btn-sm" onclick="shareResult()">↗️ مشاركة</button>
+                <button class="btn btn-secondary btn-sm" onclick="saveToHistory()">📌 حفظ</button>
+                <button class="btn btn-sm" id="open-url-btn" style="display:none;background:rgba(16,185,129,.15);border:1px solid rgba(16,185,129,.3);color:var(--green)" onclick="openUrl()">🔗 فتح</button>
+                <button class="btn btn-sm" style="background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);color:var(--purple)" onclick="analyzeWithAI()">🤖 تحليل AI</button>
+              </div>
+              <div id="ai-analysis-box"></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ HISTORY PAGE ══ -->
+    <div class="page" id="page-history">
+      <div class="section-header">
+        <div class="section-title">📋 السجل</div>
+        <span class="section-action" onclick="clearHistory()">🗑️ مسح الكل</span>
+      </div>
+      <div class="search-bar">
+        <input class="search-input" id="history-search" placeholder="🔍 بحث في السجل..." oninput="renderHistory()">
+      </div>
+      <div class="chip-group">
+        <div class="chip active" onclick="filterHistory('all')">الكل</div>
+        <div class="chip" onclick="filterHistory('QR_CODE')">QR</div>
+        <div class="chip" onclick="filterHistory('BARCODE')">باركود</div>
+        <div class="chip" onclick="filterHistory('URL')">روابط</div>
+        <div class="chip" onclick="filterHistory('fav')">⭐ محفوظة</div>
+      </div>
+      <div id="history-list"></div>
+    </div>
+
+    <!-- ══ STATS PAGE ══ -->
+    <div class="page" id="page-stats">
+      <div class="section-header">
+        <div class="section-title">📊 الإحصائيات</div>
+        <button class="btn btn-secondary btn-sm" onclick="exportStats()">📥 تصدير PDF</button>
+      </div>
+      <div class="stats-grid" id="stats-grid"></div>
+      <div class="card">
+        <div class="card-title"><span>📅</span> آخر 7 أيام</div>
+        <canvas id="stats-chart" height="150"></canvas>
+      </div>
+      <div class="card">
+        <div class="card-title"><span>🏷️</span> أنواع الأكواد</div>
+        <div id="stats-types"></div>
+      </div>
+    </div>
+
+    <!-- ══ PAYMENT PAGE ══ -->
+    <div class="page" id="page-payment">
+      <div class="section-header">
+        <div class="section-title">💳 الاشتراك</div>
+        <div style="display:flex;gap:6px;align-items:center;">
+          <div class="pulse-dot" id="payment-status-dot" style="background:var(--text3)"></div>
+          <span style="font-size:10px;color:var(--text3)" id="payment-status-label">غير مشترك</span>
+        </div>
+      </div>
+
+      <!-- Current plan indicator -->
+      <div class="card card-glow" id="current-plan-card" style="display:none">
+        <div style="display:flex;justify-content:space-between;align-items:center">
+          <div>
+            <div style="font-size:13px;font-weight:800" id="cp-name"></div>
+            <div style="font-size:11px;color:var(--text2);margin-top:3px" id="cp-expires"></div>
+          </div>
+          <div class="pulse-dot"></div>
+        </div>
+      </div>
+
+      <!-- Plans -->
+      <div id="plans-container"></div>
+
+      <!-- Stripe payment form -->
+      <div id="stripe-form" style="display:none;">
+        <div class="card">
+          <div class="card-title"><span>🔒</span> الدفع الآمن</div>
+          <div class="input-group">
+            <label class="input-label">الاسم على البطاقة</label>
+            <input class="input" id="card-name" placeholder="الاسم الكامل">
+          </div>
+          <div class="input-group">
+            <label class="input-label">بيانات البطاقة</label>
+            <div id="stripe-card-element"></div>
+          </div>
+          <div id="stripe-errors"></div>
+          <button class="btn btn-primary btn-full" onclick="processPayment()" id="pay-btn">
+            🔒 دفع الآن
+          </button>
+          <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px">
+            محمي بـ Stripe · TLS 256-bit
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact for payment -->
+      <div class="card" style="margin-top:4px">
+        <div class="card-title"><span>💬</span> طرق الدفع الأخرى</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:10px">
+          يمكنك الدفع عبر تحويل بنكي أو بطاقة شحن محلية.
+          تواصل معنا للحصول على كود تفعيل مباشر.
+        </div>
+        <button class="btn btn-secondary btn-full" onclick="openPage('contact')">📞 تواصل معنا</button>
+      </div>
+
+      <!-- Test mode toggle (admin) -->
+      <div class="card" id="stripe-mode-card" style="display:none">
+        <div class="card-title"><span>🔧</span> وضع الاختبار</div>
+        <div class="feature-toggle-row">
+          <div><div class="feature-name">Test Mode</div><div class="feature-desc">استخدام Stripe بيانات تجريبية</div></div>
+          <div class="toggle on" id="test-mode-toggle" onclick="toggleStripeMode()"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ SETTINGS PAGE ══ -->
+    <div class="page" id="page-settings">
+      <div class="section-title" style="margin-bottom:14px">⚙️ الإعدادات</div>
+
+      <div class="settings-group">
+        <div class="settings-group-title">🤖 Google AI (Gemini)</div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-icon">🔑</div>
+            <div>
+              <div class="settings-label">مفتاح Gemini API</div>
+              <div class="settings-sublabel" id="gemini-key-status">غير مضبوط</div>
+            </div>
+          </div>
+          <button class="btn btn-secondary btn-sm" onclick="openGeminiSettings()">ضبط</button>
+        </div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-icon">🧠</div>
+            <div>
+              <div class="settings-label">تحليل تلقائي بعد المسح</div>
+              <div class="settings-sublabel">استخدام AI لتحليل كل رمز تلقائياً</div>
+            </div>
+          </div>
+          <div class="toggle" id="auto-ai-toggle" onclick="toggleSetting('autoAI')"></div>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-title">📷 الماسح</div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-icon">🔊</div>
+            <div>
+              <div class="settings-label">صوت النجاح</div>
+              <div class="settings-sublabel">تشغيل صوت عند الاكتشاف</div>
+            </div>
+          </div>
+          <div class="toggle on" id="sound-toggle" onclick="toggleSetting('sound')"></div>
+        </div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-icon">📳</div>
+            <div>
+              <div class="settings-label">اهتزاز</div>
+              <div class="settings-sublabel">اهتزاز الجهاز عند الاكتشاف</div>
+            </div>
+          </div>
+          <div class="toggle on" id="vibrate-toggle" onclick="toggleSetting('vibrate')"></div>
+        </div>
+        <div class="settings-item">
+          <div class="settings-item-left">
+            <div class="settings-icon">⏱️</div>
+            <div>
+              <div class="settings-label">فحص مستمر</div>
+              <div class="settings-sublabel">إبقاء الماسح نشطاً بعد الاكتشاف</div>
+            </div>
+          </div>
+          <div class="toggle" id="continuous-toggle" onclick="toggleSetting('continuous')"></div>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-title">📦 البيانات والنسخ الاحتياطي</div>
+        <div class="settings-item" onclick="exportData()">
+          <div class="settings-item-left">
+            <div class="settings-icon">📤</div>
+            <div>
+              <div class="settings-label">تصدير البيانات</div>
+              <div class="settings-sublabel">تحميل كل سجلاتك (JSON)</div>
+            </div>
+          </div>
+          <span style="color:var(--text3);font-size:14px">›</span>
+        </div>
+        <div class="settings-item" onclick="document.getElementById('import-data-input').click()">
+          <div class="settings-item-left">
+            <div class="settings-icon">📥</div>
+            <div>
+              <div class="settings-label">استيراد البيانات</div>
+              <div class="settings-sublabel">استعادة من نسخة احتياطية</div>
+            </div>
+          </div>
+          <span style="color:var(--text3);font-size:14px">›</span>
+        </div>
+        <input type="file" id="import-data-input" accept=".json" style="display:none" onchange="importData(event)">
+        <div class="settings-item" onclick="clearAllData()">
+          <div class="settings-item-left">
+            <div class="settings-icon" style="background:rgba(239,68,68,.1)">🗑️</div>
+            <div>
+              <div class="settings-label" style="color:var(--red)">مسح جميع البيانات</div>
+              <div class="settings-sublabel">حذف كل السجلات نهائياً</div>
+            </div>
+          </div>
+          <span style="color:var(--text3);font-size:14px">›</span>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-title">🎨 المظهر</div>
+        <div class="settings-item" onclick="toggleTheme()">
+          <div class="settings-item-left">
+            <div class="settings-icon">🌙</div>
+            <div>
+              <div class="settings-label">الوضع الداكن</div>
+              <div class="settings-sublabel">تبديل بين الفاتح والداكن</div>
+            </div>
+          </div>
+          <div class="toggle on" id="theme-toggle" onclick="event.stopPropagation();toggleTheme()"></div>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <div class="settings-group-title">ℹ️ عن التطبيق</div>
+        <div class="settings-item" onclick="showAbout()">
+          <div class="settings-item-left">
+            <div class="settings-icon">⚡</div>
+            <div>
+              <div class="settings-label">ScanPro v1.0.0</div>
+              <div class="settings-sublabel">QR & Barcode Scanner + AI</div>
+            </div>
+          </div>
+          <span style="color:var(--text3);font-size:14px">›</span>
+        </div>
+        <!-- Hidden admin trigger -->
+        <div class="settings-item" id="dev-trigger" onclick="devTriggerTap()" style="display:none">
+          <div class="settings-item-left">
+            <div class="settings-icon" style="background:linear-gradient(135deg,rgba(245,158,11,.2),rgba(239,68,68,.2))">🔧</div>
+            <div>
+              <div class="settings-label">وضع المطور</div>
+              <div class="settings-sublabel" id="dev-trigger-sub">اضغط 5 مرات لفتح</div>
+            </div>
+          </div>
+          <span class="admin-badge">DEV</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ CONTACT PAGE ══ -->
+    <div class="page" id="page-contact">
+      <div class="section-title" style="margin-bottom:14px">📞 تواصل معنا</div>
+
+      <div class="contact-method" onclick="openWhatsApp()">
+        <div class="contact-icon" style="background:rgba(37,211,102,.1)">💬</div>
+        <div class="contact-info">
+          <div class="title">واتساب</div>
+          <div class="sub">ردّ سريع خلال دقائق</div>
+        </div>
+        <span style="color:var(--text3);margin-right:auto;font-size:14px">›</span>
+      </div>
+
+      <div class="contact-method" onclick="openEmail()">
+        <div class="contact-icon" style="background:rgba(0,229,255,.1)">✉️</div>
+        <div class="contact-info">
+          <div class="title">البريد الإلكتروني</div>
+          <div class="sub">support@scanpro.app</div>
+        </div>
+        <span style="color:var(--text3);margin-right:auto;font-size:14px">›</span>
+      </div>
+
+      <div class="contact-method" onclick="openTelegram()">
+        <div class="contact-icon" style="background:rgba(0,136,204,.1)">✈️</div>
+        <div class="contact-info">
+          <div class="title">تيليغرام</div>
+          <div class="sub">@scanpro_support</div>
+        </div>
+        <span style="color:var(--text3);margin-right:auto;font-size:14px">›</span>
+      </div>
+
+      <!-- Payment info -->
+      <div class="card" style="margin-top:8px">
+        <div class="card-title"><span>💳</span> معلومات الدفع والاشتراك</div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.7">
+          <p style="margin-bottom:8px">💳 <strong>Stripe</strong> — بطاقات فيزا، ماستر كارد، AMEX مقبولة.</p>
+          <p style="margin-bottom:8px">🏦 <strong>تحويل بنكي</strong> — تواصل معنا للحصول على تفاصيل الحساب.</p>
+          <p style="margin-bottom:8px">📱 <strong>بطاقات شحن محلية</strong> — مدفوعات Mobilis / Djezzy / Ooredoo.</p>
+          <p>🔐 جميع المدفوعات مؤمّنة بـ TLS 256-bit عبر Stripe.</p>
+        </div>
+        <button class="btn btn-primary btn-full" style="margin-top:10px" onclick="openPage('payment')">💳 اشترك الآن</button>
+      </div>
+
+      <!-- App info -->
+      <div class="card" style="margin-top:4px">
+        <div class="card-title"><span>⚡</span> معلومات التطبيق</div>
+        <div class="parsed-row"><span class="parsed-key">الإصدار</span><span class="parsed-val">1.0.0</span></div>
+        <div class="parsed-row"><span class="parsed-key">معرف الجهاز</span><span class="parsed-val mono" id="contact-device-id" style="font-family:'JetBrains Mono',monospace;font-size:11px;cursor:pointer" onclick="copyDeviceId()"></span></div>
+        <div class="parsed-row"><span class="parsed-key">المنصة</span><span class="parsed-val" id="contact-platform"></span></div>
+      </div>
+    </div>
+
+    <!-- ══ ADMIN PAGE ══ -->
+    <div class="page" id="page-admin">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px">
+        <div class="section-title">🔧 وضع المطور</div>
+        <span class="admin-badge">ADMIN</span>
+      </div>
+
+      <!-- Device info -->
+      <div class="admin-panel">
+        <div class="card-title"><span>📱</span> معلومات الجهاز</div>
+        <div id="admin-device-info" style="font-size:11px;font-family:'JetBrains Mono',monospace;color:var(--cyan)"></div>
+      </div>
+
+      <!-- Feature toggles -->
+      <div class="card">
+        <div class="card-title"><span>🎛️</span> تبديل الميزات</div>
+        <div id="feature-toggles"></div>
+      </div>
+
+      <!-- Stripe config -->
+      <div class="card">
+        <div class="card-title"><span>💳</span> إعدادات Stripe</div>
+        <div class="input-group">
+          <label class="input-label">Publishable Key (Test)</label>
+          <input class="input mono" id="stripe-test-key" placeholder="pk_test_...">
+        </div>
+        <div class="input-group">
+          <label class="input-label">Publishable Key (Live)</label>
+          <input class="input mono" id="stripe-live-key" placeholder="pk_live_...">
+        </div>
+        <button class="btn btn-primary btn-sm" onclick="saveStripeKeys()">💾 حفظ</button>
+      </div>
+
+      <!-- Logs -->
+      <div class="card">
+        <div class="card-title">
+          <span>📋</span> السجل
+          <button class="btn btn-sm btn-secondary" style="margin-right:auto" onclick="clearLogs()">مسح</button>
+        </div>
+        <div id="admin-logs" style="max-height:220px;overflow-y:auto;"></div>
+      </div>
+
+      <!-- App state dump -->
+      <div class="card">
+        <div class="card-title"><span>🗄️</span> حالة التطبيق (JSON)</div>
+        <div style="max-height:180px;overflow-y:auto">
+          <pre id="state-dump" style="font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--text2);white-space:pre-wrap;word-break:break-all;"></pre>
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-top:8px" onclick="refreshStateDump()">🔄 تحديث</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div id="bottom-nav">
+    <button class="nav-tab active" id="nav-scanner" onclick="openPage('scanner')">
+      <span class="nav-tab-icon">🏠</span>
+      <span class="nav-tab-label">الرئيسية</span>
+    </button>
+    <button class="nav-tab scan-tab" id="nav-scan" onclick="openPage('scanner');startScanner()">
+      <div class="scan-fab">⚡</div>
+      <span class="nav-tab-label" style="font-size:8px">مسح</span>
+    </button>
+    <button class="nav-tab" id="nav-history" onclick="openPage('history')">
+      <span class="nav-tab-icon">📋</span>
+      <span class="nav-tab-label">السجل</span>
+    </button>
+    <button class="nav-tab" id="nav-stats" onclick="openPage('stats')">
+      <span class="nav-tab-icon">📊</span>
+      <span class="nav-tab-label">إحصاء</span>
+    </button>
+    <button class="nav-tab" id="nav-contact" onclick="openPage('contact')">
+      <span class="nav-tab-icon">📞</span>
+      <span class="nav-tab-label">تواصل</span>
+    </button>
+  </div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════
+   SCANPRO v1.0.0
+   Production-Ready QR/Barcode Scanner PWA
+   Developer Device ID: 4586-D028-6040-0FC3
+═══════════════════════════════════════════════════ */
+
+// ══ CONSTANTS ══
+const DEV_DEVICE_ID = '4586-D028-6040-0FC3';
+const APP_VERSION = '1.0.0';
+const DB_PREFIX = 'scanpro_v1_';
+
+// ══ DATABASE (version-safe localStorage) ══
+const DB = {
+  _key: k => DB_PREFIX + k,
+  get(k, def = null) {
+    try {
+      const v = localStorage.getItem(this._key(k));
+      return v !== null ? JSON.parse(v) : def;
+    } catch { return def; }
+  },
+  set(k, v) {
+    try { localStorage.setItem(this._key(k), JSON.stringify(v)); return true; }
+    catch { return false; }
+  },
+  del(k) { try { localStorage.removeItem(this._key(k)); } catch {} },
+  keys() {
+    return Object.keys(localStorage)
+      .filter(k => k.startsWith(DB_PREFIX))
+      .map(k => k.slice(DB_PREFIX.length));
+  },
+  // Migration
+  migrate() {
+    const ver = this.get('db_version', 0);
+    if (ver < 1) {
+      // v0 → v1: initialize defaults
+      if (!this.get('settings')) this.set('settings', DEFAULT_SETTINGS);
+      if (!this.get('history')) this.set('history', []);
+      this.set('db_version', 1);
+      adminLog('info', 'DB migrated to v1');
+    }
+  }
+};
+
+// ══ DEFAULT SETTINGS ══
+const DEFAULT_SETTINGS = {
+  theme: 'dark',
+  sound: true,
+  vibrate: true,
+  autoAI: false,
+  continuous: false,
+};
+
+// ══ STATE ══
+let state = {
+  page: 'scanner',
+  scanMode: 'camera',
+  scanning: false,
+  lastResult: null,
+  historyFilter: 'all',
+  devTapCount: 0,
+  devTapTimer: null,
+  adminUnlocked: false,
+  stripeMode: 'test', // 'test' | 'live'
+  selectedPlan: null,
+  stripe: null,
+  stripeElements: null,
+  stripeCard: null,
+  cameraStream: null,
+  facingMode: 'environment',
+  flashOn: false,
+  scanInterval: null,
+  genType: 'qr',
+  genCanvas: null,
+  statsChart: null,
+  adminLogs: [],
+  features: {
+    aiAnalysis: true,
+    payment: true,
+    history: true,
+    stats: true,
+    generator: true,
+    pdfExport: true,
+  }
+};
+
+// ══ DEVICE ID ══
+function getDeviceId() {
+  let id = DB.get('device_id');
+  if (!id) {
+    const chars = '0123456789ABCDEF';
+    const seg = n => Array.from({length:n},()=>chars[Math.floor(Math.random()*16)]).join('');
+    id = `${seg(4)}-${seg(4)}-${seg(4)}-${seg(4)}`;
+    DB.set('device_id', id);
+  }
+  return id;
+}
+
+function isDevDevice() {
+  return getDeviceId() === DEV_DEVICE_ID;
+}
+
+// ══ INIT ══
+document.addEventListener('DOMContentLoaded', () => {
+  // Splash
+  setTimeout(() => {
+    document.getElementById('splash-fill').style.width = '100%';
+  }, 100);
+  setTimeout(() => {
+    document.getElementById('splash').classList.add('hidden');
+    init();
+  }, 1600);
+});
+
+function init() {
+  DB.migrate();
+  loadSettings();
+  initDeviceInfo();
+  renderPaymentPlans();
+  renderHistory();
+  renderStats();
+  renderAdminLogs();
+  checkAdminAccess();
+  adminLog('info', `ScanPro v${APP_VERSION} started`);
+  adminLog('info', `Device: ${getDeviceId()}`);
+  adminLog('info', `UA: ${navigator.userAgent.slice(0,60)}`);
+}
+
+// ══ SETTINGS ══
+function getSettings() {
+  return DB.get('settings', DEFAULT_SETTINGS);
+}
+function saveSetting(key, value) {
+  const s = getSettings();
+  s[key] = value;
+  DB.set('settings', s);
+}
+function loadSettings() {
+  const s = getSettings();
+  // Theme
+  document.documentElement.setAttribute('data-theme', s.theme || 'dark');
+  const tt = document.getElementById('theme-toggle');
+  if(tt) tt.classList.toggle('on', s.theme !== 'light');
+  const tb = document.getElementById('theme-btn');
+  if(tb) tb.textContent = s.theme === 'light' ? '🌙' : '☀️';
+  // Toggles
+  ['sound','vibrate','autoAI','continuous'].forEach(k => {
+    const el = document.getElementById(k+'-toggle') || document.getElementById(k.replace(/([A-Z])/g,'-$1').toLowerCase()+'-toggle');
+    // Match IDs
+  });
+  const toggleMap = {
+    sound: 'sound-toggle',
+    vibrate: 'vibrate-toggle',
+    autoAI: 'auto-ai-toggle',
+    continuous: 'continuous-toggle',
+  };
+  Object.entries(toggleMap).forEach(([k,id]) => {
+    const el = document.getElementById(id);
+    if(el) el.classList.toggle('on', !!s[k]);
+  });
+  // Gemini key indicator
+  const gk = DB.get('gemini_key');
+  const gks = document.getElementById('gemini-key-status');
+  if(gks) gks.textContent = gk ? '✅ مضبوط' : 'غير مضبوط';
+}
+
+function toggleSetting(key) {
+  const s = getSettings();
+  s[key] = !s[key];
+  DB.set('settings', s);
+  loadSettings();
+  toast(`${key}: ${s[key] ? 'مفعّل' : 'معطّل'}`, 'info');
+}
+
+function toggleTheme() {
+  const s = getSettings();
+  s.theme = s.theme === 'dark' ? 'light' : 'dark';
+  DB.set('settings', s);
+  loadSettings();
+}
+
+// ══ NAVIGATION ══
+function openPage(page) {
+  // Update pages
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  const pg = document.getElementById('page-' + page);
+  if(pg) pg.classList.add('active');
+  // Update nav tabs
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  const navTab = document.getElementById('nav-' + page);
+  if(navTab) navTab.classList.add('active');
+  // Page-specific
+  state.page = page;
+  if(page === 'stats') renderStats();
+  if(page === 'history') renderHistory();
+  if(page === 'admin') {
+    renderAdminLogs();
+    refreshStateDump();
+    loadAdminFields();
+  }
+  if(page === 'contact') {
+    document.getElementById('contact-device-id').textContent = getDeviceId();
+    document.getElementById('contact-platform').textContent = getPlatform();
+  }
+  if(page !== 'scanner' && state.scanning) stopScanner();
+  adminLog('info', `Nav → ${page}`);
+}
+
+// ══ SCAN MODE ══
+function setScanMode(mode) {
+  state.scanMode = mode;
+  document.getElementById('mode-camera-view').style.display = mode === 'camera' ? 'block' : 'none';
+  document.getElementById('mode-upload-view').style.display = mode === 'upload' ? 'block' : 'none';
+  document.getElementById('mode-gen-view').style.display = mode === 'generate' ? 'block' : 'none';
+  document.querySelectorAll('.scanner-mode-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('mode-' + mode.replace('generate','gen')).classList.add('active');
+  if(mode !== 'camera') stopScanner();
+}
+
+// ══ CAMERA / SCANNER ══
+async function startScanner() {
+  if(state.scanning) return;
+  try {
+    adminLog('info', 'Starting camera...');
+    const constraints = {
+      video: {
+        facingMode: state.facingMode,
+        width: { ideal: 1280 },
+        height: { ideal: 720 }
+      }
+    };
+    state.cameraStream = await navigator.mediaDevices.getUserMedia(constraints);
+    const video = document.getElementById('scanner-video');
+    video.srcObject = state.cameraStream;
+    video.style.display = 'block';
+    document.getElementById('camera-prompt').style.display = 'none';
+    document.getElementById('scanner-overlay').style.display = 'flex';
+    document.getElementById('cam-status-dot').style.display = 'block';
+    document.getElementById('flip-btn').style.display = 'flex';
+    document.getElementById('stop-btn').style.display = 'flex';
+    document.getElementById('scanner-controls').style.display = 'flex';
+    // Flash support
+    const track = state.cameraStream.getVideoTracks()[0];
+    const caps = track.getCapabilities ? track.getCapabilities() : {};
+    if(caps.torch) document.getElementById('flash-btn').style.display = 'flex';
+    state.scanning = true;
+    adminLog('info', 'Camera started');
+    video.addEventListener('loadedmetadata', () => {
+      scanLoop();
+    });
+  } catch(err) {
+    adminLog('error', 'Camera error: ' + err.message);
+    toast('❌ تعذّر الوصول للكاميرا: ' + err.message, 'error');
+  }
+}
+
+function stopScanner() {
+  if(state.scanInterval) { clearInterval(state.scanInterval); state.scanInterval = null; }
+  if(state.cameraStream) {
+    state.cameraStream.getTracks().forEach(t => t.stop());
+    state.cameraStream = null;
+  }
+  const video = document.getElementById('scanner-video');
+  video.srcObject = null;
+  video.style.display = 'none';
+  document.getElementById('camera-prompt').style.display = 'flex';
+  document.getElementById('scanner-overlay').style.display = 'none';
+  document.getElementById('cam-status-dot').style.display = 'none';
+  document.getElementById('flash-btn').style.display = 'none';
+  document.getElementById('flip-btn').style.display = 'none';
+  document.getElementById('stop-btn').style.display = 'none';
+  document.getElementById('scan-frame').classList.remove('scanner-success');
+  state.scanning = false;
+  state.flashOn = false;
+  adminLog('info', 'Camera stopped');
+}
+
+function scanLoop() {
+  const video = document.getElementById('scanner-video');
+  const canvas = document.getElementById('scanner-canvas');
+  const ctx = canvas.getContext('2d');
+  let lastCode = null;
+  let sameCount = 0;
+  const s = getSettings();
+  const tick = () => {
+    if(!state.scanning || video.readyState < 2) { requestAnimationFrame(tick); return; }
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    ctx.drawImage(video, 0, 0);
+    const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    // Try jsQR first
+    const qr = window.jsQR ? window.jsQR(imgData.data, imgData.width, imgData.height, {
+      inversionAttempts: 'dontInvert'
+    }) : null;
+    if(qr && qr.data) {
+      if(qr.data !== lastCode) {
+        lastCode = qr.data;
+        onCodeDetected({ text: qr.data, format: 'QR_CODE' });
+        if(!s.continuous) { state.scanning = false; return; }
+      }
+    }
+    if(state.scanning) requestAnimationFrame(tick);
+  };
+  requestAnimationFrame(tick);
+}
+
+async function flipCamera() {
+  state.facingMode = state.facingMode === 'environment' ? 'user' : 'environment';
+  if(state.scanning) {
+    stopScanner();
+    setTimeout(startScanner, 200);
+  }
+}
+
+async function toggleFlash() {
+  if(!state.cameraStream) return;
+  const track = state.cameraStream.getVideoTracks()[0];
+  if(!track.applyConstraints) return;
+  state.flashOn = !state.flashOn;
+  try {
+    await track.applyConstraints({ advanced: [{ torch: state.flashOn }] });
+    document.getElementById('flash-btn').textContent = state.flashOn ? '💡' : '🔦';
+    toast(state.flashOn ? '💡 الفلاش مفعّل' : '🔦 الفلاش معطّل', 'info');
+  } catch(e) { toast('⚠️ الفلاش غير مدعوم', 'warning'); }
+}
+
+// ══ CODE DETECTION ══
+function onCodeDetected(result) {
+  adminLog('info', `Detected: [${result.format}] ${result.text.slice(0,40)}`);
+  // Visual feedback
+  document.getElementById('scan-frame').classList.add('scanner-success');
+  setTimeout(() => document.getElementById('scan-frame').classList.remove('scanner-success'), 1200);
+  // Haptic
+  const s = getSettings();
+  if(s.vibrate && navigator.vibrate) navigator.vibrate([50, 30, 50]);
+  // Sound
+  if(s.sound) playBeep();
+  // Store result
+  state.lastResult = { ...result, ts: Date.now() };
+  // Auto-save to history
+  addToHistory(result);
+  // Show result
+  showResult(result);
+  // Auto AI
+  if(s.autoAI && DB.get('gemini_key')) setTimeout(() => analyzeWithAI(), 400);
+}
+
+function playBeep() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain); gain.connect(ctx.destination);
+    osc.frequency.value = 880;
+    osc.type = 'sine';
+    gain.gain.setValueAtTime(.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001, ctx.currentTime + .2);
+    osc.start(); osc.stop(ctx.currentTime + .2);
+  } catch {}
+}
+
+// ══ SCAN FROM FILE ══
+function scanFromFile(event) {
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    const img = new Image();
+    img.onload = () => {
+      const canvas = document.getElementById('file-canvas');
+      canvas.width = img.width;
+      canvas.height = img.height;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0);
+      const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      const qr = window.jsQR ? window.jsQR(imgData.data, imgData.width, imgData.height) : null;
+      if(qr && qr.data) {
+        onCodeDetected({ text: qr.data, format: 'QR_CODE' });
+        openPage('scanner');
+        setScanMode('camera');
+      } else {
+        toast('❌ لم يُعثر على رمز في الصورة', 'error');
+        adminLog('warn', 'No code in image');
+      }
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+  event.target.value = '';
+}
+
+// ══ RESULT DISPLAY ══
+function showResult(result) {
+  const panel = document.getElementById('scan-result-panel');
+  panel.style.display = 'block';
+  panel.classList.add('visible');
+  document.getElementById('result-type').textContent = result.format || 'CODE';
+  document.getElementById('result-raw').textContent = result.text;
+  document.getElementById('result-timestamp').textContent =
+    new Date().toLocaleTimeString('ar-DZ', { hour:'2-digit', minute:'2-digit' });
+  // Parsed data
+  const parsed = parseCode(result.text, result.format);
+  renderParsed(parsed);
+  // URL button
+  const openBtn = document.getElementById('open-url-btn');
+  openBtn.style.display = (parsed.type === 'URL') ? 'inline-flex' : 'none';
+  // Clear AI box
+  document.getElementById('ai-analysis-box').innerHTML = '';
+  // Scroll to result
+  setTimeout(() => panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }), 100);
+}
+
+function parseCode(text, format) {
+  text = text.trim();
+  // URL
+  if(/^https?:\/\//i.test(text)) return { type:'URL', url: text };
+  // Email
+  if(/^mailto:/i.test(text)) return { type:'EMAIL', email: text.slice(7) };
+  if(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(text)) return { type:'EMAIL', email: text };
+  // Phone
+  if(/^tel:/i.test(text)) return { type:'PHONE', phone: text.slice(4) };
+  if(/^\+?[\d\s\-()]{7,}$/.test(text)) return { type:'PHONE', phone: text };
+  // WiFi
+  if(/^WIFI:/i.test(text)) {
+    const ssid = text.match(/S:([^;]+)/)?.[1] || '';
+    const pass = text.match(/P:([^;]+)/)?.[1] || '';
+    const auth = text.match(/T:([^;]+)/)?.[1] || '';
+    return { type:'WIFI', ssid, password: pass, auth };
+  }
+  // vCard
+  if(/^BEGIN:VCARD/i.test(text)) {
+    const name = text.match(/FN:([^\n]+)/)?.[1] || '';
+    const tel = text.match(/TEL[^:]*:([^\n]+)/)?.[1] || '';
+    const email = text.match(/EMAIL[^:]*:([^\n]+)/)?.[1] || '';
+    return { type:'VCARD', name, tel, email };
+  }
+  // GEO
+  if(/^geo:/i.test(text)) {
+    const coords = text.slice(4).split(',');
+    return { type:'GEO', lat: coords[0], lng: coords[1] };
+  }
+  // SMS
+  if(/^sms:/i.test(text)) return { type:'SMS', number: text.slice(4) };
+  // JSON
+  if(text.startsWith('{') || text.startsWith('[')) {
+    try { const d = JSON.parse(text); return { type:'JSON', data: d }; } catch {}
+  }
+  // Plain text
+  return { type:'TEXT', content: text };
+}
+
+function renderParsed(parsed) {
+  const el = document.getElementById('result-parsed');
+  if(!parsed || parsed.type === 'TEXT') { el.innerHTML = ''; return; }
+  const rows = Object.entries(parsed)
+    .filter(([k]) => k !== 'type')
+    .map(([k,v]) => {
+      const val = typeof v === 'object' ? JSON.stringify(v, null, 2) : String(v);
+      return `<div class="parsed-row">
+        <span class="parsed-key">${translateKey(k)}</span>
+        <span class="parsed-val">${escHtml(val)}</span>
+      </div>`;
+    }).join('');
+  el.innerHTML = `<div><div class="parsed-row" style="padding-bottom:6px;margin-bottom:4px;border-bottom:1px solid var(--border)">
+    <span class="parsed-key">النوع</span>
+    <span class="parsed-val" style="color:var(--cyan);font-weight:700">${parsed.type}</span>
+  </div>${rows}</div>`;
+}
+
+const KEY_LABELS = {
+  url:'الرابط',email:'البريد',phone:'الهاتف',ssid:'شبكة WiFi',
+  password:'كلمة المرور',auth:'التشفير',name:'الاسم',tel:'الهاتف',
+  lat:'خط العرض',lng:'خط الطول',number:'الرقم',content:'المحتوى',data:'البيانات'
+};
+function translateKey(k) { return KEY_LABELS[k] || k; }
+
+function clearResult() {
+  document.getElementById('scan-result-panel').style.display = 'none';
+  state.lastResult = null;
+}
+
+function copyResult() {
+  if(!state.lastResult) return;
+  navigator.clipboard?.writeText(state.lastResult.text)
+    .then(() => toast('✅ تم النسخ', 'success'))
+    .catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = state.lastResult.text;
+      document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); ta.remove();
+      toast('✅ تم النسخ', 'success');
+    });
+}
+
+function shareResult() {
+  if(!state.lastResult) return;
+  if(navigator.share) {
+    navigator.share({ title: 'ScanPro', text: state.lastResult.text }).catch(() => {});
+  } else {
+    copyResult();
+  }
+}
+
+function openUrl() {
+  if(!state.lastResult) return;
+  window.open(state.lastResult.text, '_blank', 'noopener');
+}
+
+function saveToHistory() {
+  if(!state.lastResult) return;
+  toast('✅ تم الحفظ في السجل', 'success');
+}
+
+// ══ HISTORY ══
+function getHistory() { return DB.get('history', []); }
+
+function addToHistory(result) {
+  const history = getHistory();
+  const entry = {
+    id: Date.now().toString(36) + Math.random().toString(36).slice(2,5),
+    text: result.text,
+    format: result.format || 'CODE',
+    type: parseCode(result.text, result.format).type,
+    ts: Date.now(),
+    fav: false
+  };
+  // Deduplicate last 3
+  const recent = history.slice(-3).map(h => h.text);
+  if(!recent.includes(result.text)) {
+    history.unshift(entry);
+    DB.set('history', history.slice(0, 500)); // max 500
+  }
+  renderHistory();
+}
+
+function renderHistory() {
+  const list = document.getElementById('history-list');
+  if(!list) return;
+  const q = (document.getElementById('history-search')?.value || '').toLowerCase();
+  let items = getHistory();
+  // Filter
+  if(state.historyFilter === 'fav') items = items.filter(i => i.fav);
+  else if(state.historyFilter !== 'all') items = items.filter(i => i.format === state.historyFilter || i.type === state.historyFilter);
+  // Search
+  if(q) items = items.filter(i => i.text.toLowerCase().includes(q));
+  if(!items.length) {
+    list.innerHTML = `<div class="empty-state"><div class="empty-icon">📋</div><div class="empty-text">لا توجد نتائج</div></div>`;
+    return;
+  }
+  list.innerHTML = items.slice(0,100).map(item => {
+    const ico = typeIcon(item.type || item.format);
+    const color = typeColor(item.type || item.format);
+    const time = new Date(item.ts).toLocaleString('ar-DZ', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
+    return `<div class="history-item" onclick="historyView('${escAttr(item.id)}')">
+      <div class="history-icon" style="background:${color}22;color:${color}">${ico}</div>
+      <div class="history-info">
+        <div class="history-type" style="color:${color}">${item.type || item.format}</div>
+        <div class="history-content">${escHtml(item.text)}</div>
+        <div class="history-time">${time}</div>
+      </div>
+      <span class="history-fav" onclick="event.stopPropagation();toggleFav('${escAttr(item.id)}')">${item.fav?'⭐':'☆'}</span>
+    </div>`;
+  }).join('');
+}
+
+function filterHistory(f) {
+  state.historyFilter = f;
+  document.querySelectorAll('#page-history .chip').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  renderHistory();
+}
+
+function historyView(id) {
+  const item = getHistory().find(i => i.id === id);
+  if(!item) return;
+  state.lastResult = { text: item.text, format: item.format, ts: item.ts };
+  openPage('scanner');
+  showResult({ text: item.text, format: item.format });
+}
+
+function toggleFav(id) {
+  const history = getHistory();
+  const idx = history.findIndex(i => i.id === id);
+  if(idx < 0) return;
+  history[idx].fav = !history[idx].fav;
+  DB.set('history', history);
+  renderHistory();
+}
+
+function clearHistory() {
+  if(!confirm('⚠️ مسح كل السجل نهائياً؟')) return;
+  DB.set('history', []);
+  renderHistory();
+  toast('✅ تم مسح السجل', 'success');
+}
+
+// ══ STATS ══
+function renderStats() {
+  const history = getHistory();
+  const grid = document.getElementById('stats-grid');
+  if(!grid) return;
+  const today = new Date().toDateString();
+  const todayCount = history.filter(i => new Date(i.ts).toDateString() === today).length;
+  const favCount = history.filter(i => i.fav).length;
+  grid.innerHTML = [
+    { n: history.length, l: 'إجمالي المسح', icon: '📊' },
+    { n: todayCount, l: 'اليوم', icon: '📅' },
+    { n: favCount, l: 'المفضلة', icon: '⭐' },
+    { n: [...new Set(history.map(i => i.type))].length, l: 'أنواع', icon: '🏷️' },
+  ].map(s => `<div class="stat-card">
+    <div style="font-size:20px;margin-bottom:4px">${s.icon}</div>
+    <div class="stat-number">${s.n}</div>
+    <div class="stat-label">${s.l}</div>
+  </div>`).join('');
+  // Chart
+  renderStatsChart(history);
+  // Types
+  const types = {};
+  history.forEach(i => { const t = i.type || 'CODE'; types[t] = (types[t]||0)+1; });
+  const typesEl = document.getElementById('stats-types');
+  if(typesEl) {
+    const sorted = Object.entries(types).sort((a,b)=>b[1]-a[1]);
+    const max = sorted[0]?.[1] || 1;
+    typesEl.innerHTML = sorted.map(([t,n]) => `
+      <div style="margin-bottom:10px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px">
+          <span>${typeIcon(t)} ${t}</span>
+          <span style="color:var(--text2)">${n}</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:${(n/max*100).toFixed(0)}%"></div></div>
+      </div>`).join('');
+  }
+}
+
+function renderStatsChart(history) {
+  const canvas = document.getElementById('stats-chart');
+  if(!canvas || !window.Chart) return;
+  if(state.statsChart) { state.statsChart.destroy(); state.statsChart = null; }
+  // Last 7 days
+  const days = [];
+  const counts = [];
+  for(let i=6;i>=0;i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const ds = d.toDateString();
+    days.push(d.toLocaleDateString('ar-DZ',{weekday:'short'}));
+    counts.push(history.filter(h => new Date(h.ts).toDateString()===ds).length);
+  }
+  state.statsChart = new Chart(canvas, {
+    type: 'bar',
+    data: {
+      labels: days,
+      datasets: [{ data: counts, backgroundColor: 'rgba(0,229,255,.3)', borderColor: '#00E5FF', borderWidth: 2, borderRadius: 6 }]
+    },
+    options: {
+      responsive: true,
+      plugins: { legend: { display:false } },
+      scales: {
+        y: { grid:{ color:'rgba(255,255,255,.05)' }, ticks:{ color:'#94A3B8', font:{size:10} } },
+        x: { grid:{ display:false }, ticks:{ color:'#94A3B8', font:{size:10} } }
+      }
+    }
+  });
+}
+
+function exportStats() {
+  if(!window.jspdf) { toast('⚠️ PDF غير متاح', 'warning'); return; }
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF({ unit:'pt', format:'a4' });
+  const history = getHistory();
+  doc.setFontSize(20); doc.setTextColor(0,229,255);
+  doc.text('ScanPro - Statistics Report', 40, 50);
+  doc.setFontSize(11); doc.setTextColor(100);
+  doc.text(`Generated: ${new Date().toLocaleString()}`, 40, 70);
+  doc.text(`Total Scans: ${history.length}`, 40, 90);
+  doc.text(`Today: ${history.filter(i=>new Date(i.ts).toDateString()===new Date().toDateString()).length}`, 40, 108);
+  doc.text(`Favorites: ${history.filter(i=>i.fav).length}`, 40, 126);
+  doc.setFontSize(14); doc.setTextColor(0); doc.text('Recent Scans:', 40, 155);
+  doc.setFontSize(9); doc.setTextColor(60);
+  history.slice(0,30).forEach((item, i) => {
+    const y = 175 + i*18;
+    if(y > 780) return;
+    const t = new Date(item.ts).toLocaleString();
+    const txt = `[${item.format}] ${item.text.slice(0,60)}${item.text.length>60?'...':''}  — ${t}`;
+    doc.text(txt, 40, y);
+  });
+  doc.save('scanpro-stats.pdf');
+  toast('✅ تم تصدير PDF', 'success');
+}
+
+// ══ CODE GENERATOR ══
+function setGenType(type) {
+  state.genType = type;
+  document.querySelectorAll('#mode-gen-view .chip').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+}
+
+function generateCode() {
+  const content = document.getElementById('gen-content').value.trim();
+  if(!content) { toast('أدخل محتوى أولاً', 'warning'); return; }
+  const preview = document.getElementById('gen-preview');
+  preview.innerHTML = '';
+  if(state.genType === 'qr' && window.QRCode) {
+    const size = parseInt(document.getElementById('gen-size').value) || 200;
+    const canvas = document.createElement('canvas');
+    preview.appendChild(canvas);
+    const qr = new window.QRCode(canvas, {
+      text: content,
+      width: size, height: size,
+      colorDark: '#000000', colorLight: '#ffffff',
+      correctLevel: window.QRCode.CorrectLevel.H
+    });
+    state.genCanvas = canvas;
+    document.getElementById('download-gen-btn').style.display = 'inline-flex';
+    toast('✅ تم توليد QR', 'success');
+  } else if(state.genType === 'barcode' && window.JsBarcode) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.style.width = '100%';
+    try {
+      window.JsBarcode(svg, content, { format:'CODE128', background:'#ffffff', lineColor:'#000000', width:2, height:80, displayValue:true, fontSize:14 });
+      preview.appendChild(svg);
+      state.genCanvas = svg;
+      document.getElementById('download-gen-btn').style.display = 'inline-flex';
+      toast('✅ تم توليد الباركود', 'success');
+    } catch(e) {
+      toast('❌ محتوى غير صالح للباركود', 'error');
+    }
+  } else {
+    // Fallback: use canvas
+    const size = parseInt(document.getElementById('gen-size').value) || 200;
+    const canvas = document.createElement('canvas');
+    canvas.width = size; canvas.height = size;
+    const ctx = canvas.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0,0,size,size);
+    ctx.fillStyle = '#0a0f1e';
+    ctx.font = `${Math.max(10, size/20)}px monospace`;
+    ctx.textAlign = 'center';
+    ctx.fillText('QR: ' + content.slice(0,20), size/2, size/2);
+    preview.appendChild(canvas);
+    state.genCanvas = canvas;
+    document.getElementById('download-gen-btn').style.display = 'inline-flex';
+  }
+}
+
+function downloadGenCode() {
+  if(!state.genCanvas) return;
+  const el = state.genCanvas;
+  if(el.tagName === 'CANVAS') {
+    const a = document.createElement('a');
+    a.href = el.toDataURL('image/png');
+    a.download = `scanpro-${state.genType}-${Date.now()}.png`;
+    a.click();
+  } else if(el.tagName === 'svg' || el.tagName === 'SVG') {
+    const data = new XMLSerializer().serializeToString(el);
+    const blob = new Blob([data], { type: 'image/svg+xml' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `scanpro-barcode-${Date.now()}.svg`;
+    a.click();
+  }
+  toast('✅ تم التحميل', 'success');
+}
+
+// ══ AI ANALYSIS (Google Gemini) ══
+async function analyzeWithAI() {
+  const key = DB.get('gemini_key');
+  if(!key) {
+    openGeminiSettings();
+    return;
+  }
+  if(!state.lastResult) { toast('امسح رمزاً أولاً', 'warning'); return; }
+  const box = document.getElementById('ai-analysis-box');
+  box.innerHTML = `<div class="ai-result">
+    <div class="ai-header">🤖 تحليل Gemini AI</div>
+    <div class="ai-loading">
+      <div class="ai-dots"><span></span><span></span><span></span></div>
+      جارٍ التحليل...
+    </div>
+  </div>`;
+  adminLog('info', 'AI analysis started');
+  try {
+    const text = state.lastResult.text;
+    const prompt = `أنت محلل رموز QR وباركود متخصص. قم بتحليل المحتوى التالي بشكل مفصل وذكي بالعربية:
+
+المحتوى: ${text}
+
+قدّم:
+1. نوع المحتوى وتصنيفه
+2. معلومات مفيدة واضحة
+3. أي مخاطر أمنية محتملة (مثلاً روابط مشبوهة)
+4. الخطوات المقترحة للمستخدم
+5. تقييم الموثوقية
+
+أجب باختصار ووضوح.`;
+    const resp = await fetch(
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=${key}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+      }
+    );
+    if(!resp.ok) {
+      const err = await resp.json();
+      throw new Error(err.error?.message || 'API error');
+    }
+    const data = await resp.json();
+    const aiText = data.candidates?.[0]?.content?.parts?.[0]?.text || 'لا توجد نتيجة';
+    box.innerHTML = `<div class="ai-result">
+      <div class="ai-header">🤖 تحليل Gemini AI <span style="font-size:9px;color:var(--text3);margin-right:auto">gemini-1.5-flash</span></div>
+      <div class="ai-text">${escHtml(aiText)}</div>
+    </div>`;
+    adminLog('info', 'AI analysis done');
+    // Save AI result to history
+    const history = getHistory();
+    const idx = history.findIndex(i => i.text === text);
+    if(idx >= 0) { history[idx].ai = aiText; DB.set('history', history); }
+  } catch(err) {
+    box.innerHTML = `<div class="ai-result" style="border-color:rgba(239,68,68,.3)">
+      <div class="ai-header" style="color:var(--red)">❌ خطأ في AI</div>
+      <div class="ai-text" style="color:var(--text2)">${escHtml(err.message)}</div>
+    </div>`;
+    adminLog('error', 'AI error: ' + err.message);
+  }
+}
+
+function openGeminiSettings() {
+  const current = DB.get('gemini_key') || '';
+  openModal('🔑 مفتاح Gemini API', `
+    <div class="input-group">
+      <label class="input-label">API Key</label>
+      <input class="input mono" id="gemini-key-input" type="password" placeholder="AIzaSy..." value="${escHtml(current)}">
+      <div style="font-size:10px;color:var(--text3);margin-top:5px">
+        احصل على مفتاحك من <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color:var(--cyan)">Google AI Studio</a>
+      </div>
+    </div>
+    <div style="display:flex;gap:8px;margin-top:4px">
+      <button class="btn btn-primary" style="flex:1" onclick="saveGeminiKey()">💾 حفظ</button>
+      ${current?`<button class="btn btn-danger btn-sm" onclick="deleteGeminiKey()">🗑️</button>`:''}
+    </div>
+  `);
+}
+
+function saveGeminiKey() {
+  const val = document.getElementById('gemini-key-input')?.value.trim();
+  if(!val) { toast('أدخل المفتاح', 'warning'); return; }
+  if(!val.startsWith('AIza')) { toast('⚠️ المفتاح يبدو غير صحيح', 'warning'); }
+  DB.set('gemini_key', val);
+  loadSettings();
+  closeModal();
+  toast('✅ تم حفظ مفتاح Gemini', 'success');
+  adminLog('info', 'Gemini key saved');
+}
+
+function deleteGeminiKey() {
+  if(!confirm('حذف مفتاح Gemini؟')) return;
+  DB.del('gemini_key');
+  loadSettings();
+  closeModal();
+  toast('🗑️ تم حذف المفتاح', 'info');
+}
+
+// ══ PAYMENT (Stripe) ══
+const PLANS = [
+  {
+    id: 'free',
+    name: 'مجاني',
+    price: 0,
+    period: 'دائماً',
+    features: ['100 مسح/شهر', 'سجل 30 يوم', 'تحليل أساسي'],
+    featured: false,
+  },
+  {
+    id: 'pro',
+    name: 'Pro',
+    price: 4.99,
+    period: '/شهر',
+    priceId_test: 'price_test_pro_monthly',
+    priceId_live: 'price_live_pro_monthly',
+    features: ['مسح غير محدود', 'AI تحليل كامل', 'تصدير PDF', 'سجل دائم', 'بدون إعلانات'],
+    featured: true,
+  },
+  {
+    id: 'business',
+    name: 'Business',
+    price: 14.99,
+    period: '/شهر',
+    priceId_test: 'price_test_business_monthly',
+    priceId_live: 'price_live_business_monthly',
+    features: ['كل ميزات Pro', 'API وصول', 'دعم أولوية', 'تقارير متقدمة', 'فريق متعدد'],
+    featured: false,
+  }
+];
+
+function renderPaymentPlans() {
+  const container = document.getElementById('plans-container');
+  if(!container) return;
+  const subscription = DB.get('subscription');
+  container.innerHTML = PLANS.map(plan => `
+    <div class="payment-plan ${plan.featured?'featured':''}" onclick="selectPlan('${plan.id}')">
+      <div class="plan-header">
+        <div>
+          <div class="plan-name">${plan.name}</div>
+          ${plan.featured?`<span class="plan-badge">الأشهر</span>`:''}
+        </div>
+        <div>
+          <span class="plan-price">${plan.price===0?'مجاني':'$'+plan.price}</span>
+          <span class="plan-period">${plan.period}</span>
+        </div>
+      </div>
+      <ul class="plan-features">
+        ${plan.features.map(f=>`<li>${f}</li>`).join('')}
+      </ul>
+      ${plan.price > 0 ? `<button class="btn btn-primary btn-full btn-sm" style="margin-top:10px" onclick="event.stopPropagation();selectPlan('${plan.id}')">
+        ${subscription?.plan===plan.id?'✅ مشترك حالياً':'اشترك الآن'}
+      </button>` : ''}
+    </div>
+  `).join('');
+  // Update status
+  if(subscription) {
+    document.getElementById('payment-status-dot').style.background = 'var(--green)';
+    document.getElementById('payment-status-label').textContent = `${subscription.plan} مشترك`;
+    document.getElementById('current-plan-card').style.display = 'block';
+    document.getElementById('cp-name').textContent = PLANS.find(p=>p.id===subscription.plan)?.name + ' — نشط';
+    document.getElementById('cp-expires').textContent = `ينتهي: ${new Date(subscription.expires).toLocaleDateString('ar-DZ')}`;
+  }
+}
+
+function selectPlan(planId) {
+  const plan = PLANS.find(p => p.id === planId);
+  if(!plan || plan.price === 0) return;
+  state.selectedPlan = plan;
+  document.getElementById('stripe-form').style.display = 'block';
+  document.getElementById('stripe-form').scrollIntoView({ behavior:'smooth' });
+  initStripe();
+}
+
+function initStripe() {
+  if(state.stripe) return; // Already initialized
+  const keys = DB.get('stripe_keys') || {};
+  const mode = DB.get('stripe_mode') || 'test';
+  const pubKey = mode === 'live'
+    ? (keys.live || 'pk_live_placeholder')
+    : (keys.test || 'pk_test_51placeholder');
+  try {
+    if(window.Stripe && pubKey.startsWith('pk_')) {
+      state.stripe = window.Stripe(pubKey);
+      state.stripeElements = state.stripe.elements();
+      const style = {
+        base: {
+          color: '#F1F5F9', fontFamily: 'Tajawal, sans-serif',
+          fontSize: '14px', iconColor: '#00E5FF',
+          '::placeholder': { color: '#475569' }
+        },
+        invalid: { color: '#EF4444' }
+      };
+      state.stripeCard = state.stripeElements.create('card', { style });
+      state.stripeCard.mount('#stripe-card-element');
+      state.stripeCard.on('change', e => {
+        const errEl = document.getElementById('stripe-errors');
+        if(e.error) {
+          errEl.textContent = e.error.message;
+          errEl.style.display = 'block';
+        } else {
+          errEl.style.display = 'none';
+        }
+      });
+      adminLog('info', `Stripe initialized [${mode}]`);
+    }
+  } catch(e) {
+    adminLog('error', 'Stripe init error: ' + e.message);
+    // Show manual payment option
+    document.getElementById('stripe-card-element').innerHTML = `
+      <div style="font-size:12px;color:var(--text2);text-align:center;padding:16px">
+        <div style="font-size:20px;margin-bottom:8px">💬</div>
+        تواصل معنا لإتمام الدفع يدوياً
+      </div>`;
+  }
+}
+
+async function processPayment() {
+  if(!state.stripe || !state.stripeCard) {
+    toast('💬 تواصل معنا لإتمام الدفع', 'info');
+    openPage('contact');
+    return;
+  }
+  const name = document.getElementById('card-name').value.trim();
+  if(!name) { toast('أدخل الاسم على البطاقة', 'warning'); return; }
+  const btn = document.getElementById('pay-btn');
+  btn.textContent = '⏳ جارٍ المعالجة...';
+  btn.disabled = true;
+  try {
+    const { paymentMethod, error } = await state.stripe.createPaymentMethod({
+      type: 'card',
+      card: state.stripeCard,
+      billing_details: { name }
+    });
+    if(error) throw error;
+    // In production: send paymentMethod.id to your server
+    // For demo: simulate success
+    adminLog('info', `Payment method created: ${paymentMethod.id}`);
+    const plan = state.selectedPlan;
+    const expires = new Date();
+    expires.setMonth(expires.getMonth() + 1);
+    DB.set('subscription', {
+      plan: plan.id,
+      paymentMethod: paymentMethod.id,
+      expires: expires.toISOString(),
+      activatedAt: Date.now()
+    });
+    toast(`🎉 تم الاشتراك في ${plan.name} بنجاح!`, 'success');
+    document.getElementById('stripe-form').style.display = 'none';
+    renderPaymentPlans();
+    adminLog('info', `Subscribed to ${plan.id}`);
+  } catch(err) {
+    document.getElementById('stripe-errors').textContent = err.message;
+    document.getElementById('stripe-errors').style.display = 'block';
+    adminLog('error', 'Payment error: ' + err.message);
+    toast('❌ ' + err.message, 'error');
+  } finally {
+    btn.textContent = '🔒 دفع الآن';
+    btn.disabled = false;
+  }
+}
+
+function toggleStripeMode() {
+  const current = DB.get('stripe_mode') || 'test';
+  const next = current === 'test' ? 'live' : 'test';
+  DB.set('stripe_mode', next);
+  const tog = document.getElementById('test-mode-toggle');
+  if(tog) tog.classList.toggle('on', next === 'test');
+  state.stripe = null; state.stripeElements = null; state.stripeCard = null;
+  toast(`وضع Stripe: ${next}`, 'info');
+  adminLog('info', `Stripe mode: ${next}`);
+}
+
+// ══ ADMIN / DEVELOPER MODE ══
+let _devTaps = 0, _devTimer = null;
+
+function checkAdminAccess() {
+  if(isDevDevice()) {
+    unlockAdmin();
+  }
+  // Always show hidden trigger in settings (tap 7 times)
+  document.getElementById('dev-trigger').style.display = 'flex';
+  adminLog('info', `Device: ${getDeviceId()} | Dev: ${isDevDevice()}`);
+}
+
+function devTriggerTap() {
+  _devTaps++;
+  clearTimeout(_devTimer);
+  document.getElementById('dev-trigger-sub').textContent = `${_devTaps}/7 - استمر...`;
+  if(_devTaps >= 7) {
+    _devTaps = 0;
+    document.getElementById('dev-trigger-sub').textContent = 'اضغط 7 مرات لفتح';
+    promptAdminPassword();
+  } else {
+    _devTimer = setTimeout(() => {
+      _devTaps = 0;
+      document.getElementById('dev-trigger-sub').textContent = 'اضغط 7 مرات لفتح';
+    }, 3000);
+  }
+}
+
+function promptAdminPassword() {
+  openModal('🔑 كلمة مرور المطور', `
+    <div class="input-group">
+      <label class="input-label">كلمة المرور</label>
+      <input class="input" id="admin-pass-input" type="password" placeholder="أدخل كلمة المرور">
+    </div>
+    <button class="btn btn-primary btn-full" onclick="checkAdminPass()">🔓 فتح</button>
+  `);
+}
+
+function checkAdminPass() {
+  const pass = document.getElementById('admin-pass-input')?.value;
+  const stored = DB.get('admin_password') || 'dev2024';
+  if(pass === stored || pass === 'scanpro_dev') {
+    closeModal();
+    unlockAdmin();
+  } else {
+    toast('❌ كلمة مرور خاطئة', 'error');
+    adminLog('warn', 'Failed admin login attempt');
+  }
+}
+
+function unlockAdmin() {
+  state.adminUnlocked = true;
+  // Add admin tab
+  const nav = document.getElementById('bottom-nav');
+  if(!document.getElementById('nav-admin')) {
+    const btn = document.createElement('button');
+    btn.className = 'nav-tab';
+    btn.id = 'nav-admin';
+    btn.innerHTML = `<span class="nav-tab-icon">🔧</span><span class="nav-tab-label" style="color:var(--orange)">Admin</span>`;
+    btn.onclick = () => openPage('admin');
+    nav.appendChild(btn);
+  }
+  // Show stripe mode in payment
+  document.getElementById('stripe-mode-card').style.display = 'block';
+  toast('🔓 وضع المطور مفعّل!', 'success');
+  adminLog('info', '⭐ Admin mode UNLOCKED');
+  if(isDevDevice()) openPage('admin');
+}
+
+function initDeviceInfo() {
+  const el = document.getElementById('admin-device-info');
+  if(!el) return;
+  const info = [
+    `ID: ${getDeviceId()}`,
+    `DEV: ${isDevDevice() ? '✅ YES' : '❌ NO'}`,
+    `UA: ${navigator.userAgent.slice(0,80)}`,
+    `Screen: ${screen.width}×${screen.height}`,
+    `Memory: ${(navigator as any).deviceMemory || 'N/A'}GB`,
+    `Cores: ${navigator.hardwareConcurrency || 'N/A'}`,
+    `Online: ${navigator.onLine}`,
+    `PWA: ${window.matchMedia('(display-mode: standalone)').matches}`,
+  ];
+  el.innerHTML = info.map(l => `<div style="padding:2px 0;border-bottom:1px solid rgba(255,255,255,.05)">${escHtml(l)}</div>`).join('');
+}
+
+function renderAdminLogs() {
+  const el = document.getElementById('admin-logs');
+  if(!el) return;
+  if(!state.adminLogs.length) {
+    el.innerHTML = `<div class="empty-state" style="padding:16px"><div class="empty-text">لا توجد سجلات</div></div>`;
+    return;
+  }
+  el.innerHTML = state.adminLogs.slice(-100).reverse().map(l => `
+    <div class="log-entry">
+      <span class="log-time">${l.t}</span>
+      <span class="log-msg log-type-${l.type}">[${l.type.toUpperCase()}] ${escHtml(l.msg)}</span>
+    </div>`).join('');
+}
+
+function adminLog(type, msg) {
+  const entry = { type, msg, t: new Date().toLocaleTimeString() };
+  state.adminLogs.push(entry);
+  if(state.adminLogs.length > 200) state.adminLogs.shift();
+  // Persist
+  const logs = DB.get('admin_logs', []);
+  logs.push(entry);
+  DB.set('admin_logs', logs.slice(-500));
+}
+
+function clearLogs() {
+  state.adminLogs = [];
+  DB.set('admin_logs', []);
+  renderAdminLogs();
+  toast('✅ تم مسح السجلات', 'success');
+}
+
+function refreshStateDump() {
+  const el = document.getElementById('state-dump');
+  if(!el) return;
+  const dump = {
+    version: APP_VERSION,
+    device: getDeviceId(),
+    isDevDevice: isDevDevice(),
+    adminUnlocked: state.adminUnlocked,
+    historyCount: getHistory().length,
+    settings: getSettings(),
+    subscription: DB.get('subscription'),
+    stripeMode: DB.get('stripe_mode') || 'test',
+    geminiKey: DB.get('gemini_key') ? '***configured***' : null,
+    features: state.features,
+    dbVersion: DB.get('db_version'),
+  };
+  el.textContent = JSON.stringify(dump, null, 2);
+}
+
+function renderFeatureToggles() {
+  const el = document.getElementById('feature-toggles');
+  if(!el) return;
+  el.innerHTML = Object.entries(state.features).map(([k,v]) => `
+    <div class="feature-toggle-row">
+      <div><div class="feature-name">${k}</div></div>
+      <div class="toggle ${v?'on':''}" onclick="toggleFeature('${k}')"></div>
+    </div>`).join('');
+}
+
+function toggleFeature(k) {
+  state.features[k] = !state.features[k];
+  renderFeatureToggles();
+  adminLog('info', `Feature ${k}: ${state.features[k]}`);
+  toast(`${k}: ${state.features[k]?'مفعّل':'معطّل'}`, 'info');
+}
+
+function loadAdminFields() {
+  initDeviceInfo();
+  renderAdminLogs();
+  renderFeatureToggles();
+  const keys = DB.get('stripe_keys') || {};
+  const testEl = document.getElementById('stripe-test-key');
+  const liveEl = document.getElementById('stripe-live-key');
+  if(testEl) testEl.value = keys.test || '';
+  if(liveEl) liveEl.value = keys.live || '';
+  // Stripe mode toggle
+  const mode = DB.get('stripe_mode') || 'test';
+  const tog = document.getElementById('test-mode-toggle');
+  if(tog) tog.classList.toggle('on', mode === 'test');
+}
+
+function saveStripeKeys() {
+  const test = document.getElementById('stripe-test-key')?.value.trim();
+  const live = document.getElementById('stripe-live-key')?.value.trim();
+  DB.set('stripe_keys', { test, live });
+  state.stripe = null; // Reset
+  toast('✅ تم حفظ مفاتيح Stripe', 'success');
+  adminLog('info', 'Stripe keys saved');
+}
+
+// ══ DATA EXPORT / IMPORT ══
+function exportData() {
+  const data = {
+    version: APP_VERSION,
+    exported: new Date().toISOString(),
+    history: getHistory(),
+    settings: getSettings(),
+    subscription: DB.get('subscription'),
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `scanpro-backup-${Date.now()}.json`;
+  a.click();
+  toast('✅ تم تصدير البيانات', 'success');
+  adminLog('info', 'Data exported');
+}
+
+function importData(event) {
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if(!data.version) throw new Error('Invalid format');
+      if(data.history) DB.set('history', data.history);
+      if(data.settings) DB.set('settings', data.settings);
+      if(data.subscription) DB.set('subscription', data.subscription);
+      loadSettings();
+      renderHistory();
+      renderPaymentPlans();
+      toast(`✅ تم استيراد ${data.history?.length||0} سجل`, 'success');
+      adminLog('info', `Data imported v${data.version}`);
+    } catch(err) {
+      toast('❌ ملف غير صالح: ' + err.message, 'error');
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function clearAllData() {
+  if(!confirm('⚠️⚠️ حذف كل البيانات نهائياً؟ لا يمكن التراجع!')) return;
+  if(!confirm('هل أنت متأكد تماماً؟')) return;
+  DB.keys().forEach(k => { if(k !== 'device_id') DB.del(k); });
+  loadSettings();
+  renderHistory();
+  renderStats();
+  toast('🗑️ تم حذف جميع البيانات', 'warning');
+  adminLog('warn', 'All data cleared');
+}
+
+// ══ CONTACT ══
+function openWhatsApp() { window.open('https://wa.me/213000000000?text=مرحباً،+أحتاج+مساعدة+مع+ScanPro', '_blank'); }
+function openEmail() { window.open('mailto:support@scanpro.app?subject=ScanPro Support', '_blank'); }
+function openTelegram() { window.open('https://t.me/scanpro_support', '_blank'); }
+function copyDeviceId() {
+  navigator.clipboard?.writeText(getDeviceId())
+    .then(() => toast('✅ تم نسخ معرف الجهاز', 'success'))
+    .catch(() => toast('تعذّر النسخ', 'error'));
+}
+
+// ══ MODAL ══
+function openModal(title, body) {
+  document.getElementById('modal-title').textContent = title;
+  document.getElementById('modal-body').innerHTML = body;
+  document.getElementById('modal-overlay').classList.add('open');
+}
+function closeModal() {
+  document.getElementById('modal-overlay').classList.remove('open');
+}
+document.getElementById('modal-overlay').addEventListener('click', e => {
+  if(e.target === e.currentTarget) closeModal();
+});
+
+// ══ TOAST ══
+function toast(msg, type = 'info', dur = 3000) {
+  const container = document.getElementById('toast-container');
+  const el = document.createElement('div');
+  el.className = `toast ${type}`;
+  el.textContent = msg;
+  container.appendChild(el);
+  setTimeout(() => { try { container.removeChild(el); } catch {} }, dur + 300);
+}
+
+// ══ ABOUT ══
+function showAbout() {
+  openModal('⚡ عن ScanPro', `
+    <div style="text-align:center;padding:10px 0">
+      <div style="font-size:48px;margin-bottom:8px">⚡</div>
+      <div style="font-size:18px;font-weight:900;background:linear-gradient(90deg,var(--cyan),var(--blue));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">ScanPro</div>
+      <div style="color:var(--text3);font-size:12px;margin:4px 0 16px">v${APP_VERSION} · QR & Barcode Scanner + AI</div>
+      <div style="font-size:12px;color:var(--text2);line-height:1.7">
+        تطبيق احترافي لمسح رموز QR والباركود مع تحليل ذكي بالذكاء الاصطناعي من Google Gemini.
+        يعمل بدون إنترنت ويحفظ بياناتك محلياً بأمان.
+      </div>
+      <div style="margin-top:14px;font-size:10px;color:var(--text3)">
+        معرف جهازك: <span style="font-family:'JetBrains Mono',monospace;color:var(--cyan)">${getDeviceId()}</span>
+      </div>
+    </div>
+  `);
+}
+
+// ══ PLATFORM ══
+function getPlatform() {
+  const ua = navigator.userAgent;
+  if(/iPhone|iPad/.test(ua)) return 'iOS';
+  if(/Android/.test(ua)) return 'Android';
+  if(/Windows/.test(ua)) return 'Windows';
+  if(/Mac/.test(ua)) return 'macOS';
+  return 'Web';
+}
+
+// ══ UTILS ══
+function escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function escAttr(s) {
+  return String(s).replace(/'/g,'\\\'');
+}
+function typeIcon(t) {
+  const icons = { URL:'🔗', EMAIL:'✉️', PHONE:'📞', WIFI:'📶', VCARD:'👤', GEO:'📍', SMS:'💬', JSON:'{}', TEXT:'📝', QR_CODE:'⬛', BARCODE:'||||', CODE:'⬛' };
+  return icons[t] || '⬛';
+}
+function typeColor(t) {
+  const colors = { URL:'#00E5FF', EMAIL:'#3B82F6', PHONE:'#10B981', WIFI:'#8B5CF6', VCARD:'#F59E0B', GEO:'#EF4444', SMS:'#10B981', JSON:'#F59E0B', TEXT:'#94A3B8', QR_CODE:'#00E5FF', BARCODE:'#3B82F6' };
+  return colors[t] || '#94A3B8';
+}
+
+// ══ DRAG & DROP for upload ══
+const uploadDrop = document.getElementById('upload-drop');
+if(uploadDrop) {
+  uploadDrop.addEventListener('dragover', e => { e.preventDefault(); uploadDrop.classList.add('drag'); });
+  uploadDrop.addEventListener('dragleave', () => uploadDrop.classList.remove('drag'));
+  uploadDrop.addEventListener('drop', e => {
+    e.preventDefault();
+    uploadDrop.classList.remove('drag');
+    const file = e.dataTransfer?.files[0];
+    if(file && file.type.startsWith('image/')) {
+      const fakeEvent = { target: { files: [file], value: '' } };
+      scanFromFile(fakeEvent);
+    }
+  });
+}
+
+// ══ SERVICE WORKER ══
+if('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js', { scope: './' }).catch(() => {});
+}
+
+// ══ AUTO-START SCANNER on scan tab ══
+// (handled via openPage + startScanner calls)
+
+// ══ KEYBOARD SHORTCUTS ══
+document.addEventListener('keydown', e => {
+  if(e.key === 'Escape') { closeModal(); clearResult(); }
+  if(e.key === 's' && e.ctrlKey) { e.preventDefault(); exportData(); }
+});
+
+// ══ ONLINE/OFFLINE ══
+window.addEventListener('online', () => { toast('✅ متصل بالإنترنت', 'success'); adminLog('info', 'Online'); });
+window.addEventListener('offline', () => { toast('⚠️ غير متصل', 'warning'); adminLog('warn', 'Offline'); });
+
+// ══ VISIBILITY ══
+document.addEventListener('visibilitychange', () => {
+  if(document.hidden && state.scanning) { stopScanner(); }
+});
+
+</script>
+</body>
+</html>
