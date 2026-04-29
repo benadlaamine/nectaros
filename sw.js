@@ -1,9 +1,9 @@
-/* NectarOS Service Worker v5.4 — Unified i18n Fix */
+/* NectarOS Service Worker v5.3 */
 const APP_VERSION = 'v5.4';
-const CACHE   = 'nectaros-v8';
-const RUNTIME = 'nectaros-rt-v8';
+const CACHE   = 'nectaros-v9';
+const RUNTIME = 'nectaros-rt-v9';
 
-const STATIC = ['./', './manifest.json', './lang.js', './i18n.js'];
+const STATIC = ['./', './manifest.json', './lang.js'];
 const CDN = [
   'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap',
   'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js',
