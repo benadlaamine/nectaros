@@ -19,6 +19,7 @@
 /* ══ SERVICE WORKER — خارجي حقيقي ══ */
 if('serviceWorker' in navigator){
   navigator.serviceWorker.register('./sw.js', {scope:'./'}).then(reg=>{
+    // SW جديد ينتظر → أظهر البانر فوراً
     if(reg.waiting){ _showUpdateBanner(reg); }
     reg.addEventListener('updatefound', ()=>{
       const nw = reg.installing;
@@ -30,12 +31,13 @@ if('serviceWorker' in navigator){
       });
     });
   }).catch(()=>{});
-  // ★ مُحسَّن: منع حلقة reload اللانهائية ★
-  // نُعيد التحميل مرة واحدة فقط كل 30 ثانية
+  let _reloading = false;
   navigator.serviceWorker.addEventListener('controllerchange', ()=>{
-    const lastReload = parseInt(sessionStorage.getItem('_sw_reload')||'0');
-    if(Date.now() - lastReload > 30000){
-      sessionStorage.setItem('_sw_reload', Date.now().toString());
+    // منع حلقة reload — مرة واحدة فقط كل 30 ثانية
+    const last = parseInt(sessionStorage.getItem('_sw_rel')||'0');
+    if(!_reloading && Date.now()-last>30000){
+      _reloading=true;
+      sessionStorage.setItem('_sw_rel',Date.now().toString());
       location.reload();
     }
   });
@@ -43,12 +45,12 @@ if('serviceWorker' in navigator){
 </script>
 <title>NectarOS 🐝</title>
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&family=Cinzel+Decorative:wght@700;900&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js" defer></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js" defer></script>
-<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 <style>
 /* ═══════════════ THEME ═══════════════ */
 :root{
@@ -501,7 +503,12 @@ tr:hover td{background:rgba(255,255,255,.02);}
 .pn-schedule-item{display:flex;align-items:center;gap:10px;padding:8px 10px;background:var(--bg3);border-radius:9px;border:1px solid var(--border);margin-bottom:6px;}
 
 /* ══ SPLASH SCREEN — تصميم احترافي ══ */
-#splash{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .6s ease,transform .6s ease;overflow:hidden;}
+#splash{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .6s ease,transform .6s ease;overflow:hidden;
+  animation: _splashAutoHide 0.6s ease 5s forwards;
+}
+@keyframes _splashAutoHide{
+  to{ opacity:0; visibility:hidden; pointer-events:none; }
+}
 #splash.hide{opacity:0;transform:scale(1.06);pointer-events:none;}
 /* خلفية متحركة */
 #splash::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,193,7,.12) 0%,transparent 65%),radial-gradient(ellipse at 20% 80%,rgba(255,111,0,.07) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(255,193,7,.06) 0%,transparent 50%);pointer-events:none;}
@@ -7753,19 +7760,14 @@ async function getDeviceFingerprint(){
 async function _hashString(str){
   try{
     if(window.crypto&&crypto.subtle){
-      const _to=new Promise((_,r)=>setTimeout(()=>r(new Error('t')),800));
-      const _h=(async()=>{
-        const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str));
-        return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join('');
-      })();
+      const _to=new Promise((_,r)=>setTimeout(()=>r('t'),600));
+      const _h=(async()=>{ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str)); return Array.from(new Uint8Array(b)).map(x=>x.toString(16).padStart(2,'0')).join(''); })();
       return await Promise.race([_h,_to]);
     }
   }catch(e){}
-  // fallback djb2 — لا يحتاج أي API
-  let h=5381;for(let i=0;i<str.length;i++)h=((h<<5)+h)^str.charCodeAt(i);
-  const t=(n)=>((n>>>0).toString(16).padStart(8,'0'));
-  let h2=0x9e3779b9^(h>>>16);let h3=0x6c62272e^(h&0xffff);let h4=0xf4cfd400^h;
-  return t(h>>>0)+t(h2>>>0)+t(h3>>>0)+t(h4>>>0);
+  let h=5381; for(let i=0;i<str.length;i++)h=Math.imul(31,h)+str.charCodeAt(i)|0;
+  const p=(n,l=8)=>(n>>>0).toString(16).padStart(l,'0');
+  return p(h)+p(h^0xdeadbeef)+p(~h)+p(h*0x45d9f3b);
 }
 
 // Device ID shown to user (shorter, readable)
@@ -8548,43 +8550,20 @@ if(_isOwnerNow){
 ══════════════════════════════════════════════════ */
 function hideSplash(){
   const s=document.getElementById('splash');
-  if(!s||s.classList.contains('hide'))return;
-  const _t=(k,fb)=>(window.I18N?I18N.t(k):null)||fb;
-  const msgs=[_t('splash_loading','Loading...'),_t('splash_init','Initializing...'),_t('splash_ready','Ready! 🐝')];
-  let i=0;
-  const iv=setInterval(()=>{
-    const m=document.getElementById('splash-msg');
-    if(m&&msgs[i])m.textContent=msgs[i];
-    i++;
-    if(i>=msgs.length){
-      clearInterval(iv);
-      setTimeout(()=>{
-        s.classList.add('hide');
-        setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },600);
-      },200);
-    }
-  },400);
-  setTimeout(()=>{ s.classList.add('hide'); setTimeout(()=>{try{s.remove();}catch(e){s.style.display='none';}},600); },2500);
+  if(!s||s._done)return; s._done=true;
+  s.style.animation='none'; // override CSS auto-hide
+  s.style.opacity='0'; s.style.transform='scale(1.06)'; s.style.pointerEvents='none';
+  setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },650);
 }
+// 3 guards — أي واحد ينجح يكفي
+window.addEventListener('load',()=>setTimeout(hideSplash,600));
+document.addEventListener('DOMContentLoaded',()=>setTimeout(hideSplash,3500));
+setTimeout(hideSplash,5500); // absolute fallback
 
-// ★ GUARD 1 — بعد 4 ثوان من DOMContentLoaded
-document.addEventListener('DOMContentLoaded',()=>{
-  setTimeout(()=>{ hideSplash(); },4000);
-});
-// ★ GUARD 2 — بعد load كامل + 800ms
-window.addEventListener('load',()=>{ setTimeout(hideSplash,800); });
-
-// ★ GUARD 3 — checkLicense مع race timeout
-const _splashGuard=setTimeout(()=>hideSplash(),5000);
-const _licTO=new Promise(res=>setTimeout(()=>res('timeout'),4500));
-Promise.race([checkLicense(),_licTO])
-  .catch(e=>{
-    console.warn('[LIC]',e);
-    try{showLicenseScreen('trial');}catch(e2){}
-  }).finally(()=>{
-    clearTimeout(_splashGuard);
-    setTimeout(hideSplash,100);
-  });
+const _lt=new Promise(r=>setTimeout(r,4000));
+Promise.race([checkLicense(),_lt])
+  .catch(e=>{ try{showLicenseScreen('trial');}catch(e2){} })
+  .finally(()=>setTimeout(hideSplash,80));
 ══════════════════════════════════════════════════ */
 function renderFieldMode(){
   const _=window.__||((k,d)=>d||k);
