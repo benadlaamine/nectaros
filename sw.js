@@ -1,74 +1,96 @@
-/* ═══════════════════════════════════════
-   ScanPro Service Worker v1.0.0
-   - Cache-first for assets
-   - Network-first for API calls
-   - Data is NEVER cleared on update
-═══════════════════════════════════════ */
-const CACHE_NAME = 'scanpro-v1.0.0';
-const STATIC_ASSETS = [
-  './',
-  './index.html',
-  'https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap',
-  'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js',
-  'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
+/* NectarOS Service Worker v5.4 */
+const APP_VERSION = 'v5.3.1';
+const CACHE   = 'nectaros-v8';
+const RUNTIME = 'nectaros-rt-v8';
+
+const STATIC = ['./', './manifest.json'];
+const CDN = [
+  'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&family=Space+Mono:wght@400;700&family=Syne:wght@700;800&display=swap',
+  'https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js',
+  'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css',
+  'https://cdnjs.cloudflare.com/ajax/libs/jsbarcode/3.11.6/JsBarcode.all.min.js',
+  'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js'
 ];
 
-// Install: cache static assets
-self.addEventListener('install', event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(STATIC_ASSETS.map(url => new Request(url, { mode: 'no-cors' }))))
-      .catch(() => {}) // Don't fail install if cache fails
-      .then(() => self.skipWaiting())
+// ── التثبيت: كاش الملفات الأساسية + CDN ──
+self.addEventListener('install', e => {
+  e.waitUntil(
+    caches.open(CACHE).then(c =>
+      c.addAll(STATIC).then(() =>
+        Promise.allSettled(
+          CDN.map(u =>
+            fetch(u, {cache:'no-cache'})
+              .then(r => r.ok ? c.put(u, r) : null)
+              .catch(() => null)
+          )
+        )
+      )
+    ).then(() => {
+      console.log('[SW] NectarOS', APP_VERSION, 'installed');
+      return self.skipWaiting(); // ← تفعيل فوري بدون انتظار
+    })
   );
 });
 
-// Activate: clean old caches (NEVER touch localStorage/IndexedDB)
-self.addEventListener('activate', event => {
-  event.waitUntil(
+// ── التفعيل: حذف الكاشات القديمة ──
+self.addEventListener('activate', e => {
+  e.waitUntil(
     caches.keys().then(keys =>
       Promise.all(
         keys
-          .filter(k => k !== CACHE_NAME)
-          .map(k => caches.delete(k))
-      )
-    ).then(() => self.clients.claim())
-  );
-});
-
-// Fetch: cache-first strategy
-self.addEventListener('fetch', event => {
-  const url = new URL(event.request.url);
-  
-  // Don't cache API calls
-  if(
-    url.hostname.includes('googleapis.com') ||
-    url.hostname.includes('stripe.com') ||
-    url.hostname.includes('js.stripe.com')
-  ) {
-    event.respondWith(fetch(event.request).catch(() => new Response('', { status: 503 })));
-    return;
-  }
-  
-  // Cache-first for static assets
-  event.respondWith(
-    caches.match(event.request)
-      .then(cached => {
-        if(cached) return cached;
-        return fetch(event.request)
-          .then(resp => {
-            if(resp && resp.status === 200 && resp.type !== 'opaque') {
-              const clone = resp.clone();
-              caches.open(CACHE_NAME).then(c => c.put(event.request, clone));
-            }
-            return resp;
+          .filter(k => k !== CACHE && k !== RUNTIME)
+          .map(k => {
+            console.log('[SW] Deleting old cache:', k);
+            return caches.delete(k);
           })
-          .catch(() => cached || new Response('Offline', { status: 503 }));
-      })
+      )
+    ).then(() => {
+      console.log('[SW] NectarOS', APP_VERSION, 'activated');
+      return self.clients.claim(); // ← تحكّم في الصفحات المفتوحة فوراً
+    })
   );
 });
 
-// Message handling
-self.addEventListener('message', event => {
-  if(event.data?.type === 'SKIP_WAITING') self.skipWaiting();
+// ── الطلبات: Network-first للـ HTML، Cache-first للباقي ──
+self.addEventListener('fetch', e => {
+  if (!e.request.url.startsWith('http') || e.request.method !== 'GET') return;
+
+  const isHTML = e.request.headers.get('Accept')?.includes('text/html');
+
+  if (isHTML) {
+    // HTML: جلب من الشبكة أولاً (يضمن الحصول على أحدث نسخة)
+    e.respondWith(
+      fetch(e.request, {cache:'no-cache'}).then(r => {
+        if (r.ok) caches.open(CACHE).then(c => c.put(e.request, r.clone()));
+        return r;
+      }).catch(() =>
+        caches.match(e.request).then(r => r || caches.match('./'))
+      )
+    );
+  } else {
+    // الباقي: كاش أولاً مع تحديث خلفي
+    e.respondWith(
+      caches.match(e.request).then(cached => {
+        const fetchPromise = fetch(e.request).then(r => {
+          if (r?.ok) caches.open(RUNTIME).then(c => c.put(e.request, r.clone()));
+          return r;
+        }).catch(() => null);
+
+        return cached || fetchPromise || new Response('', {status: 503});
+      })
+    );
+  }
+});
+
+// ── رسائل من الصفحة ──
+self.addEventListener('message', e => {
+  if (e.data === 'SKIP_WAITING') {
+    self.skipWaiting();
+  }
+  // إرسال إشعار للصفحات بأن تحديثاً تم
+  if (e.data === 'GET_VERSION') {
+    e.source.postMessage({type: 'SW_VERSION', version: APP_VERSION, cache: CACHE});
+  }
 });
