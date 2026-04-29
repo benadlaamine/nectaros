@@ -33,7 +33,6 @@ if('serviceWorker' in navigator){
   }).catch(()=>{});
   let _reloading = false;
   navigator.serviceWorker.addEventListener('controllerchange', ()=>{
-    // منع حلقة reload — مرة واحدة فقط كل 30 ثانية
     const last = parseInt(sessionStorage.getItem('_sw_rel')||'0');
     if(!_reloading && Date.now()-last>30000){
       _reloading=true;
@@ -506,9 +505,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 #splash{position:fixed;inset:0;z-index:99999;background:#0a0a0a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;transition:opacity .6s ease,transform .6s ease;overflow:hidden;
   animation: _splashAutoHide 0.6s ease 5s forwards;
 }
-@keyframes _splashAutoHide{
-  to{ opacity:0; visibility:hidden; pointer-events:none; }
-}
+@keyframes _splashAutoHide{ to{ opacity:0; visibility:hidden; pointer-events:none; } }
 #splash.hide{opacity:0;transform:scale(1.06);pointer-events:none;}
 /* خلفية متحركة */
 #splash::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,rgba(255,193,7,.12) 0%,transparent 65%),radial-gradient(ellipse at 20% 80%,rgba(255,111,0,.07) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(255,193,7,.06) 0%,transparent 50%);pointer-events:none;}
@@ -5300,7 +5297,6 @@ function doLogin(){
   const s=T[currentLang]||T['ar'];
   const err=document.getElementById('login-err');
   if(!u||!p){err.textContent=s.login_err_empty;return;}
-  // فحص كلمة المرور المحفوظة (طبقتان: DB + localStorage)
   const _backupPw = localStorage.getItem('_nec_auth_pw');
   const _dbAuth = DB.get('auth') || {};
   const saved = {
@@ -5312,9 +5308,12 @@ function doLogin(){
     document.getElementById('login-screen').classList.add('hidden');
     if(window.I18N) setTimeout(()=>I18N.apply(I18N.current,false),50);
     toast('مرحباً '+u+' 👋','success');
+    // ★ انتقل للوحة التحكم بعد الدخول
+    setTimeout(()=>go('dashboard'),100);
   } else {
     err.textContent=s.login_err_wrong;
     document.getElementById('login-pass').value='';
+    document.getElementById('login-pass').focus();
   }
 }
 function doLogout(){
@@ -7766,7 +7765,7 @@ async function _hashString(str){
     }
   }catch(e){}
   let h=5381; for(let i=0;i<str.length;i++)h=Math.imul(31,h)+str.charCodeAt(i)|0;
-  const p=(n,l=8)=>(n>>>0).toString(16).padStart(l,'0');
+  const p=(n)=>(n>>>0).toString(16).padStart(8,'0');
   return p(h)+p(h^0xdeadbeef)+p(~h)+p(h*0x45d9f3b);
 }
 
@@ -8551,19 +8550,21 @@ if(_isOwnerNow){
 function hideSplash(){
   const s=document.getElementById('splash');
   if(!s||s._done)return; s._done=true;
-  s.style.animation='none'; // override CSS auto-hide
-  s.style.opacity='0'; s.style.transform='scale(1.06)'; s.style.pointerEvents='none';
+  s.style.animation='none';
+  s.style.opacity='0'; s.style.pointerEvents='none'; s.style.visibility='hidden';
   setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },650);
 }
-// 3 guards — أي واحد ينجح يكفي
 window.addEventListener('load',()=>setTimeout(hideSplash,600));
 document.addEventListener('DOMContentLoaded',()=>setTimeout(hideSplash,3500));
-setTimeout(hideSplash,5500); // absolute fallback
+setTimeout(hideSplash,5500);
 
 const _lt=new Promise(r=>setTimeout(r,4000));
 Promise.race([checkLicense(),_lt])
   .catch(e=>{ try{showLicenseScreen('trial');}catch(e2){} })
   .finally(()=>setTimeout(hideSplash,80));
+
+/* ══════════════════════════════════════════════════
+   🌾 FIELD MODE
 ══════════════════════════════════════════════════ */
 function renderFieldMode(){
   const _=window.__||((k,d)=>d||k);
