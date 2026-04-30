@@ -2006,7 +2006,10 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="card" style="margin-bottom:12px;border-color:rgba(255,193,7,.25);">
         <div class="card-header" style="background:rgba(255,193,7,.06);">
           <span class="card-title" style="color:var(--gold);">🔑 حالة الترخيص</span>
-          <button class="btn btn-xs btn-secondary" onclick="document.getElementById('license-screen').classList.remove('hidden')">⚙️ إدارة</button>
+          <div style="display:flex;gap:5px;">
+            <button class="btn btn-xs btn-secondary" onclick="document.getElementById('license-screen').classList.remove('hidden')">⚙️ إدارة</button>
+            <button id="dev-panel-toggle-btn" class="btn btn-xs" onclick="toggleDevPanel()" style="display:none;background:linear-gradient(135deg,#FFC107,#FF6F00);color:#000;font-weight:800;">🛠️ مطوّر</button>
+          </div>
         </div>
         <div id="sec-license-status" style="padding:4px 0;"></div>
         <!-- لوحة إدارة التراخيص — مخفية، تظهر فقط لجهاز المالك -->
@@ -10573,6 +10576,70 @@ function devClearCache(){
       });
     });
   }
+}
+
+/* ══ Dev Panel Toggle ══ */
+function toggleDevPanel(){
+  const panel = document.getElementById('dev-panel');
+  if(!panel) return;
+  const isOpen = panel.style.display !== 'none';
+  panel.style.display = isOpen ? 'none' : 'block';
+  const btn = document.getElementById('dev-panel-toggle-btn');
+  if(btn){
+    btn.textContent = isOpen ? '🛠️ مطوّر' : '✖ إغلاق';
+    btn.style.background = isOpen ? 'linear-gradient(135deg,#FFC107,#FF6F00)' : '#333';
+    btn.style.color = isOpen ? '#000' : '#aaa';
+  }
+  if(!isOpen){ 
+    setTimeout(()=>adminLoadUsers(), 200);
+    _initCtrlTab();
+  }
+}
+
+function _showDevBtnIfOwner(){
+  const fp = localStorage.getItem('_nec_dfp');
+  const verified = localStorage.getItem('_nec_owner_verified');
+  if(!fp && !verified) return;
+  let isOwner = verified === '1';
+  if(!isOwner && fp){
+    const raw = fp.slice(0,16).toUpperCase();
+    const did = raw.slice(0,4)+'-'+raw.slice(4,8)+'-'+raw.slice(8,12)+'-'+raw.slice(12,16);
+    isOwner = isOwnerDevice(did);
+  }
+  const btn = document.getElementById('dev-panel-toggle-btn');
+  if(btn) btn.style.display = isOwner ? 'inline-flex' : 'none';
+  
+  // Also show on license screen
+  const wrap = document.getElementById('owner-dev-btn-wrap');
+  if(wrap) wrap.style.display = isOwner ? 'block' : 'none';
+}
+
+// Run after boot
+setTimeout(_showDevBtnIfOwner, 800);
+setTimeout(_showDevBtnIfOwner, 2000); // retry
+
+// Secret: tap version text 7 times to open
+let _devTapCount = 0, _devTapTimer;
+function _ownerTap(){
+  _devTapCount++;
+  clearTimeout(_devTapTimer);
+  if(_devTapCount >= 7){
+    _devTapCount = 0;
+    // Open PIN or directly if already verified
+    if(localStorage.getItem('_nec_owner_verified')==='1'){
+      const panel = document.getElementById('dev-panel');
+      if(panel){ panel.style.display='block'; _initCtrlTab(); adminLoadUsers(); }
+      const btn = document.getElementById('dev-panel-toggle-btn');
+      if(btn){ btn.style.display='inline-flex'; btn.textContent='✖ إغلاق'; }
+      go('settings');
+      toast('🛠️ لوحة المطوّر مفتوحة','success');
+    } else {
+      openOwnerPin();
+    }
+    return;
+  }
+  if(_devTapCount === 3) toast('استمر... '+(7-_devTapCount)+' مرات أخرى','info');
+  _devTapTimer = setTimeout(()=>{ _devTapCount=0; }, 2000);
 }
 
 </script>
