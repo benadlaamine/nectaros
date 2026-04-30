@@ -2030,6 +2030,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
               <button id="adm-tab-gen" onclick="adminTab('gen')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--gold);color:#000;cursor:pointer;">⚡ توليد</button>
               <button id="adm-tab-list" onclick="adminTab('list')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--bg3);color:var(--text2);cursor:pointer;">📋 القائمة</button>
               <button id="adm-tab-search" onclick="adminTab('search')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--bg3);color:var(--text2);cursor:pointer;">🔍 بحث</button>
+              <button id="adm-tab-ctrl" onclick="adminTab('ctrl')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--bg3);color:var(--text2);cursor:pointer;">⚙️ تحكم</button>
             </div>
 
             <!-- تبويب: توليد سيريال -->
@@ -2093,6 +2094,49 @@ tr:hover td{background:rgba(255,255,255,.02);}
                 <div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">ابدأ الكتابة للبحث</div>
               </div>
             </div>
+
+            <!-- ══ تبويب: التحكم بالميزات ══ -->
+            <div id="adm-pane-ctrl" style="padding:14px;display:none;">
+              <div style="background:rgba(99,91,255,.08);border:1.5px solid rgba(99,91,255,.25);border-radius:12px;padding:14px;margin-bottom:12px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="width:36px;height:36px;background:linear-gradient(135deg,#635BFF,#3B31E8);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">💳</div>
+                    <div>
+                      <div style="font-weight:700;font-size:13px;color:#635BFF;">نظام Stripe للدفع</div>
+                      <div style="font-size:10px;color:var(--text3);">إظهار / إخفاء قسم الدفع للمستخدمين</div>
+                    </div>
+                  </div>
+                  <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer;">
+                    <input type="checkbox" id="stripe-visibility-toggle" onchange="toggleStripeVisibility(this.checked)" style="opacity:0;width:0;height:0;position:absolute;">
+                    <span id="stripe-toggle-track" style="position:absolute;inset:0;background:#333;border-radius:28px;transition:.3s;"></span>
+                    <span id="stripe-toggle-knob" style="position:absolute;top:3px;right:3px;width:22px;height:22px;background:#666;border-radius:50%;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.4);"></span>
+                  </label>
+                </div>
+                <div id="stripe-visibility-status" style="font-size:11px;padding:8px 10px;background:rgba(0,0,0,.2);border-radius:8px;color:var(--text3);">⏳ جاري التحقق...</div>
+              </div>
+              <div style="background:rgba(66,133,244,.08);border:1.5px solid rgba(66,133,244,.2);border-radius:12px;padding:14px;margin-bottom:12px;">
+                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="width:36px;height:36px;background:linear-gradient(135deg,#4285F4,#34A853);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">🧠</div>
+                    <div>
+                      <div style="font-weight:700;font-size:13px;color:#4285F4;">Gemini AI للمستخدمين</div>
+                      <div style="font-size:10px;color:var(--text3);">إظهار / إخفاء كارت Gemini</div>
+                    </div>
+                  </div>
+                  <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer;">
+                    <input type="checkbox" id="gemini-visibility-toggle" onchange="toggleGeminiVisibility(this.checked)" style="opacity:0;width:0;height:0;position:absolute;">
+                    <span id="gemini-toggle-track" style="position:absolute;inset:0;background:#333;border-radius:28px;transition:.3s;"></span>
+                    <span id="gemini-toggle-knob" style="position:absolute;top:3px;right:3px;width:22px;height:22px;background:#666;border-radius:50%;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.4);"></span>
+                  </label>
+                </div>
+                <div id="gemini-visibility-status" style="font-size:11px;padding:8px 10px;background:rgba(0,0,0,.2);border-radius:8px;color:var(--text3);">⏳ جاري التحقق...</div>
+              </div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                <button class="btn btn-secondary btn-sm" onclick="devForceUpdate()" style="font-size:11px;">🔄 إجبار التحديث</button>
+                <button class="btn btn-secondary btn-sm" onclick="devClearCache()" style="font-size:11px;">🗑️ مسح الكاش</button>
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
@@ -2173,7 +2217,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       </div>
 
       <!-- ══ GEMINI AI CHAT CARD ══ -->
-      <div class="aip-card" style="border-color:rgba(66,133,244,.25);background:linear-gradient(135deg,rgba(66,133,244,.06),rgba(52,168,83,.04));">
+      <div id="gemini-chat-card" class="aip-card" style="border-color:rgba(66,133,244,.25);background:linear-gradient(135deg,rgba(66,133,244,.06),rgba(52,168,83,.04));">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
           <div style="width:36px;height:36px;background:linear-gradient(135deg,#4285F4,#34A853);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">🧠</div>
           <div>
@@ -2214,7 +2258,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div id="contact-purchase-wrap" style="text-align:right;"></div>
       </div>
       <!-- ══ STRIPE PAYMENT SECTION ══ -->
-      <div class="card" style="border-color:rgba(99,91,255,.3);margin-top:0;">
+      <div id="stripe-payment-card" class="card" style="border-color:rgba(99,91,255,.3);margin-top:0;">
         <div style="background:linear-gradient(135deg,rgba(99,91,255,.1),rgba(99,91,255,.05));border-radius:12px;padding:16px;">
           <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
             <div style="width:44px;height:44px;background:linear-gradient(135deg,#635BFF,#3B31E8);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;">💳</div>
@@ -5843,7 +5887,7 @@ function renderPurchaseSection(){
         </div>
       </div>
     </div>
-    <div style="display:flex;gap:8px;margin-bottom:8px;">
+    <div id="stripe-purchase-btn-wrap" style="display:flex;gap:8px;margin-bottom:8px;">
       <button onclick="openStripePayment()" class="btn" style="flex:1;background:linear-gradient(135deg,#635BFF,#3B31E8);color:#fff;justify-content:center;box-shadow:0 3px 12px rgba(99,91,255,.35);">
         💳 دفع Stripe
       </button>
@@ -10359,6 +10403,177 @@ function _loadStripeSettings(){
   Object.entries(fields).forEach(([id, val])=>{ const el=document.getElementById(id); if(el&&val) el.value=val; });
 }
 setTimeout(_loadStripeSettings, 500);
+
+/* ══════════════════════════════════════════════════
+   🛠️ DEVELOPER FEATURE TOGGLES
+══════════════════════════════════════════════════ */
+
+// Keys stored in localStorage (visible to dev only via panel)
+const DEV_SETTINGS_KEY = 'nec_dev_settings';
+
+function _getDevSettings(){
+  try{ return JSON.parse(localStorage.getItem(DEV_SETTINGS_KEY)||'{}'); }catch{ return {}; }
+}
+function _saveDevSettings(obj){
+  localStorage.setItem(DEV_SETTINGS_KEY, JSON.stringify(obj));
+}
+
+// ── Apply Stripe visibility ──
+function _applyStripeVisibility(){
+  const s = _getDevSettings();
+  const show = s.stripe_visible !== false; // default: HIDDEN (false by default)
+  
+  // Contact page card
+  const card = document.getElementById('stripe-payment-card');
+  if(card) card.style.display = show ? '' : 'none';
+  
+  // Purchase section buttons
+  const btnWrap = document.getElementById('stripe-purchase-btn-wrap');
+  if(btnWrap) btnWrap.style.display = show ? 'flex' : 'none';
+  
+  // Stripe card in settings integrations
+  const settingsCards = document.querySelectorAll('[id^="stripe-"]');
+  
+  return show;
+}
+
+// ── Apply Gemini visibility ──
+function _applyGeminiVisibility(){
+  const s = _getDevSettings();
+  const show = s.gemini_visible !== false; // default: visible
+  
+  const card = document.getElementById('gemini-chat-card');
+  if(card) card.style.display = show ? '' : 'none';
+  
+  return show;
+}
+
+// ── Toggle functions called from dev panel ──
+function toggleStripeVisibility(checked){
+  const s = _getDevSettings();
+  s.stripe_visible = checked;
+  _saveDevSettings(s);
+  
+  _applyStripeVisibility();
+  _updateStripeToggleUI(checked);
+  
+  toast(checked ? '✅ Stripe ظاهر للمستخدمين' : '🙈 Stripe مخفي عن المستخدمين', checked ? 'success' : 'warning');
+  log((checked ? 'تفعيل' : 'إيقاف') + ' عرض Stripe للمستخدمين', '#635BFF');
+}
+
+function toggleGeminiVisibility(checked){
+  const s = _getDevSettings();
+  s.gemini_visible = checked;
+  _saveDevSettings(s);
+  
+  _applyGeminiVisibility();
+  _updateGeminiToggleUI(checked);
+  
+  toast(checked ? '✅ Gemini AI ظاهر' : '🙈 Gemini AI مخفي', checked ? 'success' : 'warning');
+}
+
+// ── Update toggle UI ──
+function _updateToggleUI(trackId, knobId, checkboxId, checked, activeColor){
+  const track  = document.getElementById(trackId);
+  const knob   = document.getElementById(knobId);
+  const chk    = document.getElementById(checkboxId);
+  if(track){ track.style.background = checked ? activeColor : '#333'; }
+  if(knob){  knob.style.background  = checked ? '#fff' : '#666';
+             knob.style.right       = checked ? 'calc(100% - 25px)' : '3px'; }
+  if(chk)   chk.checked = checked;
+}
+
+function _updateStripeToggleUI(checked){
+  _updateToggleUI('stripe-toggle-track','stripe-toggle-knob','stripe-visibility-toggle', checked, '#635BFF');
+  const status = document.getElementById('stripe-visibility-status');
+  if(status){
+    status.textContent = checked 
+      ? '✅ Stripe ظاهر — المستخدمون يرون قسم الدفع'
+      : '🙈 Stripe مخفي — المستخدمون لا يرون قسم الدفع';
+    status.style.color = checked ? 'var(--green)' : 'var(--orange)';
+  }
+}
+
+function _updateGeminiToggleUI(checked){
+  _updateToggleUI('gemini-toggle-track','gemini-toggle-knob','gemini-visibility-toggle', checked, '#4285F4');
+  const status = document.getElementById('gemini-visibility-status');
+  if(status){
+    status.textContent = checked ? '✅ Gemini AI ظاهر للمستخدمين' : '🙈 Gemini AI مخفي';
+    status.style.color = checked ? 'var(--green)' : 'var(--orange)';
+  }
+}
+
+// ── Init control tab when opened ──
+function _initCtrlTab(){
+  const s = _getDevSettings();
+  const stripeOn = s.stripe_visible === true; // default hidden
+  const geminiOn = s.gemini_visible !== false; // default visible
+  _updateStripeToggleUI(stripeOn);
+  _updateGeminiToggleUI(geminiOn);
+}
+
+// ── Apply on every page load ──
+function _applyAllDevToggles(){
+  _applyStripeVisibility();
+  _applyGeminiVisibility();
+}
+
+// Run on load (after DOM ready)
+setTimeout(_applyAllDevToggles, 300);
+
+// Also run when navigating to contact or aiplus
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[onclick*="go("]');
+  if(!el) return;
+  const sc = (el.getAttribute('onclick')||'').match(/go\('(\w+)'\)/)?.[1];
+  if(sc === 'contact' || sc === 'aiplus'){
+    setTimeout(_applyAllDevToggles, 150);
+  }
+});
+
+// ── adminTab override to init ctrl tab ──
+const _origAdminTab = window.adminTab;
+window.adminTab = function(tab){
+  if(typeof _origAdminTab === 'function') _origAdminTab(tab);
+  if(tab === 'ctrl') setTimeout(_initCtrlTab, 100);
+};
+
+// Extend adminTab if not already defined
+if(typeof adminTab === 'undefined'){
+  window.adminTab = function(tab){
+    ['gen','list','search','ctrl'].forEach(t=>{
+      const pane=document.getElementById('adm-pane-'+t);
+      const btn=document.getElementById('adm-tab-'+t);
+      if(pane) pane.style.display = t===tab?'block':'none';
+      if(btn){
+        btn.style.background = t===tab?'var(--gold)':'var(--bg3)';
+        btn.style.color = t===tab?'#000':'var(--text2)';
+      }
+    });
+    if(tab==='ctrl') setTimeout(_initCtrlTab, 100);
+  };
+}
+
+// ── Dev quick actions ──
+function devForceUpdate(){
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.getRegistration().then(reg=>{
+      if(reg) reg.update().then(()=>toast('✅ تم طلب التحديث — أعد تحميل الصفحة','success'));
+    });
+  }
+  toast('🔄 جاري فرض التحديث...','info');
+}
+
+function devClearCache(){
+  if('caches' in window){
+    caches.keys().then(keys=>{
+      Promise.all(keys.map(k=>caches.delete(k))).then(()=>{
+        toast('🗑️ تم مسح الكاش — أعد تحميل الصفحة','success');
+        log('مسح الكاش بواسطة المطوّر','var(--orange)');
+      });
+    });
+  }
+}
 
 </script>
 </body>
