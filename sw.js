@@ -94,3 +94,35 @@ self.addEventListener('message', e => {
     e.source.postMessage({type: 'SW_VERSION', version: APP_VERSION, cache: CACHE});
   }
 });
+
+// ── Push Notifications (background) ──
+self.addEventListener('push', e => {
+  let data = { title: 'NectarOS 🐝', body: 'لديك تنبيه جديد' };
+  try { data = e.data?.json() || data; } catch(err) {}
+  
+  e.waitUntil(
+    self.registration.showNotification(data.title, {
+      body: data.body,
+      icon: './icons/icon-192.png',
+      badge: './icons/icon-72.png',
+      vibrate: [200, 100, 200],
+      tag: data.tag || 'nectaros',
+      renotify: true,
+      data: data.url || '/'
+    })
+  );
+});
+
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  const url = e.notification.data || '/';
+  e.waitUntil(
+    clients.matchAll({type:'window'}).then(list => {
+      for(const client of list){
+        if(client.url.includes(self.location.origin) && 'focus' in client)
+          return client.focus();
+      }
+      if(clients.openWindow) return clients.openWindow(url);
+    })
+  );
+});

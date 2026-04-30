@@ -1818,6 +1818,43 @@ tr:hover td{background:rgba(255,255,255,.02);}
           </div>
         </div>
       </div>
+      <div class="integ-card" style="border-color:rgba(99,91,255,.25);">
+        <div class="integ-logo" style="background:linear-gradient(135deg,#635BFF,#3B31E8);border-radius:10px;font-size:20px;display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex-shrink:0;">💳</div>
+        <div style="flex:1;">
+          <div style="font-weight:700;font-size:13px;color:#635BFF;">Stripe — إعدادات الدفع</div>
+          <div style="font-size:10px;color:var(--text3);margin-bottom:8px;">روابط الدفع وإعدادات الاشتراكات</div>
+          
+          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:4px;">🔗 رابط الدفع الشهري</div>
+          <div style="display:flex;gap:5px;margin-bottom:8px;">
+            <input id="stripe-monthly-url" class="form-control" style="font-size:10px;font-family:monospace;" placeholder="https://buy.stripe.com/..." value="https://buy.stripe.com/fZe00abWf2NI9VC144">
+          </div>
+          
+          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:4px;">🔗 رابط الدفع السنوي</div>
+          <div style="display:flex;gap:5px;margin-bottom:8px;">
+            <input id="stripe-yearly-url" class="form-control" style="font-size:10px;font-family:monospace;" placeholder="https://buy.stripe.com/..." value="https://buy.stripe.com/fZe00abWf2NI9VC288">
+          </div>
+          
+          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:4px;">🔗 رابط مدى الحياة</div>
+          <div style="display:flex;gap:5px;margin-bottom:8px;">
+            <input id="stripe-lifetime-url" class="form-control" style="font-size:10px;font-family:monospace;" placeholder="https://buy.stripe.com/..." value="https://buy.stripe.com/fZe00abWf2NI9VC3lifetime">
+          </div>
+
+          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:4px;">💰 الأسعار</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px;margin-bottom:8px;">
+            <input id="stripe-price-monthly" class="form-control" style="font-size:10px;text-align:center;" placeholder="500 دج" value="500 دج">
+            <input id="stripe-price-yearly" class="form-control" style="font-size:10px;text-align:center;" placeholder="4500 دج" value="4500 دج">
+            <input id="stripe-price-lifetime" class="form-control" style="font-size:10px;text-align:center;" placeholder="15000 دج" value="15000 دج">
+          </div>
+          
+          <div style="display:flex;gap:6px;">
+            <button class="btn btn-xs btn-blue" style="background:rgba(99,91,255,.15);border-color:rgba(99,91,255,.3);color:#635BFF;" onclick="saveStripeSettings()">💾 حفظ الإعدادات</button>
+            <button class="btn btn-xs btn-secondary" onclick="openStripePayment()">👁️ معاينة</button>
+            <a href="https://dashboard.stripe.com" target="_blank" class="btn btn-xs btn-secondary">🌐 لوحة Stripe</a>
+          </div>
+          <div id="stripe-save-status" style="font-size:10px;color:var(--green);margin-top:5px;"></div>
+        </div>
+      </div>
+      
       <div class="integ-card" style="border-color:rgba(66,133,244,.3);">
         <div class="integ-logo" style="font-size:26px;">🧠</div>
         <div style="flex:1;">
@@ -7476,18 +7513,46 @@ function renderPushNotifs(){
   renderScheduledNotifs();
 }
 
-function requestPushPermission(){
+async function requestPushPermission(){
   if(!('Notification' in window)){toast('المتصفح لا يدعم الإشعارات','error');return;}
-  Notification.requestPermission().then(perm=>{
-    if(perm==='granted'){
-      pushEnabled=true;
-      toast('✅ تم تفعيل الإشعارات','success');
-      new Notification('NectarOS 🐝',{body:'مرحباً! ستصلك التنبيهات الآن',icon:'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">🐝</text></svg>'});
-    } else {
-      toast('تم رفض الإشعارات','error');
+  const perm = await Notification.requestPermission();
+  if(perm==='granted'){
+    pushEnabled=true;
+    toast('✅ تم تفعيل الإشعارات','success');
+    // Use SW showNotification for mobile compatibility
+    sendLocalNotif('NectarOS 🐝','مرحباً! ستصلك تنبيهات تلقائية الآن 🐝');
+  } else if(perm==='denied'){
+    toast('❌ تم رفض الإشعارات — فعّلها من إعدادات المتصفح','error');
+  } else {
+    toast('تم إغلاق نافذة الإذن','warning');
+  }
+  renderPushNotifs();
+}
+
+async function sendLocalNotif(title, body, options={}){
+  if(Notification.permission !== 'granted') return;
+  // Try SW first (works on mobile/iOS PWA)
+  try {
+    const reg = await navigator.serviceWorker?.ready;
+    if(reg?.showNotification){
+      await reg.showNotification(title, {
+        body,
+        icon: './icons/icon-192.png',
+        badge: './icons/icon-72.png',
+        vibrate: [200, 100, 200],
+        tag: options.tag||'nectaros-notif',
+        renotify: true,
+        ...options
+      });
+      return;
     }
-    renderPushNotifs();
-  });
+  } catch(e){}
+  // Fallback to Notification API (desktop)
+  try {
+    new Notification(title, {body, icon:'./icons/icon-192.png', ...options});
+  } catch(e) {
+    toast(title+': '+body, 'info');
+  }
 }
 
 function testPushNotif(type){
@@ -7500,10 +7565,9 @@ function testPushNotif(type){
   };
   const m=msgs[type];if(!m)return;
   if(Notification.permission==='granted'){
-    new Notification(m.title+' — NectarOS',{body:m.body});
+    sendLocalNotif(m.title+' — NectarOS', m.body, {tag:'test-'+type});
     toast('✅ تم إرسال الإشعار','success');
   } else {
-    // Fallback: show as toast
     toast(m.title+': '+m.body,'info');
     if(Notification.permission!=='denied')requestPushPermission();
   }
@@ -9906,13 +9970,13 @@ function saveGeminiKey(){
   log('تم ربط Google AI Studio (Gemini)','#4285F4');
 }
 
-async function testGeminiConnection(){
+async async function testGeminiConnection(){
   const key=DB.get('gemini_api_key');
   if(!key){toast('أدخل مفتاح Gemini أولاً','warning');return;}
   const statusEl=document.getElementById('gemini-status');
   if(statusEl){statusEl.textContent='⏳ جاري الاختبار...';statusEl.style.color='var(--text3)';}
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({contents:[{parts:[{text:'قل مرحبا بالعربية فقط في كلمة واحدة'}]}]})
@@ -9934,7 +9998,7 @@ async function askGemini(prompt){
   const key=DB.get('gemini_api_key');
   if(!key) return null;
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
@@ -9951,7 +10015,7 @@ async function analyzeImageWithGemini(imageData,mimeType){
   const key=DB.get('gemini_api_key');
   if(!key){toast('أدخل مفتاح Google AI Studio أولاً','warning');return null;}
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
@@ -10029,6 +10093,10 @@ const STRIPE_PLANS={
 };
 
 function openStripePayment(){
+  const stripe_s = DB.get('stripe_settings') || {};
+  const p_monthly  = stripe_s.monthly?.price  || '500 دج';
+  const p_yearly   = stripe_s.yearly?.price   || '4500 دج';
+  const p_lifetime = stripe_s.lifetime?.price || '15000 دج';
   // Show payment modal with Stripe options
   const deviceFP=_deviceFP||localStorage.getItem('_nec_dfp')||'';
   const deviceId=deviceFP?getDeviceId(deviceFP):'غير محدد';
@@ -10104,10 +10172,12 @@ function processStripePayment(plan){
   const deviceId=deviceFP?getDeviceId(deviceFP):'UNKNOWN';
   
   // Build Stripe checkout URL with device ID as metadata
+  // Use saved settings or defaults
+  const saved = DB.get('stripe_settings') || {};
   const planUrls={
-    monthly:'https://buy.stripe.com/fZe00abWf2NI9VC144', // Test URL - replace with real
-    yearly:'https://buy.stripe.com/fZe00abWf2NI9VC288',
-    lifetime:'https://buy.stripe.com/fZe00abWf2NI9VC3lifetime',
+    monthly: saved.monthly?.url || 'https://buy.stripe.com/fZe00abWf2NI9VC144',
+    yearly:  saved.yearly?.url  || 'https://buy.stripe.com/fZe00abWf2NI9VC288',
+    lifetime:saved.lifetime?.url|| 'https://buy.stripe.com/fZe00abWf2NI9VC3lifetime',
   };
   
   const baseUrl=planUrls[plan]||planUrls.monthly;
@@ -10199,7 +10269,7 @@ async function sendGeminiChat(quickPrompt){
 أجب بالعربية، كن محدداً ومفيداً، مع توصيات عملية.`;
   
   try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${key}`,{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${key}`,{
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
@@ -10258,6 +10328,34 @@ document.addEventListener('click', function(e){
     },250);
   }
 });
+
+/* ══ Stripe Settings Management ══ */
+function saveStripeSettings(){
+  const settings = {
+    monthly: { url: document.getElementById('stripe-monthly-url')?.value||'', price: document.getElementById('stripe-price-monthly')?.value||'500 دج' },
+    yearly:  { url: document.getElementById('stripe-yearly-url')?.value||'',  price: document.getElementById('stripe-price-yearly')?.value||'4500 دج' },
+    lifetime:{ url: document.getElementById('stripe-lifetime-url')?.value||'', price: document.getElementById('stripe-price-lifetime')?.value||'15000 دج' },
+  };
+  DB.set('stripe_settings', settings);
+  const el = document.getElementById('stripe-save-status');
+  if(el){ el.textContent = '✅ تم حفظ إعدادات Stripe'; setTimeout(()=>el.textContent='', 3000); }
+  toast('✅ تم حفظ إعدادات Stripe','success');
+}
+
+function _loadStripeSettings(){
+  const s = DB.get('stripe_settings');
+  if(!s) return;
+  const fields = {
+    'stripe-monthly-url': s.monthly?.url,
+    'stripe-yearly-url': s.yearly?.url,
+    'stripe-lifetime-url': s.lifetime?.url,
+    'stripe-price-monthly': s.monthly?.price,
+    'stripe-price-yearly': s.yearly?.price,
+    'stripe-price-lifetime': s.lifetime?.price,
+  };
+  Object.entries(fields).forEach(([id, val])=>{ const el=document.getElementById(id); if(el&&val) el.value=val; });
+}
+setTimeout(_loadStripeSettings, 500);
 
 </script>
 </body>
