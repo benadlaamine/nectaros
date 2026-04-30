@@ -7,7 +7,7 @@
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#1a0c00",
+  "background_color": "#110900",
   "theme_color": "#FFC107",
   "lang": "ar",
   "dir": "rtl",
@@ -17,80 +17,10 @@
   ],
   "icons": [
     {
-      "src": "./icons/icon-72.png",
-      "sizes": "72x72",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-96.png",
-      "sizes": "96x96",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-128.png",
-      "sizes": "128x128",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-144.png",
-      "sizes": "144x144",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./icons/icon-152.png",
-      "sizes": "152x152",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "./icons/icon-384.png",
-      "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any"
-    },
-    {
-      "src": "./icons/icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png",
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAgMTAwIj48cmVjdCB3aWR0aD0iMTAwIiBoZWlnaHQ9IjEwMCIgcng9IjIwIiBmaWxsPSIjMTEwOTAwIi8+PHBvbHlnb24gcG9pbnRzPSI1MCwxNiA2NiwyNSA2Niw0NSA1MCw1NCAzNCw0NSAzNCwyNSIgZmlsbD0iI0ZGQzEwNyIvPjxwb2x5Z29uIHBvaW50cz0iNTAsNiA2MSwxMyA2MSwyNyA1MCwzNCAzOSwyNyAzOSwxMyIgZmlsbD0iI0ZGRDU0RiIgb3BhY2l0eT0iLjg1Ii8+PHBvbHlnb24gcG9pbnRzPSI2NiwyNCA3NywzMSA3Nyw0NSA2Niw1MiA1NSw0NSA1NSwzMSIgZmlsbD0iI0ZGRDU0RiIgb3BhY2l0eT0iLjgiLz48cG9seWdvbiBwb2ludHM9IjY2LDUwIDc3LDU3IDc3LDcxIDY2LDc4IDU1LDcxIDU1LDU3IiBmaWxsPSIjRkZENTRGIiBvcGFjaXR5PSIuOCIvPjxwb2x5Z29uIHBvaW50cz0iNTAsNjAgNjEsNjcgNjEsODEgNTAsODggMzksODEgMzksNjciIGZpbGw9IiNGRkQ1NEYiIG9wYWNpdHk9Ii44NSIvPjxwb2x5Z29uIHBvaW50cz0iMzQsNTAgNDUsNTcgNDUsNzEgMzQsNzggMjMsNzEgMjMsNTciIGZpbGw9IiNGRkQ1NEYiIG9wYWNpdHk9Ii44Ii8+PHBvbHlnb24gcG9pbnRzPSIzNCwyNCA0NSwzMSA0NSw0NSAzNCw1MiAyMyw0NSAyMywzMSIgZmlsbD0iI0ZGRDU0RiIgb3BhY2l0eT0iLjgiLz48Y2lyY2xlIGN4PSI1MCIgY3k9IjM1IiByPSI5IiBmaWxsPSIjRkZGOUM0IiBvcGFjaXR5PSIuOTUiLz48ZWxsaXBzZSBjeD0iNDYiIGN5PSIzMSIgcng9IjMiIHJ5PSIyIiBmaWxsPSIjZmZmIiBvcGFjaXR5PSIuNSIgdHJhbnNmb3JtPSJyb3RhdGUoLTMwLDQ2LDMxKSIvPjx0ZXh0IHg9IjUwIiB5PSI5OCIgZm9udC1mYW1pbHk9IkFyaWFsLHNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iOSIgZmlsbD0iI0ZGQzEwNyIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZm9udC13ZWlnaHQ9IjkwMCIgbGV0dGVyLXNwYWNpbmc9IjEiPk5FQ1RBUjwvdGV4dD48L3N2Zz4=",
+      "sizes": "any",
+      "type": "image/svg+xml",
       "purpose": "any maskable"
     }
-  ],
-  "shortcuts": [
-    {
-      "name": "لوحة التحكم",
-      "short_name": "الرئيسية",
-      "url": "./#dashboard",
-      "description": "لوحة التحكم الرئيسية"
-    },
-    {
-      "name": "الخلايا",
-      "short_name": "الخلايا",
-      "url": "./#hives",
-      "description": "إدارة الخلايا"
-    },
-    {
-      "name": "المناحل",
-      "short_name": "المناحل",
-      "url": "./#apiaries",
-      "description": "إدارة المناحل"
-    },
-    {
-      "name": "اتصل بنا",
-      "short_name": "الدعم",
-      "url": "./#contact",
-      "description": "الدعم الفني وشراء الترخيص"
-    }
-  ],
-  "related_applications": [],
-  "prefer_related_applications": false
+  ]
 }
