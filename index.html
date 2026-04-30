@@ -158,7 +158,9 @@ body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-h
 .schange{font-size:10px;margin-top:2px;}
 
 /* ── BUTTONS ── */
-.btn{padding:8px 14px;border-radius:9px;border:none;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;font-size:12px;transition:.18s;display:inline-flex;align-items:center;gap:5px;}
+.btn{padding:8px 16px;border-radius:10px;border:none;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;font-size:12px;transition:.18s;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;user-select:none;}
+.btn-gold{background:linear-gradient(135deg,var(--gold),var(--gold4));color:#000;box-shadow:0 2px 10px rgba(255,193,7,.3);}
+.btn-gold:hover{box-shadow:0 4px 16px rgba(255,193,7,.45);filter:brightness(1.05);}
 .btn:active{transform:scale(.96);}
 .btn-primary{background:linear-gradient(135deg,var(--gold),var(--gold4));color:#000;}
 .btn-primary:hover{box-shadow:0 3px 14px rgba(255,193,7,.4);}
@@ -1149,7 +1151,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <nav id="sidebar">
   <div class="logo">
     <div class="logo-hex">🐝</div>
-    <div><div class="logo-text" style="font-family:'Syne','Cairo',sans-serif;font-size:15px;letter-spacing:-.5px;">NectarOS</div><div class="logo-sub">Smart Beekeeping · v5.1</div></div>
+    <div><div class="logo-text" style="font-family:'Syne','Cairo',sans-serif;font-size:15px;letter-spacing:-.5px;">NectarOS</div><div class="logo-sub">Smart Beekeeping · v5.4</div></div>
   </div>
   <div class="nav-section">
     <div class="nav-label" data-i18n="nav_main">الرئيسية</div>
@@ -2137,7 +2139,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
             <div style="font-weight:800;font-size:13px;color:#4285F4;">Google Gemini AI</div>
             <div id="gemini-aiplus-status" style="font-size:10px;color:var(--text3);">جاري التحقق...</div>
           </div>
-          <button onclick="nav('settings');setTimeout(()=>document.getElementById('gemini-api-key')?.focus(),600)" style="margin-right:auto;background:rgba(66,133,244,.12);border:1px solid rgba(66,133,244,.2);color:#4285F4;border-radius:8px;padding:5px 10px;font-size:10px;cursor:pointer;font-family:'Cairo',sans-serif;">⚙️ إعداد</button>
+          <button onclick="go('settings');setTimeout(()=>document.getElementById('gemini-api-key')?.focus(),600)" style="margin-right:auto;background:rgba(66,133,244,.12);border:1px solid rgba(66,133,244,.2);color:#4285F4;border-radius:8px;padding:5px 10px;font-size:10px;cursor:pointer;font-family:'Cairo',sans-serif;">⚙️ إعداد</button>
         </div>
         <!-- Quick prompts -->
         <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;">
@@ -2153,7 +2155,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <!-- Input -->
         <div style="display:flex;gap:7px;">
           <textarea id="gemini-chat-input" class="form-control" placeholder="اسأل Gemini..." style="flex:1;resize:none;height:40px;font-size:12px;" rows="1" onkeydown="if(event.ctrlKey&&event.key==='Enter')sendGeminiChat()"></textarea>
-          <button onclick="sendGeminiChat()" id="gemini-send-btn" style="background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;border:none;border-radius:10px;padding:0 14px;font-size:17px;cursor:pointer;flex-shrink:0;">➤</button>
+          <button onclick="sendGeminiChat()" id="gemini-send-btn" class="btn" style="background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;padding:0 14px;font-size:17px;flex-shrink:0;">➤</button>
         </div>
         <div style="font-size:9px;color:var(--text3);margin-top:4px;">Ctrl+Enter للإرسال</div>
       </div>
@@ -2199,7 +2201,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
               ✅ حتى 4 أجهزة متزامنة
             </div>
           </div>
-          <button onclick="openStripePayment()" style="width:100%;background:linear-gradient(135deg,#635BFF,#3B31E8);color:#fff;border:none;border-radius:10px;padding:12px;font-family:'Cairo',sans-serif;font-weight:700;font-size:13px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 4px 15px rgba(99,91,255,.4);">
+          <button onclick="openStripePayment()" class="btn" style="width:100%;background:linear-gradient(135deg,#635BFF,#3B31E8);color:#fff;justify-content:center;box-shadow:0 4px 15px rgba(99,91,255,.4);font-size:13px;">
             💳 الدفع عبر Stripe
           </button>
           <div style="font-size:9px;color:var(--text3);text-align:center;margin-top:8px;">🔒 مشفّر ومحمي بـ Stripe — لا نحتفظ ببيانات بطاقتك</div>
@@ -2594,7 +2596,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <nav id="bottom-nav">
   <div class="bn-item" id="bn-dashboard" onclick="go('dashboard')"><span class="bn-icon">📊</span><span class="bn-label">الرئيسية</span></div>
   <div class="bn-item" id="bn-hives" onclick="go('hives')"><span class="bn-icon">⬡</span><span class="bn-label">الخلايا</span></div>
-  <div class="bn-item" id="bn-apiaries" onclick="go('apiaries')"><span class="bn-icon">🗺️</span><span class="bn-label">المناحل</span></div>
+  <div class="bn-item" id="bn-scanner" onclick="go('scanner')"><span class="bn-icon">📷</span><span class="bn-label">ماسح</span></div>
   <div class="bn-item" id="bn-ai" onclick="go('ai')"><span class="bn-icon">🤖</span><span class="bn-label">الذكاء</span></div>
   <div class="bn-item" id="bn-more" onclick="toggleSB()"><span class="bn-icon">☰</span><span class="bn-label">المزيد</span></div>
 </nav>
@@ -5801,10 +5803,10 @@ function renderPurchaseSection(){
       </div>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:8px;">
-      <button onclick="openStripePayment()" style="flex:1;background:linear-gradient(135deg,#635BFF,#3B31E8);color:#fff;border:none;border-radius:10px;padding:11px;font-family:'Cairo',sans-serif;font-weight:700;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;box-shadow:0 3px 12px rgba(99,91,255,.35);">
+      <button onclick="openStripePayment()" class="btn" style="flex:1;background:linear-gradient(135deg,#635BFF,#3B31E8);color:#fff;justify-content:center;box-shadow:0 3px 12px rgba(99,91,255,.35);">
         💳 دفع Stripe
       </button>
-      <button onclick="licContactWhatsApp()" style="flex:1;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;border:none;border-radius:10px;padding:11px;font-family:'Cairo',sans-serif;font-weight:700;font-size:12px;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:6px;">
+      <button onclick="licContactWhatsApp()" class="btn" style="flex:1;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;justify-content:center;">
         💬 واتساب
       </button>
     </div>
@@ -9843,7 +9845,7 @@ function toggleAiEngine(){
   const hasGemini = !!DB.get('gemini_api_key');
   const hasClaude = !!DB.get('claude_api_key');
   if(_activeAiEngine==='claude'){
-    if(!hasGemini){toast('أضف مفتاح Google AI Studio أولاً في الإعدادات','warning');nav('settings');return;}
+    if(!hasGemini){toast('أضف مفتاح Google AI Studio أولاً في الإعدادات','warning');go('settings');return;}
     _activeAiEngine='gemini';
     const badge=document.getElementById('ai-engine-badge');
     if(badge){badge.textContent='Gemini ✨';badge.style.background='rgba(66,133,244,.2)';badge.style.color='#88aaff';badge.style.borderColor='rgba(66,133,244,.3)';}
@@ -9878,9 +9880,7 @@ window.sendAiMessage = async function(){
 - عدد المناحل: ${apiaries.length}
 - آخر الفحوصات: ${inspections.length}
 أجب بالعربية بشكل مفيد وعملي.`;
-    const geminiPrompt=context+'
-
-سؤال المستخدم: '+userMsg;
+    const geminiPrompt=context+'\n\nسؤال المستخدم: '+userMsg;
     const result=await askGemini(geminiPrompt);
     const typingEl=document.getElementById('gemini-typing');
     if(typingEl)typingEl.remove();
@@ -10156,7 +10156,7 @@ async function sendGeminiChat(quickPrompt){
   
   if(!key){
     toast('أضف مفتاح Google AI Studio أولاً','warning');
-    nav('settings');
+    go('settings');
     setTimeout(()=>document.getElementById('gemini-api-key')?.focus(),600);
     return;
   }
@@ -10203,9 +10203,7 @@ async function sendGeminiChat(quickPrompt){
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        contents:[{parts:[{text:context+'
-
-سؤال المستخدم: '+userMsg}]}],
+        contents:[{parts:[{text:context+'\n\nسؤال المستخدم: '+userMsg}]}],
         generationConfig:{temperature:0.7,maxOutputTokens:800}
       })
     });
@@ -10240,20 +10238,26 @@ function _initGeminiStatus(){
   if(notConfigEl)notConfigEl.style.display=key?'none':'block';
 }
 
-// Call on nav to aiplus
-const _origNav=window.nav;
-window.nav=function(screen,...args){
-  if(typeof _origNav==='function')_origNav(screen,...args);
-  if(screen==='aiplus'||screen==='settings'){
-    setTimeout(_initGeminiStatus,100);
+// Init Gemini status on load
+setTimeout(_initGeminiStatus,1500);
+// Also init when switching to aiplus or settings via go()
+const _origGo=window.go;
+if(typeof _origGo === 'function'){
+  // go is defined, we wrap it
+}
+document.addEventListener('click', function(e){
+  const bn = e.target.closest('[onclick*="go("]');
+  if(!bn) return;
+  const onclick = bn.getAttribute('onclick')||'';
+  if(onclick.includes("'settings'")||onclick.includes("'aiplus'")){
+    setTimeout(_initGeminiStatus,200);
     setTimeout(()=>{
       const keyEl=document.getElementById('gemini-api-key');
       const key=DB.get('gemini_api_key');
       if(keyEl&&key&&!keyEl.value)keyEl.value=key;
-    },150);
+    },250);
   }
-};
-setTimeout(_initGeminiStatus,1500);
+});
 
 </script>
 </body>
