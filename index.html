@@ -9616,7 +9616,7 @@ let _adminCurrentDeviceId = '';
 
 // ── تبويبات اللوحة ────────────────────────────────
 function adminTab(tab){
-  ['gen','list','search'].forEach(t => {
+  ['gen','list','search','ctrl'].forEach(t => {
     const btn  = document.getElementById('adm-tab-' + t);
     const pane = document.getElementById('adm-pane-' + t);
     if(!btn || !pane) return;
@@ -9626,6 +9626,7 @@ function adminTab(tab){
     pane.style.display    = active ? 'block' : 'none';
   });
   if(tab === 'list' && !_adminAllUsers.length) adminLoadUsers();
+  if(tab === 'ctrl') setTimeout(_initCtrlTab, 100);
 }
 
 // ── لصق Device ID من الحافظة ──────────────────────
@@ -10535,27 +10536,7 @@ document.addEventListener('click', function(e){
 });
 
 // ── adminTab override to init ctrl tab ──
-const _origAdminTab = window.adminTab;
-window.adminTab = function(tab){
-  if(typeof _origAdminTab === 'function') _origAdminTab(tab);
-  if(tab === 'ctrl') setTimeout(_initCtrlTab, 100);
-};
-
-// Extend adminTab if not already defined
-if(typeof adminTab === 'undefined'){
-  window.adminTab = function(tab){
-    ['gen','list','search','ctrl'].forEach(t=>{
-      const pane=document.getElementById('adm-pane-'+t);
-      const btn=document.getElementById('adm-tab-'+t);
-      if(pane) pane.style.display = t===tab?'block':'none';
-      if(btn){
-        btn.style.background = t===tab?'var(--gold)':'var(--bg3)';
-        btn.style.color = t===tab?'#000':'var(--text2)';
-      }
-    });
-    if(tab==='ctrl') setTimeout(_initCtrlTab, 100);
-  };
-}
+// adminTab now handles ctrl tab directly
 
 // ── Dev quick actions ──
 function devForceUpdate(){
