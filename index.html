@@ -1822,7 +1822,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
           </div>
         </div>
       </div>
-      <div class="integ-card" style="border-color:rgba(99,91,255,.25);">
+      <div id="stripe-integ-card" class="integ-card" style="border-color:rgba(99,91,255,.25);display:none;">
         <div class="integ-logo" style="background:linear-gradient(135deg,#635BFF,#3B31E8);border-radius:10px;font-size:20px;display:flex;align-items:center;justify-content:center;width:44px;height:44px;flex-shrink:0;">💳</div>
         <div style="flex:1;">
           <div style="font-weight:700;font-size:13px;color:#635BFF;">Stripe — إعدادات الدفع</div>
@@ -10527,6 +10527,10 @@ function _applyStripeVisibility(){
   // Purchase section buttons
   const btnWrap = document.getElementById('stripe-purchase-btn-wrap');
   if(btnWrap) btnWrap.style.display = show ? 'flex' : 'none';
+
+  // Integrations settings card (always hide from non-owner)
+  const integCard = document.getElementById('stripe-integ-card');
+  if(integCard) integCard.style.display = isOwner ? '' : 'none';
   
   return show;
 }
