@@ -11328,6 +11328,7 @@ async function authSignOut(){
   document.getElementById('account-loggedin').style.display  = 'none';
   document.getElementById('account-loggedout').style.display = 'block';
   _syncUI('disabled');
+  _updateSettingsAuthUI();
   toast('👋 تم تسجيل الخروج','info');
 }
 
@@ -11375,8 +11376,14 @@ async function _restoreAuthSession(){
     _authUser    = sess.user;
     _syncEnabled = true;
     _updateAccountUI();
-    document.getElementById('account-loggedout').style.display = 'none';
-    document.getElementById('account-loggedin').style.display  = 'block';
+    setTimeout(_updateSettingsAuthUI, 500);
+    const lo = document.getElementById('account-loggedout');
+    const li = document.getElementById('account-loggedin');
+    if(lo) lo.style.display = 'none';
+    if(li) li.style.display = 'block';
+    // Update sidebar badge
+    const badge = document.getElementById('sb-auth-badge');
+    if(badge){ badge.textContent='✅'; badge.style.background='rgba(76,175,80,.2)'; badge.style.borderColor='rgba(76,175,80,.3)'; }
     return true;
   }catch(e){
     localStorage.removeItem('_nec_auth_session');
@@ -11575,7 +11582,13 @@ async function sAuthSubmit(){
     if(data.access_token){
       await _onAuthSuccess(data);
       _updateSettingsAuthUI();
-      toast('✅ تم تسجيل الدخول بنجاح','success');
+      // Navigate to dashboard after successful auth
+      setTimeout(()=>{
+        if(typeof go === 'function'){
+          go('dashboard');
+          toast('✅ تم تسجيل الدخول — بياناتك ستُزامن الآن ☁️','success');
+        }
+      }, 800);
     }
   }catch(e){
     if(errEl){ errEl.style.color='var(--red)'; errEl.textContent=e.message; }
