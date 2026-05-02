@@ -982,6 +982,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="lic-tabs">
       <button class="lic-tab active" onclick="licTab('trial')">⏱️ التجربة</button>
       <button class="lic-tab" onclick="licTab('activate')">🔑 تفعيل</button>
+      <button id="lic-tab-account-btn" class="lic-tab" onclick="licTab('account')">👤 حسابي</button>
       <button class="lic-tab" onclick="licTab('devices')">📱 الأجهزة</button>
     </div>
 
@@ -994,6 +995,86 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <button id="trial-enter-btn" class="btn btn-primary" style="width:100%;margin-top:8px;" onclick="enterTrialApp()">
         🐝 دخول التطبيق
       </button>
+    </div>
+
+    <!-- Account tab (Cloud Sync Login) -->
+    <div id="lic-panel-account" class="lic-tab-panel">
+      
+      <!-- Logged in state -->
+      <div id="account-loggedin" style="display:none;">
+        <div style="text-align:center;padding:10px 0 16px;">
+          <div style="font-size:40px;margin-bottom:8px;">👤</div>
+          <div id="account-user-email" style="font-weight:700;font-size:13px;color:var(--gold);"></div>
+          <div style="font-size:10px;color:var(--green);margin-top:4px;">✅ متصل — بياناتك محفوظة في السحابة</div>
+        </div>
+        <div id="account-sync-stats" style="background:rgba(255,193,7,.06);border:1px solid rgba(255,193,7,.15);border-radius:10px;padding:12px;margin-bottom:12px;font-size:11px;color:var(--text2);text-align:center;">
+          جاري تحميل إحصائيات المزامنة...
+        </div>
+        <button onclick="syncFarmData(false)" class="btn btn-primary" style="width:100%;margin-bottom:8px;">
+          ☁️ مزامنة الآن
+        </button>
+        <button onclick="authSignOut()" class="btn btn-secondary" style="width:100%;">
+          🚪 تسجيل الخروج
+        </button>
+      </div>
+
+      <!-- Login/Register state -->
+      <div id="account-loggedout">
+        <!-- Toggle login/register -->
+        <div style="display:flex;gap:6px;margin-bottom:16px;background:var(--bg3);border-radius:10px;padding:4px;">
+          <button id="auth-tab-login" onclick="authToggle('login')"
+            style="flex:1;padding:8px;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-weight:700;font-size:12px;cursor:pointer;background:var(--gold);color:#000;">
+            🔓 دخول
+          </button>
+          <button id="auth-tab-register" onclick="authToggle('register')"
+            style="flex:1;padding:8px;border:none;border-radius:8px;font-family:'Cairo',sans-serif;font-weight:700;font-size:12px;cursor:pointer;background:transparent;color:var(--text2);">
+            ✏️ حساب جديد
+          </button>
+        </div>
+
+        <!-- Name field (register only) -->
+        <div id="auth-name-wrap" style="display:none;margin-bottom:10px;">
+          <label style="font-size:11px;color:var(--text3);display:block;margin-bottom:4px;">الاسم الكامل</label>
+          <input id="auth-name" class="form-control" type="text" placeholder="أحمد محمد">
+        </div>
+
+        <!-- Email -->
+        <div style="margin-bottom:10px;">
+          <label style="font-size:11px;color:var(--text3);display:block;margin-bottom:4px;">البريد الإلكتروني</label>
+          <input id="auth-email" class="form-control" type="email" placeholder="example@gmail.com" dir="ltr"
+            onkeydown="if(event.key==='Enter')document.getElementById('auth-password').focus()">
+        </div>
+
+        <!-- Password -->
+        <div style="margin-bottom:14px;">
+          <label style="font-size:11px;color:var(--text3);display:block;margin-bottom:4px;">كلمة المرور</label>
+          <div style="position:relative;">
+            <input id="auth-password" class="form-control" type="password" placeholder="••••••••" dir="ltr"
+              onkeydown="if(event.key==='Enter')authSubmit()">
+            <button onclick="this.previousElementSibling.type=this.previousElementSibling.type==='password'?'text':'password'"
+              style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:14px;color:var(--text3);">👁</button>
+          </div>
+        </div>
+
+        <!-- Confirm password (register only) -->
+        <div id="auth-confirm-wrap" style="display:none;margin-bottom:14px;">
+          <label style="font-size:11px;color:var(--text3);display:block;margin-bottom:4px;">تأكيد كلمة المرور</label>
+          <input id="auth-confirm" class="form-control" type="password" placeholder="••••••••" dir="ltr"
+            onkeydown="if(event.key==='Enter')authSubmit()">
+        </div>
+
+        <!-- Error message -->
+        <div id="auth-error" style="color:var(--red);font-size:11px;min-height:16px;margin-bottom:8px;text-align:center;"></div>
+
+        <!-- Submit button -->
+        <button id="auth-submit-btn" onclick="authSubmit()" class="btn btn-primary" style="width:100%;font-size:13px;justify-content:center;">
+          🔓 دخول
+        </button>
+
+        <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:12px;line-height:1.7;">
+          حسابك يحفظ بياناتك في السحابة<br>يمكنك الوصول من أي جهاز 📱💻
+        </div>
+      </div>
     </div>
 
     <!-- Activate tab -->
@@ -1155,7 +1236,11 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <nav id="sidebar">
   <div class="logo">
     <div class="logo-hex">🐝</div>
-    <div><div class="logo-text" style="font-family:'Syne','Cairo',sans-serif;font-size:15px;letter-spacing:-.5px;">NectarOS</div><div class="logo-sub">Smart Beekeeping · v5.4</div></div>
+    <div style="flex:1;"><div class="logo-text" style="font-family:'Syne','Cairo',sans-serif;font-size:15px;letter-spacing:-.5px;">NectarOS</div><div class="logo-sub">Smart Beekeeping · v5.4</div></div>
+    <div id="sb-auth-badge" onclick="showAccountPanel()" title="حسابي"
+      style="width:30px;height:30px;border-radius:50%;background:rgba(255,193,7,.15);border:1px solid rgba(255,193,7,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0;">
+      👤
+    </div>
   </div>
   <div class="nav-section">
     <div class="nav-label" data-i18n="nav_main">الرئيسية</div>
@@ -1264,6 +1349,13 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <span class="topbar-title" id="pg-title">لوحة التحكم</span>
     </div>
     <div class="topbar-actions">
+      <!-- Cloud Sync Status -->
+      <div id="cloud-sync-btn" onclick="manualSync()" title="مزامنة السحابة"
+        style="display:flex;align-items:center;gap:4px;padding:5px 8px;border-radius:8px;cursor:pointer;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);transition:.2s;"
+        onmouseover="this.style.background='rgba(255,193,7,.1)'" onmouseout="this.style.background='rgba(255,255,255,.05)'">
+        <span id="cloud-sync-icon" style="font-size:14px;">☁️</span>
+        <span id="cloud-sync-label" style="font-size:9px;color:var(--text3);display:none;">جاري...</span>
+      </div>
       <div id="alert-badge" class="badge br" style="display:none;">⚠️ <span id="alert-num">0</span></div>
       <button class="btn-icon" onclick="go('ai')" title="الذكاء الاصطناعي" style="color:var(--gold);">🤖</button>
       <button class="btn-icon theme-toggle" onclick="toggleTheme()" id="theme-btn">🌙</button>
@@ -7803,6 +7895,8 @@ function isOwnerDevice(did){
 async function sbQuery(method, path, body) {
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 8000);
+  // Support upsert via path param ?on_conflict=...
+  const isUpsert = path.includes('on_conflict=');
   try {
     const res = await fetch(SB_URL + '/rest/v1/' + path, {
       method,
@@ -7810,7 +7904,7 @@ async function sbQuery(method, path, body) {
         'apikey': SB_KEY,
         'Authorization': 'Bearer ' + SB_KEY,
         'Content-Type': 'application/json',
-        'Prefer': method === 'POST' ? 'return=representation' : 'return=minimal'
+        'Prefer': isUpsert ? 'resolution=merge-duplicates,return=minimal' : (method === 'POST' ? 'return=representation' : 'return=minimal')
       },
       body: body ? JSON.stringify(body) : undefined,
       signal: controller.signal
@@ -9811,21 +9905,51 @@ async function adminLoadUsers(filterStatus = ''){
   el.innerHTML = '<div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">⏳ جارٍ التحميل...</div>';
 
   try{
-    const data = await sbQuery('GET', 'licenses?select=*&order=install_date.desc&limit=100');
-    if(!data){ throw new Error('no data'); }
+    // Load licenses + merge with auth accounts if available
+    const [licenses, authUsers] = await Promise.allSettled([
+      sbQuery('GET', 'licenses?select=*&order=install_date.desc&limit=200'),
+      sbQuery('GET', 'auth_accounts?select=id,email,created_at,last_sign_in_at')
+    ]);
 
-    _adminAllUsers = data;
+    const licData  = licenses.status  === 'fulfilled' ? (licenses.value  || []) : [];
+    const authData = authUsers.status === 'fulfilled' ? (authUsers.value || []) : [];
 
-    // إحصائيات
-    const counts = {active:0, trial:0, expired:0, blocked:0};
-    data.forEach(r => { if(counts[r.status] !== undefined) counts[r.status]++; });
+    // Build email lookup from auth_accounts
+    const emailMap = {};
+    authData.forEach(u => { if(u.id) emailMap[u.id] = u; });
+
+    // Merge: add email info to license records
+    const merged = licData.map(r => ({
+      ...r,
+      _authInfo: emailMap[r.user_id] || emailMap[r.device_id] || null
+    }));
+
+    // Also add auth users that don't have a license yet
+    authData.forEach(u => {
+      const hasLic = merged.find(r => r.user_id===u.id || r.device_id===u.id);
+      if(!hasLic){
+        merged.push({
+          device_id: u.id,
+          user_id: u.id,
+          status: 'no_license',
+          _authInfo: u,
+          install_date: u.created_at
+        });
+      }
+    });
+
+    _adminAllUsers = merged;
+
+    // Stats
+    const counts = {active:0, trial:0, expired:0, blocked:0, no_license:0};
+    merged.forEach(r => { if(counts[r.status] !== undefined) counts[r.status]++; });
     if(statsEl) statsEl.innerHTML =
-      `الكل: ${data.length} &nbsp;|&nbsp; ✅ ${counts.active} &nbsp;|&nbsp; 🕐 ${counts.trial} &nbsp;|&nbsp; 🔒 ${counts.expired} &nbsp;|&nbsp; 🚫 ${counts.blocked}`;
+      `الكل: ${merged.length} &nbsp;|&nbsp; ✅ ${counts.active} &nbsp;|&nbsp; 🕐 ${counts.trial} &nbsp;|&nbsp; ⚠️ ${counts.no_license} &nbsp;|&nbsp; 🚫 ${counts.blocked}`;
 
-    adminRenderUsers(filterStatus ? data.filter(r => r.status === filterStatus) : data);
+    adminRenderUsers(filterStatus ? merged.filter(r => r.status === filterStatus) : merged);
 
   }catch(e){
-    el.innerHTML = '<div style="color:var(--red);font-size:11px;text-align:center;padding:20px;">❌ فشل الاتصال بـ Supabase</div>';
+    el.innerHTML = `<div style="color:var(--red);font-size:11px;text-align:center;padding:20px;">❌ ${e.message}</div>`;
   }
 }
 
@@ -9843,29 +9967,68 @@ function adminRenderUsers(list){
   const colors= {active:'var(--green)', trial:'var(--gold)', expired:'var(--red)', blocked:'var(--red)'};
 
   el.innerHTML = list.map(r => {
-    const icon  = icons[r.status]  || '?';
+    const icon  = icons[r.status]  || '⚪';
     const color = colors[r.status] || 'var(--text3)';
     const exp   = r.serial_expires ? new Date(r.serial_expires).toLocaleDateString('ar-DZ') : '—';
     const inst  = r.install_date   ? new Date(r.install_date).toLocaleDateString('ar-DZ')   : '—';
+    const email = r._authInfo?.email || r.email || '';
+    const lastSeen = r._authInfo?.last_sign_in_at ? new Date(r._authInfo.last_sign_in_at).toLocaleDateString('ar-DZ') : '—';
+    const uid   = r.user_id || r.device_id || '';
+    const safeEmail = email.replace(/'/g,"\'");
+    const safeNote  = (r.notes||'').replace(/'/g,"\'");
+
     return `
-      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:10px;">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;">
-          <span style="color:${color};font-size:11px;font-weight:700;">${icon} ${r.status}</span>
+      <div style="background:var(--bg3);border:1.5px solid ${color}22;border-radius:12px;padding:12px;margin-bottom:0;">
+
+        <!-- Header: status + email -->
+        <div style="display:flex;align-items:flex-start;gap:8px;margin-bottom:8px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:${color}22;border:2px solid ${color};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${icon}</div>
+          <div style="flex:1;min-width:0;">
+            ${email ? `<div style="font-weight:700;font-size:12px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;" title="${email}">📧 ${email}</div>` : ''}
+            <div style="font-size:10px;color:${color};font-weight:700;">${r.status==='no_license'?'⚠️ بدون ترخيص':r.status}</div>
+            ${r.notes ? `<div style="font-size:10px;color:var(--text3);">💬 ${r.notes}</div>` : ''}
+          </div>
           <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end;">
-            ${r.status !== 'active'  ? `<button onclick="adminSetStatus('${r.device_id}','active')"  class="btn btn-xs btn-success" style="font-size:9px;">✅ تفعيل</button>` : ''}
-            <button onclick="adminExtendLicense('${r.device_id}')" class="btn btn-xs" style="font-size:9px;background:rgba(33,150,243,.15);color:var(--blue);border:1px solid rgba(33,150,243,.3);">📅 تمديد</button>
-            <button onclick="adminEditNote('${r.device_id}','${(r.notes||'').replace(/'/g,'')}')" class="btn btn-xs btn-secondary" style="font-size:9px;">✏️ تعديل</button>
-            ${r.status !== 'blocked' ? `<button onclick="adminSetStatus('${r.device_id}','blocked')" class="btn btn-xs btn-danger"  style="font-size:9px;">🚫 حظر</button>`  : `<button onclick="adminSetStatus('${r.device_id}','active')" class="btn btn-xs btn-success" style="font-size:9px;">🔓 رفع الحظر</button>`}
+            ${r.status !== 'active' ? `<button onclick="adminSetStatus('${uid}','active')" class="btn btn-xs btn-success" style="font-size:9px;">✅ تفعيل</button>` : ''}
+            ${r.status === 'active' ? `<button onclick="adminSetStatus('${uid}','expired')" class="btn btn-xs btn-secondary" style="font-size:9px;">⏸️ إيقاف</button>` : ''}
+            <button onclick="adminExtendLicense('${uid}')" class="btn btn-xs" style="font-size:9px;background:rgba(33,150,243,.15);color:var(--blue);border:1px solid rgba(33,150,243,.3);">📅 مدد</button>
+            ${r.status !== 'blocked' ? `<button onclick="adminSetStatus('${uid}','blocked')" class="btn btn-xs btn-danger" style="font-size:9px;">🚫</button>` : `<button onclick="adminSetStatus('${uid}','active')" class="btn btn-xs btn-success" style="font-size:9px;">🔓 رفع الحظر</button>`}
             <button onclick="adminDeleteLicense('${r.device_id}')" class="btn btn-xs btn-danger" style="font-size:9px;background:rgba(244,67,54,.15);">🗑️</button>
           </div>
         </div>
         <div style="font-family:monospace;font-size:10px;color:var(--gold);margin-bottom:3px;word-break:break-all;">${r.device_id}</div>
         ${r.serial ? `<div style="font-family:monospace;font-size:9px;color:var(--text2);margin-bottom:3px;">🔑 ${r.serial}</div>` : ''}
         ${r.notes  ? `<div style="font-size:9px;color:var(--text3);">👤 ${r.notes}</div>` : ''}
-        <div style="font-size:9px;color:var(--text3);margin-top:4px;display:flex;gap:10px;">
-          <span>📅 انتهاء: ${exp}</span>
-          <span>📲 تثبيت: ${inst}</span>
+
+        <!-- ═ معلومات الجهاز (نظام الترخيص) ═ -->
+        <div style="background:rgba(255,193,7,.05);border:1px solid rgba(255,193,7,.1);border-radius:7px;padding:6px 8px;margin-top:6px;">
+          <div style="font-size:9px;color:var(--gold);font-weight:700;margin-bottom:3px;">🔑 الترخيص (معرّف الجهاز)</div>
+          <div style="font-family:monospace;font-size:9px;color:var(--text2);word-break:break-all;">${r.device_id||'—'}</div>
+          <div style="display:flex;gap:8px;margin-top:4px;font-size:9px;color:var(--text3);">
+            <span>📅 انتهاء: ${exp}</span>
+            <span>📲 تثبيت: ${inst}</span>
+          </div>
         </div>
+
+        <!-- ═ حساب المزامنة السحابية (اختياري) ═ -->
+        ${email ? `
+        <div style="background:rgba(66,133,244,.05);border:1px solid rgba(66,133,244,.15);border-radius:7px;padding:6px 8px;margin-top:5px;display:flex;align-items:center;gap:6px;">
+          <span style="font-size:14px;">☁️</span>
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:9px;color:#4285F4;font-weight:700;">حساب المزامنة السحابية</div>
+            <div style="font-size:10px;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${email}</div>
+          </div>
+          <button onclick="adminContactEmail('${safeEmail}')"
+            style="background:rgba(66,133,244,.15);border:1px solid rgba(66,133,244,.25);border-radius:6px;padding:3px 8px;font-size:9px;color:#4285F4;cursor:pointer;font-family:'Cairo',sans-serif;flex-shrink:0;">
+            📧
+          </button>
+        </div>` : `
+        <div style="margin-top:5px;">
+          <div style="font-size:9px;color:var(--text3);text-align:center;padding:4px;border:1px dashed rgba(255,255,255,.1);border-radius:6px;">
+            ☁️ لم يربط حساب مزامنة بعد
+          </div>
+        </div>`}
+
       </div>`;
   }).join('');
 }
@@ -10853,6 +11016,460 @@ window._initCtrlTab = function(){
 };
 
 setTimeout(_checkAndShowAnnouncement, 2000);
+
+
+/* ══════════════════════════════════════════════════════════
+   NECTAROS CLOUD SYNC - Supabase farm_data table
+══════════════════════════════════════════════════════════ */
+const SYNC_TABLES=['apiaries','hives','inspections','weights','harvest',
+  'queens','assets','products','store','customers','sales','expenses',
+  'events','journal','goals','settings'];
+const SYNC_INTERVAL=5*60*1000;
+let _syncTimer=null, _lastSyncAt=null, _syncInProgress=false, _syncEnabled=false;
+
+function _getSyncDid(){
+  const fp=localStorage.getItem('_nec_dfp'); if(!fp) return null;
+  const r=fp.slice(0,16).toUpperCase();
+  return r.slice(0,4)+'-'+r.slice(4,8)+'-'+r.slice(8,12)+'-'+r.slice(12,16);
+}
+
+function _syncUI(state,msg){
+  const icon=document.getElementById('cloud-sync-icon');
+  const lbl=document.getElementById('cloud-sync-label');
+  if(!icon) return;
+  const S={idle:{i:'☁️',c:'var(--text3)',l:''},syncing:{i:'🔄',c:'var(--gold)',l:'جاري...'},
+    ok:{i:'✅',c:'var(--green)',l:'تمت'},err:{i:'⚠️',c:'var(--orange)',l:'خطأ'},
+    offline:{i:'📵',c:'var(--text3)',l:''},disabled:{i:'☁️',c:'#444',l:''}};
+  const s=S[state]||S.idle;
+  icon.textContent=s.i;
+  icon.style.animation=state==='syncing'?'spin 1s linear infinite':'';
+  if(lbl){lbl.textContent=msg||s.l; lbl.style.color=s.c; lbl.style.display=(msg||s.l)?'inline':'none';}
+  if(state==='ok') setTimeout(()=>{if(lbl)lbl.style.display='none';},3000);
+}
+
+async function _syncPush(did){
+  // نظام مزدوج: user_id (البريد) إن كان مسجلاً، وإلا device_id
+  const syncId = (_authUser && _authUser.id) ? _authUser.id : did;
+  const token  = (_authSession && _authSession.access_token) ? _authSession.access_token : null;
+  const jobs=SYNC_TABLES.map(key=> _doSyncPush(key, syncId, token));
+  await Promise.allSettled(jobs);
+}
+
+async function _syncPull(did){
+  try{
+    const res=await sbQuery('GET',
+      `farm_data?device_id=eq.${encodeURIComponent(did)}&select=data_key,data_value`);
+    if(!Array.isArray(res)||!res.length) return false;
+    let fresh=false;
+    res.forEach(row=>{
+      if(!SYNC_TABLES.includes(row.data_key)||row.data_value==null) return;
+      const local=DB.get(row.data_key);
+      const remote=row.data_value;
+      if(Array.isArray(remote)&&Array.isArray(local)&&remote.length>local.length){
+        DB.set(row.data_key,remote); fresh=true;
+      } else if(row.data_key==='settings'&&remote&&typeof remote==='object'){
+        DB.set(row.data_key,Object.assign({},remote,local||{}));
+      }
+    });
+    return fresh;
+  }catch(e){console.warn('pull',e); return false;}
+}
+
+async function syncFarmData(silent=false){
+  if(_syncInProgress) return;
+  if(!_syncEnabled){_syncUI('disabled'); return;}
+  if(!navigator.onLine){_syncUI('offline'); return;}
+  const did=_getSyncDid(); if(!did){_syncUI('disabled'); return;}
+  _syncInProgress=true; _syncUI('syncing');
+  try{
+    await _syncPush(did);
+    const fresh=await _syncPull(did);
+    _lastSyncAt=new Date(); _syncInProgress=false; _syncUI('ok');
+    if(fresh&&!silent){
+      toast('☁️ بيانات جديدة من السحابة','info');
+      setTimeout(()=>{
+        const a=document.querySelector('.screen.active');
+        if(a&&typeof go==='function') go(a.id.replace('screen-',''));
+      },500);
+    }
+    if(!silent) toast('✅ تمت المزامنة السحابية','success');
+    clearTimeout(_syncTimer);
+    _syncTimer=setTimeout(()=>syncFarmData(true),SYNC_INTERVAL);
+  }catch(e){
+    _syncInProgress=false; _syncUI('err','خطأ');
+    if(!silent) toast('⚠️ فشلت المزامنة: '+e.message,'error');
+  }
+}
+
+function manualSync(){ syncFarmData(false); }
+
+function _initCloudSync(){
+  const lic=(typeof getLicense==='function'&&getLicense())||{};
+  const isOwner=localStorage.getItem('_nec_owner_verified')==='1';
+  _syncEnabled=lic.active===true||isOwner;
+  if(!_syncEnabled){_syncUI('disabled'); return;}
+  setTimeout(()=>syncFarmData(true),4000);
+  window.addEventListener('online',()=>{toast('🌐 عاد الإنترنت','info');syncFarmData(true);});
+  window.addEventListener('offline',()=>{_syncUI('offline');clearTimeout(_syncTimer);});
+}
+
+// Auto-sync on data changes (3s debounce)
+const _origDBSetSync=DB.set.bind(DB);
+DB.set=function(k,v){
+  _origDBSetSync(k,v);
+  if(SYNC_TABLES.includes(k)&&_syncEnabled&&navigator.onLine){
+    clearTimeout(_syncTimer);
+    _syncTimer=setTimeout(()=>syncFarmData(true),3000);
+  }
+};
+
+// Spin animation
+(function(){
+  if(!document.getElementById('_syncStyle')){
+    const s=document.createElement('style'); s.id='_syncStyle';
+    s.textContent='@keyframes spin{to{transform:rotate(360deg)}}';
+    document.head.appendChild(s);
+  }
+})();
+
+setTimeout(_initCloudSync, 2500);
+
+
+/* ══════════════════════════════════════════════════════════
+   👤 SUPABASE AUTH SYSTEM — Email + Password
+   بيانات كل مستخدم مرتبطة بحسابه وليس بجهازه
+══════════════════════════════════════════════════════════ */
+
+let _authUser = null;       // current logged-in user
+let _authSession = null;    // current session
+
+// ── Auth API calls ──
+async function _sbAuth(endpoint, body){
+  const res = await fetch(SB_URL + '/auth/v1/' + endpoint, {
+    method: 'POST',
+    headers: {
+      'apikey': SB_KEY,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  if(!res.ok) throw new Error(data.error_description || data.msg || 'خطأ في المصادقة');
+  return data;
+}
+
+async function _sbGetUser(token){
+  const res = await fetch(SB_URL + '/auth/v1/user', {
+    headers: { 'apikey': SB_KEY, 'Authorization': 'Bearer ' + token }
+  });
+  if(!res.ok) return null;
+  return await res.json();
+}
+
+async function _sbRefreshSession(refreshToken){
+  try{
+    return await _sbAuth('token?grant_type=refresh_token', {refresh_token: refreshToken});
+  }catch(e){ return null; }
+}
+
+// ── Toggle Login / Register ──
+function authToggle(mode){
+  const isReg = mode === 'register';
+  document.getElementById('auth-tab-login').style.background    = isReg ? 'transparent' : 'var(--gold)';
+  document.getElementById('auth-tab-login').style.color         = isReg ? 'var(--text2)' : '#000';
+  document.getElementById('auth-tab-register').style.background = isReg ? 'var(--gold)' : 'transparent';
+  document.getElementById('auth-tab-register').style.color      = isReg ? '#000' : 'var(--text2)';
+  document.getElementById('auth-name-wrap').style.display       = isReg ? 'block' : 'none';
+  document.getElementById('auth-confirm-wrap').style.display    = isReg ? 'block' : 'none';
+  document.getElementById('auth-submit-btn').textContent        = isReg ? '✏️ إنشاء الحساب' : '🔓 دخول';
+  document.getElementById('auth-error').textContent             = '';
+  window._authMode = mode;
+}
+
+// ── Submit Login / Register ──
+async function authSubmit(){
+  const email    = document.getElementById('auth-email')?.value.trim();
+  const password = document.getElementById('auth-password')?.value;
+  const confirm  = document.getElementById('auth-confirm')?.value;
+  const name     = document.getElementById('auth-name')?.value.trim();
+  const errEl    = document.getElementById('auth-error');
+  const btn      = document.getElementById('auth-submit-btn');
+  const mode     = window._authMode || 'login';
+
+  if(!email || !password){ errEl.textContent='أدخل البريد وكلمة المرور'; return; }
+  if(!email.includes('@')){ errEl.textContent='البريد الإلكتروني غير صحيح'; return; }
+  if(password.length < 6){ errEl.textContent='كلمة المرور 6 أحرف على الأقل'; return; }
+  if(mode==='register' && password!==confirm){ errEl.textContent='كلمتا المرور غير متطابقتين'; return; }
+
+  btn.disabled = true;
+  btn.textContent = '⏳ جاري...';
+  errEl.textContent = '';
+
+  try{
+    let data;
+    if(mode === 'register'){
+      data = await _sbAuth('signup', {
+        email, password,
+        data: { full_name: name || email.split('@')[0] }
+      });
+      if(data.id && !data.session){
+        // Email confirmation required
+        errEl.style.color = 'var(--green)';
+        errEl.textContent = '✅ تم الإرسال! تحقق من بريدك لتأكيد الحساب';
+        btn.disabled = false; btn.textContent = '✏️ إنشاء الحساب';
+        return;
+      }
+    } else {
+      data = await _sbAuth('token?grant_type=password', { email, password });
+    }
+
+    if(data.access_token){
+      await _onAuthSuccess(data);
+    }
+  }catch(e){
+    errEl.style.color = 'var(--red)';
+    errEl.textContent = e.message;
+  }finally{
+    if(btn.disabled){ btn.disabled=false; btn.textContent=mode==='register'?'✏️ إنشاء الحساب':'🔓 دخول'; }
+  }
+}
+
+// ── On successful auth ──
+async function _onAuthSuccess(session){
+  _authSession = session;
+  _authUser = session.user;
+
+  // Save session locally
+  localStorage.setItem('_nec_auth_session', JSON.stringify({
+    access_token:  session.access_token,
+    refresh_token: session.refresh_token,
+    user:          session.user,
+    expires_at:    Date.now() + (session.expires_in||3600)*1000
+  }));
+
+  _syncEnabled = true;
+  _updateAccountUI();
+
+  // Switch to logged-in view
+  document.getElementById('account-loggedout').style.display = 'none';
+  document.getElementById('account-loggedin').style.display  = 'block';
+  // Update sidebar badge
+  const badge = document.getElementById('sb-auth-badge');
+  if(badge){ badge.textContent='✅'; badge.style.background='rgba(76,175,80,.2)'; badge.style.borderColor='rgba(76,175,80,.3)'; }
+  toast('✅ تم تسجيل الدخول بنجاح — جاري مزامنة بياناتك','success');
+
+  // Sync immediately
+  setTimeout(()=> syncFarmData(false), 500);
+}
+
+// ── Sign Out ──
+async function authSignOut(){
+  try{
+    if(_authSession?.access_token){
+      await fetch(SB_URL+'/auth/v1/logout',{
+        method:'POST',
+        headers:{'apikey':SB_KEY,'Authorization':'Bearer '+_authSession.access_token}
+      });
+    }
+  }catch(e){}
+
+  _authUser = null; _authSession = null; _syncEnabled = false;
+  localStorage.removeItem('_nec_auth_session');
+  _updateAccountUI();
+  document.getElementById('account-loggedin').style.display  = 'none';
+  document.getElementById('account-loggedout').style.display = 'block';
+  _syncUI('disabled');
+  toast('👋 تم تسجيل الخروج','info');
+}
+
+// ── Update UI with user info ──
+function _updateAccountUI(){
+  const emailEl = document.getElementById('account-user-email');
+  const statsEl = document.getElementById('account-sync-stats');
+  if(emailEl && _authUser){
+    emailEl.textContent = _authUser.email;
+  }
+  if(statsEl){
+    const hives   = (DB.get('hives')||[]).length;
+    const apis    = (DB.get('apiaries')||[]).length;
+    const insp    = (DB.get('inspections')||[]).length;
+    const harv    = (DB.get('harvest')||[]).length;
+    statsEl.innerHTML = `
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+        <div><div style="font-size:18px;font-weight:900;color:var(--gold);">${apis}</div><div style="font-size:10px;">مناحل</div></div>
+        <div><div style="font-size:18px;font-weight:900;color:var(--gold);">${hives}</div><div style="font-size:10px;">خلايا</div></div>
+        <div><div style="font-size:18px;font-weight:900;color:var(--gold);">${insp}</div><div style="font-size:10px;">فحوصات</div></div>
+        <div><div style="font-size:18px;font-weight:900;color:var(--gold);">${harv}</div><div style="font-size:10px;">حصادات</div></div>
+      </div>
+      ${_lastSyncAt ? '<div style="font-size:9px;color:var(--text3);margin-top:8px;">آخر مزامنة: '+_lastSyncAt.toLocaleTimeString('ar')+'</div>' : ''}
+    `;
+  }
+}
+
+// ── Restore session on load ──
+async function _restoreAuthSession(){
+  const saved = localStorage.getItem('_nec_auth_session');
+  if(!saved) return false;
+
+  try{
+    const sess = JSON.parse(saved);
+    // Check if expired
+    if(sess.expires_at && Date.now() > sess.expires_at - 60000){
+      // Try to refresh
+      const refreshed = await _sbRefreshSession(sess.refresh_token);
+      if(!refreshed) { localStorage.removeItem('_nec_auth_session'); return false; }
+      await _onAuthSuccess(refreshed);
+      return true;
+    }
+    // Session still valid
+    _authSession = sess;
+    _authUser    = sess.user;
+    _syncEnabled = true;
+    _updateAccountUI();
+    document.getElementById('account-loggedout').style.display = 'none';
+    document.getElementById('account-loggedin').style.display  = 'block';
+    return true;
+  }catch(e){
+    localStorage.removeItem('_nec_auth_session');
+    return false;
+  }
+}
+
+// ── المزامنة: يستخدم user_id عند تسجيل الدخول، device_id كاحتياطي ──
+// كلا النظامين مستقلان: الترخيص=device_id | المزامنة=user_id أو device_id
+async function _doSyncPush(key, syncId, token){
+  const data = DB.get(key); if(data===null) return;
+  const headers = {
+    'apikey':SB_KEY, 'Content-Type':'application/json',
+    'Prefer':'resolution=merge-duplicates,return=minimal'
+  };
+  if(token) headers['Authorization']='Bearer '+token;
+  await fetch(SB_URL+'/rest/v1/farm_data?on_conflict=device_id,data_key',{
+    method:'POST', headers,
+    body:JSON.stringify({device_id:syncId, data_key:key, data_value:data})
+  }).catch(e=>console.warn('push',key,e));
+}
+
+async function _doSyncPull(syncId, token){
+  const headers = {'apikey':SB_KEY};
+  if(token) headers['Authorization']='Bearer '+token;
+  const res = await fetch(
+    SB_URL+'/rest/v1/farm_data?device_id=eq.'+encodeURIComponent(syncId)+'&select=data_key,data_value',
+    {headers});
+  if(!res.ok) return false;
+  const rows = await res.json();
+  if(!Array.isArray(rows)||!rows.length) return false;
+  let fresh=false;
+  rows.forEach(row=>{
+    if(!SYNC_TABLES.includes(row.data_key)||row.data_value==null) return;
+    const local=DB.get(row.data_key); const remote=row.data_value;
+    if(Array.isArray(remote)&&Array.isArray(local)&&remote.length>local.length){
+      DB.set(row.data_key,remote); fresh=true;
+    } else if(row.data_key==='settings'&&remote&&typeof remote==='object'){
+      DB.set(row.data_key,Object.assign({},remote,local||{}));
+    }
+  });
+  return fresh;
+}
+
+// ── Init on load ──
+async function _initAuth(){
+  window._authMode = 'login';
+  const restored = await _restoreAuthSession();
+  if(restored){
+    setTimeout(()=>syncFarmData(true), 3000);
+  }
+}
+
+setTimeout(_initAuth, 1000);
+
+
+function showAccountPanel(){
+  // Open license screen on account tab
+  const ls = document.getElementById('license-screen');
+  if(ls){ ls.classList.remove('hidden'); licTab('account'); }
+}
+
+
+/* ══ Email-based License Management ══ */
+
+// Activate license by email
+async function adminActivateByEmail(email){
+  if(!email){ toast('البريد غير متاح','warning'); return; }
+  const dur = prompt('مدة الترخيص بالأيام (365 = سنة):', '365');
+  if(!dur || isNaN(dur)) return;
+  
+  const expires = new Date();
+  expires.setDate(expires.getDate() + parseInt(dur));
+  
+  try{
+    // Try to find existing license by email
+    const existing = _adminAllUsers.find(r => r._authInfo?.email === email || r.email === email);
+    
+    if(existing && existing.device_id){
+      // Update existing license
+      await sbQuery('PATCH',
+        'licenses?device_id=eq.'+encodeURIComponent(existing.device_id),
+        { status:'active', serial_expires: expires.toISOString(), email }
+      );
+    } else {
+      // Create new license entry linked to email/user_id
+      const authUser = _adminAllUsers.find(r => r._authInfo?.email===email);
+      const uid = authUser?.user_id || authUser?.device_id || 'email:'+email;
+      await sbQuery('POST', 'licenses', {
+        device_id: uid,
+        user_id: uid,
+        email,
+        status: 'active',
+        serial_expires: expires.toISOString(),
+        install_date: new Date().toISOString(),
+        notes: email
+      });
+    }
+    
+    toast('✅ تم تفعيل ترخيص: '+email, 'success');
+    log('تفعيل ترخيص: '+email, 'var(--green)');
+    adminLoadUsers();
+  }catch(e){
+    toast('❌ '+e.message, 'error');
+  }
+}
+
+// Contact user via email (opens mail client)
+function adminContactEmail(email){
+  if(!email) return;
+  const subject = encodeURIComponent('NectarOS — رسالة من الدعم الفني');
+  const body = encodeURIComponent(
+    'مرحباً،\n\nشكراً لاستخدامك NectarOS.\n\n'
+  );
+  window.open(`mailto:${email}?subject=${subject}&body=${body}`);
+}
+
+// Add email to device-only record
+async function adminAddEmailToDevice(deviceId){
+  const email = prompt('أدخل البريد الإلكتروني للعميل:');
+  if(!email || !email.includes('@')){ toast('بريد غير صحيح','warning'); return; }
+  try{
+    await sbQuery('PATCH', 'licenses?device_id=eq.'+encodeURIComponent(deviceId), { email, notes: email });
+    toast('✅ تم ربط البريد: '+email, 'success');
+    adminLoadUsers();
+  }catch(e){ toast('❌ '+e.message,'error'); }
+}
+
+// adminSetStatus handled by original function
+
+// Search in admin panel - by email OR device id
+function adminSearchUsers(query){
+  if(!query) { adminRenderUsers(_adminAllUsers); return; }
+  const q = query.toLowerCase();
+  const filtered = _adminAllUsers.filter(r =>
+    (r._authInfo?.email||'').toLowerCase().includes(q) ||
+    (r.email||'').toLowerCase().includes(q) ||
+    (r.device_id||'').toLowerCase().includes(q) ||
+    (r.notes||'').toLowerCase().includes(q)
+  );
+  adminRenderUsers(filtered);
+}
 
 </script>
   <!-- ══ ANNOUNCEMENT POPUP ══ -->
