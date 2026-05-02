@@ -1,7 +1,7 @@
 /* NectarOS Service Worker v5.4 */
-const APP_VERSION = 'v5.4.0';
-const CACHE   = 'nectaros-v8';
-const RUNTIME = 'nectaros-rt-v8';
+const APP_VERSION = 'v5.4.1';
+const CACHE   = 'nectaros-v9';
+const RUNTIME = 'nectaros-rt-v9';
 
 const STATIC = ['./', './manifest.json'];
 const CDN = [

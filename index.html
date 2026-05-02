@@ -618,15 +618,15 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
 
 /* ═══════════ LICENSE / SERIAL SYSTEM ═══════════ */
-#license-screen{position:fixed;inset:0;z-index:9100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;direction:rtl;}
+#license-screen{position:fixed;inset:0;z-index:9100;background:var(--bg);display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:24px;direction:rtl;overflow-y:auto;}
 #license-screen.hidden{display:none;}
 #license-screen::before{content:'';position:absolute;inset:0;background-image:radial-gradient(circle at 20% 30%,rgba(255,193,7,.06) 0%,transparent 50%),radial-gradient(circle at 80% 70%,rgba(255,111,0,.05) 0%,transparent 40%);pointer-events:none;}
-.lic-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative;z-index:1;}
+.lic-wrap{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;width:100%;max-width:420px;box-shadow:0 20px 60px rgba(0,0,0,.5);position:relative;z-index:1;margin:auto;}
 .lic-hex{width:64px;height:64px;background:linear-gradient(135deg,var(--gold),var(--gold4));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 14px;animation:hpulse 3s infinite;}
 .lic-tabs{display:flex;gap:6px;margin-bottom:18px;background:var(--bg3);border-radius:10px;padding:4px;}
 .lic-tab{flex:1;padding:8px;border-radius:8px;border:none;background:transparent;cursor:pointer;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;color:var(--text3);transition:.2s;}
 .lic-tab.active{background:rgba(255,193,7,.18);color:var(--gold);}
-.lic-tab-panel{display:none;}
+.lic-tab-panel{display:none;min-height:0;}
 .lic-tab-panel.active{display:block;}
 .device-id-box{background:var(--bg3);border:1px solid var(--border);border-radius:9px;padding:10px 12px;font-family:'Space Mono',monospace;font-size:11px;color:var(--gold);word-break:break-all;letter-spacing:.5px;margin:10px 0;}
 .serial-input{font-family:'Space Mono',monospace;font-size:13px;text-align:center;letter-spacing:2px;text-transform:uppercase;}
@@ -1236,7 +1236,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
 <nav id="sidebar">
   <div class="logo">
     <div class="logo-hex">🐝</div>
-    <div style="flex:1;"><div class="logo-text" style="font-family:'Syne','Cairo',sans-serif;font-size:15px;letter-spacing:-.5px;">NectarOS</div><div class="logo-sub">Smart Beekeeping · v5.4</div></div>
+    <div style="flex:1;"><div class="logo-text" style="font-family:'Syne','Cairo',sans-serif;font-size:15px;letter-spacing:-.5px;">NectarOS</div><div class="logo-sub">Smart Beekeeping · v5.4.1</div></div>
     <div id="sb-auth-badge" onclick="showAccountPanel()" title="حسابي"
       style="width:30px;height:30px;border-radius:50%;background:rgba(255,193,7,.15);border:1px solid rgba(255,193,7,.2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;flex-shrink:0;">
       👤
@@ -1558,6 +1558,52 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <!-- ══ SETTINGS ══ -->
     <div id="screen-settings" class="screen">
       <div class="ph"><div class="pt">⚙️ الإعدادات</div></div>
+
+      <!-- ══ CLOUD ACCOUNT ══ -->
+      <div class="card" style="border-color:rgba(66,133,244,.22);">
+        <div class="card-header">
+          <span class="card-title" style="color:#4285F4;">☁️ حساب المزامنة</span>
+          <span id="settings-auth-badge" style="font-size:10px;color:var(--text3);">غير متصل</span>
+        </div>
+        <!-- Logged IN -->
+        <div id="settings-loggedin" style="display:none;">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+            <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#4285F4,#34A853);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">👤</div>
+            <div style="flex:1;min-width:0;">
+              <div id="settings-user-email" style="font-weight:700;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;"></div>
+              <div style="font-size:10px;color:var(--green);">✅ بياناتك محفوظة في السحابة</div>
+            </div>
+          </div>
+          <div id="settings-sync-stats" style="background:rgba(66,133,244,.06);border:1px solid rgba(66,133,244,.12);border-radius:9px;padding:10px;margin-bottom:10px;font-size:11px;text-align:center;"></div>
+          <div style="display:flex;gap:7px;">
+            <button onclick="syncFarmData(false)" class="btn btn-primary btn-sm" style="flex:1;justify-content:center;">🔄 مزامنة</button>
+            <button onclick="authSignOut()" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;">🚪 خروج</button>
+          </div>
+        </div>
+        <!-- Logged OUT -->
+        <div id="settings-loggedout">
+          <div style="display:flex;gap:5px;margin-bottom:10px;background:var(--bg3);border-radius:9px;padding:3px;">
+            <button id="s-tab-login" onclick="sAuthToggle('login')" style="flex:1;padding:7px;border:none;border-radius:7px;font-family:'Cairo',sans-serif;font-weight:700;font-size:11px;cursor:pointer;background:var(--gold);color:#000;">🔓 دخول</button>
+            <button id="s-tab-register" onclick="sAuthToggle('register')" style="flex:1;padding:7px;border:none;border-radius:7px;font-family:'Cairo',sans-serif;font-weight:700;font-size:11px;cursor:pointer;background:transparent;color:var(--text2);">✏️ حساب جديد</button>
+          </div>
+          <div id="s-name-wrap" style="display:none;margin-bottom:7px;">
+            <input id="s-auth-name" class="form-control" type="text" placeholder="الاسم الكامل" style="font-size:12px;">
+          </div>
+          <div style="margin-bottom:7px;">
+            <input id="s-auth-email" class="form-control" type="email" placeholder="البريد الإلكتروني" dir="ltr" style="font-size:12px;" onkeydown="if(event.key==='Enter')document.getElementById('s-auth-pass').focus()">
+          </div>
+          <div style="margin-bottom:7px;position:relative;">
+            <input id="s-auth-pass" class="form-control" type="password" placeholder="كلمة المرور (6+ أحرف)" dir="ltr" style="font-size:12px;" onkeydown="if(event.key==='Enter')sAuthSubmit()">
+            <button onclick="var i=document.getElementById('s-auth-pass');i.type=i.type==='password'?'text':'password'" style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:13px;">👁</button>
+          </div>
+          <div id="s-confirm-wrap" style="display:none;margin-bottom:7px;">
+            <input id="s-auth-confirm" class="form-control" type="password" placeholder="تأكيد كلمة المرور" dir="ltr" style="font-size:12px;">
+          </div>
+          <div id="s-auth-error" style="color:var(--red);font-size:11px;min-height:14px;margin-bottom:6px;text-align:center;"></div>
+          <button id="s-auth-btn" onclick="sAuthSubmit()" class="btn btn-primary" style="width:100%;justify-content:center;">🔓 دخول</button>
+          <div style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;">يحفظ بياناتك — تصل إليها من أي جهاز 📱</div>
+        </div>
+      </div>
 
       <!-- Farm Info -->
       <div class="card">
@@ -2434,7 +2480,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="card" style="text-align:center;padding:24px 20px;">
         <div style="font-size:48px;margin-bottom:12px;">🐝</div>
         <div style="font-family:'Syne','Cairo',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:6px;">NectarOS</div>
-        <div style="font-size:11px;color:var(--text3);margin-bottom:20px;" data-i18n="contact_sub">نظام إدارة المناحل الذكي — v5.4</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:20px;" data-i18n="contact_sub">نظام إدارة المناحل الذكي — v5.4.1</div>
 
         <!-- قسم شراء الترخيص -->
         <div id="contact-purchase-wrap" style="text-align:right;"></div>
@@ -5420,7 +5466,7 @@ const T={
   ar:{
     nav_main:'الرئيسية',nav_dashboard:'لوحة التحكم',nav_apiaries:'المناحل',nav_map:'الخريطة',nav_advanced:'مقاييس متقدمة',nav_hives:'الخلايا',nav_calendar:'التقويم',nav_bee_health:'صحة النحل',nav_inspections:'الفحوصات',nav_weights:'الأوزان',nav_harvest:'الحصاد',nav_queens:'جينات الملكات',nav_health:'الشهادات الصحية',nav_equipment:'المعدات والمخزن',nav_assets:'باركود المعدات',nav_inventory:'المخزن',nav_commerce:'التجارة',nav_store:'المتجر',nav_crm:'العملاء',nav_sales:'المبيعات',nav_finance:'المالية',nav_expenses:'المصاريف',nav_profit:'الربح والخسارة',nav_finance_rep:'التقارير المالية',nav_ai:'الذكاء الاصطناعي',nav_contact:'اتصل بنا',nav_settings:'الإعدادات',nav_logout:'تسجيل الخروج',
     lbl_user:'اسم المستخدم',lbl_pass:'كلمة المرور',login_btn:'🐝 دخول',login_err_empty:'أدخل اسم المستخدم وكلمة المرور',login_err_wrong:'اسم المستخدم أو كلمة المرور غير صحيحة',lang_label:'اختر اللغة',login_footer:'نظام إدارة المناحل الذكي',
-    contact_title:'📬 اتصل بنا',contact_sub:'نظام إدارة المناحل الذكي — v5.4',contact_form_title:'📨 أرسل رسالة',contact_your_name:'اسمك',contact_subject:'الموضوع',contact_message:'الرسالة',contact_send_whatsapp:'إرسال عبر واتساب',
+    contact_title:'📬 اتصل بنا',contact_sub:'نظام إدارة المناحل الذكي — v5.4.1',contact_form_title:'📨 أرسل رسالة',contact_your_name:'اسمك',contact_subject:'الموضوع',contact_message:'الرسالة',contact_send_whatsapp:'إرسال عبر واتساب',
     dir:'rtl',locale:'ar-DZ'
   },
   fr:{
@@ -8359,13 +8405,16 @@ function renderTrialInfo(){
 }
 
 function licTab(tab){
-  ['trial','activate','devices'].forEach(t=>{
-    const panel = document.getElementById('lic-panel-'+t);
-    const btn = document.querySelector(`.lic-tab[onclick*="${t}"]`);
-    if(panel) panel.classList.toggle('active', t===tab);
-    if(btn) btn.classList.toggle('active', t===tab);
+  document.querySelectorAll('.lic-tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.lic-tab').forEach(b => b.classList.remove('active'));
+  const activePanel = document.getElementById('lic-panel-'+tab);
+  if(activePanel) activePanel.classList.add('active');
+  // Find the button that references this tab
+  document.querySelectorAll('.lic-tab').forEach(b => {
+    if((b.getAttribute('onclick')||'').includes("'"+tab+"'")) b.classList.add('active');
   });
   if(tab==='devices') renderLicDevices();
+  if(tab==='account') setTimeout(()=>{ if(typeof _updateAccountUI==='function') _updateAccountUI(); }, 100);
 }
 
 function enterTrialApp(){
@@ -11381,7 +11430,10 @@ async function _initAuth(){
   }
 }
 
-setTimeout(_initAuth, 1000);
+setTimeout(function(){
+  window._authMode = window._authMode || 'login';
+  if(typeof _initAuth === 'function') _initAuth();
+}, 1200);
 
 
 function showAccountPanel(){
@@ -11470,6 +11522,111 @@ function adminSearchUsers(query){
   );
   adminRenderUsers(filtered);
 }
+
+
+/* ══ Settings Page Auth (مستقل عن شاشة الترخيص) ══ */
+let _sAuthMode = 'login';
+
+function sAuthToggle(mode){
+  _sAuthMode = mode;
+  const isReg = mode === 'register';
+  const loginBtn = document.getElementById('s-tab-login');
+  const regBtn   = document.getElementById('s-tab-register');
+  const nameWrap = document.getElementById('s-name-wrap');
+  const confWrap = document.getElementById('s-confirm-wrap');
+  const submitBtn= document.getElementById('s-auth-btn');
+  if(loginBtn){ loginBtn.style.background=isReg?'transparent':'var(--gold)'; loginBtn.style.color=isReg?'var(--text2)':'#000'; }
+  if(regBtn){   regBtn.style.background=isReg?'var(--gold)':'transparent'; regBtn.style.color=isReg?'#000':'var(--text2)'; }
+  if(nameWrap)  nameWrap.style.display  = isReg ? 'block' : 'none';
+  if(confWrap)  confWrap.style.display  = isReg ? 'block' : 'none';
+  if(submitBtn) submitBtn.textContent   = isReg ? '✏️ إنشاء الحساب' : '🔓 دخول';
+  const errEl = document.getElementById('s-auth-error');
+  if(errEl) errEl.textContent = '';
+}
+
+async function sAuthSubmit(){
+  const email    = document.getElementById('s-auth-email')?.value.trim();
+  const password = document.getElementById('s-auth-pass')?.value;
+  const confirm  = document.getElementById('s-auth-confirm')?.value;
+  const name     = document.getElementById('s-auth-name')?.value.trim();
+  const errEl    = document.getElementById('s-auth-error');
+  const btn      = document.getElementById('s-auth-btn');
+
+  if(!email || !password){ if(errEl) errEl.textContent='أدخل البريد وكلمة المرور'; return; }
+  if(!email.includes('@')){ if(errEl) errEl.textContent='البريد غير صحيح'; return; }
+  if(password.length < 6){ if(errEl) errEl.textContent='كلمة المرور 6 أحرف على الأقل'; return; }
+  if(_sAuthMode==='register' && password !== confirm){ if(errEl) errEl.textContent='كلمتا المرور غير متطابقتين'; return; }
+
+  if(btn){ btn.disabled=true; btn.textContent='⏳ جاري...'; }
+  if(errEl) errEl.textContent='';
+
+  try{
+    let data;
+    if(_sAuthMode === 'register'){
+      data = await _sbAuth('signup', { email, password, data:{ full_name: name||email.split('@')[0] } });
+      if(data.id && !data.session){
+        if(errEl){ errEl.style.color='var(--green)'; errEl.textContent='✅ تحقق من بريدك لتأكيد الحساب'; }
+        if(btn){ btn.disabled=false; btn.textContent='✏️ إنشاء الحساب'; }
+        return;
+      }
+    } else {
+      data = await _sbAuth('token?grant_type=password', { email, password });
+    }
+    if(data.access_token){
+      await _onAuthSuccess(data);
+      _updateSettingsAuthUI();
+      toast('✅ تم تسجيل الدخول بنجاح','success');
+    }
+  }catch(e){
+    if(errEl){ errEl.style.color='var(--red)'; errEl.textContent=e.message; }
+  }finally{
+    if(btn && btn.disabled){ btn.disabled=false; btn.textContent=_sAuthMode==='register'?'✏️ إنشاء الحساب':'🔓 دخول'; }
+  }
+}
+
+function _updateSettingsAuthUI(){
+  const loggedIn  = document.getElementById('settings-loggedin');
+  const loggedOut = document.getElementById('settings-loggedout');
+  const badge     = document.getElementById('settings-auth-badge');
+  const emailEl   = document.getElementById('settings-user-email');
+  const statsEl   = document.getElementById('settings-sync-stats');
+
+  if(_authUser){
+    if(loggedIn)  loggedIn.style.display  = 'block';
+    if(loggedOut) loggedOut.style.display = 'none';
+    if(badge)     { badge.textContent='✅ متصل'; badge.style.color='var(--green)'; }
+    if(emailEl)   emailEl.textContent = _authUser.email || '';
+    if(statsEl){
+      const h=(DB.get('hives')||[]).length;
+      const a=(DB.get('apiaries')||[]).length;
+      const i=(DB.get('inspections')||[]).length;
+      const hv=(DB.get('harvest')||[]).length;
+      statsEl.innerHTML = `<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px;">
+        <div><div style="font-size:16px;font-weight:900;color:#4285F4;">${a}</div><div style="font-size:9px;">مناحل</div></div>
+        <div><div style="font-size:16px;font-weight:900;color:#4285F4;">${h}</div><div style="font-size:9px;">خلايا</div></div>
+        <div><div style="font-size:16px;font-weight:900;color:#4285F4;">${i}</div><div style="font-size:9px;">فحوصات</div></div>
+        <div><div style="font-size:16px;font-weight:900;color:#4285F4;">${hv}</div><div style="font-size:9px;">حصادات</div></div>
+      </div>${_lastSyncAt?'<div style="font-size:9px;color:var(--text3);margin-top:6px;">آخر مزامنة: '+_lastSyncAt.toLocaleTimeString('ar')+'</div>':''}`;
+    }
+  } else {
+    if(loggedIn)  loggedIn.style.display  = 'none';
+    if(loggedOut) loggedOut.style.display = 'block';
+    if(badge)     { badge.textContent='غير متصل'; badge.style.color='var(--text3)'; }
+  }
+}
+
+// Call when settings screen opens
+document.addEventListener('click', function(e){
+  const el = e.target.closest('[onclick]');
+  if(!el) return;
+  const oc = el.getAttribute('onclick')||'';
+  if(oc.includes("go('settings')")||oc.includes('go("settings")')){
+    setTimeout(_updateSettingsAuthUI, 300);
+  }
+});
+
+// Init on load
+setTimeout(_updateSettingsAuthUI, 2000);
 
 </script>
   <!-- ══ ANNOUNCEMENT POPUP ══ -->
