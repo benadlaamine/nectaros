@@ -126,3 +126,11 @@ self.addEventListener('notificationclick', e => {
     })
   );
 });
+
+// ── إلغاء التثبيت: تنظيف الكاش عند طلب التحديث أو الإلغاء ──
+self.addEventListener('message', e => {
+  if (e.data === 'UNINSTALL') {
+    caches.keys().then(keys => Promise.all(keys.map(k => caches.delete(k))));
+    self.registration.unregister();
+  }
+});
