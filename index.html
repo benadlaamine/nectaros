@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta name="description" content="نظام إدارة المناحل الذكي v5.4">
+<meta name="description" content="NectarOS — Smart Beekeeping Management">
 <link rel="manifest" href="./manifest.json">
 <script>
 /* ══ SERVICE WORKER — خارجي حقيقي ══ */
@@ -913,7 +913,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
   </div>
   <!-- الإصدار -->
-  <div class="splash-version">v5.4 · نظام إدارة المناحل</div>
+  <div class="splash-version">v5.4.1</div>
 </div>
 
 <!-- ═══════════ LOGIN SCREEN ═══════════ -->
@@ -1158,7 +1158,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       </div>
     </div>
 
-    <div class="login-footer" style="margin-top:16px;position:relative;cursor:default;" onclick="_ownerTap()">NectarOS · <span>v5.4</span> · نظام إدارة المناحل الذكي</div>
+    <div class="login-footer" style="margin-top:16px;position:relative;cursor:default;" onclick="_ownerTap()">NectarOS · <span>v5.4.1</span></div>
     <div id="owner-dev-btn-wrap" style="margin-top:8px;text-align:center;display:none;">
       <button id="owner-dev-btn" onclick="openOwnerPin()" style="background:transparent;border:1px solid #333;border-radius:8px;padding:4px 14px;color:#555;font-size:10px;cursor:pointer;font-family:'Cairo',sans-serif;transition:.2s;" onmouseover="this.style.borderColor='#FFC107';this.style.color='#FFC107'" onmouseout="this.style.borderColor='#333';this.style.color='#555'">🔑 مطوّر</button>
     </div>
@@ -1172,7 +1172,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="login-tagline">Smart Beekeeping Platform</div>
   </div>
   <div class="login-card">
-    <div class="login-section-title">🐝 نظام إدارة المناحل الذكي</div>
+    <div class="login-section-title">🐝 NectarOS — Beekeeping Intelligence</div>
     <div class="form-group"><label class="form-label" id="lbl-user">اسم المستخدم</label>
       <input id="login-user" class="form-control" placeholder="admin" autocomplete="username">
     </div>
@@ -1185,7 +1185,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       🔑 الدخول الافتراضي: <span style="color:var(--gold);font-weight:700;">admin</span> / <span style="color:var(--gold);font-weight:700;">1234</span>
     </div>
   </div>
-  <div class="login-footer">NectarOS · <span>v5.4</span> · نظام إدارة المناحل الذكي</div>
+  <div class="login-footer">NectarOS · <span>v5.4.1</span></div>
     <div id="owner-tap-zone" onclick="_ownerTap()" style="position:absolute;bottom:0;left:0;right:0;height:24px;cursor:default;opacity:0;"></div>
 </div>
 
@@ -2425,7 +2425,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
       <div class="card" style="text-align:center;padding:24px 20px;">
         <div style="font-size:48px;margin-bottom:12px;">🐝</div>
         <div style="font-family:'Syne','Cairo',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:6px;">NectarOS</div>
-        <div style="font-size:11px;color:var(--text3);margin-bottom:20px;" data-i18n="contact_sub">نظام إدارة المناحل الذكي — v5.4.1</div>
+        <div style="font-size:11px;color:var(--text3);margin-bottom:20px;" data-i18n="contact_sub">Harvesting Intelligence · v5.4.1</div>
 
         <!-- قسم شراء الترخيص -->
         <div id="contact-purchase-wrap" style="text-align:right;"></div>
@@ -3052,7 +3052,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
           <div style="font-size:28px;">🐝</div>
           <div class="cert-ttl">شهادة صحة وسلامة منحل</div>
           <div style="font-size:12px;margin-top:5px;color:#664400;font-weight:700;">صادرة من منحل: <span id="cert-farm-name" style="color:#FF6F00;">---</span></div>
-          <div style="font-size:10px;margin-top:3px;color:#888;">NectarOS v5.4 — نظام إدارة المناحل الذكي</div>
+          <div style="font-size:10px;margin-top:3px;color:#888;">NectarOS v5.4.1 — Beekeeping Intelligence</div>
         </div>
         <!-- BODY -->
         <div class="cert-bdy">
@@ -5453,8 +5453,8 @@ function seed(){
 const T={
   ar:{
     nav_main:'الرئيسية',nav_dashboard:'لوحة التحكم',nav_apiaries:'المناحل',nav_map:'الخريطة',nav_advanced:'مقاييس متقدمة',nav_hives:'الخلايا',nav_calendar:'التقويم',nav_bee_health:'صحة النحل',nav_inspections:'الفحوصات',nav_weights:'الأوزان',nav_harvest:'الحصاد',nav_queens:'جينات الملكات',nav_health:'الشهادات الصحية',nav_equipment:'المعدات والمخزن',nav_assets:'باركود المعدات',nav_inventory:'المخزن',nav_commerce:'التجارة',nav_store:'المتجر',nav_crm:'العملاء',nav_sales:'المبيعات',nav_finance:'المالية',nav_expenses:'المصاريف',nav_profit:'الربح والخسارة',nav_finance_rep:'التقارير المالية',nav_ai:'الذكاء الاصطناعي',nav_contact:'اتصل بنا',nav_settings:'الإعدادات',nav_logout:'تسجيل الخروج',
-    lbl_user:'اسم المستخدم',lbl_pass:'كلمة المرور',login_btn:'🐝 دخول',login_err_empty:'أدخل اسم المستخدم وكلمة المرور',login_err_wrong:'اسم المستخدم أو كلمة المرور غير صحيحة',lang_label:'اختر اللغة',login_footer:'نظام إدارة المناحل الذكي',
-    contact_title:'📬 اتصل بنا',contact_sub:'نظام إدارة المناحل الذكي — v5.4.1',contact_form_title:'📨 أرسل رسالة',contact_your_name:'اسمك',contact_subject:'الموضوع',contact_message:'الرسالة',contact_send_whatsapp:'إرسال عبر واتساب',
+    lbl_user:'اسم المستخدم',lbl_pass:'كلمة المرور',login_btn:'🐝 دخول',login_err_empty:'أدخل اسم المستخدم وكلمة المرور',login_err_wrong:'اسم المستخدم أو كلمة المرور غير صحيحة',lang_label:'اختر اللغة',login_footer:'Beekeeping Intelligence',
+    contact_title:'📬 اتصل بنا',contact_sub:'Harvesting Intelligence · v5.4.1',contact_form_title:'📨 أرسل رسالة',contact_your_name:'اسمك',contact_subject:'الموضوع',contact_message:'الرسالة',contact_send_whatsapp:'إرسال عبر واتساب',
     dir:'rtl',locale:'ar-DZ'
   },
   fr:{
@@ -10687,13 +10687,10 @@ function _saveDevSettings(obj){
 // ── Apply Stripe visibility ──
 function _applyStripeVisibility(){
   const s = _getDevSettings();
-  const adminEnabled = s.stripe_visible === true; // dev toggle (default: hidden)
-  
-  // فقط المطوّر يرى عند الإيقاف
+  // Default: VISIBLE (show=true unless explicitly disabled)
+  // dev sets stripe_visible=false to HIDE it from clients
   const isOwner = localStorage.getItem('_nec_owner_verified') === '1';
-  
-  // يظهر إذا: المطوّر فعّله للجميع  أو  أنت المطوّر (صاحب الجهاز)
-  const show = adminEnabled || isOwner;
+  const show = (s.stripe_visible !== false) || isOwner;
   
   // Contact page card
   const card = document.getElementById('stripe-payment-card');
@@ -10735,14 +10732,13 @@ function _applyGeminiVisibility(){
 // ── Toggle functions called from dev panel ──
 function toggleStripeVisibility(checked){
   const s = _getDevSettings();
-  s.stripe_visible = checked;
+  // checked=true → show (stripe_visible not false), checked=false → hide (stripe_visible=false)
+  s.stripe_visible = checked ? undefined : false;
   _saveDevSettings(s);
-  
   _applyStripeVisibility();
   _updateStripeToggleUI(checked);
-  
-  toast(checked ? '✅ Stripe ظاهر للمستخدمين' : '🙈 Stripe مخفي عن المستخدمين', checked ? 'success' : 'warning');
-  log((checked ? 'تفعيل' : 'إيقاف') + ' عرض Stripe للمستخدمين', '#635BFF');
+  toast(checked ? '✅ Stripe ظاهر للعملاء' : '🙈 Stripe مخفي عن العملاء', checked ? 'success' : 'warning');
+  log((checked ? 'إظهار' : 'إخفاء') + ' Stripe للعملاء', '#635BFF');
 }
 
 function toggleGeminiVisibility(checked){
@@ -10772,8 +10768,8 @@ function _updateStripeToggleUI(checked){
   const status = document.getElementById('stripe-visibility-status');
   if(status){
     status.textContent = checked 
-      ? '✅ Stripe ظاهر للجميع'
-      : '🔒 مخفي للجميع — يظهر لك أنت فقط كمطوّر';
+      ? '✅ Stripe ظاهر للجميع (الافتراضي)'
+      : '🙈 Stripe مخفي عن العملاء';
     status.style.color = checked ? 'var(--green)' : 'var(--orange)';
   }
 }
@@ -10790,10 +10786,13 @@ function _updateGeminiToggleUI(checked){
 // ── Init control tab when opened ──
 function _initCtrlTab(){
   const s = _getDevSettings();
-  const stripeOn = s.stripe_visible === true; // default hidden
-  const geminiOn = s.gemini_visible !== false; // default visible
+  // stripe_visible !== false means ON (default: show)
+  const stripeOn = s.stripe_visible !== false;
+  // gemini_visible !== false means ON (default: show)
+  const geminiOn = s.gemini_visible !== false;
   _updateStripeToggleUI(stripeOn);
   _updateGeminiToggleUI(geminiOn);
+  _checkAnnouncementActive && _checkAnnouncementActive();
 }
 
 // ── Apply on every page load ──
@@ -10802,19 +10801,33 @@ function _applyAllDevToggles(){
   _applyGeminiVisibility();
 }
 
-// Run on load (after DOM ready)
+// Run multiple times on load to ensure elements exist
 setTimeout(_applyAllDevToggles, 300);
+setTimeout(_applyAllDevToggles, 800);
+setTimeout(_applyAllDevToggles, 2000);
 
-// Re-apply toggles on every navigation
-document.addEventListener('click', function(e){
-  const el = e.target.closest('[onclick*="go("]');
-  if(!el) return;
-  setTimeout(_applyAllDevToggles, 200);
-});
-// Also on sidebar nav items
-document.querySelectorAll && document.addEventListener('DOMContentLoaded', function(){
-  setTimeout(_applyAllDevToggles, 500);
-});
+// Re-apply after EVERY click (navigation or otherwise)
+document.addEventListener('click', function(){
+  setTimeout(_applyAllDevToggles, 250);
+}, true);
+
+// MutationObserver: re-apply when screens become active
+if(typeof MutationObserver !== 'undefined'){
+  new MutationObserver(function(mutations){
+    mutations.forEach(m => {
+      if(m.type === 'attributes' && m.attributeName === 'class'){
+        const el = m.target;
+        if(el.classList && el.classList.contains('active') && el.classList.contains('screen')){
+          setTimeout(_applyAllDevToggles, 100);
+        }
+      }
+    });
+  }).observe(document.body || document.documentElement, {
+    attributes: true,
+    subtree: true,
+    attributeFilter: ['class']
+  });
+}
 
 // ── adminTab override to init ctrl tab ──
 // adminTab now handles ctrl tab directly
@@ -11899,21 +11912,39 @@ window.renderAchievements = function(){
 async function devLoadEmailAccounts(){
   const el = document.getElementById('dev-cloud-accounts');
   if(!el) return;
-  el.innerHTML = '⏳ جاري التحميل...';
+  el.innerHTML = '<div style="text-align:center;padding:8px;">⏳ جاري التحميل...</div>';
   try{
-    // Get all farm_data device_ids (cloud accounts)
-    const data = await sbQuery('GET', 'farm_data?select=device_id,updated_at&order=updated_at.desc&limit=200') || [];
-    const map = {};
-    data.forEach(r => {
-      if(!map[r.device_id]) map[r.device_id] = r.updated_at;
-    });
-    // Get emails from licenses
-    const lics = await sbQuery('GET', 'licenses?select=device_id,user_id,email,status,notes') || [];
+    // Get emails from licenses table (always available)
+    const lics = await sbQuery('GET', 'licenses?select=device_id,user_id,email,status,notes,install_date&order=install_date.desc&limit=200') || [];
+    const emailLics = lics.filter(r => r.email);
+    
+    // Also try farm_data for cloud sync accounts
+    let farmAccounts = [];
+    try{
+      const farmData = await sbQuery('GET', 'farm_data?select=device_id,updated_at&order=updated_at.desc&limit=200') || [];
+      const map = {};
+      farmData.forEach(r => { if(!map[r.device_id]) map[r.device_id] = r.updated_at; });
+      farmAccounts = Object.entries(map);
+    }catch(e){ /* farm_data table may not exist yet */ }
+
+    // Merge: emails from licenses
     const emailMap = {};
     lics.forEach(r => {
       if(r.email) emailMap[r.user_id||r.device_id] = {email:r.email, status:r.status};
     });
-    const list = Object.entries(map);
+
+    // Combine farm accounts + license emails
+    const allDids = new Set([
+      ...farmAccounts.map(([did]) => did),
+      ...emailLics.map(r => r.user_id||r.device_id)
+    ]);
+
+    const list = [...allDids].map(did => ({
+      did,
+      lastSync: farmAccounts.find(([d])=>d===did)?.[1] || emailLics.find(r=>(r.user_id||r.device_id)===did)?.install_date,
+      ...emailMap[did]
+    }));
+
     if(!list.length){ el.innerHTML='<div style="color:var(--text3);text-align:center;padding:12px;">لا توجد حسابات مزامنة بعد</div>'; return; }
     el.innerHTML = list.map(([did, lastSync]) => {
       const info = emailMap[did] || {};
