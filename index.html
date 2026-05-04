@@ -900,9 +900,8 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
   </div>
   <!-- الاسم -->
-  <div class="splash-brand">
-    <div class="splash-title">NectarOS</div>
-    <div class="splash-sub">ذكاء تربية النحل</div>
+  
+    <div class="splash-sub">Beekeeping Intelligence</div>
   </div>
   <!-- التحميل -->
   <div class="splash-loader">
@@ -913,7 +912,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     </div>
   </div>
   <!-- الإصدار -->
-  <div class="splash-version">v5.4.1</div>
+  <div class="splash-version" style="display:none;"></div>
 </div>
 
 <!-- ═══════════ LOGIN SCREEN ═══════════ -->
@@ -2578,12 +2577,40 @@ tr:hover td{background:rgba(255,255,255,.02);}
 
     <!-- ══ GOALS ══ -->
     <div id="screen-goals" class="screen">
-      <div class="ph"><div class="pt">🎯 أهداف الإنتاج السنوية</div></div>
-      <div class="card" style="margin-bottom:12px;">
+      <div class="ph">
+        <div><div class="pt">🎯 أهداف الإنتاج السنوية</div></div>
+        <button class="btn btn-primary btn-sm" onclick="showGoalForm()">+ هدف مخصص</button>
+      </div>
+      <!-- Custom Goal Form -->
+      <div id="custom-goal-form" class="card" style="display:none;border-color:rgba(255,193,7,.3);margin-bottom:12px;">
         <div class="card-header">
-          <span class="card-title">📝 إدارة الأهداف</span>
-          <select id="goals-year-select" class="form-control" style="width:auto;height:28px;font-size:11px;padding:0 5px;" onchange="loadGoalYear(this.value)"></select>
+          <span class="card-title" id="goal-form-title">✏️ هدف مخصص جديد</span>
+          <button class="btn btn-xs btn-secondary" onclick="hideGoalForm()">✕</button>
         </div>
+        <div style="display:grid;grid-template-columns:60px 1fr;gap:8px;margin-bottom:8px;">
+          <div><label class="form-label">أيقونة</label><input id="cg-icon" class="form-control" value="🎯" style="font-size:18px;text-align:center;padding:6px;"></div>
+          <div><label class="form-label">اسم الهدف</label><input id="cg-name" class="form-control" placeholder="اسم الهدف..."></div>
+        </div>
+        <div style="margin-bottom:8px;"><label class="form-label">الوصف</label><input id="cg-desc" class="form-control" placeholder="وصف الهدف..."></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+          <div><label class="form-label">القيمة المستهدفة</label><input id="cg-target" class="form-control" type="number" placeholder="100"></div>
+          <div><label class="form-label">الوحدة</label><input id="cg-unit" class="form-control" placeholder="كغ / خلية..."></div>
+        </div>
+        <div style="margin-bottom:10px;">
+          <label class="form-label">الحالة</label>
+          <select id="cg-progress" class="form-control">
+            <option value="0">🔴 لم يبدأ</option>
+            <option value="50">🟡 قيد التنفيذ</option>
+            <option value="100">🟢 مكتمل</option>
+          </select>
+        </div>
+        <div style="display:flex;gap:8px;">
+          <button class="btn btn-primary btn-sm" onclick="saveCustomGoal()" style="flex:1;justify-content:center;">💾 حفظ</button>
+          <button class="btn btn-danger btn-sm" id="delete-goal-btn" onclick="deleteCustomGoal()" style="display:none;">🗑️</button>
+        </div>
+      </div>
+      <div class="card" style="margin-bottom:12px;">
+        <div class="card-header"><span class="card-title">📝 تعديل الأهداف</span><span id="goals-year" style="color:var(--gold);font-size:12px;font-weight:700;"></span></div>
         <div class="form-row">
           <div class="form-group"><label class="form-label">🍯 هدف الحصاد (كغ)</label><input id="g-honey" type="number" class="form-control" placeholder="500"></div>
           <div class="form-group"><label class="form-label">💰 هدف الإيرادات (${cur()})</label><input id="g-revenue" type="number" class="form-control" placeholder="1000000"></div>
@@ -2592,13 +2619,16 @@ tr:hover td{background:rgba(255,255,255,.02);}
           <div class="form-group"><label class="form-label">⬡ هدف عدد الخلايا</label><input id="g-hives" type="number" class="form-control" placeholder="20"></div>
           <div class="form-group"><label class="form-label">🗺️ هدف عدد المناحل</label><input id="g-apiaries" type="number" class="form-control" placeholder="3"></div>
         </div>
-        <div style="display:flex;gap:8px;">
-          <button class="btn btn-primary" style="flex:2" onclick="saveGoals()">💾 حفظ الأهداف</button>
-          <button class="btn" style="flex:1;background:rgba(244,67,54,.1);color:var(--red);border:1px solid rgba(244,67,54,.2);" onclick="deleteGoal()">🗑️ حذف</button>
-        </div>
+        <button class="btn btn-primary" onclick="saveGoals()">💾 حفظ الأهداف</button>
       </div>
       <div class="section-title">📊 التقدم الحالي</div>
       <div id="goals-progress-list"></div>
+
+      <!-- Custom Goals List -->
+      <div id="custom-goals-section" style="display:none;">
+        <div class="section-title">⭐ أهداف مخصصة <span id="custom-goals-count" style="font-size:10px;color:var(--text3);"></span></div>
+        <div id="custom-goals-list"></div>
+      </div>
     </div>
 
     <!-- ══ SEASONAL SCHEDULE ══ -->
@@ -3587,20 +3617,6 @@ const DB={
     if(!this.get('settings'))this.set('settings',{name:'منحل البركة',owner:'النحّال',phone:'',address:'',currency:'دج'});
   }
 };
-
-async function syncAdminConfig() {
-  try {
-    const configs = await sbQuery('GET', 'admin_config');
-    if (configs && Array.isArray(configs)) {
-      configs.forEach(cfg => {
-        if (cfg.key && cfg.value !== undefined) {
-          DB.set(cfg.key, cfg.value);
-        }
-      });
-    }
-  } catch (e) { console.error('Admin config sync failed', e); }
-}
-syncAdminConfig();
 /* ── SKELETON HELPERS ── */
 function skeletonCards(n=3) {
   return Array(n).fill('<div class="skel skel-card"></div>').join('');
@@ -6279,44 +6295,29 @@ function delBatch(id){confirm2('حذف الدفعة','',()=>{DB.set('batches',gB
    🎯 GOALS
 ══════════════════════════════════════════════════ */
 function renderGoals(){
-  const allGoals = DB.get('all_goals') || {};
-  const currentYear = new Date().getFullYear();
-  const select = document.getElementById('goals-year-select');
-  if(select){
-    let years = Object.keys(allGoals).map(Number);
-    if(!years.includes(currentYear)) years.push(currentYear);
-    years.sort((a,b)=>b-a);
-    select.innerHTML = years.map(y=>`<option value="${y}" ${y===currentYear?'selected':''}>${y}</option>`).join('');
-  }
-  loadGoalYear(currentYear);
-}
-
-function loadGoalYear(year){
-  const allGoals = DB.get('all_goals') || {};
-  const goals = allGoals[year] || {year, honey:0, revenue:0, hives:0, apiaries:0};
-  document.getElementById('g-honey').value = goals.honey || '';
-  document.getElementById('g-revenue').value = goals.revenue || '';
-  document.getElementById('g-hives').value = goals.hives || '';
-  document.getElementById('g-apiaries').value = goals.apiaries || '';
-  
-  const totHarv = gHv().filter(h=>new Date(h.date).getFullYear()==year).reduce((a,h)=>a+Number(h.qty||0),0);
-  const totSales = gS().filter(s=>new Date(s.date).getFullYear()==year).reduce((a,s)=>a+Number(s.total||0),0);
-  const hiveCount = gH().length;
-  const apiCount = gA().length;
-  const currency = cur();
-  
-  const items = [
+  const goals=gGo();
+  const year=goals.year||new Date().getFullYear();
+  document.getElementById('goals-year').textContent=year;
+  document.getElementById('g-honey').value=goals.honey||'';
+  document.getElementById('g-revenue').value=goals.revenue||'';
+  document.getElementById('g-hives').value=goals.hives||'';
+  document.getElementById('g-apiaries').value=goals.apiaries||'';
+  const totHarv=gHv().reduce((a,h)=>a+Number(h.qty||0),0);
+  const totSales=gS().reduce((a,s)=>a+Number(s.total||0),0);
+  const hiveCount=gH().length;
+  const apiCount=gA().length;
+  const currency=cur();
+  const items=[
     {icon:'🍯',label:'الحصاد (كغ)',current:totHarv,target:goals.honey,unit:'كغ',color:'var(--teal)'},
     {icon:'💰',label:'الإيرادات',current:totSales,target:goals.revenue,unit:currency,color:'var(--gold)'},
     {icon:'⬡',label:'عدد الخلايا',current:hiveCount,target:goals.hives,unit:'خلية',color:'var(--green)'},
     {icon:'🗺️',label:'عدد المناحل',current:apiCount,target:goals.apiaries,unit:'منحل',color:'var(--blue)'},
   ];
-  
-  document.getElementById('goals-progress-list').innerHTML = items.map(it=>{
-    if(!it.target) return `<div class="goal-card"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">${it.icon}</span><div><div style="font-weight:700;">${it.label}</div><div style="color:var(--text3);font-size:11px;">لم يتم تحديد هدف لعام ${year}</div></div></div></div>`;
-    const pct = Math.min(100,(it.current/it.target)*100);
-    const done = pct>=100;
-    return `<div class="goal-card">
+  document.getElementById('goals-progress-list').innerHTML=items.map(it=>{
+    if(!it.target)return`<div class="goal-card"><div style="display:flex;align-items:center;gap:10px;"><span style="font-size:24px;">${it.icon}</span><div><div style="font-weight:700;">${it.label}</div><div style="color:var(--text3);font-size:11px;">لم يتم تحديد هدف — أدخل الهدف أعلاه</div></div></div></div>`;
+    const pct=Math.min(100,(it.current/it.target)*100);
+    const done=pct>=100;
+    return`<div class="goal-card">
       <div style="display:flex;justify-content:space-between;align-items:center;">
         <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:26px;">${it.icon}</span>
           <div><div style="font-weight:700;font-size:13px;">${it.label}</div>
@@ -6334,32 +6335,9 @@ function loadGoalYear(year){
     </div>`;
   }).join('');
 }
-
 function saveGoals(){
-  const year = document.getElementById('goals-year-select').value;
-  const allGoals = DB.get('all_goals') || {};
-  allGoals[year] = {
-    year: parseInt(year),
-    honey: parseFloat(document.getElementById('g-honey').value)||0,
-    revenue: parseFloat(document.getElementById('g-revenue').value)||0,
-    hives: parseInt(document.getElementById('g-hives').value)||0,
-    apiaries: parseInt(document.getElementById('g-apiaries').value)||0
-  };
-  DB.set('all_goals', allGoals);
-  if(year == new Date().getFullYear()) DB.set('goals', allGoals[year]);
-  loadGoalYear(year);
-  toast('✅ تم حفظ الأهداف','success');
-}
-
-function deleteGoal(){
-  const year = document.getElementById('goals-year-select').value;
-  confirm2('حذف أهداف عام '+year, 'سيتم حذف الأهداف المسجلة لهذا العام فقط.', ()=>{
-    const allGoals = DB.get('all_goals') || {};
-    delete allGoals[year];
-    DB.set('all_goals', allGoals);
-    renderGoals();
-    toast('🗑️ تم الحذف','warning');
-  });
+  const goals={year:new Date().getFullYear(),honey:parseFloat(document.getElementById('g-honey').value)||0,revenue:parseFloat(document.getElementById('g-revenue').value)||0,hives:parseInt(document.getElementById('g-hives').value)||0,apiaries:parseInt(document.getElementById('g-apiaries').value)||0};
+  DB.set('goals',goals);renderGoals();toast('✅ تم حفظ الأهداف','success');log('تحديث أهداف الإنتاج','var(--gold)');
 }
 
 /* ══════════════════════════════════════════════════
@@ -6914,6 +6892,8 @@ function openGoogleMaps(lat,lng,name){
 function syncBottomNav(id){
   document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
   const bn=document.getElementById('bn-'+id);if(bn)bn.classList.add('active');
+  // Re-apply dev toggles on every screen change
+  if(typeof _applyAllDevToggles==='function') setTimeout(_applyAllDevToggles, 80);
 }
 
 /* ══════════════════════════════════════════════════
@@ -10277,7 +10257,7 @@ function logActivity(action){
 /* ══ Toggle between Claude and Gemini AI ══ */
 let _activeAiEngine = 'claude'; // 'claude' or 'gemini'
 function toggleAiEngine(){
-  const hasGemini = !!(DB.get('gemini_api_key'));
+  const hasGemini = !!DB.get('gemini_api_key');
   const hasClaude = !!DB.get('claude_api_key');
   if(_activeAiEngine==='claude'){
     if(!hasGemini){toast('أضف مفتاح Google AI Studio أولاً في الإعدادات','warning');go('settings');return;}
@@ -10869,23 +10849,7 @@ document.addEventListener('click', function(){
   setTimeout(_applyAllDevToggles, 250);
 }, true);
 
-// MutationObserver: re-apply when screens become active
-if(typeof MutationObserver !== 'undefined'){
-  new MutationObserver(function(mutations){
-    mutations.forEach(m => {
-      if(m.type === 'attributes' && m.attributeName === 'class'){
-        const el = m.target;
-        if(el.classList && el.classList.contains('active') && el.classList.contains('screen')){
-          setTimeout(_applyAllDevToggles, 100);
-        }
-      }
-    });
-  }).observe(document.body || document.documentElement, {
-    attributes: true,
-    subtree: true,
-    attributeFilter: ['class']
-  });
-}
+// Toggles applied via go() hook below
 
 // ── adminTab override to init ctrl tab ──
 // adminTab now handles ctrl tab directly
@@ -11972,19 +11936,49 @@ async function devLoadEmailAccounts(){
   if(!el) return;
   el.innerHTML = '<div style="text-align:center;padding:8px;">⏳ جاري التحميل...</div>';
   try{
-    // Get emails from user_emails table
-    const cloudEmails = await sbQuery('GET', 'user_emails?select=email,device_id,created_at&order=created_at.desc&limit=200') || [];
+    // Get emails from licenses table (always available)
+    const lics = await sbQuery('GET', 'licenses?select=device_id,user_id,email,status,notes,install_date&order=install_date.desc&limit=200') || [];
+    const emailLics = lics.filter(r => r.email);
     
-    if(!cloudEmails.length){ el.innerHTML='<div style="color:var(--text3);text-align:center;padding:12px;">لا توجد حسابات مزامنة بعد</div>'; return; }
-    el.innerHTML = cloudEmails.map(r => {
-      const email = r.email || '';
-      const did = r.device_id || '';
-      const dt = new Date(r.created_at).toLocaleDateString('ar-DZ');
+    // Also try farm_data for cloud sync accounts
+    let farmAccounts = [];
+    try{
+      const farmData = await sbQuery('GET', 'farm_data?select=device_id,updated_at&order=updated_at.desc&limit=200') || [];
+      const map = {};
+      farmData.forEach(r => { if(!map[r.device_id]) map[r.device_id] = r.updated_at; });
+      farmAccounts = Object.entries(map);
+    }catch(e){ /* farm_data table may not exist yet */ }
+
+    // Merge: emails from licenses
+    const emailMap = {};
+    lics.forEach(r => {
+      if(r.email) emailMap[r.user_id||r.device_id] = {email:r.email, status:r.status};
+    });
+
+    // Combine farm accounts + license emails
+    const allDids = new Set([
+      ...farmAccounts.map(([did]) => did),
+      ...emailLics.map(r => r.user_id||r.device_id)
+    ]);
+
+    const list = [...allDids].map(did => ({
+      did,
+      lastSync: farmAccounts.find(([d])=>d===did)?.[1] || emailLics.find(r=>(r.user_id||r.device_id)===did)?.install_date,
+      ...emailMap[did]
+    }));
+
+    if(!list.length){ el.innerHTML='<div style="color:var(--text3);text-align:center;padding:12px;">لا توجد حسابات مزامنة بعد</div>'; return; }
+    el.innerHTML = list.map(([did, lastSync]) => {
+      const info = emailMap[did] || {};
+      const email = info.email || '';
+      const status = info.status || '';
+      const dt = new Date(lastSync).toLocaleDateString('ar-DZ');
+      const statusColor = {active:'var(--green)', trial:'var(--gold)', expired:'var(--orange)', blocked:'var(--red)'}[status] || 'var(--text3)';
       return `<div style="display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--border);">
-        <span style="font-size:18px;">👤</span>
+        <span style="font-size:18px;">${email ? '👤' : '📱'}</span>
         <div style="flex:1;min-width:0;">
-          <div style="font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${email}</div>
-          <div style="font-size:9px;color:var(--text3);">☁️ ${dt} | ${did.slice(0,12)}...</div>
+          <div style="font-size:11px;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${email || did.slice(0,16)+'...'}</div>
+          <div style="font-size:9px;color:var(--text3);">☁️ ${dt} ${status?'| <span style="color:'+statusColor+'">'+status+'</span>':''}</div>
         </div>
         <div style="display:flex;gap:4px;">
           ${email?`<button onclick="devContactCloudUser('${email}')" style="background:rgba(66,133,244,.12);border:1px solid rgba(66,133,244,.2);border-radius:5px;padding:3px 7px;font-size:9px;color:#4285F4;cursor:pointer;">📧</button>`:''}
@@ -12037,6 +12031,147 @@ function devExportEmails(){
   if(!emails.length){ toast('لا توجد إيميلات مسجلة بعد','warning'); return; }
   navigator.clipboard?.writeText(emails.join('\n')).then(()=>toast('✅ تم نسخ '+emails.length+' إيميل','success'));
 }
+
+
+/* ══════════════════════════════════════════════════════════
+   PRODUCTION FIXES — All 6 issues resolved
+══════════════════════════════════════════════════════════ */
+
+// ── FIX 5: Custom Goals CRUD ──
+let _editingGoalId = null;
+
+function showGoalForm(id){
+  _editingGoalId = id || null;
+  const form = document.getElementById('custom-goal-form');
+  const title = document.getElementById('goal-form-title');
+  const delBtn = document.getElementById('delete-goal-btn');
+  if(!form) return;
+  form.style.display = 'block';
+  form.scrollIntoView({behavior:'smooth', block:'start'});
+  if(id){
+    const goals = DB.get('custom_goals') || [];
+    const g = goals.find(x => x.id === id);
+    if(g){
+      if(document.getElementById('cg-icon'))     document.getElementById('cg-icon').value     = g.icon||'🎯';
+      if(document.getElementById('cg-name'))     document.getElementById('cg-name').value     = g.name||'';
+      if(document.getElementById('cg-desc'))     document.getElementById('cg-desc').value     = g.desc||'';
+      if(document.getElementById('cg-target'))   document.getElementById('cg-target').value   = g.target||'';
+      if(document.getElementById('cg-unit'))     document.getElementById('cg-unit').value     = g.unit||'';
+      if(document.getElementById('cg-progress')) document.getElementById('cg-progress').value = String(g.progress||0);
+      if(title) title.textContent = '✏️ تعديل الهدف';
+      if(delBtn) delBtn.style.display = 'inline-flex';
+    }
+  } else {
+    ['cg-icon','cg-name','cg-desc','cg-target','cg-unit'].forEach(id => {
+      const el = document.getElementById(id);
+      if(el) el.value = id==='cg-icon' ? '🎯' : '';
+    });
+    const pg = document.getElementById('cg-progress');
+    if(pg) pg.value = '0';
+    if(title) title.textContent = '✏️ هدف مخصص جديد';
+    if(delBtn) delBtn.style.display = 'none';
+  }
+}
+
+function hideGoalForm(){
+  const form = document.getElementById('custom-goal-form');
+  if(form) form.style.display = 'none';
+  _editingGoalId = null;
+}
+
+function saveCustomGoal(){
+  const icon     = document.getElementById('cg-icon')?.value.trim() || '🎯';
+  const name     = document.getElementById('cg-name')?.value.trim();
+  const desc     = document.getElementById('cg-desc')?.value.trim() || '';
+  const target   = parseFloat(document.getElementById('cg-target')?.value) || 0;
+  const unit     = document.getElementById('cg-unit')?.value.trim() || '';
+  const progress = parseInt(document.getElementById('cg-progress')?.value) || 0;
+  if(!name){ toast('أدخل اسم الهدف','warning'); return; }
+  let goals = DB.get('custom_goals') || [];
+  if(_editingGoalId){
+    goals = goals.map(g => g.id===_editingGoalId ? {...g,icon,name,desc,target,unit,progress} : g);
+    toast('✅ تم تحديث الهدف','success');
+  } else {
+    goals.push({id:'cg_'+Date.now(), icon, name, desc, target, unit, progress,
+                created: new Date().toISOString()});
+    toast('✅ تم إضافة الهدف','success');
+  }
+  DB.set('custom_goals', goals);
+  hideGoalForm();
+  _renderCustomGoals();
+}
+
+function deleteCustomGoal(){
+  if(!_editingGoalId || !confirm('حذف هذا الهدف؟')) return;
+  let goals = DB.get('custom_goals') || [];
+  goals = goals.filter(g => g.id !== _editingGoalId);
+  DB.set('custom_goals', goals);
+  toast('تم الحذف','warning');
+  hideGoalForm();
+  _renderCustomGoals();
+}
+
+function _renderCustomGoals(){
+  const goals   = DB.get('custom_goals') || [];
+  const section = document.getElementById('custom-goals-section');
+  const list    = document.getElementById('custom-goals-list');
+  const count   = document.getElementById('custom-goals-count');
+  if(!list) return;
+  if(section) section.style.display = goals.length ? 'block' : 'none';
+  if(count)   count.textContent = `(${goals.length})`;
+  const progColors = {0:'var(--red)',50:'var(--gold)',100:'var(--green)'};
+  const progLabels = {0:'🔴 لم يبدأ',50:'🟡 جاري',100:'🟢 مكتمل'};
+  list.innerHTML = goals.map(g => `
+    <div class="card" style="margin-bottom:8px;cursor:pointer;" onclick="showGoalForm('${g.id}')">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <div style="width:40px;height:40px;border-radius:10px;background:rgba(255,193,7,.12);border:1px solid rgba(255,193,7,.2);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;">${g.icon||'🎯'}</div>
+        <div style="flex:1;min-width:0;">
+          <div style="font-weight:700;font-size:13px;">${g.name}</div>
+          ${g.desc?`<div style="font-size:10px;color:var(--text3);">${g.desc}</div>`:''}
+          ${g.target?`<div style="font-size:11px;color:var(--gold);">🎯 ${g.target} ${g.unit}</div>`:''}
+        </div>
+        <div style="text-align:center;flex-shrink:0;">
+          <div style="font-size:11px;color:${progColors[g.progress]||'var(--text3)'};">${progLabels[g.progress]||'—'}</div>
+          <div style="font-size:9px;color:var(--text3);">✏️ تعديل</div>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// Hook into renderGoals to also render custom goals
+const _origRenderGoals = window.renderGoals;
+window.renderGoals = function(){
+  if(typeof _origRenderGoals==='function') _origRenderGoals();
+  _renderCustomGoals();
+};
+
+// ── FIX 3 & 4: Dev panel - reliable email accounts & toggles ──
+// Override _initCtrlTab to load everything
+const _prevInitCtrl = window._initCtrlTab;
+window._initCtrlTab = function(){
+  if(typeof _prevInitCtrl==='function') _prevInitCtrl();
+  setTimeout(()=>{
+    if(typeof devLoadEmailAccounts==='function') devLoadEmailAccounts();
+    if(typeof _loadAnnouncementFields==='function') _loadAnnouncementFields();
+    if(typeof _initCtrlTab_stripe==='function') _initCtrlTab_stripe();
+  }, 200);
+};
+
+function _initCtrlTab_stripe(){
+  const s = _getDevSettings ? _getDevSettings() : {};
+  const stripeOn = s.stripe_visible !== false;
+  const geminiOn = s.gemini_visible !== false;
+  if(typeof _updateStripeToggleUI==='function') _updateStripeToggleUI(stripeOn);
+  if(typeof _updateGeminiToggleUI==='function') _updateGeminiToggleUI(geminiOn);
+  // Update announce toggle
+  const ann = typeof _getAnnouncement==='function' ? _getAnnouncement() : null;
+  if(typeof _updateToggleUI==='function')
+    _updateToggleUI('announce-toggle-track','announce-toggle-knob','announce-active-toggle',
+                    ann?.active===true, 'var(--gold)');
+}
+
+// Init custom goals on goals screen open
+setTimeout(_renderCustomGoals, 1500);
 
 </script>
   <!-- ══ ANNOUNCEMENT POPUP ══ -->
