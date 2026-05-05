@@ -901,7 +901,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
   </div>
   <!-- الاسم -->
   
-    <div class="splash-sub">Beekeeping Intelligence</div>
+    <div class="splash-sub"></div>
   </div>
   <!-- التحميل -->
   <div class="splash-loader">
@@ -8799,31 +8799,8 @@ initTrialWarningBanner();
   } catch(e) {}
 })();
 
-// Check license / trial (async) — wrapped to prevent splash freeze
-checkLicense().catch(e => {
-  console.warn('[LIC] checkLicense failed:', e);
-  try { showLicenseScreen('trial'); } catch(e2) {}
-}).finally(() => {
-  // ضمان إخفاء splash في كل الأحوال
-  setTimeout(hideSplash, 100);
-});
-// Check session (valid for 24h) + دخول تلقائي للمالك
-const sess=DB.get('session');
-const _isOwnerNow = localStorage.getItem('_nec_owner_verified')==='1';
-if(_isOwnerNow){
-  // المالك لا يحتاج login — دخول مباشر
-  document.getElementById('login-screen').classList.add('hidden');
-  if(!DB.get('session')){
-    DB.set('session',{user:'admin',lang:'ar',time:Date.now()});
-  }
-} else if(sess&&sess.time&&(Date.now()-sess.time)<86400000){
-  document.getElementById('login-screen').classList.add('hidden');
-  currentLang=sess.lang||'ar';
-  setLang(currentLang);
-}
-
 /* ══════════════════════════════════════════════════
-   🌟 SPLASH SCREEN
+   🌟 SPLASH SCREEN — defined here so checkLicense can use it
 ══════════════════════════════════════════════════ */
 function hideSplash(){
   const s=document.getElementById('splash');
@@ -8842,9 +8819,31 @@ function hideSplash(){
       },200);
     }
   },400);
-  // Fallback: force remove after 3 seconds no matter what
   setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} }, 3000);
 }
+
+// Check license / trial (async) — wrapped to prevent splash freeze
+checkLicense().catch(e => {
+  console.warn('[LIC] checkLicense failed:', e);
+  try { showLicenseScreen('trial'); } catch(e2) {}
+}).finally(() => {
+  setTimeout(hideSplash, 100);
+});
+// Check session (valid for 24h) + دخول تلقائي للمالك
+const sess=DB.get('session');
+const _isOwnerNow = localStorage.getItem('_nec_owner_verified')==='1';
+if(_isOwnerNow){
+  // المالك لا يحتاج login — دخول مباشر
+  document.getElementById('login-screen').classList.add('hidden');
+  if(!DB.get('session')){
+    DB.set('session',{user:'admin',lang:'ar',time:Date.now()});
+  }
+} else if(sess&&sess.time&&(Date.now()-sess.time)<86400000){
+  document.getElementById('login-screen').classList.add('hidden');
+  currentLang=sess.lang||'ar';
+  setLang(currentLang);
+}
+
 setTimeout(hideSplash,400);
 
 /* ══════════════════════════════════════════════════
