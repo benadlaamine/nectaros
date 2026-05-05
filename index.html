@@ -1171,7 +1171,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
     <div class="login-tagline">Smart Beekeeping Platform</div>
   </div>
   <div class="login-card">
-    <div class="login-section-title">🐝 NectarOS — Beekeeping Intelligence</div>
+    <div class="login-section-title">🐝 NectarOS</div>
     <div class="form-group"><label class="form-label" id="lbl-user">اسم المستخدم</label>
       <input id="login-user" class="form-control" placeholder="admin" autocomplete="username">
     </div>
@@ -3097,7 +3097,7 @@ tr:hover td{background:rgba(255,255,255,.02);}
           <div style="font-size:28px;">🐝</div>
           <div class="cert-ttl">شهادة صحة وسلامة منحل</div>
           <div style="font-size:12px;margin-top:5px;color:#664400;font-weight:700;">صادرة من منحل: <span id="cert-farm-name" style="color:#FF6F00;">---</span></div>
-          <div style="font-size:10px;margin-top:3px;color:#888;">NectarOS v5.4.1 — Beekeeping Intelligence</div>
+          <div style="font-size:10px;margin-top:3px;color:#888;">NectarOS v5.4.1</div>
         </div>
         <!-- BODY -->
         <div class="cert-bdy">
@@ -5498,7 +5498,7 @@ function seed(){
 const T={
   ar:{
     nav_main:'الرئيسية',nav_dashboard:'لوحة التحكم',nav_apiaries:'المناحل',nav_map:'الخريطة',nav_advanced:'مقاييس متقدمة',nav_hives:'الخلايا',nav_calendar:'التقويم',nav_bee_health:'صحة النحل',nav_inspections:'الفحوصات',nav_weights:'الأوزان',nav_harvest:'الحصاد',nav_queens:'جينات الملكات',nav_health:'الشهادات الصحية',nav_equipment:'المعدات والمخزن',nav_assets:'باركود المعدات',nav_inventory:'المخزن',nav_commerce:'التجارة',nav_store:'المتجر',nav_crm:'العملاء',nav_sales:'المبيعات',nav_finance:'المالية',nav_expenses:'المصاريف',nav_profit:'الربح والخسارة',nav_finance_rep:'التقارير المالية',nav_ai:'الذكاء الاصطناعي',nav_contact:'اتصل بنا',nav_settings:'الإعدادات',nav_logout:'تسجيل الخروج',
-    lbl_user:'اسم المستخدم',lbl_pass:'كلمة المرور',login_btn:'🐝 دخول',login_err_empty:'أدخل اسم المستخدم وكلمة المرور',login_err_wrong:'اسم المستخدم أو كلمة المرور غير صحيحة',lang_label:'اختر اللغة',login_footer:'Beekeeping Intelligence',
+    lbl_user:'اسم المستخدم',lbl_pass:'كلمة المرور',login_btn:'🐝 دخول',login_err_empty:'أدخل اسم المستخدم وكلمة المرور',login_err_wrong:'اسم المستخدم أو كلمة المرور غير صحيحة',lang_label:'اختر اللغة',login_footer:'NectarOS',
     contact_title:'📬 اتصل بنا',contact_sub:'Harvesting Intelligence · v5.4.1',contact_form_title:'📨 أرسل رسالة',contact_your_name:'اسمك',contact_subject:'الموضوع',contact_message:'الرسالة',contact_send_whatsapp:'إرسال عبر واتساب',
     dir:'rtl',locale:'ar-DZ'
   },
@@ -8802,24 +8802,14 @@ initTrialWarningBanner();
 /* ══════════════════════════════════════════════════
    🌟 SPLASH SCREEN — defined here so checkLicense can use it
 ══════════════════════════════════════════════════ */
+let _splashHidden=false;
 function hideSplash(){
+  if(_splashHidden)return;
+  _splashHidden=true;
   const s=document.getElementById('splash');
-  if(!s||s.classList.contains('hide'))return;
-  const msgs=['جاري تحميل البيانات...','تهيئة الواجهة...','جاهز! 🐝'];
-  let i=0;
-  const iv=setInterval(()=>{
-    const m=document.getElementById('splash-msg');
-    if(m&&msgs[i])m.textContent=msgs[i];
-    i++;
-    if(i>=msgs.length){
-      clearInterval(iv);
-      setTimeout(()=>{
-        s.classList.add('hide');
-        setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },600);
-      },200);
-    }
-  },400);
-  setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} }, 3000);
+  if(!s){return;}
+  s.classList.add('hide');
+  setTimeout(()=>{ try{s.remove();}catch(e){s.style.display='none';} },700);
 }
 
 // Check license / trial (async) — wrapped to prevent splash freeze
@@ -12936,162 +12926,6 @@ async function apLoadGeminiStats(){
   }catch(e){el.innerHTML='<div style="font-size:10px;color:var(--text3);">جدول السجلات غير موجود بعد</div>';}
 }
 
-// ════════════════════════════
-// 👥 CLOUD ACCOUNTS
-// ════════════════════════════
-let _apAllAccounts = [];
-let _apStatusFilter = '';
-
-async function apLoadAccounts(){
-  const el=document.getElementById('ap-accounts-list');
-  if(el) el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);">⏳ جاري التحميل...</div>';
-  try{
-    const [lics,farm]=await Promise.allSettled([
-      sbQuery('GET','licenses?select=*&order=install_date.desc&limit=500'),
-      sbQuery('GET','farm_data?select=device_id,updated_at&order=updated_at.desc&limit=500')
-    ]);
-    const licData  = lics.status==='fulfilled'  ? (lics.value||[])  : [];
-    const farmData = farm.status==='fulfilled'   ? (farm.value||[])  : [];
-    // Build farm_data map
-    const farmMap={};
-    farmData.forEach(r=>{if(!farmMap[r.device_id])farmMap[r.device_id]=r.updated_at;});
-    // Merge
-    _apAllAccounts = licData.map(r=>({
-      ...r,
-      hasCloud: !!(farmMap[r.user_id||r.device_id]),
-      lastSync: farmMap[r.user_id||r.device_id]||null
-    }));
-    // Stats
-    const total=_apAllAccounts.length;
-    const active=_apAllAccounts.filter(r=>r.status==='active').length;
-    const trial=_apAllAccounts.filter(r=>r.status==='trial').length;
-    const cloud=Object.keys(farmMap).length;
-    const s=id=>document.getElementById(id);
-    if(s('ap-stat-total'))  s('ap-stat-total').textContent=total;
-    if(s('ap-stat-active')) s('ap-stat-active').textContent=active;
-    if(s('ap-stat-trial'))  s('ap-stat-trial').textContent=trial;
-    if(s('ap-stat-cloud'))  s('ap-stat-cloud').textContent=cloud;
-    apRenderAccounts(_apAllAccounts);
-  }catch(e){
-    if(el) el.innerHTML=`<div style="color:var(--red);padding:12px;text-align:center;">❌ ${e.message}</div>`;
-  }
-}
-
-function apRenderAccounts(list){
-  const el=document.getElementById('ap-accounts-list');
-  if(!el) return;
-  if(!list.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);">لا توجد نتائج</div>';return;}
-  const statusColors={active:'var(--green)',trial:'var(--gold)',expired:'var(--orange)',blocked:'var(--red)'};
-  const statusIcons={active:'✅',trial:'🕐',expired:'⏳',blocked:'🚫'};
-  el.innerHTML=list.map(r=>{
-    const color=statusColors[r.status]||'var(--text3)';
-    const icon=statusIcons[r.status]||'⚪';
-    const exp=r.serial_expires?new Date(r.serial_expires).toLocaleDateString('ar-DZ'):'—';
-    const sync=r.lastSync?new Date(r.lastSync).toLocaleDateString('ar-DZ'):'—';
-    const email=r.email||r.notes||'';
-    const did=(r.device_id||'').slice(-12);
-    return `<div style="background:var(--card);border:1px solid ${color}33;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;">
-      <div style="display:flex;align-items:center;gap:8px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:${color}22;border:2px solid ${color};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${icon}</div>
-        <div style="flex:1;min-width:0;">
-          ${email?`<div style="font-weight:700;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">📧 ${email}</div>`:''}
-          <div style="font-size:10px;color:var(--text3);font-family:monospace;">📱 ${did}</div>
-        </div>
-        <div style="text-align:center;">
-          <div style="font-size:9px;color:${color};font-weight:700;">${icon} ${r.status||'—'}</div>
-          ${r.hasCloud?'<div style="font-size:9px;color:#4285F4;">☁️ مزامن</div>':''}
-        </div>
-      </div>
-      <div style="display:flex;gap:5px;flex-wrap:wrap;">
-        ${r.status!=='active'?`<button onclick="apSetStatus('${r.device_id}','active')" style="flex:1;background:rgba(76,175,80,.12);border:1px solid rgba(76,175,80,.25);border-radius:7px;padding:5px;font-size:10px;font-weight:700;color:var(--green);cursor:pointer;font-family:'Cairo',sans-serif;">✅ تفعيل</button>`:''}
-        ${r.status==='active'?`<button onclick="apSetStatus('${r.device_id}','expired')" style="flex:1;background:rgba(255,152,0,.1);border:1px solid rgba(255,152,0,.2);border-radius:7px;padding:5px;font-size:10px;font-weight:700;color:var(--orange);cursor:pointer;font-family:'Cairo',sans-serif;">⏸️ إيقاف</button>`:''}
-        <button onclick="apExtendLicense('${r.device_id}')" style="flex:1;background:rgba(33,150,243,.1);border:1px solid rgba(33,150,243,.2);border-radius:7px;padding:5px;font-size:10px;font-weight:700;color:var(--blue);cursor:pointer;font-family:'Cairo',sans-serif;">📅 تمديد</button>
-        ${r.status!=='blocked'?`<button onclick="apSetStatus('${r.device_id}','blocked')" style="background:rgba(244,67,54,.1);border:1px solid rgba(244,67,54,.2);border-radius:7px;padding:5px 8px;font-size:10px;color:var(--red);cursor:pointer;">🚫</button>`:''}
-        ${email?`<button onclick="adminContactEmail('${email}')" style="background:rgba(66,133,244,.1);border:1px solid rgba(66,133,244,.2);border-radius:7px;padding:5px 8px;font-size:10px;color:#4285F4;cursor:pointer;">📧</button>`:''}
-      </div>
-      <div style="font-size:9px;color:var(--text3);display:flex;gap:8px;flex-wrap:wrap;">
-        <span>⏳ انتهاء: ${exp}</span>
-        ${r.hasCloud?`<span>🔄 مزامنة: ${sync}</span>`:''}
-        ${r.notes&&!email?`<span>💬 ${r.notes}</span>`:''}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-function apFilterAccounts(q){
-  if(!q){ apRenderAccounts(_apAllAccounts.filter(r=>!_apStatusFilter||r.status===_apStatusFilter)); return; }
-  const ql=q.toLowerCase();
-  const filtered=_apAllAccounts.filter(r=>
-    (r.email||'').toLowerCase().includes(ql)||
-    (r.device_id||'').toLowerCase().includes(ql)||
-    (r.notes||'').toLowerCase().includes(ql)
-  );
-  apRenderAccounts(filtered);
-}
-
-function apFilterByStatus(status){
-  _apStatusFilter=status;
-  document.querySelectorAll('.ap-status-filter').forEach(b=>b.classList.remove('active'));
-  const filtered=status?_apAllAccounts.filter(r=>r.status===status):_apAllAccounts;
-  apRenderAccounts(filtered);
-}
-
-async function apSetStatus(deviceId,status){
-  try{
-    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(deviceId),{status});
-    _apAllAccounts=_apAllAccounts.map(r=>r.device_id===deviceId?{...r,status}:r);
-    apRenderAccounts(_apStatusFilter?_apAllAccounts.filter(r=>r.status===_apStatusFilter):_apAllAccounts);
-    const statusL={active:'✅ مفعّل',expired:'⏸️ موقوف',blocked:'🚫 محظور'};
-    toast((statusL[status]||status)+' — تم التحديث','success');
-  }catch(e){toast('❌ '+e.message,'error');}
-}
-
-async function apExtendLicense(deviceId){
-  const days=prompt('عدد أيام التمديد:','365');
-  if(!days||isNaN(days)) return;
-  const expires=new Date(); expires.setDate(expires.getDate()+parseInt(days));
-  try{
-    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(deviceId),
-      {status:'active',serial_expires:expires.toISOString()});
-    _apAllAccounts=_apAllAccounts.map(r=>r.device_id===deviceId?{...r,status:'active',serial_expires:expires.toISOString()}:r);
-    apRenderAccounts(_apAllAccounts);
-    toast(`✅ تم التمديد ${days} يوم`,'success');
-  }catch(e){toast('❌ '+e.message,'error');}
-}
-
-async function apAddLicense(){
-  const id=document.getElementById('ap-new-lic-id')?.value?.trim();
-  const days=parseInt(document.getElementById('ap-new-lic-days')?.value)||365;
-  const note=document.getElementById('ap-new-lic-note')?.value?.trim()||'';
-  const msg=document.getElementById('ap-lic-msg');
-  if(!id){if(msg){msg.textContent='أدخل البريد أو معرّف الجهاز';msg.style.color='var(--red)';}return;}
-  const expires=new Date(); expires.setDate(expires.getDate()+days);
-  const isEmail=id.includes('@');
-  const licData={
-    device_id:id, user_id:id,
-    email:isEmail?id:'',
-    status:'active',
-    serial_expires:expires.toISOString(),
-    install_date:new Date().toISOString(),
-    notes:note||id
-  };
-  try{
-    await sbQuery('POST','licenses?on_conflict=device_id',licData);
-    if(msg){msg.textContent='✅ تم الإضافة والتفعيل';msg.style.color='var(--green)';setTimeout(()=>msg.textContent='',4000);}
-    toast('✅ تم إضافة الترخيص','success');
-    document.getElementById('ap-new-lic-id').value='';
-    document.getElementById('ap-new-lic-note').value='';
-    setTimeout(apLoadAccounts,500);
-  }catch(e){
-    if(msg){msg.textContent='❌ '+e.message;msg.style.color='var(--red)';}
-    toast('❌ '+e.message,'error');
-  }
-}
-
-// ── Init when screen opens ──
-setTimeout(()=>{
-  if(location.hash==='#adminpanel') apLoad();
-},1000);
 
 </script>
   <!-- ══ ANNOUNCEMENT POPUP ══ -->
