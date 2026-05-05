@@ -2081,6 +2081,15 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div id="sec-license-status" style="padding:4px 0;"></div>
         <!-- لوحة إدارة التراخيص — مخفية، تظهر فقط لجهاز المالك -->
         <div id="dev-panel" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
+          <!-- Admin Panel Quick Access -->
+          <button onclick="go('adminpanel')" style="width:100%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1.5px solid var(--gold);border-radius:12px;padding:14px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13px;cursor:pointer;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px;box-shadow:0 4px 20px rgba(255,193,7,.15);">
+            <span style="font-size:22px;">🛠️</span>
+            <div style="text-align:right;">
+              <div>لوحة تحكم المطوّر الكاملة</div>
+              <div style="font-size:10px;color:var(--text3);font-weight:400;">إعلانات · Stripe · Gemini · الحسابات</div>
+            </div>
+            <span style="margin-right:auto;opacity:.5;">←</span>
+          </button>
           <div style="background:rgba(255,193,7,.05);border:1.5px solid rgba(255,193,7,.25);border-radius:14px;overflow:hidden;">
 
             <!-- Header -->
@@ -3745,7 +3754,7 @@ function _lazy(fn) {
   };
 }
 
-const R={dashboard:renderDashboard,apiaries:renderApiaries,map:renderMapScreen,advanced:renderAdvanced,hives:renderHives,calendar:renderCalendar,inspections:renderInspections,treatments:renderTreatments,weights:renderWeights,harvest:renderHarvest,batches:renderBatches,queens:renderQueens,health:renderCerts,assets:renderAssets,inventory:renderInventory,store:renderStore,crm:renderCRM,sales:renderSales,expenses:renderExpenses,profit:renderProfit,finance:renderFinance,settings:loadSett,ai:()=>{},contact:renderContact,goals:renderGoals,seasonal:renderSeasonal,radar:renderRadarScreen,weather:renderWeather,wareport:renderWaReport,plants:_lazy(renderPlants),disease:_lazy(renderDiseaseGuide),calcs:()=>{requestAnimationFrame(()=>{calcHoneyCost();calcDose();calcSugar();});},notifs:renderNotifs,journal:renderJournal,achievements:renderAchievements,scanner:()=>{},compare:renderCompare,tempmon:renderTempMonitor,advstats:_lazy(renderAdvStats),orders:renderOrders,tasks:renderWeeklyTasks,pushnotifs:renderPushNotifs,fieldmode:renderFieldMode,annual:_lazy(renderAnnual),themes:renderThemes,integrations:()=>{},aiplus:_lazy(renderAIPlus),invoice:renderInvoices,honeylabs:_lazy(renderHoneyLabs),team:renderTeam,foragemap:_lazy(renderForageMap),losses:_lazy(renderLosses),security:renderSecurityPage};
+const R={dashboard:renderDashboard,apiaries:renderApiaries,map:renderMapScreen,advanced:renderAdvanced,hives:renderHives,calendar:renderCalendar,inspections:renderInspections,treatments:renderTreatments,weights:renderWeights,harvest:renderHarvest,batches:renderBatches,queens:renderQueens,health:renderCerts,assets:renderAssets,inventory:renderInventory,store:renderStore,crm:renderCRM,sales:renderSales,expenses:renderExpenses,profit:renderProfit,finance:renderFinance,settings:loadSett,ai:()=>{},contact:renderContact,goals:renderGoals,seasonal:renderSeasonal,adminpanel:()=>{apLoad();},radar:renderRadarScreen,weather:renderWeather,wareport:renderWaReport,plants:_lazy(renderPlants),disease:_lazy(renderDiseaseGuide),calcs:()=>{requestAnimationFrame(()=>{calcHoneyCost();calcDose();calcSugar();});},notifs:renderNotifs,journal:renderJournal,achievements:renderAchievements,scanner:()=>{},compare:renderCompare,tempmon:renderTempMonitor,advstats:_lazy(renderAdvStats),orders:renderOrders,tasks:renderWeeklyTasks,pushnotifs:renderPushNotifs,fieldmode:renderFieldMode,annual:_lazy(renderAnnual),themes:renderThemes,integrations:()=>{},aiplus:_lazy(renderAIPlus),invoice:renderInvoices,honeylabs:_lazy(renderHoneyLabs),team:renderTeam,foragemap:_lazy(renderForageMap),losses:_lazy(renderLosses),security:renderSecurityPage};
   if(R[id])R[id]();
 }
 
@@ -12173,6 +12182,918 @@ function _initCtrlTab_stripe(){
 // Init custom goals on goals screen open
 setTimeout(_renderCustomGoals, 1500);
 
+
+/* ══════════════════════════════════════════════════════════
+   🛠️  ADMIN PANEL — Complete JS
+   Announcements · Stripe · Gemini AI · Cloud Accounts
+══════════════════════════════════════════════════════════ */
+
+// ── Tab navigation ──
+function apTab(tab){
+  ['announce','stripe','gemini','accounts'].forEach(t=>{
+    const btn  = document.getElementById('ap-tab-'+t);
+    const pane = document.getElementById('ap-pane-'+t);
+    const active = t===tab;
+    if(btn){  btn.style.background = active?'var(--gold)':'var(--bg3)';
+              btn.style.color      = active?'#000':'var(--text2)'; }
+    if(pane)  pane.style.display   = active?'block':'none';
+  });
+  if(tab==='accounts') apLoadAccounts();
+  if(tab==='stripe')   apLoadStripeSettings();
+  if(tab==='gemini')   apLoadGeminiSettings();
+  if(tab==='announce') apLoadAnnounceSettings();
+}
+
+function apLoad(){ apLoadAnnounceSettings(); }
+
+// ══════════════════════
+// 📢 ANNOUNCEMENTS
+// ══════════════════════
+const AP_ANN_TABLE = 'app_config';
+
+function apMsg(id, msg, color='var(--green)'){
+  const el=document.getElementById(id);
+  if(el){ el.textContent=msg; el.style.color=color; setTimeout(()=>el.textContent='',4000); }
+}
+
+function _apUpdateAnnToggle(checked){
+  const track=document.getElementById('ap-ann-track');
+  const knob=document.getElementById('ap-ann-knob');
+  if(track) track.style.background = checked?'var(--gold)':'#333';
+  if(knob)  knob.style.right       = checked?'2px':'calc(100% - 22px)';
+  if(knob)  knob.style.background  = checked?'#000':'#666';
+  const chk=document.getElementById('ap-ann-active');
+  if(chk)   chk.checked=checked;
+}
+
+function _apUpdateStripeToggle(checked){
+  const track=document.getElementById('ap-stripe-track');
+  const knob=document.getElementById('ap-stripe-knob');
+  if(track) track.style.background = checked?'#635BFF':'#333';
+  if(knob)  knob.style.right       = checked?'2px':'calc(100% - 22px)';
+  if(knob)  knob.style.background  = checked?'#fff':'#666';
+  const chk=document.getElementById('ap-stripe-visible');
+  if(chk)   chk.checked=checked;
+}
+
+function _apUpdateGeminiToggle(checked){
+  const track=document.getElementById('ap-gemini-track');
+  const knob=document.getElementById('ap-gemini-knob');
+  if(track) track.style.background = checked?'#4285F4':'#333';
+  if(knob)  knob.style.right       = checked?'2px':'calc(100% - 22px)';
+  if(knob)  knob.style.background  = checked?'#fff':'#666';
+  const chk=document.getElementById('ap-gemini-visible');
+  if(chk)   chk.checked=checked;
+}
+
+function apLoadAnnounceSettings(){
+  const ann = _getAnnouncement ? _getAnnouncement() : null;
+  if(!ann) return;
+  const g = id => document.getElementById(id);
+  if(g('apf-ann-icon'))    g('apf-ann-icon').value    = ann.icon||'📢';
+  if(g('apf-ann-title'))   g('apf-ann-title').value   = ann.title||'';
+  if(g('apf-ann-body'))    g('apf-ann-body').value    = ann.body||'';
+  if(g('apf-ann-cta-text'))g('apf-ann-cta-text').value= ann.ctaText||'';
+  if(g('apf-ann-cta-url')) g('apf-ann-cta-url').value = ann.ctaUrl||'';
+  if(g('apf-ann-target'))  g('apf-ann-target').value  = ann.target||'all';
+  if(g('apf-ann-repeat'))  g('apf-ann-repeat').value  = ann.repeat||'daily';
+  _apUpdateAnnToggle(ann.active===true);
+  const prev = document.getElementById('ap-ann-preview');
+  if(prev) prev.textContent = ann.title ? `"${ann.title}" — ${ann.body?.slice(0,60)||''}...` : 'لا يوجد إعلان';
+}
+
+function apToggleAnnounce(checked){
+  const ann = _getAnnouncement ? _getAnnouncement() : {};
+  if(ann){ ann.active=checked; if(typeof _saveAnnouncement==='function') _saveAnnouncement(ann); }
+  _apUpdateAnnToggle(checked);
+  toast(checked?'✅ الإعلان مفعّل':'⏸️ الإعلان متوقف', checked?'success':'info');
+  _applyAllDevToggles && _applyAllDevToggles();
+}
+
+function apSaveAnnounce(){
+  const g = id => document.getElementById(id)?.value?.trim();
+  const title=g('apf-ann-title'), body=g('apf-ann-body');
+  if(!title||!body){ toast('أدخل العنوان والنص','warning'); return; }
+  const ann = {
+    id:'ann_'+Date.now(), active:document.getElementById('ap-ann-active')?.checked||false,
+    icon:g('apf-ann-icon')||'📢', title, body,
+    ctaText:g('apf-ann-cta-text')||'', ctaUrl:g('apf-ann-cta-url')||'',
+    target:document.getElementById('apf-ann-target')?.value||'all',
+    repeat:document.getElementById('apf-ann-repeat')?.value||'daily',
+    updatedAt:new Date().toISOString()
+  };
+  if(typeof _saveAnnouncement==='function') _saveAnnouncement(ann);
+  apLoadAnnounceSettings();
+  apMsg('ap-ann-msg','✅ تم الحفظ محلياً — اضغط "رفع للسحابة" للمزامنة');
+  toast('✅ تم حفظ الإعلان','success');
+}
+
+function apPreviewAnnounce(){
+  const g = id => document.getElementById(id)?.value?.trim();
+  const ann={id:'preview',active:true,icon:g('apf-ann-icon')||'📢',
+    title:g('apf-ann-title')||'إعلان',body:g('apf-ann-body')||'...',
+    ctaText:g('apf-ann-cta-text'),ctaUrl:g('apf-ann-cta-url'),repeat:'always',target:'all'};
+  if(typeof _showAnnouncementPopup==='function') _showAnnouncementPopup(ann);
+}
+
+function apClearAnnounce(){
+  if(!confirm('حذف الإعلان الحالي؟')) return;
+  localStorage.removeItem('nec_announcement');
+  apLoadAnnounceSettings();
+  toast('تم الحذف','warning');
+}
+
+async function apSyncAnnounceToDB(){
+  const st=document.getElementById('ap-ann-sync-status');
+  if(st) st.textContent='⏳ جاري الرفع...';
+  const ann=_getAnnouncement?_getAnnouncement():null;
+  if(!ann){ if(st) st.textContent='❌ لا يوجد إعلان للرفع'; return; }
+  try{
+    await sbQuery('POST','app_config?on_conflict=config_key',
+      {config_key:'announcement',config_value:ann,updated_at:new Date().toISOString()});
+    if(st){st.textContent='✅ تم الرفع إلى Supabase'; st.style.color='var(--green)';}
+  }catch(e){ if(st){st.textContent='❌ '+e.message; st.style.color='var(--red)';} }
+}
+
+async function apFetchAnnounceFromDB(){
+  const st=document.getElementById('ap-ann-sync-status');
+  if(st) st.textContent='⏳ جاري الجلب...';
+  try{
+    const rows=await sbQuery('GET','app_config?config_key=eq.announcement&select=config_value');
+    if(rows&&rows[0]?.config_value){
+      if(typeof _saveAnnouncement==='function') _saveAnnouncement(rows[0].config_value);
+      apLoadAnnounceSettings();
+      if(st){st.textContent='✅ تم الجلب من Supabase'; st.style.color='var(--green)';}
+    } else {
+      if(st) st.textContent='⚠️ لا يوجد إعلان في السحابة';
+    }
+  }catch(e){ if(st){st.textContent='❌ '+e.message; st.style.color='var(--red)';} }
+}
+
+// ══════════════════════
+// 💳 STRIPE
+// ══════════════════════
+function apLoadStripeSettings(){
+  const s = DB.get('stripe_settings')||{};
+  const g = id => document.getElementById(id);
+  if(g('ap-s-monthly-price'))  g('ap-s-monthly-price').value  = s.monthly?.price||'500 دج';
+  if(g('ap-s-monthly-usd'))    g('ap-s-monthly-usd').value    = s.monthly?.usd||'$1.99';
+  if(g('ap-s-monthly-url'))    g('ap-s-monthly-url').value    = s.monthly?.url||'';
+  if(g('ap-s-yearly-price'))   g('ap-s-yearly-price').value   = s.yearly?.price||'4500 دج';
+  if(g('ap-s-yearly-usd'))     g('ap-s-yearly-usd').value     = s.yearly?.usd||'$17.99';
+  if(g('ap-s-yearly-url'))     g('ap-s-yearly-url').value     = s.yearly?.url||'';
+  if(g('ap-s-lifetime-price')) g('ap-s-lifetime-price').value = s.lifetime?.price||'15000 دج';
+  if(g('ap-s-lifetime-usd'))   g('ap-s-lifetime-usd').value   = s.lifetime?.usd||'$59.99';
+  if(g('ap-s-lifetime-url'))   g('ap-s-lifetime-url').value   = s.lifetime?.url||'';
+  const ds=_getDevSettings?_getDevSettings():{};
+  _apUpdateStripeToggle(ds.stripe_visible!==false);
+  apLoadStripeStats();
+}
+
+function apToggleStripe(checked){
+  const s=_getDevSettings?_getDevSettings():{};
+  s.stripe_visible = checked?undefined:false;
+  if(typeof _saveDevSettings==='function') _saveDevSettings(s);
+  _apUpdateStripeToggle(checked);
+  _applyAllDevToggles&&_applyAllDevToggles();
+  toast(checked?'✅ Stripe ظاهر للعملاء':'🙈 Stripe مخفي',checked?'success':'warning');
+}
+
+function apSaveStripe(){
+  const g=id=>document.getElementById(id)?.value?.trim();
+  const settings={
+    monthly: {price:g('ap-s-monthly-price'),usd:g('ap-s-monthly-usd'),url:g('ap-s-monthly-url')},
+    yearly:  {price:g('ap-s-yearly-price'), usd:g('ap-s-yearly-usd'), url:g('ap-s-yearly-url')},
+    lifetime:{price:g('ap-s-lifetime-price'),usd:g('ap-s-lifetime-usd'),url:g('ap-s-lifetime-url')},
+  };
+  DB.set('stripe_settings',settings);
+  apMsg('ap-stripe-msg','✅ تم الحفظ محلياً');
+  toast('✅ تم حفظ إعدادات Stripe','success');
+}
+
+async function apSyncStripeToDB(){
+  const s=DB.get('stripe_settings');
+  if(!s){toast('احفظ الإعدادات أولاً','warning');return;}
+  try{
+    await sbQuery('POST','app_config?on_conflict=config_key',
+      {config_key:'stripe_settings',config_value:s,updated_at:new Date().toISOString()});
+    apMsg('ap-stripe-msg','✅ تم الرفع إلى Supabase');
+  }catch(e){apMsg('ap-stripe-msg','❌ '+e.message,'var(--red)');}
+}
+
+async function apLoadStripeStats(){
+  const el=document.getElementById('ap-stripe-stats');
+  if(!el) return;
+  try{
+    const lics=await sbQuery('GET','licenses?select=status&limit=500')||[];
+    const active=lics.filter(r=>r.status==='active').length;
+    const trial=lics.filter(r=>r.status==='trial').length;
+    const expired=lics.filter(r=>r.status==='expired').length;
+    el.innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;">
+      <div><div style="font-size:20px;font-weight:900;color:var(--green);">${active}</div><div style="font-size:10px;color:var(--text3);">مرخّص ✅</div></div>
+      <div><div style="font-size:20px;font-weight:900;color:var(--gold);">${trial}</div><div style="font-size:10px;color:var(--text3);">تجريبي 🕐</div></div>
+      <div><div style="font-size:20px;font-weight:900;color:var(--orange);">${expired}</div><div style="font-size:10px;color:var(--text3);">منتهي ⏳</div></div>
+    </div>`;
+  }catch(e){el.textContent='❌ '+e.message;}
+}
+
+// ══════════════════════
+// 🧠 GEMINI AI
+// ══════════════════════
+function apLoadGeminiSettings(){
+  const key=DB.get('gemini_api_key')||'';
+  const model=DB.get('gemini_model')||'gemini-2.0-flash';
+  const prompt=DB.get('gemini_system_prompt')||'';
+  const g=id=>document.getElementById(id);
+  if(g('ap-gemini-key'))    g('ap-gemini-key').value    = key;
+  if(g('ap-gemini-model'))  g('ap-gemini-model').value  = model;
+  if(g('ap-gemini-prompt')) g('ap-gemini-prompt').value = prompt;
+  const ds=_getDevSettings?_getDevSettings():{};
+  _apUpdateGeminiToggle(ds.gemini_visible!==false);
+  const st=document.getElementById('ap-gemini-status');
+  if(st) st.textContent=key?'🔑 مفتاح محفوظ — اضغط اختبار للتحقق':'⚠️ لم يتم إدخال المفتاح بعد';
+}
+
+function apToggleGemini(checked){
+  const s=_getDevSettings?_getDevSettings():{};
+  s.gemini_visible=checked?undefined:false;
+  if(typeof _saveDevSettings==='function') _saveDevSettings(s);
+  _apUpdateGeminiToggle(checked);
+  _applyAllDevToggles&&_applyAllDevToggles();
+  toast(checked?'✅ Gemini ظاهر للعملاء':'🙈 Gemini مخفي',checked?'success':'warning');
+}
+
+function apSaveGemini(){
+  const key=document.getElementById('ap-gemini-key')?.value?.trim();
+  const model=document.getElementById('ap-gemini-model')?.value;
+  const prompt=document.getElementById('ap-gemini-prompt')?.value?.trim();
+  if(!key){toast('أدخل مفتاح Gemini API','warning');return;}
+  DB.set('gemini_api_key',key);
+  DB.set('gemini_model',model||'gemini-2.0-flash');
+  if(prompt) DB.set('gemini_system_prompt',prompt);
+  apMsg('ap-gemini-msg','✅ تم الحفظ محلياً');
+  toast('✅ تم حفظ إعدادات Gemini','success');
+  apLoadGeminiSettings();
+}
+
+async function apTestGemini(){
+  const key=document.getElementById('ap-gemini-key')?.value?.trim()||DB.get('gemini_api_key');
+  const model=document.getElementById('ap-gemini-model')?.value||'gemini-2.0-flash';
+  const st=document.getElementById('ap-gemini-status');
+  if(!key){if(st)st.textContent='❌ أدخل مفتاح API أولاً';return;}
+  if(st){st.textContent='⏳ جاري الاختبار...';st.style.color='var(--text3)';}
+  try{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:'قل مرحبا'}]}]})
+    });
+    const data=await res.json();
+    if(data.candidates?.[0]?.content){
+      if(st){st.textContent=`✅ متصل — ${model} يعمل بنجاح!`;st.style.color='var(--green)';}
+    } else throw new Error(data.error?.message||'فشل الاتصال');
+  }catch(e){if(st){st.textContent='❌ '+e.message;st.style.color='var(--red)';}}
+}
+
+async function apSyncGeminiToDB(){
+  const key=DB.get('gemini_api_key');
+  const model=DB.get('gemini_model');
+  if(!key){apMsg('ap-gemini-msg','احفظ المفتاح أولاً','var(--orange)');return;}
+  try{
+    await sbQuery('POST','app_config?on_conflict=config_key',
+      {config_key:'gemini_config',config_value:{model,has_key:true},updated_at:new Date().toISOString()});
+    apMsg('ap-gemini-msg','✅ تم الرفع (المفتاح يُخزَّن محلياً فقط لأسباب أمنية)');
+  }catch(e){apMsg('ap-gemini-msg','❌ '+e.message,'var(--red)');}
+}
+
+async function apLoadGeminiStats(){
+  const el=document.getElementById('ap-gemini-stats');
+  if(!el) return;
+  try{
+    const rows=await sbQuery('GET','app_config?config_key=eq.gemini_usage&select=config_value')||[];
+    const usage=rows[0]?.config_value||{requests:0,tokens:0};
+    el.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center;">
+      <div><div style="font-size:18px;font-weight:900;color:#4285F4;">${usage.requests||0}</div><div style="font-size:10px;">طلبات إجمالية</div></div>
+      <div><div style="font-size:18px;font-weight:900;color:#34A853;">${usage.tokens||0}</div><div style="font-size:10px;">tokens مستخدمة</div></div>
+    </div>`;
+  }catch(e){el.textContent='لا بيانات بعد';}
+}
+
+// ══════════════════════
+// 👥 CLOUD ACCOUNTS
+// ══════════════════════
+let _apAllAccounts=[];
+let _apStatusFilter='';
+
+async function apLoadAccounts(){
+  const el=document.getElementById('ap-accounts-list');
+  if(el) el.innerHTML='<div style="text-align:center;padding:20px;">⏳ جاري التحميل...</div>';
+  try{
+    const [lics,farm]=await Promise.allSettled([
+      sbQuery('GET','licenses?select=*&order=install_date.desc&limit=500'),
+      sbQuery('GET','farm_data?select=device_id,updated_at&order=updated_at.desc&limit=500')
+    ]);
+    const licData=lics.status==='fulfilled'?(lics.value||[]):[];
+    const farmData=farm.status==='fulfilled'?(farm.value||[]):[];
+
+    // Build farm sync map
+    const farmMap={};
+    farmData.forEach(r=>{if(!farmMap[r.device_id])farmMap[r.device_id]=r.updated_at;});
+
+    // Merge
+    _apAllAccounts=licData.map(r=>({...r,lastSync:farmMap[r.user_id||r.device_id]||null}));
+
+    // Add farm accounts without license
+    Object.keys(farmMap).forEach(did=>{
+      if(!_apAllAccounts.find(r=>(r.user_id||r.device_id)===did)){
+        _apAllAccounts.push({device_id:did,status:'no_license',lastSync:farmMap[did]});
+      }
+    });
+
+    // Stats
+    const tot=_apAllAccounts.length;
+    const act=_apAllAccounts.filter(r=>r.status==='active').length;
+    const tri=_apAllAccounts.filter(r=>r.status==='trial').length;
+    const cld=Object.keys(farmMap).length;
+    const setN=(id,n)=>{const e=document.getElementById(id);if(e)e.textContent=n;};
+    setN('ap-stat-total',tot); setN('ap-stat-active',act);
+    setN('ap-stat-trial',tri); setN('ap-stat-cloud',cld);
+
+    apRenderAccounts(_apAllAccounts);
+  }catch(e){
+    if(el) el.innerHTML=`<div style="color:var(--red);text-align:center;padding:16px;">❌ ${e.message}</div>`;
+  }
+}
+
+function apRenderAccounts(list){
+  const el=document.getElementById('ap-accounts-list');
+  if(!el) return;
+  if(!list.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);">لا توجد نتائج</div>';return;}
+  const statusColor={active:'var(--green)',trial:'var(--gold)',expired:'var(--orange)',blocked:'var(--red)',no_license:'var(--text3)'};
+  const statusLabel={active:'✅ نشط',trial:'🕐 تجريبي',expired:'⏳ منتهي',blocked:'🚫 محظور',no_license:'⚪ بلا ترخيص'};
+  el.innerHTML=list.map(r=>{
+    const uid=r.user_id||r.device_id||'';
+    const email=r.email||r.notes||'';
+    const sc=statusColor[r.status]||'var(--text3)';
+    const sl=statusLabel[r.status]||r.status;
+    const sync=r.lastSync?new Date(r.lastSync).toLocaleDateString('ar-DZ'):'—';
+    const inst=r.install_date?new Date(r.install_date).toLocaleDateString('ar-DZ'):'—';
+    const exp=r.serial_expires?new Date(r.serial_expires).toLocaleDateString('ar-DZ'):'—';
+    return `<div style="background:var(--bg3);border:1.5px solid ${sc}33;border-radius:12px;padding:12px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:${sc}22;border:2px solid ${sc};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${r.status==='active'?'✅':r.status==='trial'?'🕐':r.status==='blocked'?'🚫':'⚪'}</div>
+        <div style="flex:1;min-width:0;">
+          ${email?`<div style="font-weight:700;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">📧 ${email}</div>`:''}
+          <div style="font-size:10px;font-family:monospace;color:var(--text3);overflow:hidden;text-overflow:ellipsis;">📱 ${uid.slice(0,20)}...</div>
+          <div style="font-size:10px;color:${sc};font-weight:700;">${sl}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;">
+        <span style="font-size:9px;background:rgba(255,255,255,.05);border-radius:5px;padding:2px 6px;">📅 تثبيت: ${inst}</span>
+        <span style="font-size:9px;background:rgba(255,255,255,.05);border-radius:5px;padding:2px 6px;">⏳ انتهاء: ${exp}</span>
+        ${r.lastSync?`<span style="font-size:9px;background:rgba(66,133,244,.1);border-radius:5px;padding:2px 6px;color:#4285F4;">☁️ ${sync}</span>`:''}
+      </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        ${r.status!=='active'?`<button onclick="apSetStatus('${uid}','active')" style="flex:1;min-width:60px;background:rgba(76,175,80,.15);border:1px solid rgba(76,175,80,.3);border-radius:7px;padding:5px;font-family:'Cairo',sans-serif;font-size:10px;font-weight:700;color:var(--green);cursor:pointer;">✅ تفعيل</button>`:''}
+        ${r.status==='active'?`<button onclick="apSetStatus('${uid}','expired')" style="flex:1;min-width:60px;background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.25);border-radius:7px;padding:5px;font-family:'Cairo',sans-serif;font-size:10px;font-weight:700;color:var(--orange);cursor:pointer;">⏸ إيقاف</button>`:''}
+        <button onclick="apExtend('${uid}')" style="flex:1;min-width:60px;background:rgba(33,150,243,.12);border:1px solid rgba(33,150,243,.25);border-radius:7px;padding:5px;font-family:'Cairo',sans-serif;font-size:10px;font-weight:700;color:var(--blue);cursor:pointer;">📅 تمديد</button>
+        ${r.status!=='blocked'?`<button onclick="apSetStatus('${uid}','blocked')" style="background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.25);border-radius:7px;padding:5px 8px;font-size:10px;color:var(--red);cursor:pointer;">🚫</button>`:`<button onclick="apSetStatus('${uid}','trial')" style="background:rgba(76,175,80,.12);border:1px solid rgba(76,175,80,.25);border-radius:7px;padding:5px 8px;font-size:10px;color:var(--green);cursor:pointer;">✅</button>`}
+        ${email?`<button onclick="adminContactEmail('${email}')" style="background:rgba(66,133,244,.12);border:1px solid rgba(66,133,244,.25);border-radius:7px;padding:5px 8px;font-size:10px;color:#4285F4;cursor:pointer;">📧</button>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+async function apSetStatus(uid,status){
+  try{
+    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(uid),{status});
+    _apAllAccounts=_apAllAccounts.map(r=>(r.user_id||r.device_id)===uid?{...r,status}:r);
+    apRenderAccounts(_apStatusFilter?_apAllAccounts.filter(r=>r.status===_apStatusFilter):_apAllAccounts);
+    toast('✅ تم تحديث الحالة','success');
+  }catch(e){toast('❌ '+e.message,'error');}
+}
+
+async function apExtend(uid){
+  const days=prompt('مدة التمديد (أيام):','365');
+  if(!days||isNaN(days)) return;
+  const exp=new Date(); exp.setDate(exp.getDate()+parseInt(days));
+  try{
+    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(uid),
+      {status:'active',serial_expires:exp.toISOString()});
+    _apAllAccounts=_apAllAccounts.map(r=>(r.user_id||r.device_id)===uid?{...r,status:'active',serial_expires:exp.toISOString()}:r);
+    apRenderAccounts(_apAllAccounts);
+    toast(`✅ تم التمديد ${days} يوم`,'success');
+  }catch(e){toast('❌ '+e.message,'error');}
+}
+
+function apFilterAccounts(q){
+  if(!q){apRenderAccounts(_apStatusFilter?_apAllAccounts.filter(r=>r.status===_apStatusFilter):_apAllAccounts);return;}
+  const ql=q.toLowerCase();
+  const filtered=_apAllAccounts.filter(r=>
+    (r.email||'').toLowerCase().includes(ql)||(r.device_id||'').toLowerCase().includes(ql)||
+    (r.notes||'').toLowerCase().includes(ql)||(r.user_id||'').toLowerCase().includes(ql));
+  apRenderAccounts(filtered);
+}
+
+function apFilterByStatus(status){
+  _apStatusFilter=status;
+  document.querySelectorAll('.ap-status-filter').forEach(b=>b.classList.remove('active','btn-primary'));
+  document.querySelectorAll('.ap-status-filter').forEach(b=>{
+    if((b.textContent.includes('الكل')&&!status)||(status&&b.onclick?.toString().includes("'"+status+"'"))){
+      b.style.background='var(--gold)'; b.style.color='#000';
+    } else { b.style.background='var(--bg3)'; b.style.color='var(--text2)'; }
+  });
+  apRenderAccounts(status?_apAllAccounts.filter(r=>r.status===status):_apAllAccounts);
+}
+
+async function apAddLicense(){
+  const idVal=document.getElementById('ap-new-lic-id')?.value?.trim();
+  const days=parseInt(document.getElementById('ap-new-lic-days')?.value)||365;
+  const note=document.getElementById('ap-new-lic-note')?.value?.trim()||'';
+  if(!idVal){toast('أدخل البريد أو معرّف الجهاز','warning');return;}
+  const exp=new Date(); exp.setDate(exp.getDate()+days);
+  const isEmail=idVal.includes('@');
+  const licData={device_id:idVal,user_id:idVal,status:'active',
+    serial_expires:exp.toISOString(),install_date:new Date().toISOString(),
+    notes:note,email:isEmail?idVal:''};
+  try{
+    await sbQuery('POST','licenses?on_conflict=device_id',licData);
+    toast('✅ تم إضافة الترخيص','success');
+    apMsg('ap-lic-msg',`✅ تم تفعيل ${isEmail?idVal:'الجهاز'} لمدة ${days} يوم`);
+    if(document.getElementById('ap-new-lic-id')) document.getElementById('ap-new-lic-id').value='';
+    setTimeout(apLoadAccounts,500);
+  }catch(e){
+    apMsg('ap-lic-msg','❌ '+e.message,'var(--red)');
+    toast('❌ '+e.message,'error');
+  }
+}
+
+// Init admin panel on first load
+setTimeout(()=>{
+  if(typeof apLoadAnnounceSettings==='function') apLoadAnnounceSettings();
+},1000);
+
+
+/* ══════════════════════════════════════════════════════════
+   🛠️ ADMIN CONTROL PANEL — Full JS
+   Announcements · Stripe · Gemini · Cloud Accounts
+══════════════════════════════════════════════════════════ */
+
+// ── Tab navigation ──
+function apTab(tab){
+  ['announce','stripe','gemini','accounts'].forEach(t=>{
+    const pane = document.getElementById('ap-pane-'+t);
+    const btn  = document.getElementById('ap-tab-'+t);
+    if(pane) pane.style.display = t===tab ? 'block' : 'none';
+    if(btn){
+      btn.style.background = t===tab ? 'var(--gold)' : 'var(--bg3)';
+      btn.style.color      = t===tab ? '#000' : 'var(--text2)';
+    }
+  });
+  if(tab==='accounts') apLoadAccounts();
+  if(tab==='stripe')   apLoadStripeSettings();
+  if(tab==='gemini')   apLoadGeminiSettings();
+  if(tab==='announce') apLoadAnnouncement();
+}
+
+function apLoad(){ apTab('announce'); }
+
+// ════════════════════════════
+// 📢 ANNOUNCEMENTS
+// ════════════════════════════
+function apLoadAnnouncement(){
+  const ann = typeof _getAnnouncement==='function' ? _getAnnouncement() : null;
+  if(ann){
+    const g = id => document.getElementById(id);
+    if(g('apf-ann-icon'))    g('apf-ann-icon').value    = ann.icon  ||'📢';
+    if(g('apf-ann-title'))   g('apf-ann-title').value   = ann.title ||'';
+    if(g('apf-ann-body'))    g('apf-ann-body').value    = ann.body  ||'';
+    if(g('apf-ann-cta-text'))g('apf-ann-cta-text').value= ann.ctaText||'';
+    if(g('apf-ann-cta-url')) g('apf-ann-cta-url').value = ann.ctaUrl ||'';
+    if(g('apf-ann-target'))  g('apf-ann-target').value  = ann.target ||'all';
+    if(g('apf-ann-repeat'))  g('apf-ann-repeat').value  = ann.repeat ||'daily';
+    _apUpdateAnnToggle(ann.active===true);
+    const preview = document.getElementById('ap-ann-preview');
+    if(preview) preview.textContent = ann.title ? `"${ann.title}" — ${ann.active?'🟢 نشط':'🔴 موقوف'}` : 'لا يوجد إعلان';
+  }
+}
+
+function apAnnounceNew(){
+  ['apf-ann-icon','apf-ann-title','apf-ann-body','apf-ann-cta-text','apf-ann-cta-url'].forEach(id=>{
+    const el=document.getElementById(id); if(el) el.value = id==='apf-ann-icon'?'📢':'';
+  });
+}
+
+function _apUpdateAnnToggle(on){
+  const track=document.getElementById('ap-ann-track');
+  const knob =document.getElementById('ap-ann-knob');
+  const chk  =document.getElementById('ap-ann-active');
+  if(track) track.style.background = on?'var(--gold)':'#333';
+  if(knob)  { knob.style.background=on?'#000':'#666'; knob.style.right=on?'calc(100% - 22px)':'2px'; }
+  if(chk)   chk.checked = on;
+}
+
+function apToggleAnnounce(on){
+  _apUpdateAnnToggle(on);
+  const ann = typeof _getAnnouncement==='function'?_getAnnouncement():null;
+  if(ann && typeof _saveAnnouncement==='function'){ ann.active=on; _saveAnnouncement(ann); }
+  toast(on?'✅ الإعلان مفعّل':'⏸️ الإعلان موقوف', on?'success':'info');
+}
+
+function apSaveAnnounce(){
+  const g=id=>document.getElementById(id)?.value?.trim();
+  const title=g('apf-ann-title'); const body=g('apf-ann-body');
+  if(!title||!body){toast('أدخل العنوان والنص','warning');return;}
+  const active=document.getElementById('ap-ann-active')?.checked||false;
+  const ann={
+    id:'ann_'+Date.now(), active,
+    icon:g('apf-ann-icon')||'📢', title, body,
+    ctaText:g('apf-ann-cta-text')||'', ctaUrl:g('apf-ann-cta-url')||'',
+    target:document.getElementById('apf-ann-target')?.value||'all',
+    repeat:document.getElementById('apf-ann-repeat')?.value||'daily',
+    updatedAt:new Date().toISOString()
+  };
+  if(typeof _saveAnnouncement==='function') _saveAnnouncement(ann);
+  const msg=document.getElementById('ap-ann-msg');
+  if(msg){msg.textContent='✅ تم الحفظ';msg.style.color='var(--green)';setTimeout(()=>msg.textContent='',3000);}
+  toast('✅ تم حفظ الإعلان'+(active?' ونشره':''),'success');
+  apLoadAnnouncement();
+}
+
+function apPreviewAnnounce(){
+  const g=id=>document.getElementById(id)?.value||'';
+  const ann={id:'preview',active:true,title:g('apf-ann-title')||'إعلان تجريبي',
+    body:g('apf-ann-body')||'هذا نص الإعلان...',icon:g('apf-ann-icon')||'📢',
+    ctaText:g('apf-ann-cta-text'),ctaUrl:g('apf-ann-cta-url'),repeat:'always',target:'all'};
+  if(typeof _showAnnouncementPopup==='function') _showAnnouncementPopup(ann);
+}
+
+function apClearAnnounce(){
+  if(!confirm('حذف الإعلان الحالي؟')) return;
+  localStorage.removeItem('nec_announcement');
+  apAnnounceNew(); _apUpdateAnnToggle(false);
+  toast('تم حذف الإعلان','warning');
+  const preview=document.getElementById('ap-ann-preview');
+  if(preview) preview.textContent='لا يوجد إعلان نشط';
+}
+
+async function apSyncAnnounceToDB(){
+  const ann=typeof _getAnnouncement==='function'?_getAnnouncement():null;
+  if(!ann){toast('لا يوجد إعلان للرفع','warning');return;}
+  const st=document.getElementById('ap-ann-sync-status');
+  if(st) st.textContent='⏳ جاري الرفع...';
+  try{
+    await sbQuery('POST','app_config?on_conflict=config_key',
+      {config_key:'announcement',config_value:ann,updated_at:new Date().toISOString()});
+    if(st){st.textContent='✅ تم الرفع إلى Supabase';st.style.color='var(--green)';setTimeout(()=>st.textContent='',4000);}
+    toast('✅ تم رفع الإعلان للسحابة','success');
+  }catch(e){ if(st){st.textContent='❌ '+e.message;st.style.color='var(--red)';} toast('❌ '+e.message,'error'); }
+}
+
+async function apFetchAnnounceFromDB(){
+  const st=document.getElementById('ap-ann-sync-status');
+  if(st) st.textContent='⏳ جاري الجلب...';
+  try{
+    const rows=await sbQuery('GET','app_config?config_key=eq.announcement&select=config_value');
+    if(rows&&rows[0]&&rows[0].config_value){
+      if(typeof _saveAnnouncement==='function') _saveAnnouncement(rows[0].config_value);
+      apLoadAnnouncement();
+      if(st){st.textContent='✅ تم الجلب من Supabase';st.style.color='var(--green)';setTimeout(()=>st.textContent='',4000);}
+      toast('✅ تم جلب الإعلان من السحابة','success');
+    } else {
+      if(st){st.textContent='لا يوجد إعلان في السحابة';st.style.color='var(--text3)';}
+    }
+  }catch(e){ if(st){st.textContent='❌ '+e.message;st.style.color='var(--red)';} }
+}
+
+// ════════════════════════════
+// 💳 STRIPE
+// ════════════════════════════
+function apLoadStripeSettings(){
+  const s=DB.get('stripe_settings')||{};
+  const g=id=>document.getElementById(id);
+  if(g('ap-s-monthly-price'))  g('ap-s-monthly-price').value  = s.monthly?.price||'500 دج';
+  if(g('ap-s-monthly-usd'))    g('ap-s-monthly-usd').value    = s.monthly?.usd||'$1.99';
+  if(g('ap-s-monthly-url'))    g('ap-s-monthly-url').value    = s.monthly?.url||'';
+  if(g('ap-s-yearly-price'))   g('ap-s-yearly-price').value   = s.yearly?.price||'4500 دج';
+  if(g('ap-s-yearly-usd'))     g('ap-s-yearly-usd').value     = s.yearly?.usd||'$17.99';
+  if(g('ap-s-yearly-url'))     g('ap-s-yearly-url').value     = s.yearly?.url||'';
+  if(g('ap-s-lifetime-price')) g('ap-s-lifetime-price').value = s.lifetime?.price||'15000 دج';
+  if(g('ap-s-lifetime-usd'))   g('ap-s-lifetime-usd').value   = s.lifetime?.usd||'$59.99';
+  if(g('ap-s-lifetime-url'))   g('ap-s-lifetime-url').value   = s.lifetime?.url||'';
+  const ds=typeof _getDevSettings==='function'?_getDevSettings():{};
+  const on=ds.stripe_visible!==false;
+  _apToggleUI('ap-stripe-track','ap-stripe-knob','ap-stripe-visible',on,'#635BFF');
+}
+
+function _apToggleUI(trackId,knobId,chkId,on,color){
+  const track=document.getElementById(trackId);
+  const knob =document.getElementById(knobId);
+  const chk  =document.getElementById(chkId);
+  if(track) track.style.background=on?color:'#333';
+  if(knob)  { knob.style.background=on?'#fff':'#666'; knob.style.right=on?'calc(100% - 22px)':'2px'; }
+  if(chk)   chk.checked=on;
+}
+
+function apToggleStripe(on){
+  _apToggleUI('ap-stripe-track','ap-stripe-knob','ap-stripe-visible',on,'#635BFF');
+  const s=typeof _getDevSettings==='function'?_getDevSettings():{};
+  s.stripe_visible=on?undefined:false;
+  if(typeof _saveDevSettings==='function') _saveDevSettings(s);
+  if(typeof _applyStripeVisibility==='function') _applyStripeVisibility();
+  toast(on?'✅ Stripe ظاهر للعملاء':'🙈 Stripe مخفي','success');
+}
+
+function apSaveStripe(){
+  const gv=id=>document.getElementById(id)?.value?.trim();
+  const settings={
+    monthly: {price:gv('ap-s-monthly-price'),usd:gv('ap-s-monthly-usd'),url:gv('ap-s-monthly-url')},
+    yearly:  {price:gv('ap-s-yearly-price'), usd:gv('ap-s-yearly-usd'), url:gv('ap-s-yearly-url')},
+    lifetime:{price:gv('ap-s-lifetime-price'),usd:gv('ap-s-lifetime-usd'),url:gv('ap-s-lifetime-url')},
+  };
+  DB.set('stripe_settings',settings);
+  const msg=document.getElementById('ap-stripe-msg');
+  if(msg){msg.textContent='✅ تم الحفظ';msg.style.color='var(--green)';setTimeout(()=>msg.textContent='',3000);}
+  toast('✅ تم حفظ إعدادات Stripe','success');
+}
+
+async function apSyncStripeToDB(){
+  const s=DB.get('stripe_settings');
+  if(!s){toast('احفظ الإعدادات أولاً','warning');return;}
+  try{
+    await sbQuery('POST','app_config?on_conflict=config_key',
+      {config_key:'stripe_settings',config_value:s,updated_at:new Date().toISOString()});
+    toast('✅ تم رفع إعدادات Stripe للسحابة','success');
+  }catch(e){toast('❌ '+e.message,'error');}
+}
+
+async function apLoadStripeStats(){
+  const el=document.getElementById('ap-stripe-stats');
+  if(!el) return;
+  el.innerHTML='⏳ جاري التحميل...';
+  try{
+    const lics=await sbQuery('GET','licenses?select=status,install_date&order=install_date.desc')||[];
+    const active=lics.filter(r=>r.status==='active').length;
+    const trial=lics.filter(r=>r.status==='trial').length;
+    const expired=lics.filter(r=>r.status==='expired').length;
+    el.innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;">
+      <div><div style="font-size:24px;font-weight:900;color:var(--green);">${active}</div><div style="font-size:10px;">مرخّص نشط</div></div>
+      <div><div style="font-size:24px;font-weight:900;color:var(--gold);">${trial}</div><div style="font-size:10px;">تجريبي</div></div>
+      <div><div style="font-size:24px;font-weight:900;color:var(--red);">${expired}</div><div style="font-size:10px;">منتهي</div></div>
+    </div>`;
+  }catch(e){el.innerHTML='❌ '+e.message;}
+}
+
+// ════════════════════════════
+// 🧠 GEMINI
+// ════════════════════════════
+function apLoadGeminiSettings(){
+  const key=DB.get('gemini_api_key')||'';
+  const el=document.getElementById('ap-gemini-key');
+  if(el&&key) el.value=key;
+  const model=DB.get('gemini_model')||'gemini-2.0-flash';
+  const modelEl=document.getElementById('ap-gemini-model');
+  if(modelEl) modelEl.value=model;
+  const prompt=DB.get('gemini_system_prompt')||'';
+  const promptEl=document.getElementById('ap-gemini-prompt');
+  if(promptEl) promptEl.value=prompt;
+  const ds=typeof _getDevSettings==='function'?_getDevSettings():{};
+  const on=ds.gemini_visible!==false;
+  _apToggleUI('ap-gemini-track','ap-gemini-knob','ap-gemini-visible',on,'#4285F4');
+  const st=document.getElementById('ap-gemini-status');
+  if(st) st.textContent=key?'🔑 مفتاح محفوظ — اضغط اختبار للتحقق':'⚠️ لم يتم إدخال المفتاح';
+}
+
+function apToggleGemini(on){
+  _apToggleUI('ap-gemini-track','ap-gemini-knob','ap-gemini-visible',on,'#4285F4');
+  const s=typeof _getDevSettings==='function'?_getDevSettings():{};
+  s.gemini_visible=on?undefined:false;
+  if(typeof _saveDevSettings==='function') _saveDevSettings(s);
+  if(typeof _applyGeminiVisibility==='function') _applyGeminiVisibility();
+  toast(on?'✅ Gemini ظاهر للعملاء':'🙈 Gemini مخفي','success');
+}
+
+async function apSaveGemini(){
+  const key=document.getElementById('ap-gemini-key')?.value?.trim();
+  const model=document.getElementById('ap-gemini-model')?.value||'gemini-2.0-flash';
+  const prompt=document.getElementById('ap-gemini-prompt')?.value?.trim()||'';
+  if(!key){toast('أدخل مفتاح API','warning');return;}
+  DB.set('gemini_api_key',key);
+  DB.set('gemini_model',model);
+  DB.set('gemini_system_prompt',prompt);
+  const msg=document.getElementById('ap-gemini-msg');
+  if(msg){msg.textContent='✅ تم الحفظ';msg.style.color='var(--green)';setTimeout(()=>msg.textContent='',3000);}
+  toast('✅ تم حفظ إعدادات Gemini','success');
+}
+
+async function apTestGemini(){
+  const key=document.getElementById('ap-gemini-key')?.value?.trim()||DB.get('gemini_api_key');
+  const model=document.getElementById('ap-gemini-model')?.value||'gemini-2.0-flash';
+  const st=document.getElementById('ap-gemini-status');
+  if(!key){if(st){st.textContent='⚠️ أدخل المفتاح أولاً';st.style.color='var(--orange)';}return;}
+  if(st){st.textContent='⏳ جاري الاختبار...';st.style.color='var(--text3)';}
+  try{
+    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{parts:[{text:'قل مرحبا بكلمة واحدة'}]}]})
+    });
+    const data=await res.json();
+    if(data.candidates?.[0]?.content){
+      const reply=data.candidates[0].content.parts[0].text;
+      if(st){st.textContent=`✅ متصل — رد النموذج: "${reply.slice(0,30)}"`;st.style.color='var(--green)';}
+      toast('✅ Gemini يعمل بشكل صحيح!','success');
+    } else {
+      throw new Error(data.error?.message||'لا يوجد رد');
+    }
+  }catch(e){
+    if(st){st.textContent='❌ '+e.message;st.style.color='var(--red)';}
+    toast('❌ فشل الاتصال: '+e.message,'error');
+  }
+}
+
+async function apSyncGeminiToDB(){
+  const key=DB.get('gemini_api_key');
+  const model=DB.get('gemini_model');
+  const prompt=DB.get('gemini_system_prompt');
+  if(!key){toast('احفظ الإعدادات أولاً','warning');return;}
+  try{
+    await sbQuery('POST','app_config?on_conflict=config_key',
+      {config_key:'gemini_settings',config_value:{key,model,prompt},updated_at:new Date().toISOString()});
+    toast('✅ تم رفع إعدادات Gemini للسحابة','success');
+  }catch(e){toast('❌ '+e.message,'error');}
+}
+
+async function apLoadGeminiStats(){
+  const el=document.getElementById('ap-gemini-stats');
+  if(!el) return;
+  el.innerHTML='⏳ جاري التحميل...';
+  try{
+    const data=await sbQuery('GET','gemini_logs?select=created_at&order=created_at.desc&limit=100')||[];
+    const today=new Date().toDateString();
+    const todayCount=data.filter(r=>new Date(r.created_at).toDateString()===today).length;
+    el.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center;">
+      <div><div style="font-size:24px;font-weight:900;color:#4285F4;">${todayCount}</div><div style="font-size:10px;">طلب اليوم</div></div>
+      <div><div style="font-size:24px;font-weight:900;color:#4285F4;">${data.length}</div><div style="font-size:10px;">إجمالي (100 أخير)</div></div>
+    </div>`;
+  }catch(e){el.innerHTML='<div style="font-size:10px;color:var(--text3);">جدول السجلات غير موجود بعد</div>';}
+}
+
+// ════════════════════════════
+// 👥 CLOUD ACCOUNTS
+// ════════════════════════════
+let _apAllAccounts = [];
+let _apStatusFilter = '';
+
+async function apLoadAccounts(){
+  const el=document.getElementById('ap-accounts-list');
+  if(el) el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);">⏳ جاري التحميل...</div>';
+  try{
+    const [lics,farm]=await Promise.allSettled([
+      sbQuery('GET','licenses?select=*&order=install_date.desc&limit=500'),
+      sbQuery('GET','farm_data?select=device_id,updated_at&order=updated_at.desc&limit=500')
+    ]);
+    const licData  = lics.status==='fulfilled'  ? (lics.value||[])  : [];
+    const farmData = farm.status==='fulfilled'   ? (farm.value||[])  : [];
+    // Build farm_data map
+    const farmMap={};
+    farmData.forEach(r=>{if(!farmMap[r.device_id])farmMap[r.device_id]=r.updated_at;});
+    // Merge
+    _apAllAccounts = licData.map(r=>({
+      ...r,
+      hasCloud: !!(farmMap[r.user_id||r.device_id]),
+      lastSync: farmMap[r.user_id||r.device_id]||null
+    }));
+    // Stats
+    const total=_apAllAccounts.length;
+    const active=_apAllAccounts.filter(r=>r.status==='active').length;
+    const trial=_apAllAccounts.filter(r=>r.status==='trial').length;
+    const cloud=Object.keys(farmMap).length;
+    const s=id=>document.getElementById(id);
+    if(s('ap-stat-total'))  s('ap-stat-total').textContent=total;
+    if(s('ap-stat-active')) s('ap-stat-active').textContent=active;
+    if(s('ap-stat-trial'))  s('ap-stat-trial').textContent=trial;
+    if(s('ap-stat-cloud'))  s('ap-stat-cloud').textContent=cloud;
+    apRenderAccounts(_apAllAccounts);
+  }catch(e){
+    if(el) el.innerHTML=`<div style="color:var(--red);padding:12px;text-align:center;">❌ ${e.message}</div>`;
+  }
+}
+
+function apRenderAccounts(list){
+  const el=document.getElementById('ap-accounts-list');
+  if(!el) return;
+  if(!list.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);">لا توجد نتائج</div>';return;}
+  const statusColors={active:'var(--green)',trial:'var(--gold)',expired:'var(--orange)',blocked:'var(--red)'};
+  const statusIcons={active:'✅',trial:'🕐',expired:'⏳',blocked:'🚫'};
+  el.innerHTML=list.map(r=>{
+    const color=statusColors[r.status]||'var(--text3)';
+    const icon=statusIcons[r.status]||'⚪';
+    const exp=r.serial_expires?new Date(r.serial_expires).toLocaleDateString('ar-DZ'):'—';
+    const sync=r.lastSync?new Date(r.lastSync).toLocaleDateString('ar-DZ'):'—';
+    const email=r.email||r.notes||'';
+    const did=(r.device_id||'').slice(-12);
+    return `<div style="background:var(--card);border:1px solid ${color}33;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div style="width:36px;height:36px;border-radius:50%;background:${color}22;border:2px solid ${color};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${icon}</div>
+        <div style="flex:1;min-width:0;">
+          ${email?`<div style="font-weight:700;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">📧 ${email}</div>`:''}
+          <div style="font-size:10px;color:var(--text3);font-family:monospace;">📱 ${did}</div>
+        </div>
+        <div style="text-align:center;">
+          <div style="font-size:9px;color:${color};font-weight:700;">${icon} ${r.status||'—'}</div>
+          ${r.hasCloud?'<div style="font-size:9px;color:#4285F4;">☁️ مزامن</div>':''}
+        </div>
+      </div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        ${r.status!=='active'?`<button onclick="apSetStatus('${r.device_id}','active')" style="flex:1;background:rgba(76,175,80,.12);border:1px solid rgba(76,175,80,.25);border-radius:7px;padding:5px;font-size:10px;font-weight:700;color:var(--green);cursor:pointer;font-family:'Cairo',sans-serif;">✅ تفعيل</button>`:''}
+        ${r.status==='active'?`<button onclick="apSetStatus('${r.device_id}','expired')" style="flex:1;background:rgba(255,152,0,.1);border:1px solid rgba(255,152,0,.2);border-radius:7px;padding:5px;font-size:10px;font-weight:700;color:var(--orange);cursor:pointer;font-family:'Cairo',sans-serif;">⏸️ إيقاف</button>`:''}
+        <button onclick="apExtendLicense('${r.device_id}')" style="flex:1;background:rgba(33,150,243,.1);border:1px solid rgba(33,150,243,.2);border-radius:7px;padding:5px;font-size:10px;font-weight:700;color:var(--blue);cursor:pointer;font-family:'Cairo',sans-serif;">📅 تمديد</button>
+        ${r.status!=='blocked'?`<button onclick="apSetStatus('${r.device_id}','blocked')" style="background:rgba(244,67,54,.1);border:1px solid rgba(244,67,54,.2);border-radius:7px;padding:5px 8px;font-size:10px;color:var(--red);cursor:pointer;">🚫</button>`:''}
+        ${email?`<button onclick="adminContactEmail('${email}')" style="background:rgba(66,133,244,.1);border:1px solid rgba(66,133,244,.2);border-radius:7px;padding:5px 8px;font-size:10px;color:#4285F4;cursor:pointer;">📧</button>`:''}
+      </div>
+      <div style="font-size:9px;color:var(--text3);display:flex;gap:8px;flex-wrap:wrap;">
+        <span>⏳ انتهاء: ${exp}</span>
+        ${r.hasCloud?`<span>🔄 مزامنة: ${sync}</span>`:''}
+        ${r.notes&&!email?`<span>💬 ${r.notes}</span>`:''}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function apFilterAccounts(q){
+  if(!q){ apRenderAccounts(_apAllAccounts.filter(r=>!_apStatusFilter||r.status===_apStatusFilter)); return; }
+  const ql=q.toLowerCase();
+  const filtered=_apAllAccounts.filter(r=>
+    (r.email||'').toLowerCase().includes(ql)||
+    (r.device_id||'').toLowerCase().includes(ql)||
+    (r.notes||'').toLowerCase().includes(ql)
+  );
+  apRenderAccounts(filtered);
+}
+
+function apFilterByStatus(status){
+  _apStatusFilter=status;
+  document.querySelectorAll('.ap-status-filter').forEach(b=>b.classList.remove('active'));
+  const filtered=status?_apAllAccounts.filter(r=>r.status===status):_apAllAccounts;
+  apRenderAccounts(filtered);
+}
+
+async function apSetStatus(deviceId,status){
+  try{
+    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(deviceId),{status});
+    _apAllAccounts=_apAllAccounts.map(r=>r.device_id===deviceId?{...r,status}:r);
+    apRenderAccounts(_apStatusFilter?_apAllAccounts.filter(r=>r.status===_apStatusFilter):_apAllAccounts);
+    const statusL={active:'✅ مفعّل',expired:'⏸️ موقوف',blocked:'🚫 محظور'};
+    toast((statusL[status]||status)+' — تم التحديث','success');
+  }catch(e){toast('❌ '+e.message,'error');}
+}
+
+async function apExtendLicense(deviceId){
+  const days=prompt('عدد أيام التمديد:','365');
+  if(!days||isNaN(days)) return;
+  const expires=new Date(); expires.setDate(expires.getDate()+parseInt(days));
+  try{
+    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(deviceId),
+      {status:'active',serial_expires:expires.toISOString()});
+    _apAllAccounts=_apAllAccounts.map(r=>r.device_id===deviceId?{...r,status:'active',serial_expires:expires.toISOString()}:r);
+    apRenderAccounts(_apAllAccounts);
+    toast(`✅ تم التمديد ${days} يوم`,'success');
+  }catch(e){toast('❌ '+e.message,'error');}
+}
+
+async function apAddLicense(){
+  const id=document.getElementById('ap-new-lic-id')?.value?.trim();
+  const days=parseInt(document.getElementById('ap-new-lic-days')?.value)||365;
+  const note=document.getElementById('ap-new-lic-note')?.value?.trim()||'';
+  const msg=document.getElementById('ap-lic-msg');
+  if(!id){if(msg){msg.textContent='أدخل البريد أو معرّف الجهاز';msg.style.color='var(--red)';}return;}
+  const expires=new Date(); expires.setDate(expires.getDate()+days);
+  const isEmail=id.includes('@');
+  const licData={
+    device_id:id, user_id:id,
+    email:isEmail?id:'',
+    status:'active',
+    serial_expires:expires.toISOString(),
+    install_date:new Date().toISOString(),
+    notes:note||id
+  };
+  try{
+    await sbQuery('POST','licenses?on_conflict=device_id',licData);
+    if(msg){msg.textContent='✅ تم الإضافة والتفعيل';msg.style.color='var(--green)';setTimeout(()=>msg.textContent='',4000);}
+    toast('✅ تم إضافة الترخيص','success');
+    document.getElementById('ap-new-lic-id').value='';
+    document.getElementById('ap-new-lic-note').value='';
+    setTimeout(apLoadAccounts,500);
+  }catch(e){
+    if(msg){msg.textContent='❌ '+e.message;msg.style.color='var(--red)';}
+    toast('❌ '+e.message,'error');
+  }
+}
+
+// ── Init when screen opens ──
+setTimeout(()=>{
+  if(location.hash==='#adminpanel') apLoad();
+},1000);
+
 </script>
   <!-- ══ ANNOUNCEMENT POPUP ══ -->
   <div id="announcement-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);">
@@ -12286,6 +13207,305 @@ setTimeout(_renderCustomGoals, 1500);
       </div>
     </div>
   </div>
+
+    <!-- ══ ADMIN CONTROL PANEL ══ -->
+    <div id="screen-adminpanel" class="screen">
+      <div class="ph">
+        <div><div class="pt">🛠️ لوحة تحكم المطوّر</div><div class="ps">إدارة متكاملة لجميع الأنظمة</div></div>
+        <button class="btn btn-xs btn-secondary" onclick="go('settings')">← رجوع</button>
+      </div>
+
+      <!-- Navigation tabs -->
+      <div style="display:flex;gap:6px;overflow-x:auto;padding-bottom:2px;margin-bottom:14px;scrollbar-width:none;">
+        <button id="ap-tab-announce" onclick="apTab('announce')"
+          style="flex-shrink:0;padding:8px 14px;border-radius:10px;border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:11px;cursor:pointer;background:var(--gold);color:#000;transition:.2s;">
+          📢 الإعلانات
+        </button>
+        <button id="ap-tab-stripe" onclick="apTab('stripe')"
+          style="flex-shrink:0;padding:8px 14px;border-radius:10px;border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:11px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:.2s;">
+          💳 Stripe
+        </button>
+        <button id="ap-tab-gemini" onclick="apTab('gemini')"
+          style="flex-shrink:0;padding:8px 14px;border-radius:10px;border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:11px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:.2s;">
+          🧠 Gemini AI
+        </button>
+        <button id="ap-tab-accounts" onclick="apTab('accounts')"
+          style="flex-shrink:0;padding:8px 14px;border-radius:10px;border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:11px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:.2s;">
+          👥 الحسابات
+        </button>
+      </div>
+
+      <!-- ══ PANE: Announcements ══ -->
+      <div id="ap-pane-announce">
+        <div class="card" style="border-color:rgba(255,193,7,.25);">
+          <div class="card-header">
+            <span class="card-title" style="color:var(--gold);">📢 إدارة الإعلانات</span>
+            <button onclick="apAnnounceNew()" class="btn btn-xs btn-primary">+ جديد</button>
+          </div>
+
+          <!-- Active announcement status -->
+          <div id="ap-ann-status" style="background:rgba(255,193,7,.06);border:1px solid rgba(255,193,7,.15);border-radius:10px;padding:12px;margin-bottom:12px;">
+            <div style="display:flex;align-items:center;justify-content:space-between;">
+              <div style="font-size:12px;font-weight:700;color:var(--gold);">الإعلان النشط</div>
+              <label style="display:flex;align-items:center;gap:6px;cursor:pointer;">
+                <span style="font-size:10px;color:var(--text3);">تفعيل</span>
+                <div style="position:relative;width:46px;height:24px;">
+                  <input type="checkbox" id="ap-ann-active" onchange="apToggleAnnounce(this.checked)"
+                    style="opacity:0;width:0;height:0;position:absolute;">
+                  <span id="ap-ann-track" style="position:absolute;inset:0;background:#333;border-radius:24px;transition:.3s;cursor:pointer;" onclick="const c=document.getElementById('ap-ann-active');c.checked=!c.checked;apToggleAnnounce(c.checked)"></span>
+                  <span id="ap-ann-knob" style="position:absolute;top:2px;right:2px;width:20px;height:20px;background:#666;border-radius:50%;transition:.3s;pointer-events:none;box-shadow:0 2px 4px rgba(0,0,0,.3);"></span>
+                </div>
+              </label>
+            </div>
+            <div id="ap-ann-preview" style="font-size:11px;color:var(--text3);margin-top:6px;">لا يوجد إعلان نشط</div>
+          </div>
+
+          <!-- Form -->
+          <div id="ap-ann-form">
+            <div style="display:grid;grid-template-columns:70px 1fr;gap:8px;margin-bottom:8px;">
+              <div><label class="form-label">أيقونة</label><input id="apf-ann-icon" class="form-control" value="📢" style="font-size:20px;text-align:center;"></div>
+              <div><label class="form-label">العنوان</label><input id="apf-ann-title" class="form-control" placeholder="عنوان الإعلان..."></div>
+            </div>
+            <div style="margin-bottom:8px;"><label class="form-label">النص الكامل</label>
+              <textarea id="apf-ann-body" class="form-control" rows="4" placeholder="اكتب نص الإعلان هنا..." style="resize:vertical;"></textarea>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+              <div><label class="form-label">نص زر الإجراء</label><input id="apf-ann-cta-text" class="form-control" placeholder="اشترك الآن"></div>
+              <div><label class="form-label">رابط الزر</label><input id="apf-ann-cta-url" class="form-control" placeholder="https://" dir="ltr" style="font-size:11px;"></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
+              <div><label class="form-label">الجمهور المستهدف</label>
+                <select id="apf-ann-target" class="form-control">
+                  <option value="all">الجميع</option>
+                  <option value="trial">فترة تجريبية فقط</option>
+                  <option value="expired">منتهي الترخيص</option>
+                </select>
+              </div>
+              <div><label class="form-label">تكرار الظهور</label>
+                <select id="apf-ann-repeat" class="form-control">
+                  <option value="daily">كل يوم</option>
+                  <option value="always">كل فتح</option>
+                  <option value="once">مرة واحدة</option>
+                  <option value="weekly">أسبوعياً</option>
+                </select>
+              </div>
+            </div>
+            <div style="display:flex;gap:8px;">
+              <button onclick="apSaveAnnounce()" class="btn btn-primary" style="flex:1;justify-content:center;">💾 حفظ ونشر</button>
+              <button onclick="apPreviewAnnounce()" class="btn btn-secondary btn-sm">👁 معاينة</button>
+              <button onclick="apClearAnnounce()" class="btn btn-danger btn-sm">🗑 حذف</button>
+            </div>
+            <div id="ap-ann-msg" style="min-height:14px;margin-top:6px;font-size:11px;text-align:center;"></div>
+          </div>
+        </div>
+
+        <!-- Sync button -->
+        <div class="card" style="border-color:rgba(255,193,7,.15);">
+          <div class="card-header"><span class="card-title">☁️ مزامنة Supabase</span></div>
+          <div style="font-size:11px;color:var(--text3);margin-bottom:10px;">
+            احفظ الإعلان في Supabase ليُزامن تلقائياً مع جميع الأجهزة.
+          </div>
+          <div style="display:flex;gap:8px;">
+            <button onclick="apSyncAnnounceToDB()" class="btn btn-primary btn-sm" style="flex:1;justify-content:center;">☁️ رفع للسحابة</button>
+            <button onclick="apFetchAnnounceFromDB()" class="btn btn-secondary btn-sm" style="flex:1;justify-content:center;">⬇ جلب من السحابة</button>
+          </div>
+          <div id="ap-ann-sync-status" style="font-size:10px;color:var(--text3);margin-top:6px;text-align:center;"></div>
+        </div>
+      </div>
+
+      <!-- ══ PANE: Stripe ══ -->
+      <div id="ap-pane-stripe" style="display:none;">
+        <div class="card" style="border-color:rgba(99,91,255,.25);">
+          <div class="card-header">
+            <span class="card-title" style="color:#635BFF;">💳 إعدادات Stripe</span>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:10px;color:var(--text3);">إظهار للعملاء</span>
+              <div style="position:relative;width:46px;height:24px;">
+                <input type="checkbox" id="ap-stripe-visible" onchange="apToggleStripe(this.checked)"
+                  style="opacity:0;width:0;height:0;position:absolute;">
+                <span id="ap-stripe-track" style="position:absolute;inset:0;background:#333;border-radius:24px;transition:.3s;cursor:pointer;" onclick="const c=document.getElementById('ap-stripe-visible');c.checked=!c.checked;apToggleStripe(c.checked)"></span>
+                <span id="ap-stripe-knob" style="position:absolute;top:2px;right:2px;width:20px;height:20px;background:#666;border-radius:50%;transition:.3s;pointer-events:none;box-shadow:0 2px 4px rgba(0,0,0,.3);"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Plans -->
+          <div id="ap-stripe-plans">
+            <!-- Monthly -->
+            <div style="background:rgba(99,91,255,.06);border:1px solid rgba(99,91,255,.15);border-radius:10px;padding:12px;margin-bottom:10px;">
+              <div style="font-weight:700;font-size:12px;color:#635BFF;margin-bottom:8px;">📅 الاشتراك الشهري</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px;">
+                <div><label class="form-label">السعر (دج)</label><input id="ap-s-monthly-price" class="form-control" placeholder="500 دج" style="font-size:12px;"></div>
+                <div><label class="form-label">السعر ($)</label><input id="ap-s-monthly-usd" class="form-control" placeholder="$1.99" dir="ltr" style="font-size:12px;"></div>
+              </div>
+              <div><label class="form-label">رابط Stripe</label><input id="ap-s-monthly-url" class="form-control" placeholder="https://buy.stripe.com/..." dir="ltr" style="font-size:11px;font-family:monospace;"></div>
+            </div>
+            <!-- Yearly -->
+            <div style="background:rgba(99,91,255,.06);border:1px solid rgba(99,91,255,.15);border-radius:10px;padding:12px;margin-bottom:10px;">
+              <div style="font-weight:700;font-size:12px;color:#635BFF;margin-bottom:8px;">📆 الاشتراك السنوي</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px;">
+                <div><label class="form-label">السعر (دج)</label><input id="ap-s-yearly-price" class="form-control" placeholder="4500 دج" style="font-size:12px;"></div>
+                <div><label class="form-label">السعر ($)</label><input id="ap-s-yearly-usd" class="form-control" placeholder="$17.99" dir="ltr" style="font-size:12px;"></div>
+              </div>
+              <div><label class="form-label">رابط Stripe</label><input id="ap-s-yearly-url" class="form-control" placeholder="https://buy.stripe.com/..." dir="ltr" style="font-size:11px;font-family:monospace;"></div>
+            </div>
+            <!-- Lifetime -->
+            <div style="background:rgba(255,193,7,.06);border:1px solid rgba(255,193,7,.15);border-radius:10px;padding:12px;margin-bottom:12px;">
+              <div style="font-weight:700;font-size:12px;color:var(--gold);margin-bottom:8px;">🏆 مدى الحياة</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px;">
+                <div><label class="form-label">السعر (دج)</label><input id="ap-s-lifetime-price" class="form-control" placeholder="15000 دج" style="font-size:12px;"></div>
+                <div><label class="form-label">السعر ($)</label><input id="ap-s-lifetime-usd" class="form-control" placeholder="$59.99" dir="ltr" style="font-size:12px;"></div>
+              </div>
+              <div><label class="form-label">رابط Stripe</label><input id="ap-s-lifetime-url" class="form-control" placeholder="https://buy.stripe.com/..." dir="ltr" style="font-size:11px;font-family:monospace;"></div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:8px;">
+            <button onclick="apSaveStripe()" class="btn btn-primary" style="flex:1;justify-content:center;">💾 حفظ</button>
+            <button onclick="apSyncStripeToDB()" class="btn btn-secondary btn-sm">☁️ Supabase</button>
+            <button onclick="openStripePayment()" class="btn btn-secondary btn-sm">👁 معاينة</button>
+          </div>
+          <div id="ap-stripe-msg" style="min-height:14px;margin-top:6px;font-size:11px;text-align:center;"></div>
+        </div>
+
+        <!-- Stripe Stats -->
+        <div class="card" style="border-color:rgba(99,91,255,.15);">
+          <div class="card-header"><span class="card-title">📊 إحصائيات الدفع</span><button onclick="apLoadStripeStats()" class="btn btn-xs btn-secondary">تحديث</button></div>
+          <div id="ap-stripe-stats" style="font-size:11px;color:var(--text3);padding:8px;text-align:center;">اضغط تحديث لتحميل الإحصائيات</div>
+        </div>
+      </div>
+
+      <!-- ══ PANE: Gemini AI ══ -->
+      <div id="ap-pane-gemini" style="display:none;">
+        <div class="card" style="border-color:rgba(66,133,244,.25);">
+          <div class="card-header">
+            <span class="card-title" style="color:#4285F4;">🧠 Google Gemini AI</span>
+            <div style="display:flex;align-items:center;gap:6px;">
+              <span style="font-size:10px;color:var(--text3);">إظهار للعملاء</span>
+              <div style="position:relative;width:46px;height:24px;">
+                <input type="checkbox" id="ap-gemini-visible" onchange="apToggleGemini(this.checked)"
+                  style="opacity:0;width:0;height:0;position:absolute;">
+                <span id="ap-gemini-track" style="position:absolute;inset:0;background:#333;border-radius:24px;transition:.3s;cursor:pointer;" onclick="const c=document.getElementById('ap-gemini-visible');c.checked=!c.checked;apToggleGemini(c.checked)"></span>
+                <span id="ap-gemini-knob" style="position:absolute;top:2px;right:2px;width:20px;height:20px;background:#666;border-radius:50%;transition:.3s;pointer-events:none;box-shadow:0 2px 4px rgba(0,0,0,.3);"></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- API Key -->
+          <div style="margin-bottom:10px;">
+            <label class="form-label">🔑 مفتاح Google AI Studio API</label>
+            <div style="position:relative;">
+              <input id="ap-gemini-key" class="form-control" type="password" placeholder="AIza..." dir="ltr" style="font-size:12px;font-family:monospace;padding-left:36px;">
+              <button onclick="var i=document.getElementById('ap-gemini-key');i.type=i.type==='password'?'text':'password'"
+                style="position:absolute;left:8px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:14px;color:var(--text3);">👁</button>
+            </div>
+          </div>
+
+          <!-- Model selection -->
+          <div style="margin-bottom:10px;">
+            <label class="form-label">النموذج المستخدم</label>
+            <select id="ap-gemini-model" class="form-control">
+              <option value="gemini-2.0-flash">Gemini 2.0 Flash (الأسرع - مجاني)</option>
+              <option value="gemini-1.5-pro">Gemini 1.5 Pro (الأذكى)</option>
+              <option value="gemini-1.5-flash">Gemini 1.5 Flash</option>
+            </select>
+          </div>
+
+          <!-- System prompt -->
+          <div style="margin-bottom:12px;">
+            <label class="form-label">System Prompt (تخصيص سلوك AI)</label>
+            <textarea id="ap-gemini-prompt" class="form-control" rows="4"
+              placeholder="أنت مساعد خبير في تربية النحل..." style="resize:vertical;font-size:12px;"></textarea>
+          </div>
+
+          <!-- Connection status -->
+          <div id="ap-gemini-status" style="background:rgba(66,133,244,.06);border:1px solid rgba(66,133,244,.12);border-radius:8px;padding:10px;margin-bottom:12px;font-size:11px;text-align:center;color:var(--text3);">
+            ⏳ لم يتم الاختبار بعد
+          </div>
+
+          <div style="display:flex;gap:8px;">
+            <button onclick="apSaveGemini()" class="btn btn-primary" style="flex:1;justify-content:center;">💾 حفظ</button>
+            <button onclick="apTestGemini()" class="btn btn-secondary btn-sm">🔗 اختبار</button>
+            <button onclick="apSyncGeminiToDB()" class="btn btn-secondary btn-sm">☁️ Supabase</button>
+          </div>
+          <div id="ap-gemini-msg" style="min-height:14px;margin-top:6px;font-size:11px;text-align:center;"></div>
+        </div>
+
+        <!-- Usage stats -->
+        <div class="card" style="border-color:rgba(66,133,244,.15);">
+          <div class="card-header"><span class="card-title">📊 إحصائيات الاستخدام</span><button onclick="apLoadGeminiStats()" class="btn btn-xs btn-secondary">تحديث</button></div>
+          <div id="ap-gemini-stats" style="font-size:11px;color:var(--text3);padding:8px;text-align:center;">اضغط تحديث</div>
+        </div>
+      </div>
+
+      <!-- ══ PANE: Cloud Accounts ══ -->
+      <div id="ap-pane-accounts" style="display:none;">
+        <!-- Stats bar -->
+        <div id="ap-accounts-stats" style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:12px;">
+          <div class="card" style="text-align:center;padding:10px;">
+            <div id="ap-stat-total" style="font-size:22px;font-weight:900;color:var(--gold);">—</div>
+            <div style="font-size:10px;color:var(--text3);">إجمالي</div>
+          </div>
+          <div class="card" style="text-align:center;padding:10px;">
+            <div id="ap-stat-active" style="font-size:22px;font-weight:900;color:var(--green);">—</div>
+            <div style="font-size:10px;color:var(--text3);">مرخّص</div>
+          </div>
+          <div class="card" style="text-align:center;padding:10px;">
+            <div id="ap-stat-trial" style="font-size:22px;font-weight:900;color:var(--gold);">—</div>
+            <div style="font-size:10px;color:var(--text3);">تجريبي</div>
+          </div>
+          <div class="card" style="text-align:center;padding:10px;">
+            <div id="ap-stat-cloud" style="font-size:22px;font-weight:900;color:#4285F4;">—</div>
+            <div style="font-size:10px;color:var(--text3);">سحابي</div>
+          </div>
+        </div>
+
+        <!-- Search & filter -->
+        <div class="card" style="padding:10px;margin-bottom:10px;">
+          <div style="display:flex;gap:7px;margin-bottom:8px;">
+            <input id="ap-accounts-search" class="form-control" placeholder="🔍 بحث بالبريد أو معرّف الجهاز..."
+              oninput="apFilterAccounts(this.value)" style="flex:1;font-size:12px;">
+            <button onclick="apLoadAccounts()" class="btn btn-primary btn-sm">🔄</button>
+          </div>
+          <div style="display:flex;gap:5px;flex-wrap:wrap;">
+            <button onclick="apFilterByStatus('')"    class="btn btn-xs btn-secondary ap-status-filter active">الكل</button>
+            <button onclick="apFilterByStatus('active')" class="btn btn-xs btn-secondary ap-status-filter">✅ نشط</button>
+            <button onclick="apFilterByStatus('trial')"  class="btn btn-xs btn-secondary ap-status-filter">🕐 تجريبي</button>
+            <button onclick="apFilterByStatus('expired')" class="btn btn-xs btn-secondary ap-status-filter">⏳ منتهي</button>
+            <button onclick="apFilterByStatus('blocked')" class="btn btn-xs btn-secondary ap-status-filter">🚫 محظور</button>
+          </div>
+        </div>
+
+        <!-- Accounts list -->
+        <div id="ap-accounts-list" style="display:flex;flex-direction:column;gap:8px;">
+          <div style="text-align:center;padding:20px;color:var(--text3);">اضغط 🔄 لتحميل الحسابات</div>
+        </div>
+
+        <!-- Add license manually -->
+        <div class="card" style="margin-top:10px;border-color:rgba(255,193,7,.2);">
+          <div class="card-header"><span class="card-title">➕ إضافة ترخيص يدوي</span></div>
+          <div style="margin-bottom:8px;"><label class="form-label">البريد الإلكتروني أو معرّف الجهاز</label>
+            <input id="ap-new-lic-id" class="form-control" placeholder="email@example.com أو D028-XXXX" dir="ltr" style="font-size:12px;">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:8px;">
+            <div><label class="form-label">مدة الترخيص (أيام)</label>
+              <select id="ap-new-lic-days" class="form-control">
+                <option value="30">30 يوم</option>
+                <option value="90">90 يوم</option>
+                <option value="180">6 أشهر</option>
+                <option value="365" selected>سنة</option>
+                <option value="36500">مدى الحياة</option>
+              </select>
+            </div>
+            <div><label class="form-label">ملاحظة</label>
+              <input id="ap-new-lic-note" class="form-control" placeholder="اسم العميل...">
+            </div>
+          </div>
+          <button onclick="apAddLicense()" class="btn btn-primary" style="width:100%;justify-content:center;">✅ إضافة وتفعيل</button>
+          <div id="ap-lic-msg" style="min-height:14px;margin-top:6px;font-size:11px;text-align:center;"></div>
+        </div>
+      </div>
+    </div>
 
 </body>
 </html>
