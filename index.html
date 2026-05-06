@@ -2237,93 +2237,6 @@ tr:hover td{background:rgba(255,255,255,.02);}
                 <button class="btn btn-secondary btn-sm" onclick="devForceUpdate()" style="font-size:11px;">🔄 إجبار التحديث</button>
                 <button class="btn btn-secondary btn-sm" onclick="devClearCache()" style="font-size:11px;">🗑️ مسح الكاش</button>
               </div>
-
-              <!-- ══ ANNOUNCEMENTS MANAGER ══ -->
-              <div style="background:rgba(255,193,7,.07);border:1.5px solid rgba(255,193,7,.25);border-radius:12px;padding:14px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                  <div style="display:flex;align-items:center;gap:8px;">
-                    <div style="width:36px;height:36px;background:linear-gradient(135deg,#FF8F00,#FFC107);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">📢</div>
-                    <div>
-                      <div style="font-weight:800;font-size:13px;color:var(--gold);">نظام الإعلانات</div>
-                      <div style="font-size:10px;color:var(--text3);">يظهر للمستخدمين التجريبيين عند الفتح</div>
-                    </div>
-                  </div>
-                  <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer;">
-                    <input type="checkbox" id="announce-active-toggle" onchange="toggleAnnouncement(this.checked)" style="opacity:0;width:0;height:0;position:absolute;">
-                    <span id="announce-toggle-track" style="position:absolute;inset:0;background:#333;border-radius:28px;transition:.3s;"></span>
-                    <span id="announce-toggle-knob" style="position:absolute;top:3px;right:3px;width:22px;height:22px;background:#666;border-radius:50%;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.4);"></span>
-                  </label>
-                </div>
-
-                <!-- Icon & Title -->
-                <div style="display:grid;grid-template-columns:80px 1fr;gap:8px;margin-bottom:8px;">
-                  <div>
-                    <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">الأيقونة</div>
-                    <input id="announce-icon" class="form-control" value="📢" style="font-size:18px;text-align:center;padding:6px;">
-                  </div>
-                  <div>
-                    <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">عنوان الإعلان</div>
-                    <input id="announce-title" class="form-control" placeholder="عنوان الرسالة..." style="font-size:12px;">
-                  </div>
-                </div>
-
-                <!-- Body -->
-                <div style="margin-bottom:8px;">
-                  <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">نص الإعلان</div>
-                  <textarea id="announce-body" class="form-control" rows="4" placeholder="اكتب رسالتك هنا...&#10;&#10;مثال: انتهت فترتك التجريبية، اشترك الآن للاستمرار!" style="font-size:12px;resize:vertical;"></textarea>
-                </div>
-
-                <!-- CTA Button -->
-                <div style="background:rgba(0,0,0,.2);border-radius:9px;padding:10px;margin-bottom:10px;">
-                  <div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:8px;">🔗 زر الإجراء (اختياري)</div>
-                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-                    <div>
-                      <div style="font-size:9px;color:var(--text3);margin-bottom:3px;">نص الزر</div>
-                      <input id="announce-cta-text" class="form-control" placeholder="اشترك الآن" style="font-size:11px;">
-                    </div>
-                    <div>
-                      <div style="font-size:9px;color:var(--text3);margin-bottom:3px;">رابط الزر</div>
-                      <input id="announce-cta-url" class="form-control" placeholder="https://..." style="font-size:11px;font-family:monospace;">
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Target -->
-                <div style="margin-bottom:10px;">
-                  <div style="font-size:10px;color:var(--text3);margin-bottom:6px;">👥 من يرى الإعلان؟</div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                    <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer;background:rgba(255,255,255,.05);border-radius:7px;padding:6px 10px;">
-                      <input type="radio" name="announce-target" value="trial" checked style="accent-color:var(--gold);"> فترة تجريبية فقط
-                    </label>
-                    <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer;background:rgba(255,255,255,.05);border-radius:7px;padding:6px 10px;">
-                      <input type="radio" name="announce-target" value="all" style="accent-color:var(--gold);"> جميع المستخدمين
-                    </label>
-                    <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer;background:rgba(255,255,255,.05);border-radius:7px;padding:6px 10px;">
-                      <input type="radio" name="announce-target" value="expired" style="accent-color:var(--gold);"> منتهي الترخيص
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Repeat -->
-                <div style="margin-bottom:12px;">
-                  <div style="font-size:10px;color:var(--text3);margin-bottom:6px;">🔁 تكرار الظهور</div>
-                  <select id="announce-repeat" class="form-control" style="font-size:11px;">
-                    <option value="once">مرة واحدة فقط</option>
-                    <option value="daily" selected>كل يوم</option>
-                    <option value="always">في كل فتح</option>
-                    <option value="weekly">كل أسبوع</option>
-                  </select>
-                </div>
-
-                <!-- Action buttons -->
-                <div style="display:flex;gap:7px;">
-                  <button class="btn btn-primary btn-sm" onclick="saveAnnouncement()" style="flex:1;justify-content:center;">💾 حفظ ونشر</button>
-                  <button class="btn btn-secondary btn-sm" onclick="previewAnnouncement()">👁️ معاينة</button>
-                  <button class="btn btn-secondary btn-sm" onclick="clearAnnouncementSeen()" title="إعادة تعيين من رأى الإعلان">🔄</button>
-                </div>
-                <div id="announce-save-status" style="font-size:10px;color:var(--green);margin-top:6px;text-align:center;min-height:14px;"></div>
-              </div>
-
             </div>
 
           </div>
@@ -10893,8 +10806,8 @@ function toggleDevPanel(){
     btn.style.background = isOpen ? 'linear-gradient(135deg,#FFC107,#FF6F00)' : '#333';
     btn.style.color = isOpen ? '#000' : '#aaa';
   }
-  if(!isOpen){ 
-    setTimeout(()=>adminLoadUsers(), 200);
+  if(!isOpen){
+    setTimeout(()=>{ adminLoadUsers(); panel.scrollIntoView({behavior:'smooth',block:'start'}); }, 200);
     _initCtrlTab();
   }
 }
@@ -12181,456 +12094,6 @@ setTimeout(_renderCustomGoals, 1500);
 
 
 /* ══════════════════════════════════════════════════════════
-   🛠️  ADMIN PANEL — Complete JS
-   Announcements · Stripe · Gemini AI · Cloud Accounts
-══════════════════════════════════════════════════════════ */
-
-// ── Tab navigation ──
-function apTab(tab){
-  ['announce','stripe','gemini','accounts'].forEach(t=>{
-    const btn  = document.getElementById('ap-tab-'+t);
-    const pane = document.getElementById('ap-pane-'+t);
-    const active = t===tab;
-    if(btn){  btn.style.background = active?'var(--gold)':'var(--bg3)';
-              btn.style.color      = active?'#000':'var(--text2)'; }
-    if(pane)  pane.style.display   = active?'block':'none';
-  });
-  if(tab==='accounts') apLoadAccounts();
-  if(tab==='stripe')   apLoadStripeSettings();
-  if(tab==='gemini')   apLoadGeminiSettings();
-  if(tab==='announce') apLoadAnnounceSettings();
-}
-
-function apLoad(){ apLoadAnnounceSettings(); }
-
-// ══════════════════════
-// 📢 ANNOUNCEMENTS
-// ══════════════════════
-const AP_ANN_TABLE = 'app_config';
-
-function apMsg(id, msg, color='var(--green)'){
-  const el=document.getElementById(id);
-  if(el){ el.textContent=msg; el.style.color=color; setTimeout(()=>el.textContent='',4000); }
-}
-
-function _apUpdateAnnToggle(checked){
-  const track=document.getElementById('ap-ann-track');
-  const knob=document.getElementById('ap-ann-knob');
-  if(track) track.style.background = checked?'var(--gold)':'#333';
-  if(knob)  knob.style.right       = checked?'2px':'calc(100% - 22px)';
-  if(knob)  knob.style.background  = checked?'#000':'#666';
-  const chk=document.getElementById('ap-ann-active');
-  if(chk)   chk.checked=checked;
-}
-
-function _apUpdateStripeToggle(checked){
-  const track=document.getElementById('ap-stripe-track');
-  const knob=document.getElementById('ap-stripe-knob');
-  if(track) track.style.background = checked?'#635BFF':'#333';
-  if(knob)  knob.style.right       = checked?'2px':'calc(100% - 22px)';
-  if(knob)  knob.style.background  = checked?'#fff':'#666';
-  const chk=document.getElementById('ap-stripe-visible');
-  if(chk)   chk.checked=checked;
-}
-
-function _apUpdateGeminiToggle(checked){
-  const track=document.getElementById('ap-gemini-track');
-  const knob=document.getElementById('ap-gemini-knob');
-  if(track) track.style.background = checked?'#4285F4':'#333';
-  if(knob)  knob.style.right       = checked?'2px':'calc(100% - 22px)';
-  if(knob)  knob.style.background  = checked?'#fff':'#666';
-  const chk=document.getElementById('ap-gemini-visible');
-  if(chk)   chk.checked=checked;
-}
-
-function apLoadAnnounceSettings(){
-  const ann = _getAnnouncement ? _getAnnouncement() : null;
-  if(!ann) return;
-  const g = id => document.getElementById(id);
-  if(g('apf-ann-icon'))    g('apf-ann-icon').value    = ann.icon||'📢';
-  if(g('apf-ann-title'))   g('apf-ann-title').value   = ann.title||'';
-  if(g('apf-ann-body'))    g('apf-ann-body').value    = ann.body||'';
-  if(g('apf-ann-cta-text'))g('apf-ann-cta-text').value= ann.ctaText||'';
-  if(g('apf-ann-cta-url')) g('apf-ann-cta-url').value = ann.ctaUrl||'';
-  if(g('apf-ann-target'))  g('apf-ann-target').value  = ann.target||'all';
-  if(g('apf-ann-repeat'))  g('apf-ann-repeat').value  = ann.repeat||'daily';
-  _apUpdateAnnToggle(ann.active===true);
-  const prev = document.getElementById('ap-ann-preview');
-  if(prev) prev.textContent = ann.title ? `"${ann.title}" — ${ann.body?.slice(0,60)||''}...` : 'لا يوجد إعلان';
-}
-
-function apToggleAnnounce(checked){
-  const ann = _getAnnouncement ? _getAnnouncement() : {};
-  if(ann){ ann.active=checked; if(typeof _saveAnnouncement==='function') _saveAnnouncement(ann); }
-  _apUpdateAnnToggle(checked);
-  toast(checked?'✅ الإعلان مفعّل':'⏸️ الإعلان متوقف', checked?'success':'info');
-  _applyAllDevToggles && _applyAllDevToggles();
-}
-
-function apSaveAnnounce(){
-  const g = id => document.getElementById(id)?.value?.trim();
-  const title=g('apf-ann-title'), body=g('apf-ann-body');
-  if(!title||!body){ toast('أدخل العنوان والنص','warning'); return; }
-  const ann = {
-    id:'ann_'+Date.now(), active:document.getElementById('ap-ann-active')?.checked||false,
-    icon:g('apf-ann-icon')||'📢', title, body,
-    ctaText:g('apf-ann-cta-text')||'', ctaUrl:g('apf-ann-cta-url')||'',
-    target:document.getElementById('apf-ann-target')?.value||'all',
-    repeat:document.getElementById('apf-ann-repeat')?.value||'daily',
-    updatedAt:new Date().toISOString()
-  };
-  if(typeof _saveAnnouncement==='function') _saveAnnouncement(ann);
-  apLoadAnnounceSettings();
-  apMsg('ap-ann-msg','✅ تم الحفظ محلياً — اضغط "رفع للسحابة" للمزامنة');
-  toast('✅ تم حفظ الإعلان','success');
-}
-
-function apPreviewAnnounce(){
-  const g = id => document.getElementById(id)?.value?.trim();
-  const ann={id:'preview',active:true,icon:g('apf-ann-icon')||'📢',
-    title:g('apf-ann-title')||'إعلان',body:g('apf-ann-body')||'...',
-    ctaText:g('apf-ann-cta-text'),ctaUrl:g('apf-ann-cta-url'),repeat:'always',target:'all'};
-  if(typeof _showAnnouncementPopup==='function') _showAnnouncementPopup(ann);
-}
-
-function apClearAnnounce(){
-  if(!confirm('حذف الإعلان الحالي؟')) return;
-  localStorage.removeItem('nec_announcement');
-  apLoadAnnounceSettings();
-  toast('تم الحذف','warning');
-}
-
-async function apSyncAnnounceToDB(){
-  const st=document.getElementById('ap-ann-sync-status');
-  if(st) st.textContent='⏳ جاري الرفع...';
-  const ann=_getAnnouncement?_getAnnouncement():null;
-  if(!ann){ if(st) st.textContent='❌ لا يوجد إعلان للرفع'; return; }
-  try{
-    await sbQuery('POST','app_config?on_conflict=config_key',
-      {config_key:'announcement',config_value:ann,updated_at:new Date().toISOString()});
-    if(st){st.textContent='✅ تم الرفع إلى Supabase'; st.style.color='var(--green)';}
-  }catch(e){ if(st){st.textContent='❌ '+e.message; st.style.color='var(--red)';} }
-}
-
-async function apFetchAnnounceFromDB(){
-  const st=document.getElementById('ap-ann-sync-status');
-  if(st) st.textContent='⏳ جاري الجلب...';
-  try{
-    const rows=await sbQuery('GET','app_config?config_key=eq.announcement&select=config_value');
-    if(rows&&rows[0]?.config_value){
-      if(typeof _saveAnnouncement==='function') _saveAnnouncement(rows[0].config_value);
-      apLoadAnnounceSettings();
-      if(st){st.textContent='✅ تم الجلب من Supabase'; st.style.color='var(--green)';}
-    } else {
-      if(st) st.textContent='⚠️ لا يوجد إعلان في السحابة';
-    }
-  }catch(e){ if(st){st.textContent='❌ '+e.message; st.style.color='var(--red)';} }
-}
-
-// ══════════════════════
-// 💳 STRIPE
-// ══════════════════════
-function apLoadStripeSettings(){
-  const s = DB.get('stripe_settings')||{};
-  const g = id => document.getElementById(id);
-  if(g('ap-s-monthly-price'))  g('ap-s-monthly-price').value  = s.monthly?.price||'500 دج';
-  if(g('ap-s-monthly-usd'))    g('ap-s-monthly-usd').value    = s.monthly?.usd||'$1.99';
-  if(g('ap-s-monthly-url'))    g('ap-s-monthly-url').value    = s.monthly?.url||'';
-  if(g('ap-s-yearly-price'))   g('ap-s-yearly-price').value   = s.yearly?.price||'4500 دج';
-  if(g('ap-s-yearly-usd'))     g('ap-s-yearly-usd').value     = s.yearly?.usd||'$17.99';
-  if(g('ap-s-yearly-url'))     g('ap-s-yearly-url').value     = s.yearly?.url||'';
-  if(g('ap-s-lifetime-price')) g('ap-s-lifetime-price').value = s.lifetime?.price||'15000 دج';
-  if(g('ap-s-lifetime-usd'))   g('ap-s-lifetime-usd').value   = s.lifetime?.usd||'$59.99';
-  if(g('ap-s-lifetime-url'))   g('ap-s-lifetime-url').value   = s.lifetime?.url||'';
-  const ds=_getDevSettings?_getDevSettings():{};
-  _apUpdateStripeToggle(ds.stripe_visible!==false);
-  apLoadStripeStats();
-}
-
-function apToggleStripe(checked){
-  const s=_getDevSettings?_getDevSettings():{};
-  s.stripe_visible = checked?undefined:false;
-  if(typeof _saveDevSettings==='function') _saveDevSettings(s);
-  _apUpdateStripeToggle(checked);
-  _applyAllDevToggles&&_applyAllDevToggles();
-  toast(checked?'✅ Stripe ظاهر للعملاء':'🙈 Stripe مخفي',checked?'success':'warning');
-}
-
-function apSaveStripe(){
-  const g=id=>document.getElementById(id)?.value?.trim();
-  const settings={
-    monthly: {price:g('ap-s-monthly-price'),usd:g('ap-s-monthly-usd'),url:g('ap-s-monthly-url')},
-    yearly:  {price:g('ap-s-yearly-price'), usd:g('ap-s-yearly-usd'), url:g('ap-s-yearly-url')},
-    lifetime:{price:g('ap-s-lifetime-price'),usd:g('ap-s-lifetime-usd'),url:g('ap-s-lifetime-url')},
-  };
-  DB.set('stripe_settings',settings);
-  apMsg('ap-stripe-msg','✅ تم الحفظ محلياً');
-  toast('✅ تم حفظ إعدادات Stripe','success');
-}
-
-async function apSyncStripeToDB(){
-  const s=DB.get('stripe_settings');
-  if(!s){toast('احفظ الإعدادات أولاً','warning');return;}
-  try{
-    await sbQuery('POST','app_config?on_conflict=config_key',
-      {config_key:'stripe_settings',config_value:s,updated_at:new Date().toISOString()});
-    apMsg('ap-stripe-msg','✅ تم الرفع إلى Supabase');
-  }catch(e){apMsg('ap-stripe-msg','❌ '+e.message,'var(--red)');}
-}
-
-async function apLoadStripeStats(){
-  const el=document.getElementById('ap-stripe-stats');
-  if(!el) return;
-  try{
-    const lics=await sbQuery('GET','licenses?select=status&limit=500')||[];
-    const active=lics.filter(r=>r.status==='active').length;
-    const trial=lics.filter(r=>r.status==='trial').length;
-    const expired=lics.filter(r=>r.status==='expired').length;
-    el.innerHTML=`<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center;">
-      <div><div style="font-size:20px;font-weight:900;color:var(--green);">${active}</div><div style="font-size:10px;color:var(--text3);">مرخّص ✅</div></div>
-      <div><div style="font-size:20px;font-weight:900;color:var(--gold);">${trial}</div><div style="font-size:10px;color:var(--text3);">تجريبي 🕐</div></div>
-      <div><div style="font-size:20px;font-weight:900;color:var(--orange);">${expired}</div><div style="font-size:10px;color:var(--text3);">منتهي ⏳</div></div>
-    </div>`;
-  }catch(e){el.textContent='❌ '+e.message;}
-}
-
-// ══════════════════════
-// 🧠 GEMINI AI
-// ══════════════════════
-function apLoadGeminiSettings(){
-  const key=DB.get('gemini_api_key')||'';
-  const model=DB.get('gemini_model')||'gemini-2.0-flash';
-  const prompt=DB.get('gemini_system_prompt')||'';
-  const g=id=>document.getElementById(id);
-  if(g('ap-gemini-key'))    g('ap-gemini-key').value    = key;
-  if(g('ap-gemini-model'))  g('ap-gemini-model').value  = model;
-  if(g('ap-gemini-prompt')) g('ap-gemini-prompt').value = prompt;
-  const ds=_getDevSettings?_getDevSettings():{};
-  _apUpdateGeminiToggle(ds.gemini_visible!==false);
-  const st=document.getElementById('ap-gemini-status');
-  if(st) st.textContent=key?'🔑 مفتاح محفوظ — اضغط اختبار للتحقق':'⚠️ لم يتم إدخال المفتاح بعد';
-}
-
-function apToggleGemini(checked){
-  const s=_getDevSettings?_getDevSettings():{};
-  s.gemini_visible=checked?undefined:false;
-  if(typeof _saveDevSettings==='function') _saveDevSettings(s);
-  _apUpdateGeminiToggle(checked);
-  _applyAllDevToggles&&_applyAllDevToggles();
-  toast(checked?'✅ Gemini ظاهر للعملاء':'🙈 Gemini مخفي',checked?'success':'warning');
-}
-
-function apSaveGemini(){
-  const key=document.getElementById('ap-gemini-key')?.value?.trim();
-  const model=document.getElementById('ap-gemini-model')?.value;
-  const prompt=document.getElementById('ap-gemini-prompt')?.value?.trim();
-  if(!key){toast('أدخل مفتاح Gemini API','warning');return;}
-  DB.set('gemini_api_key',key);
-  DB.set('gemini_model',model||'gemini-2.0-flash');
-  if(prompt) DB.set('gemini_system_prompt',prompt);
-  apMsg('ap-gemini-msg','✅ تم الحفظ محلياً');
-  toast('✅ تم حفظ إعدادات Gemini','success');
-  apLoadGeminiSettings();
-}
-
-async function apTestGemini(){
-  const key=document.getElementById('ap-gemini-key')?.value?.trim()||DB.get('gemini_api_key');
-  const model=document.getElementById('ap-gemini-model')?.value||'gemini-2.0-flash';
-  const st=document.getElementById('ap-gemini-status');
-  if(!key){if(st)st.textContent='❌ أدخل مفتاح API أولاً';return;}
-  if(st){st.textContent='⏳ جاري الاختبار...';st.style.color='var(--text3)';}
-  try{
-    const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${key}`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{parts:[{text:'قل مرحبا'}]}]})
-    });
-    const data=await res.json();
-    if(data.candidates?.[0]?.content){
-      if(st){st.textContent=`✅ متصل — ${model} يعمل بنجاح!`;st.style.color='var(--green)';}
-    } else throw new Error(data.error?.message||'فشل الاتصال');
-  }catch(e){if(st){st.textContent='❌ '+e.message;st.style.color='var(--red)';}}
-}
-
-async function apSyncGeminiToDB(){
-  const key=DB.get('gemini_api_key');
-  const model=DB.get('gemini_model');
-  if(!key){apMsg('ap-gemini-msg','احفظ المفتاح أولاً','var(--orange)');return;}
-  try{
-    await sbQuery('POST','app_config?on_conflict=config_key',
-      {config_key:'gemini_config',config_value:{model,has_key:true},updated_at:new Date().toISOString()});
-    apMsg('ap-gemini-msg','✅ تم الرفع (المفتاح يُخزَّن محلياً فقط لأسباب أمنية)');
-  }catch(e){apMsg('ap-gemini-msg','❌ '+e.message,'var(--red)');}
-}
-
-async function apLoadGeminiStats(){
-  const el=document.getElementById('ap-gemini-stats');
-  if(!el) return;
-  try{
-    const rows=await sbQuery('GET','app_config?config_key=eq.gemini_usage&select=config_value')||[];
-    const usage=rows[0]?.config_value||{requests:0,tokens:0};
-    el.innerHTML=`<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;text-align:center;">
-      <div><div style="font-size:18px;font-weight:900;color:#4285F4;">${usage.requests||0}</div><div style="font-size:10px;">طلبات إجمالية</div></div>
-      <div><div style="font-size:18px;font-weight:900;color:#34A853;">${usage.tokens||0}</div><div style="font-size:10px;">tokens مستخدمة</div></div>
-    </div>`;
-  }catch(e){el.textContent='لا بيانات بعد';}
-}
-
-// ══════════════════════
-// 👥 CLOUD ACCOUNTS
-// ══════════════════════
-let _apAllAccounts=[];
-let _apStatusFilter='';
-
-async function apLoadAccounts(){
-  const el=document.getElementById('ap-accounts-list');
-  if(el) el.innerHTML='<div style="text-align:center;padding:20px;">⏳ جاري التحميل...</div>';
-  try{
-    const [lics,farm]=await Promise.allSettled([
-      sbQuery('GET','licenses?select=*&order=install_date.desc&limit=500'),
-      sbQuery('GET','farm_data?select=device_id,updated_at&order=updated_at.desc&limit=500')
-    ]);
-    const licData=lics.status==='fulfilled'?(lics.value||[]):[];
-    const farmData=farm.status==='fulfilled'?(farm.value||[]):[];
-
-    // Build farm sync map
-    const farmMap={};
-    farmData.forEach(r=>{if(!farmMap[r.device_id])farmMap[r.device_id]=r.updated_at;});
-
-    // Merge
-    _apAllAccounts=licData.map(r=>({...r,lastSync:farmMap[r.user_id||r.device_id]||null}));
-
-    // Add farm accounts without license
-    Object.keys(farmMap).forEach(did=>{
-      if(!_apAllAccounts.find(r=>(r.user_id||r.device_id)===did)){
-        _apAllAccounts.push({device_id:did,status:'no_license',lastSync:farmMap[did]});
-      }
-    });
-
-    // Stats
-    const tot=_apAllAccounts.length;
-    const act=_apAllAccounts.filter(r=>r.status==='active').length;
-    const tri=_apAllAccounts.filter(r=>r.status==='trial').length;
-    const cld=Object.keys(farmMap).length;
-    const setN=(id,n)=>{const e=document.getElementById(id);if(e)e.textContent=n;};
-    setN('ap-stat-total',tot); setN('ap-stat-active',act);
-    setN('ap-stat-trial',tri); setN('ap-stat-cloud',cld);
-
-    apRenderAccounts(_apAllAccounts);
-  }catch(e){
-    if(el) el.innerHTML=`<div style="color:var(--red);text-align:center;padding:16px;">❌ ${e.message}</div>`;
-  }
-}
-
-function apRenderAccounts(list){
-  const el=document.getElementById('ap-accounts-list');
-  if(!el) return;
-  if(!list.length){el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);">لا توجد نتائج</div>';return;}
-  const statusColor={active:'var(--green)',trial:'var(--gold)',expired:'var(--orange)',blocked:'var(--red)',no_license:'var(--text3)'};
-  const statusLabel={active:'✅ نشط',trial:'🕐 تجريبي',expired:'⏳ منتهي',blocked:'🚫 محظور',no_license:'⚪ بلا ترخيص'};
-  el.innerHTML=list.map(r=>{
-    const uid=r.user_id||r.device_id||'';
-    const email=r.email||r.notes||'';
-    const sc=statusColor[r.status]||'var(--text3)';
-    const sl=statusLabel[r.status]||r.status;
-    const sync=r.lastSync?new Date(r.lastSync).toLocaleDateString('ar-DZ'):'—';
-    const inst=r.install_date?new Date(r.install_date).toLocaleDateString('ar-DZ'):'—';
-    const exp=r.serial_expires?new Date(r.serial_expires).toLocaleDateString('ar-DZ'):'—';
-    return `<div style="background:var(--bg3);border:1.5px solid ${sc}33;border-radius:12px;padding:12px;">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
-        <div style="width:36px;height:36px;border-radius:50%;background:${sc}22;border:2px solid ${sc};display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;">${r.status==='active'?'✅':r.status==='trial'?'🕐':r.status==='blocked'?'🚫':'⚪'}</div>
-        <div style="flex:1;min-width:0;">
-          ${email?`<div style="font-weight:700;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">📧 ${email}</div>`:''}
-          <div style="font-size:10px;font-family:monospace;color:var(--text3);overflow:hidden;text-overflow:ellipsis;">📱 ${uid.slice(0,20)}...</div>
-          <div style="font-size:10px;color:${sc};font-weight:700;">${sl}</div>
-        </div>
-      </div>
-      <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:8px;">
-        <span style="font-size:9px;background:rgba(255,255,255,.05);border-radius:5px;padding:2px 6px;">📅 تثبيت: ${inst}</span>
-        <span style="font-size:9px;background:rgba(255,255,255,.05);border-radius:5px;padding:2px 6px;">⏳ انتهاء: ${exp}</span>
-        ${r.lastSync?`<span style="font-size:9px;background:rgba(66,133,244,.1);border-radius:5px;padding:2px 6px;color:#4285F4;">☁️ ${sync}</span>`:''}
-      </div>
-      <div style="display:flex;gap:5px;flex-wrap:wrap;">
-        ${r.status!=='active'?`<button onclick="apSetStatus('${uid}','active')" style="flex:1;min-width:60px;background:rgba(76,175,80,.15);border:1px solid rgba(76,175,80,.3);border-radius:7px;padding:5px;font-family:'Cairo',sans-serif;font-size:10px;font-weight:700;color:var(--green);cursor:pointer;">✅ تفعيل</button>`:''}
-        ${r.status==='active'?`<button onclick="apSetStatus('${uid}','expired')" style="flex:1;min-width:60px;background:rgba(255,152,0,.12);border:1px solid rgba(255,152,0,.25);border-radius:7px;padding:5px;font-family:'Cairo',sans-serif;font-size:10px;font-weight:700;color:var(--orange);cursor:pointer;">⏸ إيقاف</button>`:''}
-        <button onclick="apExtend('${uid}')" style="flex:1;min-width:60px;background:rgba(33,150,243,.12);border:1px solid rgba(33,150,243,.25);border-radius:7px;padding:5px;font-family:'Cairo',sans-serif;font-size:10px;font-weight:700;color:var(--blue);cursor:pointer;">📅 تمديد</button>
-        ${r.status!=='blocked'?`<button onclick="apSetStatus('${uid}','blocked')" style="background:rgba(244,67,54,.12);border:1px solid rgba(244,67,54,.25);border-radius:7px;padding:5px 8px;font-size:10px;color:var(--red);cursor:pointer;">🚫</button>`:`<button onclick="apSetStatus('${uid}','trial')" style="background:rgba(76,175,80,.12);border:1px solid rgba(76,175,80,.25);border-radius:7px;padding:5px 8px;font-size:10px;color:var(--green);cursor:pointer;">✅</button>`}
-        ${email?`<button onclick="adminContactEmail('${email}')" style="background:rgba(66,133,244,.12);border:1px solid rgba(66,133,244,.25);border-radius:7px;padding:5px 8px;font-size:10px;color:#4285F4;cursor:pointer;">📧</button>`:''}
-      </div>
-    </div>`;
-  }).join('');
-}
-
-async function apSetStatus(uid,status){
-  try{
-    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(uid),{status});
-    _apAllAccounts=_apAllAccounts.map(r=>(r.user_id||r.device_id)===uid?{...r,status}:r);
-    apRenderAccounts(_apStatusFilter?_apAllAccounts.filter(r=>r.status===_apStatusFilter):_apAllAccounts);
-    toast('✅ تم تحديث الحالة','success');
-  }catch(e){toast('❌ '+e.message,'error');}
-}
-
-async function apExtend(uid){
-  const days=prompt('مدة التمديد (أيام):','365');
-  if(!days||isNaN(days)) return;
-  const exp=new Date(); exp.setDate(exp.getDate()+parseInt(days));
-  try{
-    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(uid),
-      {status:'active',serial_expires:exp.toISOString()});
-    _apAllAccounts=_apAllAccounts.map(r=>(r.user_id||r.device_id)===uid?{...r,status:'active',serial_expires:exp.toISOString()}:r);
-    apRenderAccounts(_apAllAccounts);
-    toast(`✅ تم التمديد ${days} يوم`,'success');
-  }catch(e){toast('❌ '+e.message,'error');}
-}
-
-function apFilterAccounts(q){
-  if(!q){apRenderAccounts(_apStatusFilter?_apAllAccounts.filter(r=>r.status===_apStatusFilter):_apAllAccounts);return;}
-  const ql=q.toLowerCase();
-  const filtered=_apAllAccounts.filter(r=>
-    (r.email||'').toLowerCase().includes(ql)||(r.device_id||'').toLowerCase().includes(ql)||
-    (r.notes||'').toLowerCase().includes(ql)||(r.user_id||'').toLowerCase().includes(ql));
-  apRenderAccounts(filtered);
-}
-
-function apFilterByStatus(status){
-  _apStatusFilter=status;
-  document.querySelectorAll('.ap-status-filter').forEach(b=>b.classList.remove('active','btn-primary'));
-  document.querySelectorAll('.ap-status-filter').forEach(b=>{
-    if((b.textContent.includes('الكل')&&!status)||(status&&b.onclick?.toString().includes("'"+status+"'"))){
-      b.style.background='var(--gold)'; b.style.color='#000';
-    } else { b.style.background='var(--bg3)'; b.style.color='var(--text2)'; }
-  });
-  apRenderAccounts(status?_apAllAccounts.filter(r=>r.status===status):_apAllAccounts);
-}
-
-async function apAddLicense(){
-  const idVal=document.getElementById('ap-new-lic-id')?.value?.trim();
-  const days=parseInt(document.getElementById('ap-new-lic-days')?.value)||365;
-  const note=document.getElementById('ap-new-lic-note')?.value?.trim()||'';
-  if(!idVal){toast('أدخل البريد أو معرّف الجهاز','warning');return;}
-  const exp=new Date(); exp.setDate(exp.getDate()+days);
-  const isEmail=idVal.includes('@');
-  const licData={device_id:idVal,user_id:idVal,status:'active',
-    serial_expires:exp.toISOString(),install_date:new Date().toISOString(),
-    notes:note,email:isEmail?idVal:''};
-  try{
-    await sbQuery('POST','licenses?on_conflict=device_id',licData);
-    toast('✅ تم إضافة الترخيص','success');
-    apMsg('ap-lic-msg',`✅ تم تفعيل ${isEmail?idVal:'الجهاز'} لمدة ${days} يوم`);
-    if(document.getElementById('ap-new-lic-id')) document.getElementById('ap-new-lic-id').value='';
-    setTimeout(apLoadAccounts,500);
-  }catch(e){
-    apMsg('ap-lic-msg','❌ '+e.message,'var(--red)');
-    toast('❌ '+e.message,'error');
-  }
-}
-
-// Init admin panel on first load
-setTimeout(()=>{
-  if(typeof apLoadAnnounceSettings==='function') apLoadAnnounceSettings();
-},1000);
-
-
-/* ══════════════════════════════════════════════════════════
    🛠️ ADMIN CONTROL PANEL — Full JS
    Announcements · Stripe · Gemini · Cloud Accounts
 ══════════════════════════════════════════════════════════ */
@@ -12933,6 +12396,98 @@ async function apLoadGeminiStats(){
     </div>`;
   }catch(e){el.innerHTML='<div style="font-size:10px;color:var(--text3);">جدول السجلات غير موجود بعد</div>';}
 }
+
+// ════════════════════════════════════
+// 👥 CLOUD ACCOUNTS — ap-pane-accounts
+// ════════════════════════════════════
+let _apAllAccounts = [];
+let _apStatusFilter = '';
+
+async function apLoadAccounts(){
+  const listEl   = document.getElementById('ap-accounts-list');
+  const statEl   = document.getElementById('ap-accounts-stats');
+  if(!listEl) return;
+  listEl.innerHTML = '<div style="text-align:center;padding:30px;color:var(--text3);">⏳ جاري التحميل...</div>';
+  try{
+    const data = await sbQuery('GET','licenses?select=*&order=install_date.desc&limit=300') || [];
+    _apAllAccounts = data;
+    // Stats
+    const s={total:data.length,active:0,trial:0,expired:0,cloud:0};
+    data.forEach(r=>{
+      if(r.status==='active') s.active++;
+      else if(r.status==='trial') s.trial++;
+      else if(r.status==='expired'||r.status==='blocked') s.expired++;
+      if(r.email) s.cloud++;
+    });
+    const sEl=document.getElementById('ap-stat-total');   if(sEl) sEl.textContent=s.total;
+    const aEl=document.getElementById('ap-stat-active');  if(aEl) aEl.textContent=s.active;
+    const tEl=document.getElementById('ap-stat-trial');   if(tEl) tEl.textContent=s.trial;
+    const cEl=document.getElementById('ap-stat-cloud');   if(cEl) cEl.textContent=s.cloud;
+    _apRenderAccounts(_apStatusFilter ? data.filter(r=>r.status===_apStatusFilter) : data);
+  }catch(e){
+    listEl.innerHTML=`<div style="color:var(--red);text-align:center;padding:20px;">❌ ${e.message}</div>`;
+  }
+}
+
+function _apRenderAccounts(list){
+  const el=document.getElementById('ap-accounts-list');
+  if(!el) return;
+  if(!list.length){
+    el.innerHTML='<div style="text-align:center;padding:20px;color:var(--text3);">لا توجد نتائج</div>';
+    return;
+  }
+  const statusLabel={active:'✅ نشط',trial:'🕐 تجريبي',expired:'⏳ منتهي',blocked:'🚫 محظور'};
+  const statusColor={active:'var(--green)',trial:'var(--gold)',expired:'var(--text3)',blocked:'var(--red)'};
+  el.innerHTML = list.map(r=>`
+    <div class="card" style="padding:10px;border-color:rgba(255,255,255,.08);">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+        <div style="font-size:12px;font-weight:700;">${r.email||r.device_id?.slice(0,16)||'—'}</div>
+        <span style="font-size:10px;font-weight:700;color:${statusColor[r.status]||'var(--text3)'};">${statusLabel[r.status]||r.status}</span>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;">
+        <span style="font-size:9px;color:var(--text3);">🔑 ${r.serial||'—'}</span>
+        <span style="font-size:9px;color:var(--text3);">📅 ${r.install_date?r.install_date.slice(0,10):'—'}</span>
+        ${r.expire_date?`<span style="font-size:9px;color:var(--text3);">⏱ ${r.expire_date.slice(0,10)}</span>`:''}
+      </div>
+      <div style="display:flex;gap:5px;margin-top:8px;">
+        <button onclick="apRevokeAccount('${r.device_id}')" class="btn btn-xs" style="background:rgba(239,68,68,.12);border:1px solid rgba(239,68,68,.2);color:var(--red);font-size:10px;">🚫 إلغاء</button>
+        <button onclick="apCopyId('${r.device_id||r.serial}')" class="btn btn-xs btn-secondary" style="font-size:10px;">📋 نسخ</button>
+      </div>
+    </div>`).join('');
+}
+
+function apFilterAccounts(q){
+  const filtered = _apAllAccounts.filter(r=>
+    (r.email||'').toLowerCase().includes(q.toLowerCase()) ||
+    (r.device_id||'').toLowerCase().includes(q.toLowerCase()) ||
+    (r.serial||'').toLowerCase().includes(q.toLowerCase())
+  );
+  _apRenderAccounts(_apStatusFilter ? filtered.filter(r=>r.status===_apStatusFilter) : filtered);
+}
+
+function apFilterByStatus(status){
+  _apStatusFilter = status;
+  document.querySelectorAll('.ap-status-filter').forEach(b=>{
+    b.classList.toggle('active', b.getAttribute('onclick').includes("'"+status+"'"));
+    b.style.background = b.classList.contains('active') ? 'var(--gold)' : '';
+    b.style.color = b.classList.contains('active') ? '#000' : '';
+  });
+  _apRenderAccounts(status ? _apAllAccounts.filter(r=>r.status===status) : _apAllAccounts);
+}
+
+async function apRevokeAccount(deviceId){
+  if(!deviceId || !confirm('إلغاء هذا الترخيص؟')) return;
+  try{
+    await sbQuery('PATCH',`licenses?device_id=eq.${encodeURIComponent(deviceId)}`,{status:'blocked'});
+    toast('تم الإلغاء','success');
+    apLoadAccounts();
+  }catch(e){ toast('❌ '+e.message,'error'); }
+}
+
+function apCopyId(id){
+  navigator.clipboard.writeText(id||'').then(()=>toast('تم النسخ ✓','success')).catch(()=>{});
+}
+
 
 
 </script>
