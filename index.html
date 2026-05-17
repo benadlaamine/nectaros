@@ -2081,436 +2081,14 @@ tr:hover td{background:rgba(255,255,255,.02);}
         <div id="sec-license-status" style="padding:4px 0;"></div>
         <!-- لوحة إدارة التراخيص — مخفية، تظهر فقط لجهاز المالك -->
         <div id="dev-panel" style="display:none;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);">
-          <!-- Admin Panel Quick Access -->
-          <button onclick="go('adminpanel')" style="width:100%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1.5px solid var(--gold);border-radius:12px;padding:14px;font-family:'Cairo',sans-serif;font-weight:800;font-size:13px;cursor:pointer;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:14px;box-shadow:0 4px 20px rgba(255,193,7,.15);">
-            <span style="font-size:22px;">🛠️</span>
+          <button onclick="go('adminpanel')" style="width:100%;background:linear-gradient(135deg,#1a1a2e,#16213e);border:1.5px solid var(--gold);border-radius:14px;padding:16px;font-family:'Cairo',sans-serif;font-weight:800;font-size:14px;cursor:pointer;color:var(--gold);display:flex;align-items:center;justify-content:center;gap:12px;box-shadow:0 4px 20px rgba(255,193,7,.15);">
+            <span style="font-size:26px;">🛠️</span>
             <div style="text-align:right;">
-              <div>لوحة تحكم المطوّر الكاملة</div>
-              <div style="font-size:10px;color:var(--text3);font-weight:400;">إعلانات · Stripe · Gemini · الحسابات</div>
+              <div>لوحة تحكم المطوّر</div>
+              <div style="font-size:10px;color:rgba(255,193,7,.6);font-weight:400;">تراخيص · إعلانات · Stripe · Gemini · الحسابات</div>
             </div>
-            <span style="margin-right:auto;opacity:.5;">←</span>
           </button>
-          <div style="background:rgba(255,193,7,.05);border:1.5px solid rgba(255,193,7,.25);border-radius:14px;overflow:hidden;">
-
-            <!-- Header -->
-            <div style="background:linear-gradient(135deg,rgba(255,193,7,.15),rgba(255,111,0,.1));padding:12px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,193,7,.2);">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <span style="font-size:20px;">🛠️</span>
-                <div>
-                  <div style="font-size:13px;font-weight:800;color:var(--gold);">إدارة التراخيص</div>
-                  <div style="font-size:9px;color:var(--text3);">للمطوّر فقط — NectarOS</div>
-                </div>
-              </div>
-              <button class="btn btn-secondary btn-sm" onclick="adminLoadUsers()">🔄 تحديث</button>
-            </div>
-
-            <!-- تبويبات -->
-            <div style="display:flex;border-bottom:1px solid var(--border);">
-              <button id="adm-tab-gen" onclick="adminTab('gen')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--gold);color:#000;cursor:pointer;">⚡ توليد</button>
-              <button id="adm-tab-list" onclick="adminTab('list')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--bg3);color:var(--text2);cursor:pointer;">📋 القائمة</button>
-              <button id="adm-tab-search" onclick="adminTab('search')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--bg3);color:var(--text2);cursor:pointer;">🔍 بحث</button>
-              <button id="adm-tab-ctrl" onclick="adminTab('ctrl')" style="flex:1;padding:9px;font-family:'Cairo',sans-serif;font-size:11px;font-weight:700;border:none;background:var(--bg3);color:var(--text2);cursor:pointer;">⚙️ تحكم</button>
-            </div>
-
-            <!-- تبويب: توليد سيريال -->
-            <div id="adm-pane-gen" style="padding:14px;">
-              <div class="form-group">
-                <label class="form-label" style="font-size:11px;">📱 Device ID للعميل</label>
-                <div style="display:flex;gap:6px;">
-                  <input id="admin-device-id" class="form-control" style="font-family:monospace;font-size:11px;flex:1;" placeholder="XXXX-XXXX-XXXX-XXXX" dir="ltr" oninput="this.value=this.value.toUpperCase()">
-                  <button onclick="adminPasteDeviceId()" class="btn btn-secondary btn-sm" style="flex-shrink:0;">📋 لصق</button>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label" style="font-size:11px;">👤 اسم العميل</label>
-                <input id="admin-note" class="form-control" placeholder="مثال: أحمد — الجزائر العاصمة">
-              </div>
-              <div class="form-group">
-                <label class="form-label" style="font-size:11px;">⏳ مدة الترخيص</label>
-                <select id="admin-duration" class="form-control">
-                  <option value="30">30 يوم (تجريبي ممتد)</option>
-                  <option value="90">3 أشهر</option>
-                  <option value="180">6 أشهر</option>
-                  <option value="365" selected>سنة كاملة</option>
-                  <option value="3650">مدى الحياة</option>
-                </select>
-              </div>
-              <button class="btn btn-primary" style="width:100%;" onclick="adminGenerateSerial()">⚡ توليد السيريال</button>
-
-              <!-- نتيجة السيريال -->
-              <div id="admin-result-box" style="display:none;margin-top:12px;background:var(--bg3);border:1px solid rgba(255,193,7,.3);border-radius:10px;padding:12px;">
-                <div style="font-size:10px;color:var(--text3);margin-bottom:6px;text-align:center;">السيريال الجاهز للإرسال</div>
-                <div id="admin-serial-result" style="font-family:monospace;font-size:16px;font-weight:800;color:var(--gold);text-align:center;letter-spacing:3px;word-break:break-all;margin-bottom:8px;"></div>
-                <div id="admin-serial-info" style="font-size:10px;color:var(--text2);text-align:center;margin-bottom:10px;"></div>
-                <div style="display:flex;gap:8px;">
-                  <button class="btn btn-secondary btn-sm" style="flex:1;" onclick="adminCopySerial()">📋 نسخ</button>
-                  <button class="btn btn-success btn-sm" style="flex:1;" onclick="adminShareSerial()">📤 مشاركة واتساب</button>
-                </div>
-              </div>
-            </div>
-
-            <!-- تبويب: قائمة التراخيص -->
-            <div id="adm-pane-list" style="display:none;padding:14px;">
-              <div style="display:flex;gap:6px;margin-bottom:10px;flex-wrap:wrap;">
-                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('')">الكل</button>
-                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('active')">✅ نشط</button>
-                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('trial')">🕐 تجريبي</button>
-                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('expired')">🔒 منتهي</button>
-                <button class="btn btn-secondary btn-sm" onclick="adminFilterStatus('blocked')">🚫 محظور</button>
-              </div>
-              <div id="admin-users-list" style="max-height:340px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;">
-                <div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">اضغط 🔄 تحديث لتحميل القائمة</div>
-              </div>
-              <div id="admin-list-stats" style="font-size:10px;color:var(--text3);text-align:center;margin-top:8px;"></div>
-            </div>
-
-            <!-- تبويب: بحث -->
-            <div id="adm-pane-search" style="display:none;padding:14px;">
-              <div style="display:flex;gap:6px;margin-bottom:12px;">
-                <input id="admin-search-input" class="form-control" placeholder="Device ID أو اسم العميل..." oninput="adminSearch(this.value)">
-              </div>
-              <div id="admin-search-results" style="max-height:300px;overflow-y:auto;display:flex;flex-direction:column;gap:8px;">
-                <div style="color:var(--text3);font-size:11px;text-align:center;padding:20px;">ابدأ الكتابة للبحث</div>
-              </div>
-            </div>
-
-            <!-- ══ تبويب: التحكم بالميزات ══ -->
-            <div id="adm-pane-ctrl" style="padding:14px;display:none;">
-              <div style="background:rgba(99,91,255,.08);border:1.5px solid rgba(99,91,255,.25);border-radius:12px;padding:14px;margin-bottom:12px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                  <div style="display:flex;align-items:center;gap:8px;">
-                    <div style="width:36px;height:36px;background:linear-gradient(135deg,#635BFF,#3B31E8);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">💳</div>
-                    <div>
-                      <div style="font-weight:700;font-size:13px;color:#635BFF;">نظام Stripe للدفع</div>
-                      <div style="font-size:10px;color:var(--text3);">إظهار / إخفاء قسم الدفع للمستخدمين</div>
-                    </div>
-                  </div>
-                  <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer;">
-                    <input type="checkbox" id="stripe-visibility-toggle" onchange="toggleStripeVisibility(this.checked)" style="opacity:0;width:0;height:0;position:absolute;">
-                    <span id="stripe-toggle-track" style="position:absolute;inset:0;background:#333;border-radius:28px;transition:.3s;"></span>
-                    <span id="stripe-toggle-knob" style="position:absolute;top:3px;right:3px;width:22px;height:22px;background:#666;border-radius:50%;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.4);"></span>
-                  </label>
-                </div>
-                <div id="stripe-visibility-status" style="font-size:11px;padding:8px 10px;background:rgba(0,0,0,.2);border-radius:8px;color:var(--text3);">⏳ جاري التحقق...</div>
-              </div>
-              <div style="background:rgba(66,133,244,.08);border:1.5px solid rgba(66,133,244,.2);border-radius:12px;padding:14px;margin-bottom:12px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;">
-                  <div style="display:flex;align-items:center;gap:8px;">
-                    <div style="width:36px;height:36px;background:linear-gradient(135deg,#4285F4,#34A853);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">🧠</div>
-                    <div>
-                      <div style="font-weight:700;font-size:13px;color:#4285F4;">Gemini AI للمستخدمين</div>
-                      <div style="font-size:10px;color:var(--text3);">إظهار / إخفاء كارت Gemini</div>
-                    </div>
-                  </div>
-                  <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer;">
-                    <input type="checkbox" id="gemini-visibility-toggle" onchange="toggleGeminiVisibility(this.checked)" style="opacity:0;width:0;height:0;position:absolute;">
-                    <span id="gemini-toggle-track" style="position:absolute;inset:0;background:#333;border-radius:28px;transition:.3s;"></span>
-                    <span id="gemini-toggle-knob" style="position:absolute;top:3px;right:3px;width:22px;height:22px;background:#666;border-radius:50%;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.4);"></span>
-                  </label>
-                </div>
-                <div id="gemini-visibility-status" style="font-size:11px;padding:8px 10px;background:rgba(0,0,0,.2);border-radius:8px;color:var(--text3);">⏳ جاري التحقق...</div>
-              </div>
-              <!-- Cloud Accounts quick stats -->
-              <div style="background:rgba(66,133,244,.07);border:1.5px solid rgba(66,133,244,.18);border-radius:12px;padding:12px;margin-bottom:12px;">
-                <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-                  <div style="width:32px;height:32px;background:linear-gradient(135deg,#4285F4,#34A853);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;">☁️</div>
-                  <div style="font-weight:800;font-size:12px;color:#4285F4;">حسابات المزامنة السحابية</div>
-                </div>
-                <div id="dev-cloud-accounts" style="font-size:11px;color:var(--text3);text-align:center;padding:8px;max-height:200px;overflow-y:auto;">
-                  اضغط تحديث لعرض الحسابات
-                </div>
-                <div style="display:flex;gap:6px;margin-top:8px;">
-                  <button onclick="devLoadEmailAccounts()" class="btn btn-xs" style="flex:1;background:rgba(66,133,244,.12);border:1px solid rgba(66,133,244,.2);color:#4285F4;">🔄 تحديث</button>
-                  <button onclick="devExportEmails()" class="btn btn-xs btn-secondary" style="flex:1;">📋 نسخ الإيميلات</button>
-                </div>
-              </div>
-
-              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-                <button class="btn btn-secondary btn-sm" onclick="devForceUpdate()" style="font-size:11px;">🔄 إجبار التحديث</button>
-                <button class="btn btn-secondary btn-sm" onclick="devClearCache()" style="font-size:11px;">🗑️ مسح الكاش</button>
-              </div>
-
-              <!-- ══ ANNOUNCEMENTS MANAGER ══ -->
-              <div style="background:rgba(255,193,7,.07);border:1.5px solid rgba(255,193,7,.25);border-radius:12px;padding:14px;">
-                <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;">
-                  <div style="display:flex;align-items:center;gap:8px;">
-                    <div style="width:36px;height:36px;background:linear-gradient(135deg,#FF8F00,#FFC107);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:18px;">📢</div>
-                    <div>
-                      <div style="font-weight:800;font-size:13px;color:var(--gold);">نظام الإعلانات</div>
-                      <div style="font-size:10px;color:var(--text3);">يظهر للمستخدمين التجريبيين عند الفتح</div>
-                    </div>
-                  </div>
-                  <label style="position:relative;display:inline-block;width:52px;height:28px;cursor:pointer;">
-                    <input type="checkbox" id="announce-active-toggle" onchange="toggleAnnouncement(this.checked)" style="opacity:0;width:0;height:0;position:absolute;">
-                    <span id="announce-toggle-track" style="position:absolute;inset:0;background:#333;border-radius:28px;transition:.3s;"></span>
-                    <span id="announce-toggle-knob" style="position:absolute;top:3px;right:3px;width:22px;height:22px;background:#666;border-radius:50%;transition:.3s;box-shadow:0 2px 6px rgba(0,0,0,.4);"></span>
-                  </label>
-                </div>
-
-                <!-- Icon & Title -->
-                <div style="display:grid;grid-template-columns:80px 1fr;gap:8px;margin-bottom:8px;">
-                  <div>
-                    <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">الأيقونة</div>
-                    <input id="announce-icon" class="form-control" value="📢" style="font-size:18px;text-align:center;padding:6px;">
-                  </div>
-                  <div>
-                    <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">عنوان الإعلان</div>
-                    <input id="announce-title" class="form-control" placeholder="عنوان الرسالة..." style="font-size:12px;">
-                  </div>
-                </div>
-
-                <!-- Body -->
-                <div style="margin-bottom:8px;">
-                  <div style="font-size:10px;color:var(--text3);margin-bottom:4px;">نص الإعلان</div>
-                  <textarea id="announce-body" class="form-control" rows="4" placeholder="اكتب رسالتك هنا...&#10;&#10;مثال: انتهت فترتك التجريبية، اشترك الآن للاستمرار!" style="font-size:12px;resize:vertical;"></textarea>
-                </div>
-
-                <!-- CTA Button -->
-                <div style="background:rgba(0,0,0,.2);border-radius:9px;padding:10px;margin-bottom:10px;">
-                  <div style="font-size:10px;color:var(--gold);font-weight:700;margin-bottom:8px;">🔗 زر الإجراء (اختياري)</div>
-                  <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-                    <div>
-                      <div style="font-size:9px;color:var(--text3);margin-bottom:3px;">نص الزر</div>
-                      <input id="announce-cta-text" class="form-control" placeholder="اشترك الآن" style="font-size:11px;">
-                    </div>
-                    <div>
-                      <div style="font-size:9px;color:var(--text3);margin-bottom:3px;">رابط الزر</div>
-                      <input id="announce-cta-url" class="form-control" placeholder="https://..." style="font-size:11px;font-family:monospace;">
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Target -->
-                <div style="margin-bottom:10px;">
-                  <div style="font-size:10px;color:var(--text3);margin-bottom:6px;">👥 من يرى الإعلان؟</div>
-                  <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                    <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer;background:rgba(255,255,255,.05);border-radius:7px;padding:6px 10px;">
-                      <input type="radio" name="announce-target" value="trial" checked style="accent-color:var(--gold);"> فترة تجريبية فقط
-                    </label>
-                    <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer;background:rgba(255,255,255,.05);border-radius:7px;padding:6px 10px;">
-                      <input type="radio" name="announce-target" value="all" style="accent-color:var(--gold);"> جميع المستخدمين
-                    </label>
-                    <label style="display:flex;align-items:center;gap:5px;font-size:11px;cursor:pointer;background:rgba(255,255,255,.05);border-radius:7px;padding:6px 10px;">
-                      <input type="radio" name="announce-target" value="expired" style="accent-color:var(--gold);"> منتهي الترخيص
-                    </label>
-                  </div>
-                </div>
-
-                <!-- Repeat -->
-                <div style="margin-bottom:12px;">
-                  <div style="font-size:10px;color:var(--text3);margin-bottom:6px;">🔁 تكرار الظهور</div>
-                  <select id="announce-repeat" class="form-control" style="font-size:11px;">
-                    <option value="once">مرة واحدة فقط</option>
-                    <option value="daily" selected>كل يوم</option>
-                    <option value="always">في كل فتح</option>
-                    <option value="weekly">كل أسبوع</option>
-                  </select>
-                </div>
-
-                <!-- Action buttons -->
-                <div style="display:flex;gap:7px;">
-                  <button class="btn btn-primary btn-sm" onclick="saveAnnouncement()" style="flex:1;justify-content:center;">💾 حفظ ونشر</button>
-                  <button class="btn btn-secondary btn-sm" onclick="previewAnnouncement()">👁️ معاينة</button>
-                  <button class="btn btn-secondary btn-sm" onclick="clearAnnouncementSeen()" title="إعادة تعيين من رأى الإعلان">🔄</button>
-                </div>
-                <div id="announce-save-status" style="font-size:10px;color:var(--green);margin-top:6px;text-align:center;min-height:14px;"></div>
-              </div>
-
-            </div>
-
-          </div>
         </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">🛡️ حالة الأمان</span></div>
-        <div id="security-status-list"></div>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">🔑 كلمة المرور</span></div>
-        <div class="form-group"><label class="form-label">كلمة المرور الحالية</label><input id="sec5-old" type="password" class="form-control"></div>
-        <div class="form-group"><label class="form-label">كلمة المرور الجديدة</label><input id="sec5-new" type="password" class="form-control"></div>
-        <div class="form-group"><label class="form-label">تأكيد كلمة المرور</label><input id="sec5-conf" type="password" class="form-control"></div>
-        <button class="btn btn-primary btn-sm" onclick="changeSecPassword()">🔒 تغيير</button>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">🔒 تشفير البيانات</span></div>
-        <div style="font-size:11px;color:var(--text2);margin-bottom:10px;">تشفير AES-256 لبياناتك الحساسة</div>
-        <div class="pn-toggle-row">
-          <div><div style="font-size:12px;font-weight:600;">تشفير قاعدة البيانات</div><div style="font-size:10px;color:var(--text3);">حماية البيانات المحلية</div></div>
-          <label class="toggle-switch"><input type="checkbox" id="enc-db" onchange="toggleEncryption('db',this.checked)"><span class="toggle-slider"></span></label>
-        </div>
-        <div class="pn-toggle-row">
-          <div><div style="font-size:12px;font-weight:600;">تشفير النسخ الاحتياطية</div><div style="font-size:10px;color:var(--text3);">تأمين ملفات التصدير</div></div>
-          <label class="toggle-switch"><input type="checkbox" id="enc-backup" onchange="toggleEncryption('backup',this.checked)"><span class="toggle-slider"></span></label>
-        </div>
-        <div class="pn-toggle-row">
-          <div><div style="font-size:12px;font-weight:600;">قفل تلقائي بعد 10 دقائق</div><div style="font-size:10px;color:var(--text3);">تسجيل خروج تلقائي عند التعطل</div></div>
-          <label class="toggle-switch"><input type="checkbox" id="auto-lock" onchange="toggleEncryption('autolock',this.checked)"><span class="toggle-slider"></span></label>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">📋 سجل النشاط</span></div>
-        <div id="activity-log-list" style="max-height:200px;overflow-y:auto;"></div>
-      </div>
-      <div class="card">
-        <div class="card-header"><span class="card-title">📱 PWA — وضع بدون إنترنت</span></div>
-        <div id="pwa-features-list"></div>
-        <button class="btn btn-primary btn-sm" style="margin-top:10px;width:100%;" onclick="installPWA()">📲 تثبيت التطبيق</button>
-      </div>
-    </div>
-
-    <!-- ══ AI PLUS ══ -->
-    <div id="screen-aiplus" class="screen">
-      <div class="ph"><div><div class="pt">🧠 الذكاء الاصطناعي المتقدم</div><div class="ps">تحليل عميق مدعوم بـ Claude AI</div></div></div>
-      <div class="aip-card">
-        <div style="font-weight:700;font-size:13px;color:var(--gold);margin-bottom:8px;">🔍 تحليل صورة الخلية</div>
-        <div style="font-size:11px;color:var(--text2);margin-bottom:10px;">ارفع صورة للخلية ليحللها الذكاء الاصطناعي</div>
-        <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-          <label class="btn btn-secondary btn-sm" style="cursor:pointer;">📷 رفع صورة<input type="file" accept="image/*" style="display:none;" onchange="analyzeHiveImage(this)"></label>
-          <button class="btn btn-teal btn-sm" onclick="analyzeHiveImage(null,'demo')">🧪 تجربة نموذجية</button>
-        </div>
-        <div id="aip-img-result" class="aip-result" style="display:none;"></div>
-      </div>
-      <div class="aip-card">
-        <div style="font-weight:700;font-size:13px;color:var(--gold);margin-bottom:8px;">🦠 كشف الأمراض المبكر</div>
-        <button class="btn btn-primary btn-sm" onclick="runDiseaseDetection()">🔬 تشغيل الكشف التلقائي</button>
-        <div id="aip-disease-result" class="aip-result" style="display:none;"></div>
-      </div>
-      <div class="aip-card">
-        <div style="font-weight:700;font-size:13px;color:var(--gold);margin-bottom:8px;">📅 توصيات موسمية ذكية</div>
-        <div id="aip-season-result" class="aip-result"></div>
-      </div>
-      <div class="aip-card">
-        <div style="font-weight:700;font-size:13px;color:var(--gold);margin-bottom:8px;">💬 اسأل AI عن مزرعتك</div>
-        <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;">
-          <span class="aip-chip" onclick="askAIPlus(this.textContent)">ما هي أفضل خلية عندي؟</span>
-          <span class="aip-chip" onclick="askAIPlus(this.textContent)">متى أحصد؟</span>
-          <span class="aip-chip" onclick="askAIPlus(this.textContent)">كيف أزيد الإنتاج؟</span>
-          <span class="aip-chip" onclick="askAIPlus(this.textContent)">هل مزرعتي مربحة؟</span>
-          <span class="aip-chip" onclick="askAIPlus(this.textContent)">ما الأمراض الأكثر خطورة الآن؟</span>
-          <span class="aip-chip" onclick="askAIPlus(this.textContent)">خطة عمل الأسبوع القادم</span>
-        </div>
-        <div style="display:flex;gap:7px;">
-          <input id="aip-question" class="form-control" placeholder="اكتب سؤالك..." onkeydown="if(event.key==='Enter')askAIPlus(document.getElementById('aip-question').value)">
-          <button class="btn btn-primary btn-sm" onclick="askAIPlus(document.getElementById('aip-question').value)">إرسال</button>
-        </div>
-        <div id="aip-custom-result" class="aip-result" style="display:none;margin-top:10px;"></div>
-      </div>
-
-      <!-- ══ GEMINI AI CHAT CARD ══ -->
-      <div id="gemini-chat-card" class="aip-card" style="border-color:rgba(66,133,244,.25);background:linear-gradient(135deg,rgba(66,133,244,.06),rgba(52,168,83,.04));">
-        <div style="display:flex;align-items:center;gap:8px;margin-bottom:10px;">
-          <div style="width:36px;height:36px;background:linear-gradient(135deg,#4285F4,#34A853);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0;">🧠</div>
-          <div>
-            <div style="font-weight:800;font-size:13px;color:#4285F4;">Google Gemini AI</div>
-            <div id="gemini-aiplus-status" style="font-size:10px;color:var(--text3);">جاري التحقق...</div>
-          </div>
-          <button onclick="go('settings');setTimeout(()=>document.getElementById('gemini-api-key')?.focus(),600)" style="margin-right:auto;background:rgba(66,133,244,.12);border:1px solid rgba(66,133,244,.2);color:#4285F4;border-radius:8px;padding:5px 10px;font-size:10px;cursor:pointer;font-family:'Cairo',sans-serif;">⚙️ إعداد</button>
-        </div>
-        <!-- Quick prompts -->
-        <div style="display:flex;gap:5px;flex-wrap:wrap;margin-bottom:10px;">
-          <span class="aip-chip" style="border-color:rgba(66,133,244,.2);color:#4285F4;" onclick="sendGeminiChat(this.textContent)">📊 تحليل مناحلي</span>
-          <span class="aip-chip" style="border-color:rgba(66,133,244,.2);color:#4285F4;" onclick="sendGeminiChat(this.textContent)">🦠 أمراض الموسم</span>
-          <span class="aip-chip" style="border-color:rgba(66,133,244,.2);color:#4285F4;" onclick="sendGeminiChat(this.textContent)">🍯 توقيت الحصاد</span>
-          <span class="aip-chip" style="border-color:rgba(66,133,244,.2);color:#4285F4;" onclick="sendGeminiChat(this.textContent)">📅 خطة الأسبوع</span>
-        </div>
-        <!-- Chat history -->
-        <div id="gemini-chat-history" style="min-height:60px;max-height:280px;overflow-y:auto;background:rgba(0,0,0,.18);border-radius:10px;padding:10px;margin-bottom:10px;display:flex;flex-direction:column;gap:8px;">
-          <div style="text-align:center;color:var(--text3);font-size:11px;padding:16px 0;">ابدأ محادثة مع Gemini حول نحلك 🐝</div>
-        </div>
-        <!-- Input -->
-        <div style="display:flex;gap:7px;">
-          <textarea id="gemini-chat-input" class="form-control" placeholder="اسأل Gemini..." style="flex:1;resize:none;height:40px;font-size:12px;" rows="1" onkeydown="if(event.ctrlKey&&event.key==='Enter')sendGeminiChat()"></textarea>
-          <button onclick="sendGeminiChat()" id="gemini-send-btn" class="btn" style="background:linear-gradient(135deg,#4285F4,#34A853);color:#fff;padding:0 14px;font-size:17px;flex-shrink:0;">➤</button>
-        </div>
-        <div style="font-size:9px;color:var(--text3);margin-top:4px;">Ctrl+Enter للإرسال</div>
-      </div>
-    </div>
-
-    <!-- ══ CONTACT ══ -->
-    <div id="screen-contact" class="screen">
-      <div class="ph"><div class="pt" data-i18n="contact_title">📬 اتصل بنا</div></div>
-      <div class="card" style="text-align:center;padding:24px 20px;">
-        <div style="font-size:48px;margin-bottom:12px;">🐝</div>
-        <div style="font-family:'Syne','Cairo',sans-serif;font-size:22px;font-weight:800;color:var(--gold);margin-bottom:6px;">NectarOS</div>
-        <div style="font-size:11px;color:var(--text3);margin-bottom:20px;" data-i18n="contact_sub">Harvesting Intelligence · v5.4.1</div>
-
-        <!-- قسم شراء الترخيص -->
-        <div id="contact-purchase-wrap" style="text-align:right;"></div>
-      </div>
-      <!-- ══ STRIPE PAYMENT SECTION ══ -->
-      <div id="stripe-payment-card" class="card" style="border-color:rgba(99,91,255,.3);margin-top:0;">
-        <div style="background:linear-gradient(135deg,rgba(99,91,255,.1),rgba(99,91,255,.05));border-radius:12px;padding:16px;">
-          <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
-            <div style="width:44px;height:44px;background:linear-gradient(135deg,#635BFF,#3B31E8);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px;">💳</div>
-            <div>
-              <div style="font-size:14px;font-weight:800;color:#635BFF;">Stripe — دفع آمن دولي</div>
-              <div style="font-size:10px;color:var(--text3);">Visa · Mastercard · Apple Pay · Google Pay</div>
-            </div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px;">
-            <div style="background:rgba(99,91,255,.08);border:1px solid rgba(99,91,255,.2);border-radius:9px;padding:10px;text-align:center;">
-              <div style="font-size:20px;font-weight:900;color:#635BFF;">500 دج</div>
-              <div style="font-size:9px;color:var(--text3);">شهري</div>
-            </div>
-            <div style="background:rgba(99,91,255,.15);border:1px solid rgba(99,91,255,.3);border-radius:9px;padding:10px;text-align:center;position:relative;">
-              <div style="position:absolute;top:-8px;right:50%;transform:translateX(50%);background:#635BFF;color:#fff;font-size:9px;font-weight:700;padding:2px 8px;border-radius:10px;">الأشهر</div>
-              <div style="font-size:20px;font-weight:900;color:#635BFF;">4500 دج</div>
-              <div style="font-size:9px;color:var(--text3);">سنوي (وفر 12%)</div>
-            </div>
-          </div>
-          <div style="background:rgba(99,91,255,.06);border-radius:9px;padding:10px;margin-bottom:12px;">
-            <div style="font-size:10px;color:var(--text2);line-height:1.9;">
-              ✅ وصول كامل لجميع المميزات<br>
-              ✅ تحديثات مجانية مستمرة<br>
-              ✅ دعم فني أولوية<br>
-              ✅ حتى 4 أجهزة متزامنة
-            </div>
-          </div>
-          <button onclick="openStripePayment()" class="btn" style="width:100%;background:linear-gradient(135deg,#635BFF,#3B31E8);color:#fff;justify-content:center;box-shadow:0 4px 15px rgba(99,91,255,.4);font-size:13px;">
-            💳 الدفع عبر Stripe
-          </button>
-          <div style="font-size:9px;color:var(--text3);text-align:center;margin-top:8px;">🔒 مشفّر ومحمي بـ Stripe — لا نحتفظ ببيانات بطاقتك</div>
-        </div>
-      </div>
-    </div>
-
-
-    <!-- ══ MAP SCREEN (v15) ══ -->
-    <div id="screen-map" class="screen">
-      <div class="ph">
-        <div><div class="pt">📍 الخريطة التفاعلية</div><div class="ps">مواقع المناحل مع حالة الخلايا في الوقت الفعلي</div></div>
-        <button class="btn btn-primary btn-sm" onclick="refreshMap()">🔄 تحديث</button>
-      </div>
-      <div class="dist-card">
-        <div style="font-weight:700;font-size:12px;margin-bottom:11px;color:var(--gold);">📏 حساب المسافة بين منحلين</div>
-        <div class="form-row">
-          <div class="form-group" style="margin-bottom:0;"><label class="form-label">المنحل أ</label><select id="dist-a" class="form-control"></select></div>
-          <div class="form-group" style="margin-bottom:0;"><label class="form-label">المنحل ب</label><select id="dist-b" class="form-control"></select></div>
-        </div>
-        <button class="btn btn-primary" style="width:100%;margin-top:10px;" onclick="calcMapDist()">📐 احسب المسافة</button>
-        <div class="dist-result-box" id="dist-result" style="display:none;">
-          <div class="dist-big" id="dist-val">—</div>
-          <div style="font-size:12px;color:var(--text3);margin-top:2px;">كيلومتر</div>
-          <div style="font-size:11px;color:var(--text2);margin-top:5px;" id="dist-names"></div>
-        </div>
-      </div>
-      <div id="leaflet-map"></div>
-      <div class="card">
-        <div style="font-weight:700;font-size:12px;margin-bottom:10px;">🎨 دليل الألوان على الخريطة</div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px;">
-          <div class="map-legend-row"><div class="map-dot" style="background:#4CAF50;box-shadow:0 0 6px #4CAF50;"></div><span>منحل نشط وصحي</span></div>
-          <div class="map-legend-row"><div class="map-dot" style="background:#FF9800;box-shadow:0 0 6px #FF9800;"></div><span>يحتاج رعاية</span></div>
-          <div class="map-legend-row"><div class="map-dot" style="background:#f44336;box-shadow:0 0 6px #f44336;"></div><span>حالة حرجة / لا ملكة</span></div>
-          <div class="map-legend-row"><div class="map-dot" style="background:#2196F3;box-shadow:0 0 6px #2196F3;"></div><span>منحل جديد</span></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ ADVANCED METRICS (v15) ══ -->
-    <div id="screen-advanced" class="screen">
-      <div class="ph"><div><div class="pt">📈 مقاييس متقدمة</div><div class="ps">ROI · مقارنة السلالات · توقعات الإيراد · تنبيهات</div></div></div>
-      <div class="grid-2" style="margin-bottom:12px;">
         <div class="card">
           <div class="card-header"><span class="card-title">💹 مؤشر الإنتاجية ROI — كل منحل</span></div>
           <div id="adv-roi-list"><div class="empty-s"><div class="ei">💹</div><p>لا مناحل</p></div></div>
@@ -13083,6 +12661,194 @@ setTimeout(()=>{
   if(location.hash==='#adminpanel') apLoad();
 },1000);
 
+
+/* ══ ADMIN PANEL: Licenses Tab ══ */
+let _apLicAll = [];
+let _apLicFilter = '';
+
+async function apLoadLicenses(){
+  const el = document.getElementById('ap-lic-list');
+  if(el) el.innerHTML='<div style="text-align:center;padding:16px;color:var(--text3);">⏳ جاري التحميل...</div>';
+  try{
+    const data = await sbQuery('GET','licenses?select=*&order=install_date.desc&limit=500') || [];
+    _apLicAll = data;
+    // Stats
+    const active  = data.filter(r=>r.status==='active').length;
+    const trial   = data.filter(r=>r.status==='trial').length;
+    const expired = data.filter(r=>r.status==='expired'||r.status==='blocked').length;
+    const s = id => document.getElementById(id);
+    if(s('lic-stat-active'))  s('lic-stat-active').textContent  = active;
+    if(s('lic-stat-trial'))   s('lic-stat-trial').textContent   = trial;
+    if(s('lic-stat-expired')) s('lic-stat-expired').textContent = expired;
+    apRenderLicenses(_apLicFilter ? data.filter(r=>r.status===_apLicFilter) : data);
+  }catch(e){
+    if(el) el.innerHTML=`<div style="color:var(--red);text-align:center;padding:12px;">❌ ${e.message}</div>`;
+  }
+}
+
+function apRenderLicenses(list){
+  const el = document.getElementById('ap-lic-list');
+  if(!el) return;
+  if(!list.length){el.innerHTML='<div style="text-align:center;padding:16px;color:var(--text3);">لا توجد نتائج</div>';return;}
+  const sc={active:'var(--green)',trial:'var(--gold)',expired:'var(--orange)',blocked:'var(--red)'};
+  const si={active:'✅',trial:'🕐',expired:'⏳',blocked:'🚫'};
+  el.innerHTML = list.map(r=>{
+    const col = sc[r.status]||'var(--text3)';
+    const icn = si[r.status]||'⚪';
+    const exp = r.serial_expires ? new Date(r.serial_expires).toLocaleDateString('ar-DZ') : '—';
+    const email = r.email||r.notes||'';
+    const did = (r.device_id||'').slice(-14);
+    return `<div style="background:var(--card);border:1px solid ${col}33;border-radius:11px;padding:11px;">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+        <div style="width:34px;height:34px;border-radius:50%;background:${col}22;border:2px solid ${col};display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;">${icn}</div>
+        <div style="flex:1;min-width:0;">
+          ${email?`<div style="font-weight:700;font-size:12px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">📧 ${email}</div>`:''}
+          <div style="font-size:10px;color:var(--text3);font-family:monospace;">📱 ...${did}</div>
+        </div>
+        <div style="font-size:9px;color:${col};font-weight:700;text-align:center;">${icn}<br>${r.status}</div>
+      </div>
+      <div style="font-size:9px;color:var(--text3);margin-bottom:8px;">⏳ ${exp}</div>
+      <div style="display:flex;gap:5px;flex-wrap:wrap;">
+        ${r.status!=='active' ?`<button onclick="apLicSetStatus('${r.device_id}','active')"   class="btn btn-xs btn-success"  style="flex:1;justify-content:center;">✅ تفعيل</button>`:''}
+        ${r.status==='active' ?`<button onclick="apLicSetStatus('${r.device_id}','expired')"  class="btn btn-xs btn-secondary" style="flex:1;justify-content:center;">⏸️ إيقاف</button>`:''}
+        <button onclick="apLicExtend('${r.device_id}')"                                        class="btn btn-xs" style="flex:1;justify-content:center;background:rgba(33,150,243,.12);border:1px solid rgba(33,150,243,.2);color:var(--blue);">📅 تمديد</button>
+        ${r.status!=='blocked'?`<button onclick="apLicSetStatus('${r.device_id}','blocked')"  class="btn btn-xs btn-danger"   >🚫</button>`:`<button onclick="apLicSetStatus('${r.device_id}','active')" class="btn btn-xs btn-success">🔓</button>`}
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function apSearchLicenses(q){
+  if(!q){ apRenderLicenses(_apLicFilter?_apLicAll.filter(r=>r.status===_apLicFilter):_apLicAll); return; }
+  const ql=q.toLowerCase();
+  apRenderLicenses(_apLicAll.filter(r=>
+    (r.email||'').toLowerCase().includes(ql)||
+    (r.device_id||'').toLowerCase().includes(ql)||
+    (r.notes||'').toLowerCase().includes(ql)
+  ));
+}
+
+function apLicFilter(status){
+  _apLicFilter = status;
+  document.querySelectorAll('.ap-lic-filter').forEach(b=>b.classList.remove('active'));
+  const list = status ? _apLicAll.filter(r=>r.status===status) : _apLicAll;
+  apRenderLicenses(list);
+}
+
+async function apLicSetStatus(deviceId, status){
+  try{
+    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(deviceId),{status});
+    _apLicAll = _apLicAll.map(r=>r.device_id===deviceId?{...r,status}:r);
+    apRenderLicenses(_apLicFilter?_apLicAll.filter(r=>r.status===_apLicFilter):_apLicAll);
+    toast({active:'✅ مفعّل',expired:'⏸️ موقوف',blocked:'🚫 محظور'}[status]||status,'success');
+  }catch(e){toast('❌ '+e.message,'error');}
+}
+
+async function apLicExtend(deviceId){
+  const days = prompt('عدد أيام التمديد:','365');
+  if(!days||isNaN(days)) return;
+  const exp = new Date(); exp.setDate(exp.getDate()+parseInt(days));
+  try{
+    await sbQuery('PATCH','licenses?device_id=eq.'+encodeURIComponent(deviceId),{status:'active',serial_expires:exp.toISOString()});
+    _apLicAll = _apLicAll.map(r=>r.device_id===deviceId?{...r,status:'active',serial_expires:exp.toISOString()}:r);
+    apRenderLicenses(_apLicAll);
+    toast(`✅ تمديد ${days} يوم`,'success');
+  }catch(e){toast('❌ '+e.message,'error');}
+}
+
+async function apAddLic(){
+  const id   = document.getElementById('ap-lic-id')?.value.trim();
+  const days = parseInt(document.getElementById('ap-lic-days')?.value)||365;
+  const note = document.getElementById('ap-lic-note')?.value.trim()||'';
+  const msg  = document.getElementById('ap-lic-add-msg');
+  if(!id){if(msg){msg.textContent='أدخل البريد أو معرّف الجهاز';msg.style.color='var(--red)';}return;}
+  const exp = new Date(); exp.setDate(exp.getDate()+days);
+  try{
+    await sbQuery('POST','licenses?on_conflict=device_id',{
+      device_id:id,user_id:id,email:id.includes('@')?id:'',
+      status:'active',serial_expires:exp.toISOString(),
+      install_date:new Date().toISOString(),notes:note||id
+    });
+    if(msg){msg.textContent='✅ تم الإضافة';msg.style.color='var(--green)';setTimeout(()=>msg.textContent='',3000);}
+    toast('✅ تم إضافة الترخيص','success');
+    document.getElementById('ap-lic-id').value='';
+    document.getElementById('ap-lic-note').value='';
+    setTimeout(apLoadLicenses,400);
+  }catch(e){
+    if(msg){msg.textContent='❌ '+e.message;msg.style.color='var(--red)';}
+    toast('❌ '+e.message,'error');
+  }
+}
+
+/* ══ ADMIN PANEL: Control Tab ══ */
+function _ctrlToggle(trackId, knobId, chkId, on, color){
+  const t=document.getElementById(trackId);
+  const k=document.getElementById(knobId);
+  const c=document.getElementById(chkId);
+  if(t) t.style.background = on ? color : '#333';
+  if(k){ k.style.background = on?'#fff':'#666'; k.style.right=on?'calc(100% - 22px)':'2px'; }
+  if(c) c.checked = on;
+}
+
+function apCtrlStripe(on){
+  _ctrlToggle('ct-stripe-track','ct-stripe-knob','ct-stripe',on,'#635BFF');
+  const s=typeof _getDevSettings==='function'?_getDevSettings():{};
+  s.stripe_visible = on ? undefined : false;
+  if(typeof _saveDevSettings==='function') _saveDevSettings(s);
+  if(typeof _applyStripeVisibility==='function') _applyStripeVisibility();
+  const st=document.getElementById('ct-stripe-status');
+  if(st){st.textContent=on?'✅ Stripe ظاهر للعملاء':'🙈 Stripe مخفي';st.style.color=on?'var(--green)':'var(--orange)';}
+  toast(on?'✅ Stripe ظاهر':'🙈 Stripe مخفي',on?'success':'info');
+}
+
+function apCtrlGemini(on){
+  _ctrlToggle('ct-gemini-track','ct-gemini-knob','ct-gemini',on,'#4285F4');
+  const s=typeof _getDevSettings==='function'?_getDevSettings():{};
+  s.gemini_visible = on ? undefined : false;
+  if(typeof _saveDevSettings==='function') _saveDevSettings(s);
+  if(typeof _applyGeminiVisibility==='function') _applyGeminiVisibility();
+  const st=document.getElementById('ct-gemini-status');
+  if(st){st.textContent=on?'✅ Gemini ظاهر للعملاء':'🙈 Gemini مخفي';st.style.color=on?'var(--green)':'var(--orange)';}
+  toast(on?'✅ Gemini ظاهر':'🙈 Gemini مخفي',on?'success':'info');
+}
+
+function apCtrlAnn(on){
+  _ctrlToggle('ct-ann-track','ct-ann-knob','ct-ann',on,'var(--gold)');
+  const ann=typeof _getAnnouncement==='function'?_getAnnouncement():null;
+  if(ann&&typeof _saveAnnouncement==='function'){ann.active=on;_saveAnnouncement(ann);}
+  const st=document.getElementById('ct-ann-status');
+  if(st){st.textContent=on?'✅ الإعلان مفعّل':'⏸️ الإعلان متوقف';st.style.color=on?'var(--green)':'var(--text3)';}
+  toast(on?'✅ الإعلان مفعّل':'⏸️ موقوف',on?'success':'info');
+}
+
+function _initCtrlTab(){
+  const s=typeof _getDevSettings==='function'?_getDevSettings():{};
+  apCtrlStripe(s.stripe_visible!==false);
+  apCtrlGemini(s.gemini_visible!==false);
+  const ann=typeof _getAnnouncement==='function'?_getAnnouncement():null;
+  apCtrlAnn(ann?.active===true);
+}
+
+/* ══ Extend apTab to handle new tabs ══ */
+const _origApTab = window.apTab;
+window.apTab = function(tab){
+  ['announce','stripe','gemini','accounts','licenses','ctrl'].forEach(t=>{
+    const pane=document.getElementById('ap-pane-'+t);
+    const btn =document.getElementById('ap-tab-'+t);
+    if(pane) pane.style.display = t===tab?'block':'none';
+    if(btn){ btn.style.background=t===tab?'var(--gold)':'var(--bg3)'; btn.style.color=t===tab?'#000':'var(--text2)'; }
+  });
+  if(tab==='accounts')  apLoadAccounts();
+  if(tab==='licenses')  apLoadLicenses();
+  if(tab==='stripe')    apLoadStripeSettings();
+  if(tab==='gemini')    apLoadGeminiSettings();
+  if(tab==='announce')  apLoadAnnouncement();
+  if(tab==='ctrl')      _initCtrlTab();
+};
+
+// Also override apLoad to use new tab system
+window.apLoad = function(){ apTab('announce'); };
+
 </script>
   <!-- ══ ANNOUNCEMENT POPUP ══ -->
   <div id="announcement-overlay" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:99999;align-items:center;justify-content:center;padding:20px;backdrop-filter:blur(4px);">
@@ -13221,6 +12987,14 @@ setTimeout(()=>{
         <button id="ap-tab-accounts" onclick="apTab('accounts')"
           style="flex-shrink:0;padding:8px 14px;border-radius:10px;border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:11px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:.2s;">
           👥 الحسابات
+        </button>
+        <button id="ap-tab-licenses" onclick="apTab('licenses')"
+          style="flex-shrink:0;padding:8px 14px;border-radius:10px;border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:11px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:.2s;">
+          🔑 التراخيص
+        </button>
+        <button id="ap-tab-ctrl" onclick="apTab('ctrl')"
+          style="flex-shrink:0;padding:8px 14px;border-radius:10px;border:none;font-family:'Cairo',sans-serif;font-weight:700;font-size:11px;cursor:pointer;background:var(--bg3);color:var(--text2);transition:.2s;">
+          ⚙️ تحكم
         </button>
       </div>
 
